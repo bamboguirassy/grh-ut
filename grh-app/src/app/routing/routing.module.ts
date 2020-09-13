@@ -1,3 +1,7 @@
+import { paysRoutes } from './../pages/parametrage/pays/pays.routes';
+import { fonctionRoutes } from './../pages/parametrage/fonction/fonction.routes';
+import { mutuelleSanteRoutes } from './../pages/parametrage/mutuellesante/mutuellesante.routes';
+import { caisseSocialeRoutes } from './../pages/parametrage/caissesociale/caissesociale.routes';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -14,6 +18,10 @@ import { Page404Component } from '../pages/apps/sessions/page-404';
 import { Page500Component } from '../pages/apps/sessions/page-500';
 import { userRoutes } from '../pages/parametrage/user/user.routes';
 import { groupRoutes } from '../pages/parametrage/group/group.routes';
+import { typeEntiteRoutes } from '../pages/parametrage/typeentite/typeentite.routes';
+import { typeContratRoutes } from '../pages/parametrage/typecontrat/typecontrat.routes';
+import { typeDocumentRoutes } from '../pages/parametrage/typedocument/typedocument.routes';
+import { typeEmployeRoutes } from '../pages/parametrage/typeemploye/typeemploye.routes';
 import { PageEditAccountComponent } from '../pages/apps/service-pages/edit-account/edit-account.component';
 
 const VERTICAL_ROUTES: Routes = [
@@ -24,6 +32,14 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'settings', component: PageSettingsComponent },
   userRoutes,
   groupRoutes,
+  typeEntiteRoutes,
+  typeContratRoutes,
+  typeDocumentRoutes,
+  caisseSocialeRoutes,
+  mutuelleSanteRoutes,
+  fonctionRoutes,
+  paysRoutes,
+  typeEmployeRoutes
 ];
 
 const PUBLIC_ROUTES: Routes = [

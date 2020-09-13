@@ -1,3 +1,39 @@
+import { CaisseSocialeShowComponent } from './parametrage/caissesociale/caissesociale-show/caissesociale-show.component';
+import { TypeEmployeNewComponent } from './parametrage/typeemploye/typeemploye-new/typeemploye-new.component';
+import { TypeEmployeCloneComponent } from './parametrage/typeemploye/typeemploye-clone/typeemploye-clone.component';
+import { TypeEmployeShowComponent } from './parametrage/typeemploye/typeemploye-show/typeemploye-show.component';
+import { TypeEmployeEditComponent } from './parametrage/typeemploye/typeemploye-edit/typeemploye-edit.component';
+import { TypeEmployeListComponent } from './parametrage/typeemploye/typeemploye-list/typeemploye-list.component';
+import { PaysNewComponent } from './parametrage/pays/pays-new/pays-new.component';
+import { PaysCloneComponent } from './parametrage/pays/pays-clone/pays-clone.component';
+import { PaysShowComponent } from './parametrage/pays/pays-show/pays-show.component';
+import { PaysEditComponent } from './parametrage/pays/pays-edit/pays-edit.component';
+import { PaysListComponent } from './parametrage/pays/pays-list/pays-list.component';
+import { MutuelleSanteNewComponent } from './parametrage/mutuellesante/mutuellesante-new/mutuellesante-new.component';
+import { MutuelleSanteCloneComponent } from './parametrage/mutuellesante/mutuellesante-clone/mutuellesante-clone.component';
+import { MutuelleSanteShowComponent } from './parametrage/mutuellesante/mutuellesante-show/mutuellesante-show.component';
+import { MutuelleSanteEditComponent } from './parametrage/mutuellesante/mutuellesante-edit/mutuellesante-edit.component';
+import { MutuelleSanteListComponent } from './parametrage/mutuellesante/mutuellesante-list/mutuellesante-list.component';
+import { FonctionNewComponent } from './parametrage/fonction/fonction-new/fonction-new.component';
+import { FonctionCloneComponent } from './parametrage/fonction/fonction-clone/fonction-clone.component';
+import { FonctionShowComponent } from './parametrage/fonction/fonction-show/fonction-show.component';
+import { FonctionEditComponent } from './parametrage/fonction/fonction-edit/fonction-edit.component';
+import { FonctionListComponent } from './parametrage/fonction/fonction-list/fonction-list.component';
+import { CaisseSocialeNewComponent } from './parametrage/caissesociale/caissesociale-new/caissesociale-new.component';
+import { CaisseSocialeCloneComponent } from './parametrage/caissesociale/caissesociale-clone/caissesociale-clone.component';
+import { CaisseSocialeEditComponent } from './parametrage/caissesociale/caissesociale-edit/caissesociale-edit.component';
+import { CaisseSocialeListComponent } from './parametrage/caissesociale/caissesociale-list/caissesociale-list.component';
+import { TypeDocumentNewComponent } from './parametrage/typedocument/typedocument-new/typedocument-new.component';
+import { TypeDocumentCloneComponent } from './parametrage/typedocument/typedocument-clone/typedocument-clone.component';
+import { TypeDocumentShowComponent } from './parametrage/typedocument/typedocument-show/typedocument-show.component';
+import { TypeDocumentEditComponent } from './parametrage/typedocument/typedocument-edit/typedocument-edit.component';
+import { TypeDocumentListComponent } from './parametrage/typedocument/typedocument-list/typedocument-list.component';
+import { TypeContratNewComponent } from './parametrage/typecontrat/typecontrat-new/typecontrat-new.component';
+import { TypeContratCloneComponent } from './parametrage/typecontrat/typecontrat-clone/typecontrat-clone.component';
+import { TypeContratShowComponent } from './parametrage/typecontrat/typecontrat-show/typecontrat-show.component';
+import { TypeContratEditComponent } from './parametrage/typecontrat/typecontrat-edit/typecontrat-edit.component';
+import { TypeContratListComponent } from './parametrage/typecontrat/typecontrat-list/typecontrat-list.component';
+import { TypeEntiteNewComponent } from './parametrage/typeentite/typeentite-new/typeentite-new.component';
 import { PageEditAccountComponent } from './apps/service-pages/edit-account/edit-account.component';
 import { UserCloneComponent } from './parametrage/user/user-clone/user-clone.component';
 import { UserShowComponent } from './parametrage/user/user-show/user-show.component';
@@ -38,6 +74,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { UserListComponent } from './parametrage/user/user-list/user-list.component';
 import { UserNewComponent } from './parametrage/user/user-new/user-new.component';
 import { GroupShowComponent } from './parametrage/group/group-show/group-show.component';
+import { TypeEntiteCloneComponent } from './parametrage/typeentite/typeentite-clone/typeentite-clone.component';
+import { TypeEntiteEditComponent } from './parametrage/typeentite/typeentite-edit/typeentite-edit.component';
+import { TypeEntiteListComponent } from './parametrage/typeentite/typeentite-list/typeentite-list.component';
+import { TypeEntiteShowComponent } from './parametrage/typeentite/typeentite-show/typeentite-show.component';
 
 @NgModule({
   imports: [
@@ -86,7 +126,7 @@ import { GroupShowComponent } from './parametrage/group/group-show/group-show.co
     NzUploadModule,
     UIModule,
     LayoutModule,
-    
+
     SharedModule
   ],
   declarations: [
@@ -108,9 +148,59 @@ import { GroupShowComponent } from './parametrage/group/group-show/group-show.co
     GroupEditComponent,
     GroupShowComponent,
     GroupListComponent,
-    GroupNewComponent
+    GroupNewComponent,
+    // typeentite components
+    TypeEntiteListComponent,
+    TypeEntiteEditComponent,
+    TypeEntiteShowComponent,
+    TypeEntiteCloneComponent,
+    TypeEntiteNewComponent,
+    // typecontrat components
+    TypeContratListComponent,
+    TypeContratEditComponent,
+    TypeContratShowComponent,
+    TypeContratCloneComponent,
+    TypeContratNewComponent,
+    // typedocument components
+    TypeDocumentListComponent,
+    TypeDocumentEditComponent,
+    TypeDocumentShowComponent,
+    TypeDocumentCloneComponent,
+    TypeDocumentNewComponent,
+
+    // caissesociale components
+    CaisseSocialeListComponent,
+    CaisseSocialeEditComponent,
+    CaisseSocialeShowComponent,
+    CaisseSocialeCloneComponent,
+    CaisseSocialeNewComponent,
+    // fonction components
+    FonctionListComponent,
+    FonctionEditComponent,
+    FonctionShowComponent,
+    FonctionCloneComponent,
+    FonctionNewComponent,
+    // mutuellesante components
+    MutuelleSanteListComponent,
+    MutuelleSanteEditComponent,
+    MutuelleSanteShowComponent,
+    MutuelleSanteCloneComponent,
+    MutuelleSanteNewComponent,
+    // pays components
+    PaysListComponent,
+    PaysEditComponent,
+    PaysShowComponent,
+    PaysCloneComponent,
+    PaysNewComponent,
+    // typeemploye components
+    TypeEmployeListComponent,
+    TypeEmployeEditComponent,
+    TypeEmployeShowComponent,
+    TypeEmployeCloneComponent,
+    TypeEmployeNewComponent,
+
   ],
-  exports: [ ],
-  entryComponents: [ ]
+  exports: [],
+  entryComponents: []
 })
-export class PagesModule {}
+export class PagesModule { }

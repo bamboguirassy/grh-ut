@@ -1,0 +1,139 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\CaisseSociale;
+use App\Form\CaisseSocialeType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use App\Utils\Utils;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+/**
+ * @Route("/api/caissesociale")
+ */
+class CaisseSocialeController extends AbstractController
+{
+    /**
+     * @Rest\Get(path="/", name="caisse_sociale_index")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_CAISSESOCIALE_INDEX")
+     */
+    public function index(): array
+    {
+        $caisseSociales = $this->getDoctrine()
+            ->getRepository(CaisseSociale::class)
+            ->findAll();
+
+        return count($caisseSociales)?$caisseSociales:[];
+    }
+
+    /**
+     * @Rest\Post(Path="/create", name="caisse_sociale_new")
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_CAISSESOCIALE_CREATE")
+     */
+    public function create(Request $request, \App\Service\FileUploader $uploader): CaisseSociale    {
+        $caisseSociale = new CaisseSociale();
+        $form = $this->createForm(CaisseSocialeType::class, $caisseSociale);
+        $form->submit(Utils::serializeRequestContent($request));
+        
+        //check if file provided
+        if ($caisseSociale->getFilepath()) {
+            $host = $request->getHttpHost();
+            $scheme = $request->getScheme();
+            file_put_contents($caisseSociale->getFilename(), base64_decode($caisseSociale->getFilepath()));
+            $file = new \Symfony\Component\HttpFoundation\File\File($caisseSociale->getFilename());
+            $authorizedExtensions = ['jpeg', 'jpg', 'png'];
+            if (!in_array($file->guessExtension(), $authorizedExtensions)) {
+                throw new BadRequestHttpException('Fichier non pris en charge');
+            }
+            $newFileName = $uploader->setTargetDirectory('caissesociale_image_directory')->upload($file, null); // old fileName
+            $caisseSociale->setFilepath("$scheme://$host/" . $uploader->getTargetDirectory() . $newFileName);
+            $caisseSociale->setFilename($newFileName);
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($caisseSociale);
+        $entityManager->flush();
+
+        return $caisseSociale;
+    }
+
+    /**
+     * @Rest\Get(path="/{id}", name="caisse_sociale_show",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_CAISSESOCIALE_SHOW")
+     */
+    public function show(CaisseSociale $caisseSociale): CaisseSociale    {
+        return $caisseSociale;
+    }
+
+    
+    /**
+     * @Rest\Put(path="/{id}/edit", name="caisse_sociale_edit",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_CAISSESOCIALE_EDIT")
+     */
+    public function edit(Request $request, CaisseSociale $caisseSociale): CaisseSociale    {
+        $form = $this->createForm(CaisseSocialeType::class, $caisseSociale);
+        $form->submit(Utils::serializeRequestContent($request));
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return $caisseSociale;
+    }
+    
+    /**
+     * @Rest\Put(path="/{id}/clone", name="caisse_sociale_clone",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_CAISSESOCIALE_CLONE")
+     */
+    public function cloner(Request $request, CaisseSociale $caisseSociale):  CaisseSociale {
+        $em=$this->getDoctrine()->getManager();
+        $caisseSocialeNew=new CaisseSociale();
+        $form = $this->createForm(CaisseSocialeType::class, $caisseSocialeNew);
+        $form->submit(Utils::serializeRequestContent($request));
+        $em->persist($caisseSocialeNew);
+
+        $em->flush();
+
+        return $caisseSocialeNew;
+    }
+
+    /**
+     * @Rest\Delete("/{id}", name="caisse_sociale_delete",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_CAISSESOCIALE_EDIT")
+     */
+    public function delete(CaisseSociale $caisseSociale): CaisseSociale    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($caisseSociale);
+        $entityManager->flush();
+
+        return $caisseSociale;
+    }
+    
+    /**
+     * @Rest\Post("/delete-selection/", name="caisse_sociale_selection_delete")
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_CAISSESOCIALE_DELETE")
+     */
+    public function deleteMultiple(Request $request): array {
+        $entityManager = $this->getDoctrine()->getManager();
+        $caisseSociales = Utils::getObjectFromRequest($request);
+        if (!count($caisseSociales)) {
+            throw $this->createNotFoundException("Selectionner au minimum un élément à supprimer.");
+        }
+        foreach ($caisseSociales as $caisseSociale) {
+            $caisseSociale = $entityManager->getRepository(CaisseSociale::class)->find($caisseSociale->id);
+            $entityManager->remove($caisseSociale);
+        }
+        $entityManager->flush();
+
+        return $caisseSociales;
+    }
+}

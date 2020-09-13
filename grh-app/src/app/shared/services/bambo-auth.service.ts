@@ -122,7 +122,42 @@ export class BamboAuthService {
             "title": "Utilisateurs",
             "routing": "user",
             enabled: this.checkListAccess('user')
-          }
+          },
+          {
+            "title": "Types Contrat",
+            "routing": "typecontrat",
+            enabled: this.checkListAccess('typecontrat')
+          },
+          {
+            "title": "Types Document",
+            "routing": "typedocument",
+            enabled: this.checkListAccess('typedocument')
+          },
+          {
+            "title": "Types Entité",
+            "routing": "typeentite",
+            enabled: this.checkListAccess('typeentite')
+          },
+          {
+            "title": "Types Employé",
+            "routing": "typeemploye",
+            enabled: this.checkListAccess('typeemploye')
+          },
+          {
+            "title": "Mutuelles de Santé",
+            "routing": "mutuellesante",
+            enabled: this.checkListAccess('mutuellesante')
+          },
+          {
+            "title": "Caisses Sociales",
+            "routing": "caissesociale",
+            enabled: this.checkListAccess('caissesociale')
+          },
+          {
+            "title": "Fonctions",
+            "routing": "fonction",
+            enabled: this.checkListAccess('fonction')
+          },
         ],
         enabled: false
       }

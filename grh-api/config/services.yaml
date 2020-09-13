@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
   user_image_directory: 'uploads/user/profil/'
+  caissesociale_image_directory: 'uploads/caissesociale/'
+  mutuellesante_image_directory: 'uploads/mutuellesante/'
 
 services:
     # default configuration for services in *this* file
