@@ -147,6 +147,8 @@ class GroupController extends AbstractController {
                 new AccessModel('CAISSESOCIALE', "Caisse Sociale"),
                 new AccessModel('MUTUELLESANTE', "Mutuelle de Santé"),
                 new AccessModel('TYPEEMPLOYE', "Catégorie d'employé"),
+                new AccessModel('STRUCTURE', "Structure/établissement"),
+                new AccessModel('SYNDICAT', "Syndicat"),
                     ]
             )
         ];
