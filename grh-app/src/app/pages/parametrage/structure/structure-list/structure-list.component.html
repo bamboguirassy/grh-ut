@@ -22,14 +22,14 @@
         <ng-container *ngFor="let data of expandTable.data">
           <ng-container *ngFor="let item of mapOfExpandedData[data.id]">
             <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
-              <td style="white-space: nowrap;" [nzIndentSize]="item.level! * 20" [nzShowExpand]="!!item.children"
-                [(nzExpand)]="item.expand" (nzExpandChange)="collapse(mapOfExpandedData[data.id], item, $event)">
-                <span class="nowrap" *ngIf="item.code">{{ item.code }}</span>
-                <tc-badge view="error" *ngIf="!item.code">Indéfinie</tc-badge>
-              </td>
-              <td>
+              <td style="white-space: nowrap;" [nzIndentSize]="item.level! * 20" [nzShowExpand]="!!item.children" [(nzExpand)]="item.expand"
+                (nzExpandChange)="collapse(mapOfExpandedData[data.id], item, $event)">
                 <span class="nowrap" *ngIf="item.nom">{{ item.nom }}</span>
                 <tc-badge view="error" *ngIf="!item.nom">Indéfinie</tc-badge>
+              </td>
+              <td>
+                <span class="nowrap" *ngIf="item.code">{{ item.code }}</span>
+                <tc-badge view="error" *ngIf="!item.code">Indéfinie</tc-badge>
               </td>
               <td>
                 <span class="nowrap" *ngIf="item.telephone">{{ item.telephone }}</span>

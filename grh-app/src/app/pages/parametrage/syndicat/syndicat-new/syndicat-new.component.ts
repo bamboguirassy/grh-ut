@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren } from '@angular/core';
+import { TypeEmploye } from './../../typeemploye/typeemploye';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren, Input } from '@angular/core';
 import { SyndicatService } from '../syndicat.service';
 import { Syndicat } from '../syndicat';
 import { Router } from '@angular/router';
+import { UploadFileModel } from 'src/app/shared/classes/upload-file-model';
 
 @Component({
   selector: 'app-syndicat-new',
@@ -16,6 +18,9 @@ export class SyndicatNewComponent implements OnInit {
   entity: Syndicat;
   @Output() creation: EventEmitter<Syndicat> = new EventEmitter();
   isModalVisible = false;
+  @Input() typeEmploye: TypeEmploye;
+  currentAvatar: any;
+  fileModel: UploadFileModel = new UploadFileModel();
 
   constructor(public syndicatSrv: SyndicatService,
     public router: Router) {
@@ -25,6 +30,9 @@ export class SyndicatNewComponent implements OnInit {
   ngOnInit(): void {}
 
   save() {
+    this.entity.typeEmploye = this.typeEmploye.id;
+    this.entity.filename = this.fileModel.fileName;
+    this.entity.filepath = this.fileModel.fileContent;
     this.syndicatSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
@@ -41,6 +49,18 @@ export class SyndicatNewComponent implements OnInit {
   // close modal window
   closeModal() {
     this.isModalVisible = false;
+  }
+
+  // upload new file
+  onFileChanged(inputValue: any) {
+    let file: File = inputValue.target.files[0];
+    let reader: FileReader = new FileReader();
+    reader.onloadend = () => {
+      this.currentAvatar = reader.result;
+      this.fileModel.fileName = file.name.split('.')[0];
+      this.fileModel.fileContent = this.currentAvatar.split(',')[1];
+    };
+    reader.readAsDataURL(file);
   }
 
 }

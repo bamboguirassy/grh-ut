@@ -7,6 +7,8 @@ import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { BasePageComponent } from 'src/app/pages/base-page';
 import { Location } from '@angular/common';
+import { TypeEntite } from '../../typeentite/typeentite';
+import { TypeEntiteService } from '../../typeentite/typeentite.service';
 
 @Component({
   selector: 'app-structure-edit',
@@ -15,11 +17,18 @@ import { Location } from '@angular/common';
 })
 export class StructureEditComponent extends BasePageComponent<Structure> implements OnInit, OnDestroy {
 
+  
+  typeEntites: TypeEntite[] = [];
+  structureParentes: Structure[] = [];
+  selectedStructureParenteId: any;
+  selectedTypeEntiteId: any;
+  
   constructor(store: Store<IAppState>,
               public structureSrv: StructureService,
               public router: Router,
               private activatedRoute: ActivatedRoute,
-              public location: Location) {
+              public location: Location,
+              public typeEntiteSrv: TypeEntiteService) {
     super(store, structureSrv);
     this.pageData = {
       title: 'Modification - Structure',
@@ -49,9 +58,31 @@ export class StructureEditComponent extends BasePageComponent<Structure> impleme
   }
 
   handlePostLoad() {
+    this.selectedTypeEntiteId = this.entity.typeEntite?.id;
+    this.selectedStructureParenteId = this.entity?.structureParente?.id;
+    this.findTypeEntites();
+    this.findStructureParentes();
+  }
+
+  findTypeEntites() {
+    this.typeEntiteSrv.findAll()
+    .subscribe((data: any)=>{
+      this.typeEntites = data;
+    })
+  }
+
+  findStructureParentes() {
+    this.structureSrv.findAll()
+    .subscribe((data: any)=>{
+      this.structureParentes = data;
+    })
   }
 
   prepareUpdate() {
+    if(this.selectedStructureParenteId) {
+      this.entity.structureParente = this.selectedStructureParenteId;
+    }
+    this.entity.typeEntite = this.selectedTypeEntiteId;
   }
 
   handlePostUpdate() {

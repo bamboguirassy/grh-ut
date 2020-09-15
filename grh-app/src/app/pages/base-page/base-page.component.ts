@@ -27,7 +27,7 @@ export class BasePageComponent<T extends BamboAbstractObject> implements OnInit,
   lightGradient = ['#fff', SETTINGS.topbarBg];
   deepGradient = ['#fff', SETTINGS.sidebarBg];
   secondGradient = ['#fff', '#F5F6F1'];
-  secondViewBorder = 'success';
+  secondViewBorder = 'warning';
 
   constructor(
     public store: Store<IAppState>,
@@ -70,7 +70,7 @@ export class BasePageComponent<T extends BamboAbstractObject> implements OnInit,
 
   setLoaded(during: number = 0) {
     setTimeout(() => this.store.dispatch(new PageActions.Update({ loaded: true })), during);
-    this.handlePostLoad();
+    //this.handlePostLoad();
   }
 
   findAll() {
