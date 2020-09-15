@@ -7,6 +7,7 @@ parameters:
   user_image_directory: 'uploads/user/profil/'
   caissesociale_image_directory: 'uploads/caissesociale/'
   mutuellesante_image_directory: 'uploads/mutuellesante/'
+  syndicat_image_directory: 'uploads/syndicat/'
 
 services:
     # default configuration for services in *this* file

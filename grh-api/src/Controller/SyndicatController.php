@@ -30,16 +30,46 @@ class SyndicatController extends AbstractController
 
         return count($syndicats)?$syndicats:[];
     }
+    
+    
+    /**
+     * @Rest\Get(path="/{id}/typeemploye", name="syndicat_by_typeemploye")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_SYNDICAT_INDEX")
+     */
+    public function findByTypeEmploye(\App\Entity\TypeEmploye $typeEmploye): array
+    {
+        $syndicats = $this->getDoctrine()
+            ->getRepository(Syndicat::class)
+            ->findByTypeEmploye($typeEmploye);
+
+        return count($syndicats)?$syndicats:[];
+    }
 
     /**
      * @Rest\Post(Path="/create", name="syndicat_new")
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_SYNDICAT_CREATE")
      */
-    public function create(Request $request): Syndicat    {
+    public function create(Request $request, \App\Service\FileUploader $uploader): Syndicat    {
         $syndicat = new Syndicat();
         $form = $this->createForm(SyndicatType::class, $syndicat);
         $form->submit(Utils::serializeRequestContent($request));
+        
+        //check if file provided
+        if ($syndicat->getFilepath()) {
+            $host = $request->getHttpHost();
+            $scheme = $request->getScheme();
+            file_put_contents($syndicat->getFilename(), base64_decode($syndicat->getFilepath()));
+            $file = new \Symfony\Component\HttpFoundation\File\File($syndicat->getFilename());
+            $authorizedExtensions = ['jpeg', 'jpg', 'png'];
+            if (!in_array($file->guessExtension(), $authorizedExtensions)) {
+                throw new BadRequestHttpException('Fichier non pris en charge');
+            }
+            $newFileName = $uploader->setTargetDirectory('syndicat_image_directory')->upload($file, null); // old fileName
+            $syndicat->setFilepath("$scheme://$host/" . $uploader->getTargetDirectory() . $newFileName);
+            $syndicat->setFilename($newFileName);
+        }
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($syndicat);
