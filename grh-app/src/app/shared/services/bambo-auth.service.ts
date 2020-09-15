@@ -158,6 +158,16 @@ export class BamboAuthService {
             "routing": "fonction",
             enabled: this.checkListAccess('fonction')
           },
+          {
+            "title": "Structures",
+            "routing": "structure",
+            enabled: this.checkListAccess('structure')
+          },
+          {
+            "title": "Syndicats",
+            "routing": "syndicat",
+            enabled: this.checkListAccess('syndicat')
+          },
         ],
         enabled: false
       }

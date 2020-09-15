@@ -1,3 +1,13 @@
+import { SyndicatNewComponent } from './parametrage/syndicat/syndicat-new/syndicat-new.component';
+import { SyndicatCloneComponent } from './parametrage/syndicat/syndicat-clone/syndicat-clone.component';
+import { SyndicatShowComponent } from './parametrage/syndicat/syndicat-show/syndicat-show.component';
+import { SyndicatEditComponent } from './parametrage/syndicat/syndicat-edit/syndicat-edit.component';
+import { SyndicatListComponent } from './parametrage/syndicat/syndicat-list/syndicat-list.component';
+import { StructureNewComponent } from './parametrage/structure/structure-new/structure-new.component';
+import { StructureCloneComponent } from './parametrage/structure/structure-clone/structure-clone.component';
+import { StructureShowComponent } from './parametrage/structure/structure-show/structure-show.component';
+import { StructureEditComponent } from './parametrage/structure/structure-edit/structure-edit.component';
+import { StructureListComponent } from './parametrage/structure/structure-list/structure-list.component';
 import { CaisseSocialeShowComponent } from './parametrage/caissesociale/caissesociale-show/caissesociale-show.component';
 import { TypeEmployeNewComponent } from './parametrage/typeemploye/typeemploye-new/typeemploye-new.component';
 import { TypeEmployeCloneComponent } from './parametrage/typeemploye/typeemploye-clone/typeemploye-clone.component';
@@ -198,6 +208,18 @@ import { TypeEntiteShowComponent } from './parametrage/typeentite/typeentite-sho
     TypeEmployeShowComponent,
     TypeEmployeCloneComponent,
     TypeEmployeNewComponent,
+    // structure components
+    StructureListComponent,
+    StructureEditComponent,
+    StructureShowComponent,
+    StructureCloneComponent,
+    StructureNewComponent,
+    // syndicat components
+    SyndicatListComponent,
+    SyndicatEditComponent,
+    SyndicatShowComponent,
+    SyndicatCloneComponent,
+    SyndicatNewComponent,
 
   ],
   exports: [],

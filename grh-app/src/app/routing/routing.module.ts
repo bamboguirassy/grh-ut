@@ -1,3 +1,5 @@
+import { syndicatRoutes } from './../pages/parametrage/syndicat/syndicat.routes';
+import { structureRoutes } from './../pages/parametrage/structure/structure.routes';
 import { paysRoutes } from './../pages/parametrage/pays/pays.routes';
 import { fonctionRoutes } from './../pages/parametrage/fonction/fonction.routes';
 import { mutuelleSanteRoutes } from './../pages/parametrage/mutuellesante/mutuellesante.routes';
@@ -39,7 +41,9 @@ const VERTICAL_ROUTES: Routes = [
   mutuelleSanteRoutes,
   fonctionRoutes,
   paysRoutes,
-  typeEmployeRoutes
+  typeEmployeRoutes,
+  structureRoutes,
+  syndicatRoutes
 ];
 
 const PUBLIC_ROUTES: Routes = [
