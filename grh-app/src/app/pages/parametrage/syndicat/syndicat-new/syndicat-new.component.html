@@ -5,7 +5,7 @@
 <app-access-denied *ngIf="!(syndicatSrv.resourceName|creable)"></app-access-denied>
 
 <!-- Modal window -->
-<nz-modal nzWidth="80%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau Syndicat - '+typeEmploye.code"
+<nz-modal nzWidth="80%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau Syndicat - '+typeEmploye?.code"
   [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
   <ng-template #modalBody>
     <form #form="ngForm" ngNativeValidate>
