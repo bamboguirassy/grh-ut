@@ -8,10 +8,12 @@
   </tc-card>
   <nz-tabset [(nzSelectedIndex)]="selectedIndex" (nzSelectChange)="handleTabChange($event)">
     <nz-tab *ngFor="let typeEmploye of typeEmployes" [nzTitle]="typeEmploye.code">
+      <h3>Liste des syndicats - {{typeEmploye?.nom}} </h3>
       <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-        <tc-table-col [columnTitle]="'#'" [columnName]="'#'">
-          <ng-template #tableTDTemplate let-row="row">
-            <i class="icofont-data icofont-2x"></i>
+        <tc-table-col [columnTitle]="'#'" [columnName]="'filepath'">
+          <ng-template #tableTDTemplate let-row="row" let-value>
+            <i *ngIf="!value" class="icofont-data icofont-2x"></i>
+            <tc-avatar *ngIf="value" [src]="value"></tc-avatar>
           </ng-template>
         </tc-table-col>
         <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
@@ -26,22 +28,10 @@
             <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
           </ng-template>
         </tc-table-col>
-        <tc-table-col [columnTitle]="'Filename'" [columnName]="'filename'" [enableSorting]="true">
-          <ng-template #tableTDTemplate let-value>
-            <span class="nowrap" *ngIf="value">{{ value }}</span>
-            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-          </ng-template>
-        </tc-table-col>
-        <tc-table-col [columnTitle]="'Filepath'" [columnName]="'filepath'" [enableSorting]="true">
-          <ng-template #tableTDTemplate let-value>
-            <span class="nowrap" *ngIf="value">{{ value }}</span>
-            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-          </ng-template>
-        </tc-table-col>
-        <tc-table-col [columnTitle]="'MontantCotisationMensuelle'" [columnName]="'montantCotisationMensuelle'"
+        <tc-table-col [columnTitle]="'Montant Cotisation Mensuelle'" [columnName]="'montantCotisationMensuelle'"
           [enableSorting]="true">
           <ng-template #tableTDTemplate let-value>
-            <span class="nowrap" *ngIf="value">{{ value }}</span>
+            <span class="nowrap" *ngIf="value">{{ value }} FCFA</span>
             <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
           </ng-template>
         </tc-table-col>
