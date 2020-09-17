@@ -8,6 +8,7 @@ parameters:
   caissesociale_image_directory: 'uploads/caissesociale/'
   mutuellesante_image_directory: 'uploads/mutuellesante/'
   syndicat_image_directory: 'uploads/syndicat/'
+  employe_photo_directory: 'uploads/employe/photo/'
 
 services:
     # default configuration for services in *this* file

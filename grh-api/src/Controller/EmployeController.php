@@ -36,10 +36,25 @@ class EmployeController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_EMPLOYE_CREATE")
      */
-    public function create(Request $request): Employe    {
+    public function create(Request $request, \App\Service\FileUploader $uploader): Employe    {
         $employe = new Employe();
         $form = $this->createForm(EmployeType::class, $employe);
         $form->submit(Utils::serializeRequestContent($request));
+        
+        //check if file provided
+        if ($employe->getFilepath()) {
+            $host = $request->getHttpHost();
+            $scheme = $request->getScheme();
+            file_put_contents($employe->getFilename(), base64_decode($employe->getFilepath()));
+            $file = new \Symfony\Component\HttpFoundation\File\File($employe->getFilename());
+            $authorizedExtensions = ['jpeg', 'jpg', 'png'];
+            if (!in_array($file->guessExtension(), $authorizedExtensions)) {
+                throw new BadRequestHttpException('Fichier non pris en charge');
+            }
+            $newFileName = $uploader->setTargetDirectory('employe_photo_directory')->upload($file, null); // old fileName
+            $employe->setFilepath("$scheme://$host/" . $uploader->getTargetDirectory() . $newFileName);
+            $employe->setFilename($newFileName);
+        }
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($employe);
