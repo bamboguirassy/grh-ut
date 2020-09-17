@@ -17,16 +17,16 @@ export class BamboAuthService {
 
   public localStorage = window.localStorage;
 
-  constructor(public httpSrv: BamboHttpService) {}
+  constructor(public httpSrv: BamboHttpService) { }
 
-  login(loginData: {username: string, password: string}) {
+  login(loginData: { username: string, password: string }) {
     this.httpSrv.post('login_check', loginData).
       pipe(first())
       .subscribe((data: any) => {
         this.httpSrv.tokenSrv.setToken(data.token);
         this.getCurrentUser()
           .then((user: User) => {
-              this.httpSrv.router.navigate(['']);
+            this.httpSrv.router.navigate(['']);
           });
       }, error => {
         this.httpSrv.catchError(error);
@@ -42,7 +42,7 @@ export class BamboAuthService {
           resolve(this.currentUser);
         }, error => {
           console.log(error);
-          this.httpSrv.router.navigate(['public','sign-in']);
+          this.httpSrv.router.navigate(['public', 'sign-in']);
           resolve(false);
         });
     });
@@ -61,8 +61,8 @@ export class BamboAuthService {
   logout() {
     this.httpSrv.tokenSrv.removeToken();
     this.currentUserManager.next(null);
-    this.currentUser  = null;
-    this.httpSrv.router.navigate(['public','sign-in']);
+    this.currentUser = null;
+    this.httpSrv.router.navigate(['public', 'sign-in']);
   }
 
   checkCloneAccess(entityName: string) {
@@ -94,7 +94,7 @@ export class BamboAuthService {
     const role = 'ROLE_' + entityName + '_SHOW';
     return this.getRoles().includes(role);
   }
-  
+
 
   getAuthorizedMenu(): IMenuItem[] {
     // define menu
@@ -164,10 +164,38 @@ export class BamboAuthService {
             enabled: this.checkListAccess('structure')
           },
           {
-            "title": "Syndicats",
-            "routing": "syndicat",
+            title: "Syndicats",
+            routing: "syndicat",
             enabled: this.checkListAccess('syndicat')
           },
+        ],
+        enabled: false
+      },
+      {
+        title: "Gestion des grades",
+        icon: {
+          class: "icofont-graduate"
+        },
+        sub: [
+          {
+            title: "Grades",
+            routing: "grade",
+            enabled: this.checkListAccess('grade')
+          }
+        ],
+        enabled: false
+      },
+      {
+        title: "Gestion des employés",
+        icon: {
+          class: "icofont-people"
+        },
+        sub: [
+          {
+            title: "Employés",
+            routing: "employe",
+            enabled: this.checkListAccess('employe')
+          }
         ],
         enabled: false
       }
@@ -181,6 +209,6 @@ export class BamboAuthService {
         menuItem.sub.length ? menuItem.enabled = true : menuItem.enabled = false;
       };
     });
-    return this.menuItems.filter(menuItem=>menuItem.enabled);
+    return this.menuItems.filter(menuItem => menuItem.enabled);
   }
 }
