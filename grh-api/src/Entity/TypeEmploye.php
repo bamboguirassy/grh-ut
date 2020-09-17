@@ -35,12 +35,12 @@ class TypeEmploye
      */
     private $code;
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNom()
+    public function getNom(): ?string
     {
         return $this->nom;
     }
@@ -52,7 +52,7 @@ class TypeEmploye
         return $this;
     }
 
-    public function getCode()
+    public function getCode(): ?string
     {
         return $this->code;
     }

@@ -150,7 +150,15 @@ class GroupController extends AbstractController {
                 new AccessModel('STRUCTURE', "Structure/établissement"),
                 new AccessModel('SYNDICAT', "Syndicat"),
                     ]
-            )
+            ),
+            new AccessGroup("Gestion des grades", [
+                new AccessModel('GRADE', "Grade"),
+                    ]
+            ),
+            new AccessGroup("Gestion des employés", [
+                new AccessModel('EMPLOYE', "Employés"),
+                    ]
+            ),
         ];
 
         return $accessGroups;
