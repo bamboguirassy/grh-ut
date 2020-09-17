@@ -1,4 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren } from '@angular/core';
+import { GradeService } from './../../../gestiongrade/grade/grade.service';
+import { CaisseSocialeService } from './../../../parametrage/caissesociale/caissesociale.service';
+import { MutuelleSanteService } from './../../../parametrage/mutuellesante/mutuellesante.service';
+import { PaysService } from './../../../parametrage/pays/pays.service';
+import { Grade } from './../../../gestiongrade/grade/grade';
+import { MutuelleSante } from './../../../parametrage/mutuellesante/mutuellesante';
+import { CaisseSociale } from './../../../parametrage/caissesociale/caissesociale';
+import { Pays } from './../../../parametrage/pays/pays';
+import { TypeEmploye } from './../../../parametrage/typeemploye/typeemploye';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren, Input } from '@angular/core';
 import { EmployeService } from '../employe.service';
 import { Employe } from '../employe';
 import { Router } from '@angular/router';
@@ -19,15 +28,42 @@ export class EmployeNewComponent implements OnInit {
   isModalVisible = false;
   currentAvatar: any;
   fileModel: UploadFileModel = new UploadFileModel();
+  @Input() typeEmploye: TypeEmploye;
+  nationalites: Pays[] = [];
+  selectedNationalite: Pays;
+  caisseSociales: CaisseSociale[] = [];
+  selectedCaisseSociale: CaisseSociale;
+  mutuelleSantes: MutuelleSante[] = [];
+  selectedMutuelleSante: MutuelleSante;
+  grades: Grade[] = [];
+  selectedGrade: Grade;
 
   constructor(public employeSrv: EmployeService,
-    public router: Router) {
+    public router: Router, public paysSrv: PaysService,
+    public mutuelleSanteSrv: MutuelleSanteService,
+    public caisseSocialeSrv: CaisseSocialeService,
+    public gradeSrv: GradeService) {
     this.entity = new Employe();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.findNationalites();
+    this.findCaisseSociales();
+    this.findMutuelleSantes();
+    this.findGrades();
+  }
 
   save() {
+    if(this.selectedCaisseSociale) {
+      this.entity.caisseSociale = this.selectedCaisseSociale.id;
+    }
+    if(this.selectedMutuelleSante) {
+      this.entity.mutuelleSante = this.selectedMutuelleSante.id;
+    }
+    this.entity.grade = this.selectedGrade.id;
+    this.entity.nationalite = this.selectedNationalite.id;
+    this.entity.typeEmploye = this.typeEmploye.id;
+    
     this.employeSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
@@ -56,6 +92,34 @@ export class EmployeNewComponent implements OnInit {
       this.fileModel.fileContent = this.currentAvatar.split(',')[1];
     };
     reader.readAsDataURL(file);
+  }
+
+  findNationalites() {
+    this.paysSrv.findAll()
+    .subscribe((data: any)=>{
+      this.nationalites = data;
+    },err=>this.paysSrv.httpSrv.catchError(err));
+  }
+
+  findMutuelleSantes() {
+    this.mutuelleSanteSrv.findAll()
+    .subscribe((data: any)=>{
+      this.mutuelleSantes = data;
+    },err=>this.mutuelleSanteSrv.httpSrv.catchError(err));
+  }
+
+  findCaisseSociales() {
+    this.caisseSocialeSrv.findAll()
+    .subscribe((data: any)=>{
+      this.caisseSociales = data;
+    },err=>this.caisseSocialeSrv.httpSrv.catchError(err));
+  }
+
+  findGrades() {
+    this.gradeSrv.findAll()
+    .subscribe((data: any)=>{
+      this.grades = data;
+    },err=>this.gradeSrv.httpSrv.catchError(err));
   }
 
 }

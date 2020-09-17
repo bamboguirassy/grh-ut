@@ -8,6 +8,18 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EmployeService extends BamboAbstractService {
 
+  public situationMatrimoniales: any[] = [
+    {label:'Célibataire', value:'Célibataire'},
+    {label:'Marié(e)', value:'Marié(e)'},
+    {label:'Divorcé(e)', value:'Divorcé(e)'},
+    {label:'Veuf(ve)', value:'Veuf(ve)'}
+  ];
+
+  public genres: any[] = [
+    {label: 'Masculin', value: 'Masculin'},
+    {label: 'Féminin', value: 'Féminin'},
+  ];
+
   constructor(public httpSrv: BamboHttpService, public toastr: ToastrService) {
     super(httpSrv, toastr);
     this.routePrefix = 'employe/';

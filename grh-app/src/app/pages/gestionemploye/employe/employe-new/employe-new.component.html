@@ -10,7 +10,7 @@
     <ng-template #modalBody>
         <form #form="ngForm" ngNativeValidate>
             <div class="row">
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
                         <tc-form-label>Prénoms</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.prenoms" name="prenoms" id="prenoms"
@@ -22,7 +22,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
                         <tc-form-label>Nom</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
@@ -32,19 +32,18 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
                         <tc-form-label>Date Naissance</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.dateNaissance" name="dateNaissance"
-                            id="dateNaissance" #dateNaissance="ngModel">
-                        </tc-input>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="entity.dateNaissance"
+                            name="dateNaissance" id="dateNaissance" #dateNaissance="ngModel"></nz-date-picker>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="dateNaissance">
                             </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
                         <tc-form-label>Lieu Naissance</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.lieuNaissance" name="lieuNaissance"
@@ -56,21 +55,22 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Cni</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.cni" name="cni" id="cni" #cni="ngModel">
+                        <tc-form-label>CNI</tc-form-label>
+                        <tc-input prefixIcon="icofont-id" required="required" [(ngModel)]="entity.cni" name="cni"
+                            id="cni" #cni="ngModel">
                         </tc-input>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="cni"></app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
                         <tc-form-label>Matricule</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.matricule" name="matricule" id="matricule"
-                            #matricule="ngModel">
+                        <tc-input prefixIcon="icofont-key" required="required" [(ngModel)]="entity.matricule"
+                            name="matricule" id="matricule" #matricule="ngModel">
                         </tc-input>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="matricule">
@@ -78,10 +78,10 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
                         <tc-form-label>Matricule Caisse Sociale</tc-form-label>
-                        <tc-input [(ngModel)]="entity.matriculeCaisseSociale"
+                        <tc-input prefixIcon="icofont-key-hole" [(ngModel)]="entity.matriculeCaisseSociale"
                             name="matriculeCaisseSociale" id="matriculeCaisseSociale" #matriculeCaisseSociale="ngModel">
                         </tc-input>
                         <tc-form-description>
@@ -90,68 +90,47 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
                         <tc-form-label>Date Recrutement</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.dateRecrutement" name="dateRecrutement"
-                            id="dateRecrutement" #dateRecrutement="ngModel">
-                        </tc-input>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required="required"
+                            [(ngModel)]="entity.dateRecrutement" name="dateRecrutement" id="dateRecrutement"
+                            #dateRecrutement="ngModel"></nz-date-picker>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="dateRecrutement">
                             </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Genre</tc-form-label>
+                        <tc-select required="required" [(ngModel)]="entity.genre" name="genre" id="genre"
+                            #genre="ngModel" [placeholder]="'Selectionner le genre'" [options]="employeSrv.genres">
+                        </tc-select>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="genre"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
                         <tc-form-label>Situtation Matrimoniale</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.situtationMatrimoniale"
-                            name="situtationMatrimoniale" id="situtationMatrimoniale" #situtationMatrimoniale="ngModel">
-                        </tc-input>
+                        <tc-select required="required" [(ngModel)]="entity.situtationMatrimoniale"
+                            name="situtationMatrimoniale" id="situtationMatrimoniale" #situtationMatrimoniale="ngModel"
+                            [placeholder]="'Selectionner la situation matrimoniale'"
+                            [options]="employeSrv.situationMatrimoniales"></tc-select>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="situtationMatrimoniale">
                             </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6">
-                    <tc-form-group>
-                        <tc-form-label>En retraite ?</tc-form-label>
-                        <tc-input [(ngModel)]="entity.retraite" name="retraite" id="retraite"
-                            #retraite="ngModel">
-                        </tc-input>
-                        <tc-form-description>
-                            <app-form-field-validation-message [formField]="retraite">
-                            </app-form-field-validation-message>
-                        </tc-form-description>
-                    </tc-form-group>
-                </div>
-                <div class="col-12 col-md-6">
-                    <tc-form-group>
-                        <tc-form-label>Genre</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.genre" name="genre" id="genre"
-                            #genre="ngModel">
-                        </tc-input>
-                        <tc-form-description>
-                            <app-form-field-validation-message [formField]="genre"></app-form-field-validation-message>
-                        </tc-form-description>
-                    </tc-form-group>
-                </div>
-                <div class="col-12 col-md-6">
-                    <tc-form-group>
-                        <tc-form-label>Etat</tc-form-label>
-                        <tc-input [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel">
-                        </tc-input>
-                        <tc-form-description>
-                            <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
-                        </tc-form-description>
-                    </tc-form-group>
-                </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
                         <tc-form-label>Email Instutitionnel</tc-form-label>
-                        <tc-input [(ngModel)]="entity.emailUniv" name="emailUniv" id="emailUniv"
-                            #emailUniv="ngModel">
+                        <tc-input prefixIcon="icofont-ui-email" [(ngModel)]="entity.emailUniv" name="emailUniv"
+                            id="emailUniv" #emailUniv="ngModel">
                         </tc-input>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="emailUniv">
@@ -159,10 +138,10 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
                         <tc-form-label>Email Personnel</tc-form-label>
-                        <tc-input [(ngModel)]="entity.email" name="email" id="email"
+                        <tc-input prefixIcon="icofont-email" [(ngModel)]="entity.email" name="email" id="email"
                             #email="ngModel">
                         </tc-input>
                         <tc-form-description>
@@ -170,24 +149,11 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12">
-                    <tc-form-group>
-                      <tc-form-label>Photo</tc-form-label>
-                      <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
-                      <div class="d-flex align-items-center">
-                        <tc-avatar [src]="currentAvatar" [size]="100"></tc-avatar>
-                        <button tc-button [type]="'button'" [afterIcon]="'icofont-ui-user'" [view]="'accent'" [outline]="true"
-                          (click)="fileInput.click()">
-                          Choisir photo
-                        </button>
-                      </div>
-                    </tc-form-group>
-                  </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
                         <tc-form-label>Téléphone Primaire</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.telephonePrimaire" name="telephonePrimaire"
-                            id="telephonePrimaire" #telephonePrimaire="ngModel">
+                        <tc-input prefixIcon="icofont-phone" required="required" [(ngModel)]="entity.telephonePrimaire"
+                            name="telephonePrimaire" id="telephonePrimaire" #telephonePrimaire="ngModel">
                         </tc-input>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="telephonePrimaire">
@@ -195,16 +161,118 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
                         <tc-form-label>Téléphone Secondaire</tc-form-label>
-                        <tc-input [(ngModel)]="entity.telephoneSecondaire"
+                        <tc-input prefixIcon="icofont-phone-circle" [(ngModel)]="entity.telephoneSecondaire"
                             name="telephoneSecondaire" id="telephoneSecondaire" #telephoneSecondaire="ngModel">
                         </tc-input>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="telephoneSecondaire">
                             </app-form-field-validation-message>
                         </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Nationalité</tc-form-label>
+                        <nz-select [required]="true" style="width: 100%" nzPlaceHolder="Sélectionner nationalité" nzAllowClear nzShowSearch
+                            [(ngModel)]="selectedNationalite" name="nationalite" id="nationalite"
+                            #nationalite="ngModel">
+                            <ng-container *ngFor="let nationalite of nationalites">
+                                <nz-option [nzValue]="nationalite" [nzLabel]="nationalite.nationalite"></nz-option>
+                            </ng-container>
+                        </nz-select>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="nationalite">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Grade</tc-form-label>
+                        <nz-select style="width: 100%" nzPlaceHolder="Sélectionner grade" nzAllowClear nzShowSearch
+                            [(ngModel)]="selectedGrade" name="grade" id="grade"
+                            #grade="ngModel">
+                            <ng-container *ngFor="let grade of grades">
+                                <nz-option [nzValue]="grade" [nzLabel]="grade.classification"></nz-option>
+                            </ng-container>
+                        </nz-select>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="grade">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Caisse Sociale</tc-form-label>
+                        <nz-select style="width: 100%" nzPlaceHolder="Sélectionner caisse sociale" nzAllowClear nzShowSearch
+                            [(ngModel)]="selectedCaisseSociale" name="caisseSociale" id="caisseSociale"
+                            #caisseSociale="ngModel">
+                            <ng-container *ngFor="let caisseSociale of caisseSociales">
+                                <nz-option [nzValue]="caisseSociale" [nzLabel]="caisseSociale.nom"></nz-option>
+                            </ng-container>
+                        </nz-select>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="caisseSociale">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Mutuelle Santé</tc-form-label>
+                        <nz-select style="width: 100%" nzPlaceHolder="Sélectionner mutuelle de santé" nzAllowClear nzShowSearch
+                            [(ngModel)]="selectedMutuelleSante" name="mutuelleSante" id="mutuelleSante"
+                            #mutuelleSante="ngModel">
+                            <ng-container *ngFor="let mutuelleSante of mutuelleSantes">
+                                <nz-option [nzValue]="mutuelleSante" [nzLabel]="mutuelleSante.nom"></nz-option>
+                            </ng-container>
+                        </nz-select>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="mutuelleSante">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Etat</tc-form-label>
+                        <tc-switcher [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel"
+                            [bgColor]="['transparent', 'transparent', '#ed5564']"
+                            [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']">
+                        </tc-switcher>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>En retraite ?</tc-form-label>
+                        <tc-switcher [(ngModel)]="entity.retraite" name="retraite" id="retraite" #retraite="ngModel"
+                            [bgColor]="['transparent', 'transparent', '#ed5564']"
+                            [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']">
+                        </tc-switcher>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="retraite">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Photo</tc-form-label>
+                        <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
+                        <div class="d-flex align-items-center">
+                            <tc-avatar [src]="currentAvatar" [size]="100"></tc-avatar>
+                            <button tc-button [type]="'button'" [afterIcon]="'icofont-ui-user'" [view]="'accent'"
+                                [outline]="true" (click)="fileInput.click()">
+                                Choisir photo
+                            </button>
+                        </div>
                     </tc-form-group>
                 </div>
             </div>
