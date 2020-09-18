@@ -1,8 +1,8 @@
-<tc-card *ngIf="adresseSrv.resourceName|listable" [tcGradient]="lightGradient">
+<tc-card *ngIf="membreSyndicatSrv.resourceName|listable" [tcGradient]="lightGradient">
   <tc-card [view]="secondViewBorder" [outline]="true">
     <div class="row">
       <div class="col-12">
-        <app-adresse-new [employe]="employe" (creation)="onCreate($event)"></app-adresse-new>
+        <app-membresyndicat-new [employe]="employe" (creation)="onCreate($event)"></app-membresyndicat-new>
         <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findByEmploye()">Rafraichir</button>
       </div>
     </div>
@@ -13,15 +13,15 @@
         <i class="icofont-data icofont-2x"></i>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Ville'" [columnName]="'ville'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Syndicat'" [columnName]="'syndicat'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
+        <span title="{{value?.nom}}" class="nowrap" *ngIf="value">{{ value?.code }}</span>
         <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Quartier'" [columnName]="'quartier'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Date Enregistrement'" [columnName]="'dateEnregistrement'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
+        <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
         <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
       </ng-template>
     </tc-table-col>
@@ -34,18 +34,14 @@
     <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
       <ng-template #tableTDTemplate let-row="row">
         <div class="actions">
-          <button *ngIf="adresseSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'"
-            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-          <!-- <button *ngIf="adresseSrv.resourceName|clonable" [outline]="true" tc-button [afterIcon]="'icofont-copy'"
-            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'clone']"></button> -->
-          <button *ngIf="adresseSrv.resourceName|deletable" (click)="remove(row)" tc-button
+          <button *ngIf="membreSyndicatSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
+          <button *ngIf="membreSyndicatSrv.resourceName|deletable" (click)="remove(row)" tc-button
             [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-          <!-- <button *ngIf="adresseSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'" [view]="'accent'"
-            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id]"></button> -->
         </div>
       </ng-template>
     </tc-table-col>
   </tc-table>
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
 </tc-card>
-<app-access-denied *ngIf="!(adresseSrv.resourceName|listable)"></app-access-denied>
+<app-access-denied *ngIf="!(membreSyndicatSrv.resourceName|listable)"></app-access-denied>
