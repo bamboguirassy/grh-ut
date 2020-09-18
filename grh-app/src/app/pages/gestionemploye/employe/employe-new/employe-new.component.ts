@@ -12,6 +12,7 @@ import { EmployeService } from '../employe.service';
 import { Employe } from '../employe';
 import { Router } from '@angular/router';
 import { UploadFileModel } from 'src/app/shared/classes/upload-file-model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-employe-new',
@@ -42,7 +43,7 @@ export class EmployeNewComponent implements OnInit {
     public router: Router, public paysSrv: PaysService,
     public mutuelleSanteSrv: MutuelleSanteService,
     public caisseSocialeSrv: CaisseSocialeService,
-    public gradeSrv: GradeService) {
+    public gradeSrv: GradeService, public datePipe: DatePipe) {
     this.entity = new Employe();
   }
 
@@ -63,7 +64,10 @@ export class EmployeNewComponent implements OnInit {
     this.entity.grade = this.selectedGrade.id;
     this.entity.nationalite = this.selectedNationalite.id;
     this.entity.typeEmploye = this.typeEmploye.id;
-    
+    this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance,'yyyy-MM-dd');
+    this.entity.dateRecrutement = this.datePipe.transform(this.entity.dateRecrutement,'yyyy-MM-dd');
+    this.entity.filename = this.fileModel.fileName;
+    this.entity.filepath = this.fileModel.fileContent;
     this.employeSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();

@@ -197,12 +197,12 @@ class Employe
      */
     private $typeEmploye;
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getPrenoms(): ?string
+    public function getPrenoms()
     {
         return $this->prenoms;
     }
@@ -214,7 +214,7 @@ class Employe
         return $this;
     }
 
-    public function getNom(): ?string
+    public function getNom()
     {
         return $this->nom;
     }
@@ -226,19 +226,19 @@ class Employe
         return $this;
     }
 
-    public function getDateNaissance(): ?\DateTimeInterface
+    public function getDateNaissance()
     {
         return $this->dateNaissance;
     }
 
-    public function setDateNaissance(\DateTimeInterface $dateNaissance): self
+    public function setDateNaissance($dateNaissance): self
     {
         $this->dateNaissance = $dateNaissance;
 
         return $this;
     }
 
-    public function getLieuNaissance(): ?string
+    public function getLieuNaissance()
     {
         return $this->lieuNaissance;
     }
@@ -250,7 +250,7 @@ class Employe
         return $this;
     }
 
-    public function getCni(): ?string
+    public function getCni()
     {
         return $this->cni;
     }
@@ -262,7 +262,7 @@ class Employe
         return $this;
     }
 
-    public function getMatricule(): ?string
+    public function getMatricule()
     {
         return $this->matricule;
     }
@@ -274,55 +274,55 @@ class Employe
         return $this;
     }
 
-    public function getMatriculeCaisseSociale(): ?string
+    public function getMatriculeCaisseSociale()
     {
         return $this->matriculeCaisseSociale;
     }
 
-    public function setMatriculeCaisseSociale(?string $matriculeCaisseSociale): self
+    public function setMatriculeCaisseSociale($matriculeCaisseSociale): self
     {
         $this->matriculeCaisseSociale = $matriculeCaisseSociale;
 
         return $this;
     }
 
-    public function getDateRecrutement(): ?\DateTimeInterface
+    public function getDateRecrutement()
     {
         return $this->dateRecrutement;
     }
 
-    public function setDateRecrutement(\DateTimeInterface $dateRecrutement): self
+    public function setDateRecrutement($dateRecrutement): self
     {
         $this->dateRecrutement = $dateRecrutement;
 
         return $this;
     }
 
-    public function getSitutationMatrimoniale(): ?string
+    public function getSitutationMatrimoniale()
     {
         return $this->situtationMatrimoniale;
     }
 
-    public function setSitutationMatrimoniale(?string $situtationMatrimoniale): self
+    public function setSitutationMatrimoniale($situtationMatrimoniale): self
     {
         $this->situtationMatrimoniale = $situtationMatrimoniale;
 
         return $this;
     }
 
-    public function getRetraite(): ?bool
+    public function getRetraite()
     {
         return $this->retraite;
     }
 
-    public function setRetraite(?bool $retraite): self
+    public function setRetraite($retraite): self
     {
         $this->retraite = $retraite;
 
         return $this;
     }
 
-    public function getGenre(): ?string
+    public function getGenre()
     {
         return $this->genre;
     }
@@ -334,67 +334,67 @@ class Employe
         return $this;
     }
 
-    public function getEtat(): ?bool
+    public function getEtat()
     {
         return $this->etat;
     }
 
-    public function setEtat(?bool $etat): self
+    public function setEtat($etat): self
     {
         $this->etat = $etat;
 
         return $this;
     }
 
-    public function getEmailUniv(): ?string
+    public function getEmailUniv()
     {
         return $this->emailUniv;
     }
 
-    public function setEmailUniv(?string $emailUniv): self
+    public function setEmailUniv($emailUniv): self
     {
         $this->emailUniv = $emailUniv;
 
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getEmail()
     {
         return $this->email;
     }
 
-    public function setEmail(?string $email): self
+    public function setEmail($email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    public function getFilename(): ?string
+    public function getFilename()
     {
         return $this->filename;
     }
 
-    public function setFilename(?string $filename): self
+    public function setFilename($filename): self
     {
         $this->filename = $filename;
 
         return $this;
     }
 
-    public function getFilepath(): ?string
+    public function getFilepath()
     {
         return $this->filepath;
     }
 
-    public function setFilepath(?string $filepath): self
+    public function setFilepath($filepath): self
     {
         $this->filepath = $filepath;
 
         return $this;
     }
 
-    public function getTelephonePrimaire(): ?string
+    public function getTelephonePrimaire()
     {
         return $this->telephonePrimaire;
     }
@@ -406,72 +406,72 @@ class Employe
         return $this;
     }
 
-    public function getTelephoneSecondaire(): ?string
+    public function getTelephoneSecondaire()
     {
         return $this->telephoneSecondaire;
     }
 
-    public function setTelephoneSecondaire(?string $telephoneSecondaire): self
+    public function setTelephoneSecondaire($telephoneSecondaire): self
     {
         $this->telephoneSecondaire = $telephoneSecondaire;
 
         return $this;
     }
 
-    public function getCaisseSociale(): ?CaisseSociale
+    public function getCaisseSociale()
     {
         return $this->caisseSociale;
     }
 
-    public function setCaisseSociale(?CaisseSociale $caisseSociale): self
+    public function setCaisseSociale($caisseSociale): self
     {
         $this->caisseSociale = $caisseSociale;
 
         return $this;
     }
 
-    public function getGrade(): ?Grade
+    public function getGrade()
     {
         return $this->grade;
     }
 
-    public function setGrade(?Grade $grade): self
+    public function setGrade($grade): self
     {
         $this->grade = $grade;
 
         return $this;
     }
 
-    public function getMutuelleSante(): ?MutuelleSante
+    public function getMutuelleSante()
     {
         return $this->mutuelleSante;
     }
 
-    public function setMutuelleSante(?MutuelleSante $mutuelleSante): self
+    public function setMutuelleSante($mutuelleSante): self
     {
         $this->mutuelleSante = $mutuelleSante;
 
         return $this;
     }
 
-    public function getNationalite(): ?Pays
+    public function getNationalite()
     {
         return $this->nationalite;
     }
 
-    public function setNationalite(?Pays $nationalite): self
+    public function setNationalite($nationalite): self
     {
         $this->nationalite = $nationalite;
 
         return $this;
     }
 
-    public function getTypeEmploye(): ?TypeEmploye
+    public function getTypeEmploye()
     {
         return $this->typeEmploye;
     }
 
-    public function setTypeEmploye(?TypeEmploye $typeEmploye): self
+    public function setTypeEmploye($typeEmploye): self
     {
         $this->typeEmploye = $typeEmploye;
 

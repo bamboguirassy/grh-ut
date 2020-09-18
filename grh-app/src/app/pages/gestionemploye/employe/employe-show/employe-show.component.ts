@@ -21,14 +21,14 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     public location: Location) {
     super(store, employeSrv);
     this.pageData = {
-      title: 'Détails - Employe',
+      title: 'Dossier - Employé',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Employes',
+          title: 'Employés',
           route: '/'+this.orientation+'/employe'
         },
         {
@@ -48,7 +48,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   }
 
   handlePostLoad() {
-    this.title = 'Employe - ' + this.entity?.id;
+    this.title = this.entity?.prenoms+' '+this.entity?.nom+' ('+this.entity?.matricule+')';
   }
 
   handlePostDelete() {

@@ -30,6 +30,20 @@ class EmployeController extends AbstractController
 
         return count($employes)?$employes:[];
     }
+    
+    /**
+     * @Rest\Get(path="/{id}/typeemploye", name="employe_by_typeemploye")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function findByTypeEmployé(\App\Entity\TypeEmploye $typeEmploye): array
+    {
+        $employes = $this->getDoctrine()
+            ->getRepository(Employe::class)
+            ->findByTypeEmploye($typeEmploye);
+
+        return count($employes)?$employes:[];
+    }
 
     /**
      * @Rest\Post(Path="/create", name="employe_new")
@@ -40,6 +54,15 @@ class EmployeController extends AbstractController
         $employe = new Employe();
         $form = $this->createForm(EmployeType::class, $employe);
         $form->submit(Utils::serializeRequestContent($request));
+        $reqData = Utils::getObjectFromRequest($request);
+        if(!isset($reqData->dateNaissance)) {
+            throw $this->createNotFoundException("La date de naissance est introuvable !");
+        }
+        if(!isset($reqData->dateRecrutement)) {
+            throw $this->createNotFoundException("La date de recrutement est introuvable !");
+        }
+        $employe->setDateNaissance(new \DateTime($reqData->dateNaissance));
+        $employe->setDateRecrutement(new \DateTime($reqData->dateRecrutement));
         
         //check if file provided
         if ($employe->getFilepath()) {

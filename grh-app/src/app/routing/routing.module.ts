@@ -1,3 +1,5 @@
+import { membreFamilleRoutes } from './../pages/gestionemploye/membrefamille/membrefamille.routes';
+import { adresseRoutes } from './../pages/gestionemploye/adresse/adresse.routes';
 import { employeRoutes } from './../pages/gestionemploye/employe/employe.routes';
 import { gradeRoutes } from './../pages/gestiongrade/grade/grade.routes';
 import { syndicatRoutes } from './../pages/parametrage/syndicat/syndicat.routes';
@@ -47,7 +49,9 @@ const VERTICAL_ROUTES: Routes = [
   structureRoutes,
   syndicatRoutes,
   gradeRoutes,
-  employeRoutes
+  employeRoutes,
+  adresseRoutes,
+  membreFamilleRoutes
 ];
 
 const PUBLIC_ROUTES: Routes = [

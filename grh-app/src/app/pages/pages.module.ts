@@ -98,6 +98,16 @@ import { GradeEditComponent } from './gestiongrade/grade/grade-edit/grade-edit.c
 import { GradeListComponent } from './gestiongrade/grade/grade-list/grade-list.component';
 import { GradeShowComponent } from './gestiongrade/grade/grade-show/grade-show.component';
 import { GradeNewComponent } from './gestiongrade/grade/grade-new/grade-new.component';
+import { AdresseCloneComponent } from './gestionemploye/adresse/adresse-clone/adresse-clone.component';
+import { AdresseEditComponent } from './gestionemploye/adresse/adresse-edit/adresse-edit.component';
+import { AdresseListComponent } from './gestionemploye/adresse/adresse-list/adresse-list.component';
+import { AdresseNewComponent } from './gestionemploye/adresse/adresse-new/adresse-new.component';
+import { AdresseShowComponent } from './gestionemploye/adresse/adresse-show/adresse-show.component';
+import { MembreFamilleCloneComponent } from './gestionemploye/membrefamille/membrefamille-clone/membrefamille-clone.component';
+import { MembreFamilleEditComponent } from './gestionemploye/membrefamille/membrefamille-edit/membrefamille-edit.component';
+import { MembreFamilleListComponent } from './gestionemploye/membrefamille/membrefamille-list/membrefamille-list.component';
+import { MembreFamilleNewComponent } from './gestionemploye/membrefamille/membrefamille-new/membrefamille-new.component';
+import { MembreFamilleShowComponent } from './gestionemploye/membrefamille/membrefamille-show/membrefamille-show.component';
 
 @NgModule({
   imports: [
@@ -242,6 +252,18 @@ import { GradeNewComponent } from './gestiongrade/grade/grade-new/grade-new.comp
     EmployeShowComponent,
     EmployeCloneComponent,
     EmployeNewComponent,
+    // adresse components
+    AdresseListComponent,
+    AdresseEditComponent,
+    AdresseShowComponent,
+    AdresseCloneComponent,
+    AdresseNewComponent,
+    // membrefamille components
+    MembreFamilleListComponent,
+    MembreFamilleEditComponent,
+    MembreFamilleShowComponent,
+    MembreFamilleCloneComponent,
+    MembreFamilleNewComponent,
 
   ],
   exports: [],

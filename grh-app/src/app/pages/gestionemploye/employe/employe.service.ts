@@ -1,3 +1,4 @@
+import { TypeEmploye } from './../../parametrage/typeemploye/typeemploye';
 import { BamboAbstractService } from '../../../shared/services/bambo-abstract.service';
 import { BamboHttpService } from './../../../shared/services/bambo-http.service';
 import { Injectable } from '@angular/core';
@@ -24,6 +25,10 @@ export class EmployeService extends BamboAbstractService {
     super(httpSrv, toastr);
     this.routePrefix = 'employe/';
     this.resourceName = 'EMPLOYE';
+  }
+
+  findByTypeEmploye(typeEmploye: TypeEmploye) {
+    return this.httpSrv.get(this.routePrefix+typeEmploye.id+'/typeemploye')
   }
   
 }

@@ -8,12 +8,12 @@ import { BamboAbstractObject } from './../../../shared/classes/bambo-abstract-ob
 export class Employe extends BamboAbstractObject {
     prenoms: string;
     nom: string;
-    dateNaissance: Date;
+    dateNaissance: string;
     lieuNaissance: string;
     cni: string;
     matricule: string;
     matriculeCaisseSociale: string;
-    dateRecrutement: Date;
+    dateRecrutement: string;
     situtationMatrimoniale: string;
     retraite: boolean;
     genre: string;

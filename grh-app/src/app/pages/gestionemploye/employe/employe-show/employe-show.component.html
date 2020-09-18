@@ -2,158 +2,171 @@
     <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
         <div class="row">
             <div class="d-none d-md-block col-md-1">
-                <i class="icofont icofont-data icofont-4x"></i>
+                <i *ngIf="!entity?.filepath" class="icofont icofont-data icofont-4x"></i>
+                <tc-avatar size="80" *ngIf="entity?.filepath" [src]="entity?.filepath"></tc-avatar>
             </div>
             <div class="col-12 col-md-7">
                 <blockquote class="blockquote">
                     <p class="mb-0">{{title}}</p>
-                    <footer class="blockquote-footer"> <cite title="Source Title">sous titre</cite></footer>
+                    <footer class="blockquote-footer">
+                        <cite title="Poste actuelle">Poste actuelle occupée depuis le
+                            dd/MM/yyyy</cite> <br>
+                        <cite title="Date Recrutement">- Récruté(e) le
+                            {{entity?.dateRecrutement|date:'dd/MM/yyyy'}}</cite>
+                    </footer>
                 </blockquote>
             </div>
             <div class="col-12 col-md-4">
                 <button *ngIf="employeSrv.resourceName|editable"
                     [routerLink]="['/'+orientation,employeSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
                     class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
-                <button (click)="remove(entity)" *ngIf="employeSrv.resourceName|deletable" tc-button
-                    view="error" beforeIcon="icofont-trash" class=" float-right ml-1"></button>
+                <button (click)="remove(entity)" *ngIf="employeSrv.resourceName|deletable" tc-button view="error"
+                    beforeIcon="icofont-trash" class=" float-right ml-1"></button>
                 <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
                     beforeIcon="icofont-refresh"></button>
-                <button tc-button class="float-right" (click)="location.back()"
-                    beforeIcon="icofont-reply"></button>
+                <button tc-button class="float-right" (click)="location.back()" beforeIcon="icofont-reply"></button>
             </div>
         </div>
     </tc-card>
     <div class="row">
-        <div class="col-12 col-md-4">
-            <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
+        <div class="col-12 col-md-5">
+            <tc-card [outline]="true" [view]="secondViewBorder" title="Informations" [tcGradient]="secondGradient">
                 <table class="table">
-                                                                                                <tr>
-                            <th>Prenoms</th>
-                            <td>
-                                <span *ngIf="entity?.prenoms">{{ entity?.prenoms }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.prenoms">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Nom</th>
-                            <td>
-                                <span *ngIf="entity?.nom">{{ entity?.nom }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.nom">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>DateNaissance</th>
-                            <td>
-                                <span *ngIf="entity?.dateNaissance">{{ entity?.dateNaissance }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.dateNaissance">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>LieuNaissance</th>
-                            <td>
-                                <span *ngIf="entity?.lieuNaissance">{{ entity?.lieuNaissance }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.lieuNaissance">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Cni</th>
-                            <td>
-                                <span *ngIf="entity?.cni">{{ entity?.cni }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.cni">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Matricule</th>
-                            <td>
-                                <span *ngIf="entity?.matricule">{{ entity?.matricule }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.matricule">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>MatriculeCaisseSociale</th>
-                            <td>
-                                <span *ngIf="entity?.matriculeCaisseSociale">{{ entity?.matriculeCaisseSociale }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.matriculeCaisseSociale">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>DateRecrutement</th>
-                            <td>
-                                <span *ngIf="entity?.dateRecrutement">{{ entity?.dateRecrutement }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.dateRecrutement">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>SitutationMatrimoniale</th>
-                            <td>
-                                <span *ngIf="entity?.situtationMatrimoniale">{{ entity?.situtationMatrimoniale }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.situtationMatrimoniale">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Retraite</th>
-                            <td>
-                                <span *ngIf="entity?.retraite">{{ entity?.retraite }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.retraite">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Genre</th>
-                            <td>
-                                <span *ngIf="entity?.genre">{{ entity?.genre }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.genre">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Etat</th>
-                            <td>
-                                <span *ngIf="entity?.etat">{{ entity?.etat }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.etat">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>EmailUniv</th>
-                            <td>
-                                <span *ngIf="entity?.emailUniv">{{ entity?.emailUniv }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.emailUniv">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Email</th>
-                            <td>
-                                <span *ngIf="entity?.email">{{ entity?.email }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.email">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Filename</th>
-                            <td>
-                                <span *ngIf="entity?.filename">{{ entity?.filename }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.filename">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Filepath</th>
-                            <td>
-                                <span *ngIf="entity?.filepath">{{ entity?.filepath }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.filepath">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>TelephonePrimaire</th>
-                            <td>
-                                <span *ngIf="entity?.telephonePrimaire">{{ entity?.telephonePrimaire }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.telephonePrimaire">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>TelephoneSecondaire</th>
-                            <td>
-                                <span *ngIf="entity?.telephoneSecondaire">{{ entity?.telephoneSecondaire }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.telephoneSecondaire">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                    </table>
+                    <tr>
+                        <th>Date Naissance</th>
+                        <td>
+                            <span *ngIf="entity?.dateNaissance">{{ entity?.dateNaissance|date:'dd/MM/yyyy' }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.dateNaissance">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Lieu Naissance</th>
+                        <td>
+                            <span *ngIf="entity?.lieuNaissance">{{ entity?.lieuNaissance }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.lieuNaissance">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>CNI/Passeport</th>
+                        <td>
+                            <span *ngIf="entity?.cni">{{ entity?.cni }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.cni">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Retraité</th>
+                        <td>
+                            <tc-badge view="error" *ngIf="!entity?.retraite">Non</tc-badge>
+                            <tc-badge view="success" *ngIf="entity?.retraite">En retraite</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Genre</th>
+                        <td>
+                            <span *ngIf="entity?.genre">{{ entity?.genre }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.genre">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Nationalité</th>
+                        <td>
+                            <span *ngIf="entity?.nationalite">{{ entity?.nationalite?.nationalite }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.nationalite">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Etat</th>
+                        <td>
+                            <tc-badge view="error" *ngIf="!entity?.etat">Gélé(e)</tc-badge>
+                            <tc-badge view="success" *ngIf="entity?.etat">Actif</tc-badge>
+                        </td>
+                    </tr>
+                </table>
+            </tc-card>
+        </div>
+        <div class="col-12 col-md-7">
+            <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
+                <nz-collapse nzAccordion>
+                    <nz-collapse-panel nzHeader="Contacts" [nzActive]="true">
+                        <table class="table">
+                            <tr>
+                                <th>Email Institutionnel</th>
+                                <td>
+                                    <span *ngIf="entity?.emailUniv">
+                                        <a href="mailto:{{entity?.emailUniv}}">{{entity?.emailUniv}}</a></span>
+                                    <tc-badge view="error" *ngIf="!entity?.emailUniv">Indéfinie</tc-badge>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Email Personnel</th>
+                                <td>
+                                    <span *ngIf="entity?.email">
+                                        <a href="mailto:{{ entity?.email }}">{{ entity?.email }}</a>
+                                    </span>
+                                    <tc-badge view="error" *ngIf="!entity?.email">Indéfinie</tc-badge>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Téléphone Primaire</th>
+                                <td>
+                                    <span *ngIf="entity?.telephonePrimaire">
+                                        <a
+                                            href="tel:{{ entity?.telephonePrimaire }}">{{ entity?.telephonePrimaire }}</a>
+                                    </span>
+                                    <tc-badge view="error" *ngIf="!entity?.telephonePrimaire">Indéfinie</tc-badge>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Téléphone Secondaire</th>
+                                <td>
+                                    <span *ngIf="entity?.telephoneSecondaire">
+                                        <a
+                                            href="tel:{{ entity?.telephoneSecondaire }}">{{ entity?.telephoneSecondaire }}</a>
+                                    </span>
+                                    <tc-badge view="error" *ngIf="!entity?.telephoneSecondaire">Indéfinie</tc-badge>
+                                </td>
+                            </tr>
+                        </table>
+                    </nz-collapse-panel>
+                    <nz-collapse-panel nzHeader="Sociales">
+                        <table class="table">
+                            <tr>
+                                <th>Situtation Matrimoniale</th>
+                                <td>
+                                    <span *ngIf="entity?.situtationMatrimoniale">{{ entity?.situtationMatrimoniale }}</span>
+                                    <tc-badge view="error" *ngIf="!entity?.situtationMatrimoniale">Indéfinie</tc-badge>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Matricule Caisse Sociale</th>
+                                <td>
+                                    <span *ngIf="entity?.matriculeCaisseSociale">{{ entity?.matriculeCaisseSociale }}</span>
+                                    <tc-badge view="error" *ngIf="!entity?.matriculeCaisseSociale">Indéfinie</tc-badge>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Caisse Sociale</th>
+                                <td>
+                                    <span *ngIf="entity?.caisseSociale">{{ entity?.caisseSociale?.nom }}</span>
+                                    <tc-badge view="error" *ngIf="!entity?.caisseSociale">Indéfinie</tc-badge>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Mutuelle de Santé</th>
+                                <td>
+                                    <span *ngIf="entity?.mutuelleSante">{{ entity?.mutuelleSante?.nom }}</span>
+                                    <tc-badge view="error" *ngIf="!entity?.mutuelleSante">Indéfinie</tc-badge>
+                                </td>
+                            </tr>
+                        </table>
+                    </nz-collapse-panel>
+                    <nz-collapse-panel nzHeader="Adresses">
+                        <app-adresse-list *ngIf="entity" [employe]="entity"></app-adresse-list>
+                    </nz-collapse-panel>
+                    <nz-collapse-panel nzHeader="Famille">
+                        <app-membrefamille-list *ngIf="entity" [employe]="entity"></app-membrefamille-list>
+                    </nz-collapse-panel>
+                </nz-collapse>
             </tc-card>
         </div>
     </div>

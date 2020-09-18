@@ -5,7 +5,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
+import { DatePipe, HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 
 import { StoreModule } from '@ngrx/store';
 import { en_US, NgZorroAntdModule, NZ_I18N } from 'ng-zorro-antd';
@@ -19,6 +19,8 @@ import { pageDataReducer } from './store/reducers/page-data.reducer';
 import { appSettingsReducer } from './store/reducers/app-settings.reducer';
 import { patientsReducer } from './store/reducers/patients.reducer';
 import { NgHttpLoaderModule } from 'ng-http-loader';
+import fr from '@angular/common/locales/fr';
+registerLocaleData(fr);
 
 export function currentUserProviderFactory(authSrv: BamboAuthService) {
   return () => authSrv.getCurrentUser();
@@ -51,6 +53,7 @@ export function currentUserProviderFactory(authSrv: BamboAuthService) {
   ],
   providers: [
     BamboAuthService,
+    DatePipe,
     {
       provide: APP_INITIALIZER,
       useFactory: currentUserProviderFactory, deps: [BamboAuthService], multi: true
