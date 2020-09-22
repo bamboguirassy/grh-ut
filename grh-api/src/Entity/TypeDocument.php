@@ -35,12 +35,12 @@ class TypeDocument
      */
     private $dureeArchivage;
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getNom()
     {
         return $this->nom;
     }
@@ -52,7 +52,7 @@ class TypeDocument
         return $this;
     }
 
-    public function getDureeArchivage(): ?int
+    public function getDureeArchivage()
     {
         return $this->dureeArchivage;
     }

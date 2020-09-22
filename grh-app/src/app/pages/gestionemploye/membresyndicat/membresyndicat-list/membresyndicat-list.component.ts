@@ -2,7 +2,6 @@ import { SETTINGS } from './../../../../../environments/settings';
 import { Component, OnInit, Input } from '@angular/core';
 import { MembreSyndicatService } from '../membresyndicat.service';
 import { MembreSyndicat } from '../membresyndicat';
-import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
 import { Employe } from '../../employe/employe';
 

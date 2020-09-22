@@ -170,7 +170,7 @@
                         <app-membresyndicat-list *ngIf="entity" [employe]="entity"></app-membresyndicat-list>
                     </nz-collapse-panel>
                     <nz-collapse-panel nzHeader="Documents">
-                        ===
+                        <app-document-list *ngIf="entity" [employe]="entity"></app-document-list>
                     </nz-collapse-panel>
                 </nz-collapse>
             </tc-card>

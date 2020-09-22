@@ -1,3 +1,4 @@
+import { DocumentNewComponent } from './gestionemploye/document/document-new/document-new.component';
 import { MembreSyndicatNewComponent } from './gestionemploye/membresyndicat/membresyndicat-new/membresyndicat-new.component';
 import { SyndicatNewComponent } from './parametrage/syndicat/syndicat-new/syndicat-new.component';
 import { SyndicatCloneComponent } from './parametrage/syndicat/syndicat-clone/syndicat-clone.component';
@@ -113,6 +114,10 @@ import { MembreSyndicatCloneComponent } from './gestionemploye/membresyndicat/me
 import { MembreSyndicatEditComponent } from './gestionemploye/membresyndicat/membresyndicat-edit/membresyndicat-edit.component';
 import { MembreSyndicatListComponent } from './gestionemploye/membresyndicat/membresyndicat-list/membresyndicat-list.component';
 import { MembreSyndicatShowComponent } from './gestionemploye/membresyndicat/membresyndicat-show/membresyndicat-show.component';
+import { DocumentCloneComponent } from './gestionemploye/document/document-clone/document-clone.component';
+import { DocumentEditComponent } from './gestionemploye/document/document-edit/document-edit.component';
+import { DocumentListComponent } from './gestionemploye/document/document-list/document-list.component';
+import { DocumentShowComponent } from './gestionemploye/document/document-show/document-show.component';
 
 @NgModule({
   imports: [
@@ -275,7 +280,12 @@ import { MembreSyndicatShowComponent } from './gestionemploye/membresyndicat/mem
     MembreSyndicatShowComponent,
     MembreSyndicatCloneComponent,
     MembreSyndicatNewComponent,
-
+    // document components
+    DocumentListComponent,
+    DocumentEditComponent,
+    DocumentShowComponent,
+    DocumentCloneComponent,
+    DocumentNewComponent,
   ],
   exports: [],
   entryComponents: []

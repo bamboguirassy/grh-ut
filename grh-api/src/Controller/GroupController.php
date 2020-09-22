@@ -160,6 +160,7 @@ class GroupController extends AbstractController {
                 new AccessModel('ADRESSE', "Adresses employé"),
                 new AccessModel('MEMBREFAMILLE', "Membres Famille"),
                 new AccessModel('MEMBRESYNDICAT', "Syndicat employé"),
+                new AccessModel('DOCUMENT', "Documents Employé"),
                     ]
             ),
         ];
