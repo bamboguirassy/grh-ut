@@ -11,38 +11,37 @@ use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Utils\Utils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * @Route("/api/document")
  */
-class DocumentController extends AbstractController
-{
+class DocumentController extends AbstractController {
+
     /**
      * @Rest\Get(path="/", name="document_index")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_DOCUMENT_INDEX")
      */
-    public function index(): array
-    {
+    public function index(): array {
         $documents = $this->getDoctrine()
-            ->getRepository(Document::class)
-            ->findAll();
+                ->getRepository(Document::class)
+                ->findAll();
 
-        return count($documents)?$documents:[];
+        return count($documents) ? $documents : [];
     }
-    
+
     /**
      * @Rest\Get(path="/{id}/employe", name="document_employe")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_DOCUMENT_INDEX")
      */
-    public function findByEmploye(\App\Entity\Employe $employe): array
-    {
+    public function findByEmploye(\App\Entity\Employe $employe): array {
         $documents = $this->getDoctrine()
-            ->getRepository(Document::class)
-            ->findByEmploye($employe);
+                ->getRepository(Document::class)
+                ->findByEmploye($employe);
 
-        return count($documents)?$documents:[];
+        return count($documents) ? $documents : [];
     }
 
     /**
@@ -50,10 +49,21 @@ class DocumentController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_DOCUMENT_CREATE")
      */
-    public function create(Request $request): Document    {
+    public function create(Request $request, \App\Service\FileUploader $uploader): Document {
         $document = new Document();
         $form = $this->createForm(DocumentType::class, $document);
         $form->submit(Utils::serializeRequestContent($request));
+
+        //check if file provided
+        if ($document->getFilepath()) {
+            $host = $request->getHttpHost();
+            $scheme = $request->getScheme();
+            file_put_contents($document->getFilename(), base64_decode($document->getFilepath()));
+            $file = new \Symfony\Component\HttpFoundation\File\File($document->getFilename());
+            $newFileName = $uploader->setTargetDirectory('employe_document_directory')->upload($file, null); // old fileName
+            $document->setFilepath("$scheme://$host/" . $uploader->getTargetDirectory() . $newFileName);
+            $document->setFilename($newFileName);
+        }
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($document);
@@ -67,17 +77,16 @@ class DocumentController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_DOCUMENT_SHOW")
      */
-    public function show(Document $document): Document    {
+    public function show(Document $document): Document {
         return $document;
     }
 
-    
     /**
      * @Rest\Put(path="/{id}/edit", name="document_edit",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_DOCUMENT_EDIT")
      */
-    public function edit(Request $request, Document $document): Document    {
+    public function edit(Request $request, Document $document): Document {
         $form = $this->createForm(DocumentType::class, $document);
         $form->submit(Utils::serializeRequestContent($request));
 
@@ -85,15 +94,15 @@ class DocumentController extends AbstractController
 
         return $document;
     }
-    
+
     /**
      * @Rest\Put(path="/{id}/clone", name="document_clone",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_DOCUMENT_CLONE")
      */
-    public function cloner(Request $request, Document $document):  Document {
-        $em=$this->getDoctrine()->getManager();
-        $documentNew=new Document();
+    public function cloner(Request $request, Document $document): Document {
+        $em = $this->getDoctrine()->getManager();
+        $documentNew = new Document();
         $form = $this->createForm(DocumentType::class, $documentNew);
         $form->submit(Utils::serializeRequestContent($request));
         $em->persist($documentNew);
@@ -108,14 +117,21 @@ class DocumentController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_DOCUMENT_EDIT")
      */
-    public function delete(Document $document): Document    {
+    public function delete(Document $document, ParameterBagInterface $params): Document {
         $entityManager = $this->getDoctrine()->getManager();
+
+        $fs = new \Symfony\Component\Filesystem\Filesystem();
+        $oldFile = $params->get('employe_document_directory') . $document->getFilename();
+        if ($fs->exists($oldFile)) {
+            $fs->remove($oldFile); // remove old file
+        }
+
         $entityManager->remove($document);
         $entityManager->flush();
 
         return $document;
     }
-    
+
     /**
      * @Rest\Post("/delete-selection/", name="document_selection_delete")
      * @Rest\View(StatusCode=200)
@@ -135,4 +151,5 @@ class DocumentController extends AbstractController
 
         return $documents;
     }
+
 }

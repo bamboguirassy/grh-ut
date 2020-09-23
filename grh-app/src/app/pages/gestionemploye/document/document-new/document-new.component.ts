@@ -1,8 +1,11 @@
+import { TypeDocumentService } from './../../../parametrage/typedocument/typedocument.service';
+import { Employe } from './../../employe/employe';
 import { UploadFileModel } from './../../../../shared/classes/upload-file-model';
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren, Input } from '@angular/core';
 import { DocumentService } from '../document.service';
 import { Document } from '../document';
 import { Router } from '@angular/router';
+import { TypeDocument } from 'src/app/pages/parametrage/typedocument/typedocument';
 
 @Component({
   selector: 'app-document-new',
@@ -19,17 +22,24 @@ export class DocumentNewComponent implements OnInit {
   isModalVisible = false;
   currentAvatar: any;
   fileModel: UploadFileModel = new UploadFileModel();
+  @Input() employe: Employe;
+  typeDocuments: TypeDocument[] = [];
+  selectedTypeDocument: TypeDocument;
 
   constructor(public documentSrv: DocumentService,
-    public router: Router) {
+    public router: Router, public typeDocumentSrv: TypeDocumentService) {
     this.entity = new Document();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.findTypeDocuments();
+  }
 
   save() {
     this.entity.filename = this.fileModel.fileName;
     this.entity.filepath = this.fileModel.fileContent;
+    this.entity.employe = this.employe.id;
+    this.entity.typeDocument = this.selectedTypeDocument.id;
     this.documentSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
@@ -58,6 +68,13 @@ export class DocumentNewComponent implements OnInit {
       this.fileModel.fileContent = this.currentAvatar.split(',')[1];
     };
     reader.readAsDataURL(file);
+  }
+
+  findTypeDocuments() {
+    this.typeDocumentSrv.findAll()
+      .subscribe((data: any) => {
+        this.typeDocuments = data;
+      }, err => this.typeDocumentSrv.httpSrv.catchError(err));
   }
 
 }

@@ -3,12 +3,26 @@
 <app-access-denied *ngIf="!(documentSrv.resourceName|creable)"></app-access-denied>
 
 <!-- Modal window -->
-<nz-modal nzWidth="80%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
+<nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
   [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
   <ng-template #modalBody>
     <form #form="ngForm" ngNativeValidate>
       <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Type</tc-form-label>
+            <nz-select [required]="true" name="typeDocument" id="typeDocument" #typeDocument="ngModel" nzPlaceHolder="Selectionner le type de document"
+              nzAllowClear nzShowSearch [(ngModel)]="selectedTypeDocument">
+              <ng-container *ngFor="let typeDocument of typeDocuments">
+                <nz-option [nzValue]="typeDocument" [nzLabel]="typeDocument.nom"></nz-option>
+              </ng-container>
+            </nz-select>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="typeDocument"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12">
           <tc-form-group>
             <tc-form-label>Nom</tc-form-label>
             <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
@@ -18,14 +32,15 @@
             </tc-form-description>
           </tc-form-group>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12">
           <tc-form-group>
             <tc-form-label>Document</tc-form-label>
             <input type="file" accept="*" (change)="onFileChanged($event)" #fileInput hidden>
             <div class="d-flex align-items-center">
-              <button tc-button [type]="'button'" [afterIcon]="'icofont-ui-user'" [view]="'accent'" [outline]="true"
+              <span *ngIf="fileModel?.fileName">{{fileModel?.fileName}}</span> &nbsp;
+              <button tc-button [type]="'button'" [afterIcon]="'icofont-ui-file'" [view]="'accent'" [outline]="true"
                 (click)="fileInput.click()">
-                Choisir un document
+                Choisir un fichier
               </button>
             </div>
           </tc-form-group>

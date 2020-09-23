@@ -9,6 +9,7 @@ parameters:
   mutuellesante_image_directory: 'uploads/mutuellesante/'
   syndicat_image_directory: 'uploads/syndicat/'
   employe_photo_directory: 'uploads/employe/photo/'
+  employe_document_directory: 'uploads/employe/document/'
 
 services:
     # default configuration for services in *this* file
