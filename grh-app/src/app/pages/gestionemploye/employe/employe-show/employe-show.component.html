@@ -87,7 +87,7 @@
         <div class="col-12 col-md-7">
             <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
                 <nz-collapse nzAccordion>
-                    <nz-collapse-panel nzHeader="Contacts" [nzActive]="true">
+                    <nz-collapse-panel nzHeader="Contacts" [nzActive]="false">
                         <table class="table">
                             <tr>
                                 <th>Email Institutionnel</th>
@@ -133,14 +133,16 @@
                             <tr>
                                 <th>Situtation Matrimoniale</th>
                                 <td>
-                                    <span *ngIf="entity?.situtationMatrimoniale">{{ entity?.situtationMatrimoniale }}</span>
+                                    <span
+                                        *ngIf="entity?.situtationMatrimoniale">{{ entity?.situtationMatrimoniale }}</span>
                                     <tc-badge view="error" *ngIf="!entity?.situtationMatrimoniale">Indéfinie</tc-badge>
                                 </td>
                             </tr>
                             <tr>
                                 <th>Matricule Caisse Sociale</th>
                                 <td>
-                                    <span *ngIf="entity?.matriculeCaisseSociale">{{ entity?.matriculeCaisseSociale }}</span>
+                                    <span
+                                        *ngIf="entity?.matriculeCaisseSociale">{{ entity?.matriculeCaisseSociale }}</span>
                                     <tc-badge view="error" *ngIf="!entity?.matriculeCaisseSociale">Indéfinie</tc-badge>
                                 </td>
                             </tr>
@@ -171,6 +173,18 @@
                     </nz-collapse-panel>
                     <nz-collapse-panel nzHeader="Documents">
                         <app-document-list *ngIf="entity" [employe]="entity"></app-document-list>
+                    </nz-collapse-panel>
+                </nz-collapse>
+            </tc-card>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
+                <nz-collapse nzAccordion>
+                    <nz-collapse-panel nzHeader="Fonctions" [nzActive]="false">
+                    </nz-collapse-panel>
+                    <nz-collapse-panel nzHeader="Grade & Avancements" [nzActive]="false">
                     </nz-collapse-panel>
                 </nz-collapse>
             </tc-card>
