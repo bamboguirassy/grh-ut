@@ -182,8 +182,8 @@
         <div class="col-12">
             <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
                 <nz-collapse nzAccordion>
-                    <nz-collapse-panel nzHeader="Fonctions" [nzActive]="false">
-                    </nz-collapse-panel>
+                    <nz-collapse-panel nzHeader="Fonctions & Responsabilités" [nzActive]="false">
+                        <app-fonctionemploye-list *ngIf="entity"[employe]="entity"></app-fonctionemploye-list>                    </nz-collapse-panel>
                     <nz-collapse-panel nzHeader="Grade & Avancements" [nzActive]="false">
                     </nz-collapse-panel>
                 </nz-collapse>

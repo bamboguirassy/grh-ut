@@ -1,3 +1,4 @@
+import { FonctionEmployeNewComponent } from './gestionemploye/fonctionemploye/fonctionemploye-new/fonctionemploye-new.component';
 import { DocumentNewComponent } from './gestionemploye/document/document-new/document-new.component';
 import { MembreSyndicatNewComponent } from './gestionemploye/membresyndicat/membresyndicat-new/membresyndicat-new.component';
 import { SyndicatNewComponent } from './parametrage/syndicat/syndicat-new/syndicat-new.component';
@@ -118,6 +119,10 @@ import { DocumentCloneComponent } from './gestionemploye/document/document-clone
 import { DocumentEditComponent } from './gestionemploye/document/document-edit/document-edit.component';
 import { DocumentListComponent } from './gestionemploye/document/document-list/document-list.component';
 import { DocumentShowComponent } from './gestionemploye/document/document-show/document-show.component';
+import { FonctionEmployeCloneComponent } from './gestionemploye/fonctionemploye/fonctionemploye-clone/fonctionemploye-clone.component';
+import { FonctionEmployeEditComponent } from './gestionemploye/fonctionemploye/fonctionemploye-edit/fonctionemploye-edit.component';
+import { FonctionEmployeListComponent } from './gestionemploye/fonctionemploye/fonctionemploye-list/fonctionemploye-list.component';
+import { FonctionEmployeShowComponent } from './gestionemploye/fonctionemploye/fonctionemploye-show/fonctionemploye-show.component';
 
 @NgModule({
   imports: [
@@ -286,6 +291,12 @@ import { DocumentShowComponent } from './gestionemploye/document/document-show/d
     DocumentShowComponent,
     DocumentCloneComponent,
     DocumentNewComponent,
+    // fonctionemploye components
+    FonctionEmployeListComponent,
+    FonctionEmployeEditComponent,
+    FonctionEmployeShowComponent,
+    FonctionEmployeCloneComponent,
+    FonctionEmployeNewComponent,
   ],
   exports: [],
   entryComponents: []

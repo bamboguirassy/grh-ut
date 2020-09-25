@@ -27,8 +27,8 @@
     </tc-table-col>
     <tc-table-col [columnTitle]="'Etat'" [columnName]="'etat'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <tc-badge view="error" *ngIf="!value">Non</tc-badge>
-        <tc-badge view="success" *ngIf="value">Oui</tc-badge>
+        <tc-badge view="error" *ngIf="!value">Inactif</tc-badge>
+        <tc-badge view="success" *ngIf="value">Actif</tc-badge>
       </ng-template>
     </tc-table-col>
     <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
