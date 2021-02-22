@@ -44,7 +44,7 @@ export class EmployeNewComponent implements OnInit {
     public mutuelleSanteSrv: MutuelleSanteService,
     public caisseSocialeSrv: CaisseSocialeService,
     public gradeSrv: GradeService, public datePipe: DatePipe) {
-    this.entity = new Employe();
+    this.initNewEmploye();
   }
 
   ngOnInit(): void {
@@ -54,25 +54,30 @@ export class EmployeNewComponent implements OnInit {
     this.findGrades();
   }
 
+  initNewEmploye() {
+    this.entity = new Employe();
+    this.entity.etat = true;
+  }
+
   save() {
-    if(this.selectedCaisseSociale) {
+    if (this.selectedCaisseSociale) {
       this.entity.caisseSociale = this.selectedCaisseSociale.id;
     }
-    if(this.selectedMutuelleSante) {
+    if (this.selectedMutuelleSante) {
       this.entity.mutuelleSante = this.selectedMutuelleSante.id;
     }
     this.entity.grade = this.selectedGrade.id;
     this.entity.nationalite = this.selectedNationalite.id;
     this.entity.typeEmploye = this.typeEmploye.id;
-    this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance,'yyyy-MM-dd');
-    this.entity.dateRecrutement = this.datePipe.transform(this.entity.dateRecrutement,'yyyy-MM-dd');
+    this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
+    this.entity.dateRecrutement = this.datePipe.transform(this.entity.dateRecrutement, 'yyyy-MM-dd');
     this.entity.filename = this.fileModel.fileName;
     this.entity.filepath = this.fileModel.fileContent;
     this.employeSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
         this.creation.emit(data);
-        this.entity = new Employe();
+        this.initNewEmploye();
       }, error => this.employeSrv.httpSrv.catchError(error));
   }
 
@@ -100,30 +105,30 @@ export class EmployeNewComponent implements OnInit {
 
   findNationalites() {
     this.paysSrv.findAll()
-    .subscribe((data: any)=>{
-      this.nationalites = data;
-    },err=>this.paysSrv.httpSrv.catchError(err));
+      .subscribe((data: any) => {
+        this.nationalites = data;
+      }, err => this.paysSrv.httpSrv.catchError(err));
   }
 
   findMutuelleSantes() {
     this.mutuelleSanteSrv.findAll()
-    .subscribe((data: any)=>{
-      this.mutuelleSantes = data;
-    },err=>this.mutuelleSanteSrv.httpSrv.catchError(err));
+      .subscribe((data: any) => {
+        this.mutuelleSantes = data;
+      }, err => this.mutuelleSanteSrv.httpSrv.catchError(err));
   }
 
   findCaisseSociales() {
     this.caisseSocialeSrv.findAll()
-    .subscribe((data: any)=>{
-      this.caisseSociales = data;
-    },err=>this.caisseSocialeSrv.httpSrv.catchError(err));
+      .subscribe((data: any) => {
+        this.caisseSociales = data;
+      }, err => this.caisseSocialeSrv.httpSrv.catchError(err));
   }
 
   findGrades() {
     this.gradeSrv.findAll()
-    .subscribe((data: any)=>{
-      this.grades = data;
-    },err=>this.gradeSrv.httpSrv.catchError(err));
+      .subscribe((data: any) => {
+        this.grades = data;
+      }, err => this.gradeSrv.httpSrv.catchError(err));
   }
 
 }

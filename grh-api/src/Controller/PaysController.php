@@ -15,20 +15,23 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * @Route("/api/pays")
  */
-class PaysController extends AbstractController
-{
+class PaysController extends AbstractController {
+
     /**
      * @Rest\Get(path="/", name="pays_index")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_PAYS_INDEX")
      */
-    public function index(): array
-    {
+    public function index(): array {
         $pays = $this->getDoctrine()
-            ->getRepository(Pays::class)
-            ->findAll();
+                ->getRepository(Pays::class)
+                ->findAll();
+        $senegal = $this->getDoctrine()
+                ->getRepository(Pays::class)
+                ->findOneByAlpha2('SN');
+        array_unshift($pays, $senegal);
 
-        return count($pays)?$pays:[];
+        return count($pays) ? $pays : [];
     }
 
     /**
@@ -36,7 +39,7 @@ class PaysController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_PAYS_CREATE")
      */
-    public function create(Request $request): Pays    {
+    public function create(Request $request): Pays {
         $pay = new Pays();
         $form = $this->createForm(PaysType::class, $pay);
         $form->submit(Utils::serializeRequestContent($request));
@@ -53,17 +56,16 @@ class PaysController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_PAYS_SHOW")
      */
-    public function show(Pays $pay): Pays    {
+    public function show(Pays $pay): Pays {
         return $pay;
     }
 
-    
     /**
      * @Rest\Put(path="/{id}/edit", name="pays_edit",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_PAYS_EDIT")
      */
-    public function edit(Request $request, Pays $pay): Pays    {
+    public function edit(Request $request, Pays $pay): Pays {
         $form = $this->createForm(PaysType::class, $pay);
         $form->submit(Utils::serializeRequestContent($request));
 
@@ -71,15 +73,15 @@ class PaysController extends AbstractController
 
         return $pay;
     }
-    
+
     /**
      * @Rest\Put(path="/{id}/clone", name="pays_clone",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_PAYS_CLONE")
      */
-    public function cloner(Request $request, Pays $pay):  Pays {
-        $em=$this->getDoctrine()->getManager();
-        $payNew=new Pays();
+    public function cloner(Request $request, Pays $pay): Pays {
+        $em = $this->getDoctrine()->getManager();
+        $payNew = new Pays();
         $form = $this->createForm(PaysType::class, $payNew);
         $form->submit(Utils::serializeRequestContent($request));
         $em->persist($payNew);
@@ -94,14 +96,14 @@ class PaysController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_PAYS_EDIT")
      */
-    public function delete(Pays $pay): Pays    {
+    public function delete(Pays $pay): Pays {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($pay);
         $entityManager->flush();
 
         return $pay;
     }
-    
+
     /**
      * @Rest\Post("/delete-selection/", name="pays_selection_delete")
      * @Rest\View(StatusCode=200)
@@ -121,4 +123,5 @@ class PaysController extends AbstractController
 
         return $pays;
     }
+
 }

@@ -61,7 +61,7 @@
             </tc-form-description>
           </tc-form-group>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-6" *ngIf="selectedTypeContrat?.code!='CDI'">
           <tc-form-group>
             <tc-form-label>Durée en année (Optionnel)</tc-form-label>
             <tc-input type="number" [(ngModel)]="entity.duree" name="duree" id="duree" #duree="ngModel">

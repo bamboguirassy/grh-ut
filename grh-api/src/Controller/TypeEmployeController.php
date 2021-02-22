@@ -26,7 +26,7 @@ class TypeEmployeController extends AbstractController
     {
         $typeEmployes = $this->getDoctrine()
             ->getRepository(TypeEmploye::class)
-            ->findAll();
+            ->findBy([],['code'=>'ASC']);
 
         return count($typeEmployes)?$typeEmployes:[];
     }
