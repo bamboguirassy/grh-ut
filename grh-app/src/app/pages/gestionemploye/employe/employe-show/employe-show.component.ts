@@ -6,6 +6,9 @@ import { IAppState } from 'src/app/interfaces/app-state';
 import { Employe } from '../employe';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { FonctionEmployeService } from '../../fonctionemploye/fonctionemploye.service';
+import { first } from 'rxjs/operators';
+import { FonctionEmploye } from '../../fonctionemploye/fonctionemploye';
 
 @Component({
   selector: 'app-employe-show',
@@ -14,9 +17,10 @@ import { Location } from '@angular/common';
 })
 export class EmployeShowComponent extends BasePageComponent<Employe> implements OnInit, OnDestroy {
   entity: Employe;
+  latestFonction: FonctionEmploye;
 
   constructor(store: Store<IAppState>,
-    public employeSrv: EmployeService,
+    public employeSrv: EmployeService, public fonctionEmployeSrv: FonctionEmployeService,
     private activatedRoute: ActivatedRoute,
     public location: Location) {
     super(store, employeSrv);
@@ -49,10 +53,23 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
 
   handlePostLoad() {
     this.title = this.entity?.prenoms+' '+this.entity?.nom+' ('+this.entity?.matricule+')';
+    this.findLatestFonction();
   }
 
   handlePostDelete() {
     this.location.back();
+  }
+
+  findLatestFonction() {
+    this
+    .fonctionEmployeSrv
+    .findLatest(this.entity)
+    .pipe(first())
+    .subscribe((fonctionEmploye: any) => {
+      this.latestFonction = fonctionEmploye;
+    }, err => {
+      this.fonctionEmployeSrv.httpSrv.handleError(err);
+    })
   }
 
 }
