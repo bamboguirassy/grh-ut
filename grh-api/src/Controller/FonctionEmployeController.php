@@ -53,20 +53,24 @@ class FonctionEmployeController extends AbstractController
      * @Rest\Get(path="/employe/{id}/latest", name="fonction_latest_by_employe")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_FONCTIONEMPLOYE_INDEX")
-     * @throws NoResultException
-     * @throws NonUniqueResultException
      */
     public function findLatest(Employe $employe, EntityManagerInterface $entityManager)
     {
-        return
-            $entityManager->createQuery('
-            SELECT fe
-            FROM App\Entity\FonctionEmploye fe
-            WHERE fe.employe = :employe
-            ORDER BY fe.datePriseFonction DESC
-      ')->setParameter('employe', $employe)
-                ->setMaxResults(1)
-                ->getSingleResult();
+        try {
+            return
+                $entityManager->createQuery('
+                SELECT fe
+                FROM App\Entity\FonctionEmploye fe
+                WHERE fe.employe = :employe
+                ORDER BY fe.datePriseFonction DESC
+          ')->setParameter('employe', $employe)
+                    ->setMaxResults(1)
+                    ->getSingleResult();
+        } catch (NoResultException $e) {
+            return null;
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
     }
 
     /**
