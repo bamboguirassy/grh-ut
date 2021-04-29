@@ -47,7 +47,6 @@ class EmployeController extends AbstractController
             ->findByTypeEmploye($type);
             $tab [] = ['type'=>$type,'nbreEmploye'=>count($employes)];
         }
-        
 
         return count($tab)?$tab:[];
     }

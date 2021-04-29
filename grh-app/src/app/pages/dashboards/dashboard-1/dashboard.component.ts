@@ -37,7 +37,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
     super(store, httpSv);
 
     this.pageData = {
-      title: '',
+      title: 'Tableau de bord',
       loaded: false,
       breadcrumbs: [
         {
