@@ -10,7 +10,12 @@
                     <p class="mb-0">{{title}}</p>
                     <footer class="blockquote-footer">
                         <cite title="Poste actuelle">
-                            {{latestFonction?.fonction?.nom}} depuis le {{latestFonction?.datePriseFonction | date :'dd/MM/yyyy'}}
+                            <span *ngIf="latestFonction else fallback" class="fonction">&nbsp;
+                                {{latestFonction?.fonction?.nom}} depuis le
+                                {{latestFonction?.datePriseFonction | date :'dd/MM/yyyy'}} &nbsp;</span>
+                            <ng-template #fallback>
+                                <span class="fonction">&nbsp;Aucun poste occupé&nbsp;</span>
+                            </ng-template>
                         </cite> <br>
                         <cite title="Date Recrutement">- Récruté(e) le
                             {{entity?.dateRecrutement|date:'dd/MM/yyyy'}}</cite>
