@@ -19,4 +19,8 @@ export class FonctionEmployeService extends BamboAbstractService {
     return this.httpSrv.get(this.routePrefix + employe.id + '/employe');
   }
 
+  findLatest(employe: Employe) {
+    return this.httpSrv.get(this.routePrefix + 'employe/' + employe.id + '/latest');
+  }
+
 }
