@@ -38,6 +38,7 @@
                         </tc-input>
                     </tc-form-group>
                 </div>
+
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Telephone</tc-form-label>
@@ -60,10 +61,39 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
+             
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Etat Compte</tc-form-label>
                         <tc-switcher [(ngModel)]="entity.enabled" name="enabled" id="enabled"></tc-switcher>
+                    </tc-form-group>
+                </div>
+                <!-- 
+                    <tc-form-group>
+                    <tc-form-label>Type</tc-form-label>
+                    <nz-select [required]="true" style="width: 100%" nzPlaceHolder="Sélectionner " [(ngModel)]="selectedGroupId" name="group" id="group"
+                      #group="ngModel"  nzAllowClear nzShowSearch>
+                      <ng-container *ngFor="let group of groups">
+                        <nz-option [nzValue]="group.id" [nzLabel]="group.nom"></nz-option>
+                      </ng-container>
+                    </nz-select>
+                    <tc-form-description>
+                      <app-form-field-validation-message [formField]="group"></app-form-field-validation-message>
+                    </tc-form-description>
+                  </tc-form-group>
+                 -->
+                <div class="col-12">
+                    <tc-form-group>
+                        <tc-form-label>Groupes</tc-form-label>
+                        <nz-select [required]="true" nzMode="multiple" style="width: 100%" nzPlaceHolder="Selectionner le(s) groupe(s)" [(ngModel)]="selectedGroupId" name="group" id="group"
+                      #group="ngModel"  nzAllowClear nzShowSearch>
+                      <ng-container *ngFor="let group of groups">
+                        <nz-option *ngIf="!fetching" [nzValue]="group.id" [nzLabel]="group.name"></nz-option>
+                      </ng-container>
+                      <nz-option *ngIf="fetching" nzDisabled nzCustomContent>
+                        <i nz-icon nzType="loading" class="loading-icon"></i> Veuillez patienter...
+                    </nz-option>
+                    </nz-select>
                     </tc-form-group>
                 </div>
             </div>
