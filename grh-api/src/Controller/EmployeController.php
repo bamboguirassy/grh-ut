@@ -37,6 +37,27 @@ class EmployeController extends AbstractController
     }
 
     /**
+     * @Rest\Get(path="/statistics/count-by-type/", name="employe_count_statistic_by_type")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function countByType(): array
+    {
+        $em = $this->getDoctrine()->getManager();
+        $types = $em->getRepository('App\Entity\TypeEmploye')
+        ->findAll();
+        $tab = [];
+        foreach ($types as $type) {
+            $employes = $em ->getRepository(Employe::class)
+            ->findByTypeEmploye($type);
+            $tab [] = ['type'=>$type,'nbreEmploye'=>count($employes)];
+        }
+        
+
+        return count($tab)?$tab:[];
+    }
+    
+    /**
      * @Rest\Get(path="/{id}/typeemploye", name="employe_by_typeemploye")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
