@@ -6,7 +6,7 @@ import { first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { BasePageComponent } from 'src/app/pages/base-page';
-import { Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { UploadFileModel } from 'src/app/shared/classes/upload-file-model';
 import { TypeEmploye } from 'src/app/pages/parametrage/typeemploye/typeemploye';
 import { Pays } from 'src/app/pages/parametrage/pays/pays';
@@ -51,7 +51,7 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
               public caisseSocialeSrv: CaisseSocialeService,
               private activatedRoute: ActivatedRoute,
               public gradeSrv: GradeService,
-              public location: Location) {
+              public location: Location,public datePipe: DatePipe) {
     super(store, employeSrv);
     this.pageData = {
       title: 'Modification - Employe',
@@ -133,6 +133,8 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
     this.selectedCaisseSocialeId = this.entity.caisseSociale?.id;
     this.selectedGradeId = this.entity.grade?.id;
     this.selectedNationaliteId = this.entity.nationalite?.id;
+    this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
+    this.entity.dateRecrutement = this.datePipe.transform(this.entity.dateRecrutement, 'yyyy-MM-dd');
     this.findCaisseSociales();
     this.findMutuelleSantes();
     this.findNationalites();

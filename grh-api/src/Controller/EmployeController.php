@@ -133,7 +133,15 @@ class EmployeController extends AbstractController
     {
         $form = $this->createForm(EmployeType::class, $employe);
         $form->submit(Utils::serializeRequestContent($request));
-
+        $reqData = Utils::getObjectFromRequest($request);
+         if (!isset($reqData->dateNaissance)) {
+            throw $this->createNotFoundException("La date de naissance est introuvable !");
+        }
+        if (!isset($reqData->dateRecrutement)) {
+            throw $this->createNotFoundException("La date de recrutement est introuvable !");
+        }
+        $employe->setDateNaissance(new \DateTime($reqData->dateNaissance));
+        $employe->setDateRecrutement(new \DateTime($reqData->dateRecrutement));
         $this->getDoctrine()->getManager()->flush();
 
         return $employe;
