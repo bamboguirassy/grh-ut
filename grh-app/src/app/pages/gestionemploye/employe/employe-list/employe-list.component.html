@@ -11,7 +11,7 @@
         <nz-tabset [(nzSelectedIndex)]="selectedIndex" (nzSelectChange)="handleTabChange($event)">
             <nz-tab *ngFor="let typeEmploye of typeEmployes" [nzTitle]="typeEmploye.code">
                 <h3>Liste des employés - {{typeEmploye?.code}} </h3>
-                <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
+                <tc-table [itemsPerPage]="15" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
                     <tc-table-col [columnTitle]="'#'" [columnName]="'filepath'">
                         <ng-template #tableTDTemplate let-row="row" let-value>
                             <a [routerLink]="[row.id]" routerLinkActive="router-link-active">
