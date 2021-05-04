@@ -32,10 +32,21 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
 
   // custom types
   tabCountEmploye = [];
-  tabStatsByType: { nombreEmploye: number, nombreHomme: number, nombreFemme: number, tranche1020: number, tranche2030: number, tranche3040: number, tranchePlus40: number };
+  tabStatsByType: {
+    nombreEmploye: number,
+    nombreHomme: number,
+    nombreFemme: number,
+    tranche1020: number,
+    tranche2030: number,
+    tranche3040: number,
+    tranchePlus40: number,
+    caisseSociales: any,
+    recrutementCourant: any,
+    recrutementPrecedent: any
+  };
 
   handlePostLoad() {
-   }
+  }
 
   constructor(
     store: Store<IAppState>,
@@ -80,10 +91,10 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
 
     this.getData('assets/data/last-appointments.json', 'appointments', 'setLoaded');
 
-    this.setHSOptions();
+    // this.setHSOptions();
     //this.setPAOptions();
     //this.setPGOptions();
-    this.setDOptions();
+    //this.setDOptions();
     this.setPIOptions();
     this.setHEOptions();
   }
@@ -117,6 +128,8 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
         this.tabStatsByType = tab[0];
         this.setPGOptions();
         this.setPAOptions();
+        this.setDOptions();
+        this.setHSOptions();
       }, err => {
         this.employeSrv.httpSrv.handleError(err);
       })
@@ -133,6 +146,28 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
   }
 
   setHSOptions() {
+    const courant: Array<any> = [];
+    const precedent: Array<any> = [];
+    const abCourant: string[] = [];
+    const abPrecendent: string[] = [];
+    const currentYear = new Date().getFullYear();
+    const previousYear = new Date().getFullYear() - 1;
+    this
+      .tabStatsByType
+      .recrutementCourant
+      .forEach(rc => {
+        courant.push(rc.nombre);
+        abCourant.push(`${currentYear}-${rc.mois}`);
+      });
+
+      this
+      .tabStatsByType
+      .recrutementPrecedent
+      .forEach(rc => {
+        precedent.push(rc.nombre);
+        abPrecendent.push(`${previousYear}-${rc.mois}`);
+      }); 
+
     this.hsOptions = {
       color: ['#ed5564', '#336cfb'],
       tooltip: {
@@ -142,7 +177,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
         }
       },
       legend: {
-        data: ['Patients 2018', 'Patients 2019']
+        data: [`Recrutement ${previousYear}`, `Recrutement  ${currentYear}`]
       },
       grid: {
         left: 30,
@@ -165,12 +200,12 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
           axisPointer: {
             label: {
               formatter: function (params) {
-                return 'Patients ' + params.value
+                return 'Recrutements ' + params.value
                   + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
               }
             }
           },
-          data: ['2019-1', '2019-2', '2019-3', '2019-4', '2019-5', '2019-6', '2019-7', '2019-8', '2019-9', '2019-10', '2019-11', '2019-12']
+          data: abCourant
         },
         {
           type: 'category',
@@ -186,12 +221,12 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
           axisPointer: {
             label: {
               formatter: function (params) {
-                return 'Patients ' + params.value
+                return 'Recrutements ' + params.value
                   + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
               }
             }
           },
-          data: ['2018-1', '2018-2', '2018-3', '2018-4', '2018-5', '2018-6', '2018-7', '2018-8', '2018-9', '2018-10', '2018-11', '2018-12']
+          data: abPrecendent
         }
       ],
       yAxis: [
@@ -201,17 +236,17 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
       ],
       series: [
         {
-          name: 'Patients 2018',
+          name: `Recrutement ${previousYear}`,
           type: 'line',
           xAxisIndex: 1,
           smooth: true,
-          data: [159, 149, 174, 182, 219, 201, 175, 182, 119, 118, 112, 96]
+          data: precedent
         },
         {
-          name: 'Patients 2019',
+          name: `Recrutement  ${currentYear}`,
           type: 'line',
           smooth: true,
-          data: [95, 124, 132, 143, 138, 178, 194, 211, 234, 257, 241, 226]
+          data: courant
         }
       ]
     };
@@ -310,6 +345,10 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
   }
 
   setDOptions() {
+    const data: Array<any> = [];
+    this.tabStatsByType.caisseSociales.forEach(cs => {
+      data.push({ value: cs.nombre, name: cs.nom });
+    });
     this.dOptions = {
       grid: {
         left: 0,
@@ -331,13 +370,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
             show: false
           }
         },
-        data: [
-          { value: 115, name: 'Cardiology' },
-          { value: 173, name: 'Dentistry' },
-          { value: 154, name: 'Laboratory' },
-          { value: 180, name: 'Pulmonology' },
-          { value: 219, name: 'Gynecology' }
-        ],
+        data: data,
         itemStyle: this.pieStyle
       }]
     };

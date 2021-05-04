@@ -40,11 +40,11 @@
 </div>
 
 
-<tc-card [title]="'Hospital survey'">
+<tc-card [title]="'Suivi Recrutement'" *ngIf="tabStatsByType">
   <div echarts [options]="hsOptions" class="chat-container container-h-400"></div>
 </tc-card>
 
-<div class="row" *ngIf="tabCountEmploye">
+<div class="row" *ngIf="tabStatsByType">
   <div class="col col-12 col-md-6">
     <tc-card>
       <h4 class="mt-0 mb-1">$25038</h4>
@@ -76,7 +76,7 @@
 
 
    <div class="col col-12 col-md-4">
-    <tc-card [title]="'Departments'">
+    <tc-card [title]="'Caisse Sociale'">
       <div echarts [options]="dOptions" class="chat-container container-h-300"></div>
     </tc-card>
   </div>

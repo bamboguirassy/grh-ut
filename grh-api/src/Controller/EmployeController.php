@@ -75,22 +75,81 @@ class EmployeController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $tab = [];
         $tabCaisse = [];
+        $tabRecrutementCourant = [];
+        $tabRecrutementPrecedent = [];
         $nbrHomme = 0;
         $nbrFemme = 0;
         $tranche1020 = 0;
         $tranche2030 = 0;
         $tranche3040 = 0;
         $tranchePlus40 = 0;
+        $anneeCourante = date("Y");
+        $anneePrecendente = date("Y", strtotime("-1 year"));
         $employes = $em->getRepository(Employe::class)
             ->findByTypeEmploye($typeEmploye);
         $caisseSociales = $em->getRepository(CaisseSociale::class)->findAll();
+
+        foreach (range(1, 12) as $mois) {
+            if ($mois >= 1 AND $mois <= 9)
+                $mois = '0' . $mois;
+            $mois = (string)$mois;
+            try {
+                $nombreEmployeCourant = $em
+                    ->createQuery('
+                            SELECT COUNT(e) 
+                            FROM App\Entity\Employe e 
+                            WHERE e.dateRecrutement LIKE :dr 
+                            AND e.typeEmploye=:te
+                        ')
+                    ->setParameter('dr', "{$anneeCourante}-{$mois}%")
+                    ->setParameter('te', $typeEmploye)
+                    ->getSingleScalarResult();
+            } catch (NoResultException $e) {
+                $nombreEmployeCourant = 0;
+            } catch (NonUniqueResultException $e) {
+                $nombreEmployeCourant = 0;
+            }
+
+            try {
+                $nombreEmployePrecendent = $em
+                    ->createQuery('
+                            SELECT COUNT(e) 
+                            FROM App\Entity\Employe e 
+                            WHERE e.dateRecrutement LIKE :dr 
+                            AND e.typeEmploye=:te
+                        ')
+                    ->setParameter('dr', "{$anneePrecendente}-{$mois}%")
+                    ->setParameter('te', $typeEmploye)
+                    ->getSingleScalarResult();
+            } catch (NoResultException $e) {
+                $nombreEmployePrecendent = 0;
+            } catch (NonUniqueResultException $e) {
+                $nombreEmployePrecendent = 0;
+            }
+
+            $tabRecrutementCourant[] = [
+                'mois' => $mois,
+                'nombre' => $nombreEmployeCourant
+            ];
+
+            $tabRecrutementPrecedent[] = [
+                'mois' => $mois,
+                'nombre' => $nombreEmployePrecendent
+            ];
+        }
+
         /** @var CaisseSociale $caisseSociale */
         foreach ($caisseSociales as $caisseSociale) {
             $count = 0;
             try {
                 $count = $em
-                    ->createQuery('SELECT COUNT(e) FROM App\Entity\Employe e WHERE e.caisseSociale=:cs')
+                    ->createQuery('
+                        SELECT COUNT(e) 
+                        FROM App\Entity\Employe e 
+                        WHERE e.caisseSociale=:cs AND e.typeEmploye=:te
+                    ')
                     ->setParameter('cs', $caisseSociale)
+                    ->setParameter('te', $typeEmploye)
                     ->getSingleScalarResult();
             } catch (NoResultException $e) {
                 $count = 0;
@@ -98,7 +157,8 @@ class EmployeController extends AbstractController
                 $count = 0;
             }
             $tabCaisse[] = [
-                $caisseSociale->getNom() => $count
+                'nom' => $caisseSociale->getNom(),
+                'nombre' => $count
             ];
         }
         /** @var Employe $employe */
@@ -120,7 +180,10 @@ class EmployeController extends AbstractController
             'tranche1020' => $tranche1020,
             'tranche2030' => $tranche2030,
             'tranche3040' => $tranche3040,
-            'tranchePlus40' => $tranchePlus40
+            'tranchePlus40' => $tranchePlus40,
+            'caisseSociales' => $tabCaisse,
+            'recrutementCourant' => $tabRecrutementCourant,
+            'recrutementPrecedent' => $tabRecrutementPrecedent
         ];
 
 
@@ -206,7 +269,7 @@ class EmployeController extends AbstractController
         $form = $this->createForm(EmployeType::class, $employe);
         $form->submit(Utils::serializeRequestContent($request));
         $reqData = Utils::getObjectFromRequest($request);
-         if (!isset($reqData->dateNaissance)) {
+        if (!isset($reqData->dateNaissance)) {
             throw $this->createNotFoundException("La date de naissance est introuvable !");
         }
         if (!isset($reqData->dateRecrutement)) {
