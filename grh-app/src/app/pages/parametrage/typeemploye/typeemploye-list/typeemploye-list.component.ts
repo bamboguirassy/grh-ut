@@ -13,18 +13,18 @@ import { TypeEmploye } from '../typeemploye';
 export class TypeEmployeListComponent extends BasePageComponent<TypeEmploye> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public typeEmployeSrv: TypeEmployeService) {
+    public typeEmployeSrv: TypeEmployeService) {
     super(store, typeEmployeSrv);
 
     this.pageData = {
-      title: 'Liste des Types d\'employé',
+      title: 'Liste des Types d\'employés',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des types d\'employé'
+          title: 'Liste des types d\'employés'
         }
       ]
     };
@@ -43,6 +43,6 @@ export class TypeEmployeListComponent extends BasePageComponent<TypeEmploye> imp
     this.findAll();
   }
 
-  handlePostLoad(){}
+  handlePostLoad() { }
 
 }
