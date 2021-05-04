@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { EChartOption } from 'echarts';
@@ -6,6 +6,9 @@ import { BasePageComponent } from '../../base-page';
 import { IAppState } from '../../../interfaces/app-state';
 import { HttpService } from '../../../services/http/http.service';
 import { EmployeService } from '../../gestionemploye/employe/employe.service';
+import { TypeEmploye } from '../../parametrage/typeemploye/typeemploye';
+import { TypeEmployeService } from '../../parametrage/typeemploye/typeemploye.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'page-dashboard',
@@ -23,16 +26,33 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
   piePatternSrc: string;
   piePatternImg: any;
   pieStyle: any;
+  typeEmployes: TypeEmploye[] = [];
+  selectedTypeEmploye: TypeEmploye = new TypeEmploye();
+  fetching = false;
 
   // custom types
   tabCountEmploye = [];
+  tabStatsByType: {
+    nombreEmploye: number,
+    nombreHomme: number,
+    nombreFemme: number,
+    tranche1020: number,
+    tranche2030: number,
+    tranche3040: number,
+    tranchePlus40: number,
+    caisseSociales: any,
+    recrutementCourant: any,
+    recrutementPrecedent: any
+  };
 
-  handlePostLoad() { }
+  handlePostLoad() {
+  }
 
   constructor(
     store: Store<IAppState>,
     httpSv: HttpService,
-    public employeSrv: EmployeService
+    public employeSrv: EmployeService,
+    public typeEmployeSrv: TypeEmployeService,
   ) {
     super(store, httpSv);
 
@@ -71,16 +91,49 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
 
     this.getData('assets/data/last-appointments.json', 'appointments', 'setLoaded');
 
-    this.setHSOptions();
-    this.setPAOptions();
-    this.setPGOptions();
-    this.setDOptions();
+    // this.setHSOptions();
+    //this.setPAOptions();
+    //this.setPGOptions();
+    //this.setDOptions();
     this.setPIOptions();
     this.setHEOptions();
   }
 
   ngOnDestroy() {
     super.ngOnDestroy();
+  }
+
+
+  fetchTypeEmployes() {
+    if (!this.typeEmployes.length) {
+      this.fetching = true;
+      this
+        .typeEmployeSrv
+        .findAll()
+        .pipe(
+          finalize(() => this.fetching = false)
+        ).subscribe((typeEmployes: any) => {
+          this.typeEmployes = typeEmployes;
+        }, error => {
+          this.typeEmployeSrv.httpSrv.catchError(error);
+        });
+    }
+  }
+
+  findStatsByType(event: any) {
+    this
+      .employeSrv
+      .findStatsByType(event)
+      .subscribe((tab: any) => {
+        this.tabStatsByType = tab[0];
+        this.setPGOptions();
+        this.setPAOptions();
+        this.setDOptions();
+        this.setHSOptions();
+      }, err => {
+        this.employeSrv.httpSrv.handleError(err);
+      })
+
   }
 
   getEmployeCountStatistics() {
@@ -93,6 +146,28 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
   }
 
   setHSOptions() {
+    const courant: Array<any> = [];
+    const precedent: Array<any> = [];
+    const abCourant: string[] = [];
+    const abPrecendent: string[] = [];
+    const currentYear = new Date().getFullYear();
+    const previousYear = new Date().getFullYear() - 1;
+    this
+      .tabStatsByType
+      .recrutementCourant
+      .forEach(rc => {
+        courant.push(rc.nombre);
+        abCourant.push(`${currentYear}-${rc.mois}`);
+      });
+
+      this
+      .tabStatsByType
+      .recrutementPrecedent
+      .forEach(rc => {
+        precedent.push(rc.nombre);
+        abPrecendent.push(`${previousYear}-${rc.mois}`);
+      }); 
+
     this.hsOptions = {
       color: ['#ed5564', '#336cfb'],
       tooltip: {
@@ -102,7 +177,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
         }
       },
       legend: {
-        data: ['Patients 2018', 'Patients 2019']
+        data: [`Recrutement ${previousYear}`, `Recrutement  ${currentYear}`]
       },
       grid: {
         left: 30,
@@ -125,12 +200,12 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
           axisPointer: {
             label: {
               formatter: function (params) {
-                return 'Patients ' + params.value
+                return 'Recrutements ' + params.value
                   + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
               }
             }
           },
-          data: ['2019-1', '2019-2', '2019-3', '2019-4', '2019-5', '2019-6', '2019-7', '2019-8', '2019-9', '2019-10', '2019-11', '2019-12']
+          data: abCourant
         },
         {
           type: 'category',
@@ -146,12 +221,12 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
           axisPointer: {
             label: {
               formatter: function (params) {
-                return 'Patients ' + params.value
+                return 'Recrutements ' + params.value
                   + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
               }
             }
           },
-          data: ['2018-1', '2018-2', '2018-3', '2018-4', '2018-5', '2018-6', '2018-7', '2018-8', '2018-9', '2018-10', '2018-11', '2018-12']
+          data: abPrecendent
         }
       ],
       yAxis: [
@@ -161,17 +236,17 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
       ],
       series: [
         {
-          name: 'Patients 2018',
+          name: `Recrutement ${previousYear}`,
           type: 'line',
           xAxisIndex: 1,
           smooth: true,
-          data: [159, 149, 174, 182, 219, 201, 175, 182, 119, 118, 112, 96]
+          data: precedent
         },
         {
-          name: 'Patients 2019',
+          name: `Recrutement  ${currentYear}`,
           type: 'line',
           smooth: true,
-          data: [95, 124, 132, 143, 138, 178, 194, 211, 234, 257, 241, 226]
+          data: courant
         }
       ]
     };
@@ -214,11 +289,10 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
           }
         },
         data: [
-          { value: 347, name: '0-10' },
-          { value: 310, name: '10-20' },
-          { value: 234, name: '20-30' },
-          { value: 195, name: '30-40' },
-          { value: 670, name: '40+' }
+          { value: this.tabStatsByType.tranche1020, name: '10-20' },
+          { value: this.tabStatsByType.tranche2030, name: '20-30' },
+          { value: this.tabStatsByType.tranche3040, name: '30-40' },
+          { value: this.tabStatsByType.tranchePlus40, name: '40+' }
         ],
         itemStyle: this.pieStyle
       }]
@@ -262,8 +336,8 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
           }
         },
         data: [
-          { value: 154, name: 'Female' },
-          { value: 173, name: 'Male' }
+          { value: this.tabStatsByType.nombreFemme, name: 'Femme' },
+          { value: this.tabStatsByType.nombreHomme, name: 'Homme' }
         ],
         itemStyle: this.pieStyle
       }]
@@ -271,6 +345,10 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
   }
 
   setDOptions() {
+    const data: Array<any> = [];
+    this.tabStatsByType.caisseSociales.forEach(cs => {
+      data.push({ value: cs.nombre, name: cs.nom });
+    });
     this.dOptions = {
       grid: {
         left: 0,
@@ -292,13 +370,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
             show: false
           }
         },
-        data: [
-          { value: 115, name: 'Cardiology' },
-          { value: 173, name: 'Dentistry' },
-          { value: 154, name: 'Laboratory' },
-          { value: 180, name: 'Pulmonology' },
-          { value: 219, name: 'Gynecology' }
-        ],
+        data: data,
         itemStyle: this.pieStyle
       }]
     };

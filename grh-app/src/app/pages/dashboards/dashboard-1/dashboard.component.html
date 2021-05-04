@@ -1,18 +1,15 @@
 <div class="row">
   <div class="col col-12">
-    Nombre d'employé(s) par catégorie - <a href="javascript:void(0)" (click)="getEmployeCountStatistics()">charger les données</a>
+    Nombre d'employé(s) par catégorie - <a href="javascript:void(0)" (click)="getEmployeCountStatistics()">charger les
+      données</a>
     <hr>
   </div>
   <div class="col col-12 col-md-6 col-xl-3" *ngFor="let employeCountItem of tabCountEmploye">
     <tc-card [tcBgColor]="'#fbfbfb'" class="animated fadeInUp delay-01s">
       <div class="row align-items-center">
         <div class="col col-5">
-          <tc-icon
-            [tcColor]="'rgba(51,108,251,0.5)'"
-            [tcFontSize]="48"
-            [iconClass]="'icofont-first-aid-alt'"
-            [padding]="0"
-          ></tc-icon>
+          <tc-icon [tcColor]="'rgba(51,108,251,0.5)'" [tcFontSize]="48" [iconClass]="'icofont-first-aid-alt'"
+            [padding]="0"></tc-icon>
         </div>
 
         <div class="col col-7">
@@ -23,12 +20,31 @@
     </tc-card>
   </div>
 </div>
+<div class="row">
+  <div class="col-12">
+    <tc-form-group>
+      <tc-form-label>Type d'employé</tc-form-label>
+      <nz-select (nzOpenChange)="fetchTypeEmployes()" (ngModelChange)="findStatsByType($event)" nzAllowClear
+        nzShowSearch style="width: 100%" name="typeEmploye" id="typeEmploye"
+        nzPlaceHolder="Selectionner le type d'employe" [(ngModel)]="selectedTypeEmploye">
+        <ng-container *ngFor="let typeEmploye of typeEmployes">
+          <nz-option *ngIf="!fetching" [nzLabel]="typeEmploye.nom" [nzValue]="typeEmploye">
+          </nz-option>
+        </ng-container>
+        <nz-option *ngIf="fetching" nzDisabled nzCustomContent>
+          <i nz-icon nzType="loading" class="loading-icon"></i> Veuillez patienter...
+        </nz-option>
+      </nz-select>
+    </tc-form-group>
+  </div>
+</div>
 
-<tc-card [title]="'Hospital survey'">
+
+<tc-card [title]="'Suivi Recrutement'" *ngIf="tabStatsByType">
   <div echarts [options]="hsOptions" class="chat-container container-h-400"></div>
 </tc-card>
 
-<div class="row">
+<div class="row" *ngIf="tabStatsByType">
   <div class="col col-12 col-md-6">
     <tc-card>
       <h4 class="mt-0 mb-1">$25038</h4>
@@ -46,21 +62,21 @@
       <div echarts [options]="heOptions" class="chat-container"></div>
     </tc-card>
   </div>
-
   <div class="col col-12 col-md-4">
-    <tc-card [title]="'Patients age'">
+    <tc-card [title]="'Age'">
       <div echarts [options]="paOptions" class="chat-container container-h-300"></div>
     </tc-card>
   </div>
 
-  <div class="col col-12 col-md-4">
-    <tc-card [title]="'Patients gender'">
+  <div class="col col-12 col-md-4" >
+    <tc-card [title]="'Genre'">
       <div echarts [options]="pgOptions" class="chat-container container-h-300"></div>
     </tc-card>
   </div>
 
-  <div class="col col-12 col-md-4">
-    <tc-card [title]="'Departments'">
+
+   <div class="col col-12 col-md-4">
+    <tc-card [title]="'Caisse Sociale'">
       <div echarts [options]="dOptions" class="chat-container container-h-300"></div>
     </tc-card>
   </div>
@@ -98,7 +114,8 @@
     <tc-table-col [columnTitle]="'Number'" [columnName]="'number'">
       <ng-template #tableTDTemplate let-value>
         <span class="nowrap" [tcColor]="'#336cfb'">
-          <tc-icon [iconClass]="'icofont-ui-cell-phone'" [tcFontSize]="16" [padding]="0" class="mr-1"></tc-icon> {{ value }}
+          <tc-icon [iconClass]="'icofont-ui-cell-phone'" [tcFontSize]="16" [padding]="0" class="mr-1"></tc-icon>
+          {{ value }}
         </span>
       </ng-template>
     </tc-table-col>

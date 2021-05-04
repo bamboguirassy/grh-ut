@@ -22,14 +22,14 @@ export class TypeDocumentEditComponent extends BasePageComponent<TypeDocument> i
               public location: Location) {
     super(store, typeDocumentSrv);
     this.pageData = {
-      title: 'Modification - TypeDocument',
+      title: 'Modification - Type Document',
       breadcrumbs: [
         {
-          title: 'Accueil',
+          title: 'Accueil ',
           route: ''
         },
         {
-          title: 'TypeDocuments',
+          title: 'Types Document ',
           route: '/'+this.orientation+'/typedocument'
         },
         {

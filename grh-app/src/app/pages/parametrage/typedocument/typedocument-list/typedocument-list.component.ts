@@ -17,14 +17,14 @@ export class TypeDocumentListComponent extends BasePageComponent<TypeDocument> i
     super(store, typeDocumentSrv);
 
     this.pageData = {
-      title: 'Liste des Types de Documents',
+      title: 'Liste des Types de Document',
       breadcrumbs: [
         {
-          title: 'Accueil',
+          title: 'Accueil ',
           route: ''
         },
         {
-          title: 'Liste des types de documents'
+          title: 'Liste des types de document'
         }
       ]
     };

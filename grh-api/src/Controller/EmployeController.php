@@ -9,6 +9,10 @@ use App\Entity\MutuelleSante;
 use App\Entity\Pays;
 use App\Entity\TypeEmploye;
 use App\Form\EmployeType;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Metadata\Tests\Driver\Fixture\C\SubDir\C;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,17 +49,148 @@ class EmployeController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $types = $em->getRepository('App\Entity\TypeEmploye')
-        ->findAll();
+            ->findAll();
         $tab = [];
         foreach ($types as $type) {
-            $employes = $em ->getRepository(Employe::class)
-            ->findByTypeEmploye($type);
-            $tab [] = ['type'=>$type,'nbreEmploye'=>count($employes)];
+            $employes = $em->getRepository(Employe::class)
+                ->findByTypeEmploye($type);
+            $tab [] = [
+                'type' => $type,
+                'nbreEmploye' => count($employes)
+            ];
         }
 
-        return count($tab)?$tab:[];
+
+        return count($tab) ? $tab : [];
     }
-    
+
+    /**
+     * @Rest\Get(path="/statistics/by-type/{id}", name="statistic_by_type")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function findStatsByType(Request $request, TypeEmploye $typeEmploye): array
+    {
+        /** @var EntityManagerInterface $em */
+        $em = $this->getDoctrine()->getManager();
+        $tab = [];
+        $tabCaisse = [];
+        $tabRecrutementCourant = [];
+        $tabRecrutementPrecedent = [];
+        $nbrHomme = 0;
+        $nbrFemme = 0;
+        $tranche1020 = 0;
+        $tranche2030 = 0;
+        $tranche3040 = 0;
+        $tranchePlus40 = 0;
+        $anneeCourante = date("Y");
+        $anneePrecendente = date("Y", strtotime("-1 year"));
+        $employes = $em->getRepository(Employe::class)
+            ->findByTypeEmploye($typeEmploye);
+        $caisseSociales = $em->getRepository(CaisseSociale::class)->findAll();
+
+        foreach (range(1, 12) as $mois) {
+            if ($mois >= 1 AND $mois <= 9)
+                $mois = '0' . $mois;
+            $mois = (string)$mois;
+            try {
+                $nombreEmployeCourant = $em
+                    ->createQuery('
+                            SELECT COUNT(e) 
+                            FROM App\Entity\Employe e 
+                            WHERE e.dateRecrutement LIKE :dr 
+                            AND e.typeEmploye=:te
+                        ')
+                    ->setParameter('dr', "{$anneeCourante}-{$mois}%")
+                    ->setParameter('te', $typeEmploye)
+                    ->getSingleScalarResult();
+            } catch (NoResultException $e) {
+                $nombreEmployeCourant = 0;
+            } catch (NonUniqueResultException $e) {
+                $nombreEmployeCourant = 0;
+            }
+
+            try {
+                $nombreEmployePrecendent = $em
+                    ->createQuery('
+                            SELECT COUNT(e) 
+                            FROM App\Entity\Employe e 
+                            WHERE e.dateRecrutement LIKE :dr 
+                            AND e.typeEmploye=:te
+                        ')
+                    ->setParameter('dr', "{$anneePrecendente}-{$mois}%")
+                    ->setParameter('te', $typeEmploye)
+                    ->getSingleScalarResult();
+            } catch (NoResultException $e) {
+                $nombreEmployePrecendent = 0;
+            } catch (NonUniqueResultException $e) {
+                $nombreEmployePrecendent = 0;
+            }
+
+            $tabRecrutementCourant[] = [
+                'mois' => $mois,
+                'nombre' => $nombreEmployeCourant
+            ];
+
+            $tabRecrutementPrecedent[] = [
+                'mois' => $mois,
+                'nombre' => $nombreEmployePrecendent
+            ];
+        }
+
+        /** @var CaisseSociale $caisseSociale */
+        foreach ($caisseSociales as $caisseSociale) {
+            $count = 0;
+            try {
+                $count = $em
+                    ->createQuery('
+                        SELECT COUNT(e) 
+                        FROM App\Entity\Employe e 
+                        WHERE e.caisseSociale=:cs AND e.typeEmploye=:te
+                    ')
+                    ->setParameter('cs', $caisseSociale)
+                    ->setParameter('te', $typeEmploye)
+                    ->getSingleScalarResult();
+            } catch (NoResultException $e) {
+                $count = 0;
+            } catch (NonUniqueResultException $e) {
+                $count = 0;
+            }
+            $tabCaisse[] = [
+                'nom' => $caisseSociale->getNom(),
+                'nombre' => $count
+            ];
+        }
+        /** @var Employe $employe */
+        foreach ($employes as $employe) {
+            if (strtolower($employe->getGenre()) === 'masculin')
+                $nbrHomme++;
+            else
+                $nbrFemme++;
+            $age = (int)date('Y') - (int)$employe->getDateNaissance()->format('Y');
+            if ($age >= 10 && $age < 20) $tranche1020++;
+            else if ($age >= 20 && $age < 30) $tranche2030++;
+            else if ($age >= 30 && $age < 40) $tranche3040++;
+            else if ($age >= 40) $tranchePlus40++;
+        }
+        $tab [] = [
+            'nombreEmploye' => count($employes),
+            'nombreHomme' => $nbrHomme,
+            'nombreFemme' => $nbrFemme,
+            'tranche1020' => $tranche1020,
+            'tranche2030' => $tranche2030,
+            'tranche3040' => $tranche3040,
+            'tranchePlus40' => $tranchePlus40,
+            'caisseSociales' => $tabCaisse,
+            'recrutementCourant' => $tabRecrutementCourant,
+            'recrutementPrecedent' => $tabRecrutementPrecedent
+        ];
+
+
+        return count($tab) ? $tab : [];
+    }
+
+
     /**
      * @Rest\Get(path="/{id}/typeemploye", name="employe_by_typeemploye")
      * @Rest\View(StatusCode = 200)
@@ -134,7 +269,7 @@ class EmployeController extends AbstractController
         $form = $this->createForm(EmployeType::class, $employe);
         $form->submit(Utils::serializeRequestContent($request));
         $reqData = Utils::getObjectFromRequest($request);
-         if (!isset($reqData->dateNaissance)) {
+        if (!isset($reqData->dateNaissance)) {
             throw $this->createNotFoundException("La date de naissance est introuvable !");
         }
         if (!isset($reqData->dateRecrutement)) {
