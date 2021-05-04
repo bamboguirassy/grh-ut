@@ -27,7 +27,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
   piePatternImg: any;
   pieStyle: any;
   typeEmployes: TypeEmploye[] = [];
-  selectedTypeEmploye: TypeEmploye = new TypeEmploye();
+  selectedTypeEmploye: TypeEmploye[] = [];
   fetching = false;
 
   // custom types
@@ -36,13 +36,14 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
     nombreEmploye: number,
     nombreHomme: number,
     nombreFemme: number,
-    tranche1020: number,
-    tranche2030: number,
+    tranche1830: number,
     tranche3040: number,
-    tranchePlus40: number,
-    caisseSociales: any,
-    recrutementCourant: any,
-    recrutementPrecedent: any
+    tranche4050: number,
+    tranche5060: number,
+    tranchePlus60: number,
+    caisseSociales: Array<any>,
+    recrutementCourant: Array<any>,
+    recrutementPrecedent: Array<any>
   };
 
   handlePostLoad() {
@@ -61,11 +62,11 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
       loaded: false,
       breadcrumbs: [
         {
-          title: 'Dashboards',
+          title: 'Tableau de bord',
           route: 'default-dashboard'
         },
         {
-          title: 'Default'
+          title: 'Global'
         }
       ]
     };
@@ -121,6 +122,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
   }
 
   findStatsByType(event: any) {
+
     this
       .employeSrv
       .findStatsByType(event)
@@ -160,13 +162,13 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
         abCourant.push(`${currentYear}-${rc.mois}`);
       });
 
-      this
+    this
       .tabStatsByType
       .recrutementPrecedent
       .forEach(rc => {
         precedent.push(rc.nombre);
         abPrecendent.push(`${previousYear}-${rc.mois}`);
-      }); 
+      });
 
     this.hsOptions = {
       color: ['#ed5564', '#336cfb'],
@@ -253,6 +255,22 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
   }
 
   setPAOptions() {
+    const data: Array<{ value: number, name: string }> = [];
+    if (this.tabStatsByType.tranche1830 > 0) {
+      data.push({ value: this.tabStatsByType.tranche1830, name: '18-30' });
+    }
+    if (this.tabStatsByType.tranche3040 > 0) {
+      data.push({ value: this.tabStatsByType.tranche3040, name: '30-40' });
+    }
+    if (this.tabStatsByType.tranche4050 > 0) {
+      data.push({ value: this.tabStatsByType.tranche4050, name: '40-50' });
+    }
+    if (this.tabStatsByType.tranche5060 > 0) {
+      data.push({ value: this.tabStatsByType.tranche5060, name: '50-60' });
+    }
+    if (this.tabStatsByType.tranchePlus60 > 0) {
+      data.push({ value: this.tabStatsByType.tranchePlus60, name: '60+' });
+    }
     this.paOptions = {
       grid: {
         left: 0,
@@ -288,12 +306,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
             }
           }
         },
-        data: [
-          { value: this.tabStatsByType.tranche1020, name: '10-20' },
-          { value: this.tabStatsByType.tranche2030, name: '20-30' },
-          { value: this.tabStatsByType.tranche3040, name: '30-40' },
-          { value: this.tabStatsByType.tranchePlus40, name: '40+' }
-        ],
+        data: data,
         itemStyle: this.pieStyle
       }]
     };
