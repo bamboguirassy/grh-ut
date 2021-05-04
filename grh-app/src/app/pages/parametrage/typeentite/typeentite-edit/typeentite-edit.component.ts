@@ -22,14 +22,14 @@ export class TypeEntiteEditComponent extends BasePageComponent<TypeEntite> imple
               public location: Location) {
     super(store, typeEntiteSrv);
     this.pageData = {
-      title: 'Modification - TypeEntite',
+      title: 'Modification - Type Entité',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'TypeEntites',
+          title: 'Type Entités',
           route: '/'+this.orientation+'/typeentite'
         },
         {
