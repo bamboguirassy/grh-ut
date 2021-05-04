@@ -22,14 +22,14 @@ export class CaisseSocialeEditComponent extends BasePageComponent<CaisseSociale>
               public location: Location) {
     super(store, caisseSocialeSrv);
     this.pageData = {
-      title: 'Modification - CaisseSociale',
+      title: 'Modification - Caisse Sociale',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'CaisseSociales',
+          title: 'Caisse Sociales',
           route: '/'+this.orientation+'/caissesociale'
         },
         {
