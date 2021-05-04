@@ -9,6 +9,10 @@ use App\Entity\MutuelleSante;
 use App\Entity\Pays;
 use App\Entity\TypeEmploye;
 use App\Form\EmployeType;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Metadata\Tests\Driver\Fixture\C\SubDir\C;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,17 +49,85 @@ class EmployeController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $types = $em->getRepository('App\Entity\TypeEmploye')
-        ->findAll();
+            ->findAll();
         $tab = [];
         foreach ($types as $type) {
-            $employes = $em ->getRepository(Employe::class)
-            ->findByTypeEmploye($type);
-            $tab [] = ['type'=>$type,'nbreEmploye'=>count($employes)];
+            $employes = $em->getRepository(Employe::class)
+                ->findByTypeEmploye($type);
+            $tab [] = [
+                'type' => $type,
+                'nbreEmploye' => count($employes)
+            ];
         }
 
-        return count($tab)?$tab:[];
+
+        return count($tab) ? $tab : [];
     }
-    
+
+    /**
+     * @Rest\Get(path="/statistics/by-type/{id}", name="statistic_by_type")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function findStatsByType(Request $request, TypeEmploye $typeEmploye): array
+    {
+        /** @var EntityManagerInterface $em */
+        $em = $this->getDoctrine()->getManager();
+        $tab = [];
+        $tabCaisse = [];
+        $nbrHomme = 0;
+        $nbrFemme = 0;
+        $tranche1020 = 0;
+        $tranche2030 = 0;
+        $tranche3040 = 0;
+        $tranchePlus40 = 0;
+        $employes = $em->getRepository(Employe::class)
+            ->findByTypeEmploye($typeEmploye);
+        $caisseSociales = $em->getRepository(CaisseSociale::class)->findAll();
+        /** @var CaisseSociale $caisseSociale */
+        foreach ($caisseSociales as $caisseSociale) {
+            $count = 0;
+            try {
+                $count = $em
+                    ->createQuery('SELECT COUNT(e) FROM App\Entity\Employe e WHERE e.caisseSociale=:cs')
+                    ->setParameter('cs', $caisseSociale)
+                    ->getSingleScalarResult();
+            } catch (NoResultException $e) {
+                $count = 0;
+            } catch (NonUniqueResultException $e) {
+                $count = 0;
+            }
+            $tabCaisse[] = [
+                $caisseSociale->getNom() => $count
+            ];
+        }
+        /** @var Employe $employe */
+        foreach ($employes as $employe) {
+            if (strtolower($employe->getGenre()) === 'masculin')
+                $nbrHomme++;
+            else
+                $nbrFemme++;
+            $age = (int)date('Y') - (int)$employe->getDateNaissance()->format('Y');
+            if ($age >= 10 && $age < 20) $tranche1020++;
+            else if ($age >= 20 && $age < 30) $tranche2030++;
+            else if ($age >= 30 && $age < 40) $tranche3040++;
+            else if ($age >= 40) $tranchePlus40++;
+        }
+        $tab [] = [
+            'nombreEmploye' => count($employes),
+            'nombreHomme' => $nbrHomme,
+            'nombreFemme' => $nbrFemme,
+            'tranche1020' => $tranche1020,
+            'tranche2030' => $tranche2030,
+            'tranche3040' => $tranche3040,
+            'tranchePlus40' => $tranchePlus40
+        ];
+
+
+        return count($tab) ? $tab : [];
+    }
+
+
     /**
      * @Rest\Get(path="/{id}/typeemploye", name="employe_by_typeemploye")
      * @Rest\View(StatusCode = 200)

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { EChartOption } from 'echarts';
@@ -6,6 +6,9 @@ import { BasePageComponent } from '../../base-page';
 import { IAppState } from '../../../interfaces/app-state';
 import { HttpService } from '../../../services/http/http.service';
 import { EmployeService } from '../../gestionemploye/employe/employe.service';
+import { TypeEmploye } from '../../parametrage/typeemploye/typeemploye';
+import { TypeEmployeService } from '../../parametrage/typeemploye/typeemploye.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'page-dashboard',
@@ -23,16 +26,22 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
   piePatternSrc: string;
   piePatternImg: any;
   pieStyle: any;
+  typeEmployes: TypeEmploye[] = [];
+  selectedTypeEmploye: TypeEmploye = new TypeEmploye();
+  fetching = false;
 
   // custom types
   tabCountEmploye = [];
+  tabStatsByType: { nombreEmploye: number, nombreHomme: number, nombreFemme: number, tranche1020: number, tranche2030: number, tranche3040: number, tranchePlus40: number };
 
-  handlePostLoad() { }
+  handlePostLoad() {
+   }
 
   constructor(
     store: Store<IAppState>,
     httpSv: HttpService,
-    public employeSrv: EmployeService
+    public employeSrv: EmployeService,
+    public typeEmployeSrv: TypeEmployeService,
   ) {
     super(store, httpSv);
 
@@ -72,8 +81,8 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
     this.getData('assets/data/last-appointments.json', 'appointments', 'setLoaded');
 
     this.setHSOptions();
-    this.setPAOptions();
-    this.setPGOptions();
+    //this.setPAOptions();
+    //this.setPGOptions();
     this.setDOptions();
     this.setPIOptions();
     this.setHEOptions();
@@ -81,6 +90,37 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
 
   ngOnDestroy() {
     super.ngOnDestroy();
+  }
+
+
+  fetchTypeEmployes() {
+    if (!this.typeEmployes.length) {
+      this.fetching = true;
+      this
+        .typeEmployeSrv
+        .findAll()
+        .pipe(
+          finalize(() => this.fetching = false)
+        ).subscribe((typeEmployes: any) => {
+          this.typeEmployes = typeEmployes;
+        }, error => {
+          this.typeEmployeSrv.httpSrv.catchError(error);
+        });
+    }
+  }
+
+  findStatsByType(event: any) {
+    this
+      .employeSrv
+      .findStatsByType(event)
+      .subscribe((tab: any) => {
+        this.tabStatsByType = tab[0];
+        this.setPGOptions();
+        this.setPAOptions();
+      }, err => {
+        this.employeSrv.httpSrv.handleError(err);
+      })
+
   }
 
   getEmployeCountStatistics() {
@@ -214,11 +254,10 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
           }
         },
         data: [
-          { value: 347, name: '0-10' },
-          { value: 310, name: '10-20' },
-          { value: 234, name: '20-30' },
-          { value: 195, name: '30-40' },
-          { value: 670, name: '40+' }
+          { value: this.tabStatsByType.tranche1020, name: '10-20' },
+          { value: this.tabStatsByType.tranche2030, name: '20-30' },
+          { value: this.tabStatsByType.tranche3040, name: '30-40' },
+          { value: this.tabStatsByType.tranchePlus40, name: '40+' }
         ],
         itemStyle: this.pieStyle
       }]
@@ -262,8 +301,8 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
           }
         },
         data: [
-          { value: 154, name: 'Female' },
-          { value: 173, name: 'Male' }
+          { value: this.tabStatsByType.nombreFemme, name: 'Femme' },
+          { value: this.tabStatsByType.nombreHomme, name: 'Homme' }
         ],
         itemStyle: this.pieStyle
       }]

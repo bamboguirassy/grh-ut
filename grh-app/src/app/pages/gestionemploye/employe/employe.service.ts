@@ -34,5 +34,9 @@ export class EmployeService extends BamboAbstractService {
   countByType() {
     return this.httpSrv.get(this.routePrefix+'statistics/count-by-type/');
   }
+
+  findStatsByType(typeEmploye: TypeEmploye) {
+    return this.httpSrv.get(this.routePrefix + 'statistics/by-type/' + typeEmploye.id);
+  }
   
 }
