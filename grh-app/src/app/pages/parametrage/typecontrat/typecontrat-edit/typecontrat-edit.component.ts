@@ -22,14 +22,14 @@ export class TypeContratEditComponent extends BasePageComponent<TypeContrat> imp
               public location: Location) {
     super(store, typeContratSrv);
     this.pageData = {
-      title: 'Modification - TypeContrat',
+      title: 'Modification - Type de contrat',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'TypeContrats',
+          title: 'Types de Contrat',
           route: '/'+this.orientation+'/typecontrat'
         },
         {
