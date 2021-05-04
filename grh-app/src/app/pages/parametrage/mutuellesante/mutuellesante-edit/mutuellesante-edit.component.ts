@@ -29,7 +29,7 @@ export class MutuelleSanteEditComponent extends BasePageComponent<MutuelleSante>
           route: ''
         },
         {
-          title: 'Mutuelle de Santé',
+          title: 'Liste Mutuelle de Santé',
           route: '/'+this.orientation+'/mutuellesante'
         },
         {
