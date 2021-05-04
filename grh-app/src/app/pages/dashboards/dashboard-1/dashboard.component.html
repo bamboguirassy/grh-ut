@@ -24,8 +24,8 @@
   <div class="col-12">
     <tc-form-group>
       <tc-form-label>Type d'employé</tc-form-label>
-      <nz-select (nzOpenChange)="fetchTypeEmployes()" (ngModelChange)="findStatsByType($event)" nzAllowClear
-        nzShowSearch style="width: 100%" name="typeEmploye" id="typeEmploye"
+      <nz-select nzMode="multiple" (nzOpenChange)="fetchTypeEmployes()" (ngModelChange)="findStatsByType($event)" nzAllowClear
+        nzShowSearch  style="width: 100%" name="typeEmploye" id="typeEmploye"
         nzPlaceHolder="Selectionner le type d'employe" [(ngModel)]="selectedTypeEmploye">
         <ng-container *ngFor="let typeEmploye of typeEmployes">
           <nz-option *ngIf="!fetching" [nzLabel]="typeEmploye.nom" [nzValue]="typeEmploye">
@@ -40,11 +40,11 @@
 </div>
 
 
-<tc-card [title]="'Suivi Recrutement'" *ngIf="tabStatsByType">
+<tc-card [title]="'Suivi Recrutement'" *ngIf="selectedTypeEmploye.length">
   <div echarts [options]="hsOptions" class="chat-container container-h-400"></div>
 </tc-card>
 
-<div class="row" *ngIf="tabStatsByType">
+<div class="row" *ngIf="selectedTypeEmploye.length">
   <div class="col col-12 col-md-6">
     <tc-card>
       <h4 class="mt-0 mb-1">$25038</h4>

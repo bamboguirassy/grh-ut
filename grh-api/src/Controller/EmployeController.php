@@ -65,29 +65,40 @@ class EmployeController extends AbstractController
     }
 
     /**
-     * @Rest\Get(path="/statistics/by-type/{id}", name="statistic_by_type")
+     * @Rest\Post(path="/statistics/by-type", name="statistic_by_type")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
-    public function findStatsByType(Request $request, TypeEmploye $typeEmploye): array
+    public function findStatsByType(Request $request): array
     {
         /** @var EntityManagerInterface $em */
         $em = $this->getDoctrine()->getManager();
+        $typeEmployeIds = Utils::serializeRequestContent($request)['typeEmployes'];
         $tab = [];
         $tabCaisse = [];
         $tabRecrutementCourant = [];
         $tabRecrutementPrecedent = [];
         $nbrHomme = 0;
         $nbrFemme = 0;
-        $tranche1020 = 0;
-        $tranche2030 = 0;
+        $tranche1830 = 0;
         $tranche3040 = 0;
-        $tranchePlus40 = 0;
+        $tranche4050 = 0;
+        $tranche5060 = 0;
+        $tranche60Plus = 0;
         $anneeCourante = date("Y");
         $anneePrecendente = date("Y", strtotime("-1 year"));
-        $employes = $em->getRepository(Employe::class)
-            ->findByTypeEmploye($typeEmploye);
+        $typeEmployes = $em->createQuery('
+            SELECT te
+            FROM App\Entity\TypeEmploye te
+            WHERE te.id IN (:ids)
+        ')->setParameter('ids', $typeEmployeIds)->getResult();
+        $employes = $em->createQuery('
+            SELECT e
+            FROM App\Entity\Employe e
+            WHERE e.typeEmploye IN (:te)
+        ')->setParameter('te', $typeEmployes)->getResult();
         $caisseSociales = $em->getRepository(CaisseSociale::class)->findAll();
+
 
         foreach (range(1, 12) as $mois) {
             if ($mois >= 1 AND $mois <= 9)
@@ -99,10 +110,10 @@ class EmployeController extends AbstractController
                             SELECT COUNT(e) 
                             FROM App\Entity\Employe e 
                             WHERE e.dateRecrutement LIKE :dr 
-                            AND e.typeEmploye=:te
+                            AND e.typeEmploye IN (:te)
                         ')
                     ->setParameter('dr', "{$anneeCourante}-{$mois}%")
-                    ->setParameter('te', $typeEmploye)
+                    ->setParameter('te', $typeEmployes)
                     ->getSingleScalarResult();
             } catch (NoResultException $e) {
                 $nombreEmployeCourant = 0;
@@ -116,10 +127,10 @@ class EmployeController extends AbstractController
                             SELECT COUNT(e) 
                             FROM App\Entity\Employe e 
                             WHERE e.dateRecrutement LIKE :dr 
-                            AND e.typeEmploye=:te
+                            AND e.typeEmploye IN (:te)
                         ')
                     ->setParameter('dr', "{$anneePrecendente}-{$mois}%")
-                    ->setParameter('te', $typeEmploye)
+                    ->setParameter('te', $typeEmployes)
                     ->getSingleScalarResult();
             } catch (NoResultException $e) {
                 $nombreEmployePrecendent = 0;
@@ -146,10 +157,11 @@ class EmployeController extends AbstractController
                     ->createQuery('
                         SELECT COUNT(e) 
                         FROM App\Entity\Employe e 
-                        WHERE e.caisseSociale=:cs AND e.typeEmploye=:te
+                        WHERE e.caisseSociale=:cs 
+                            AND e.typeEmploye IN (:te)
                     ')
                     ->setParameter('cs', $caisseSociale)
-                    ->setParameter('te', $typeEmploye)
+                    ->setParameter('te', $typeEmployes)
                     ->getSingleScalarResult();
             } catch (NoResultException $e) {
                 $count = 0;
@@ -168,19 +180,21 @@ class EmployeController extends AbstractController
             else
                 $nbrFemme++;
             $age = (int)date('Y') - (int)$employe->getDateNaissance()->format('Y');
-            if ($age >= 10 && $age < 20) $tranche1020++;
-            else if ($age >= 20 && $age < 30) $tranche2030++;
+            if ($age >= 18 && $age < 30) $tranche1830++;
             else if ($age >= 30 && $age < 40) $tranche3040++;
-            else if ($age >= 40) $tranchePlus40++;
+            else if ($age >= 40 && $age < 50) $tranche4050++;
+            else if ($age >= 50 && $age < 60) $tranche5060++;
+            else if ($age >= 60) $tranche60Plus++;
         }
         $tab [] = [
             'nombreEmploye' => count($employes),
             'nombreHomme' => $nbrHomme,
             'nombreFemme' => $nbrFemme,
-            'tranche1020' => $tranche1020,
-            'tranche2030' => $tranche2030,
+            'tranche1830' => $tranche1830,
+            'tranche4050' => $tranche4050,
+            'tranche5060' => $tranche5060,
             'tranche3040' => $tranche3040,
-            'tranchePlus40' => $tranchePlus40,
+            'tranchePlus60' => $tranche60Plus,
             'caisseSociales' => $tabCaisse,
             'recrutementCourant' => $tabRecrutementCourant,
             'recrutementPrecedent' => $tabRecrutementPrecedent
