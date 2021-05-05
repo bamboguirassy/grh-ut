@@ -9,6 +9,8 @@ import { EmployeService } from '../../gestionemploye/employe/employe.service';
 import { TypeEmploye } from '../../parametrage/typeemploye/typeemploye';
 import { TypeEmployeService } from '../../parametrage/typeemploye/typeemploye.service';
 import { finalize } from 'rxjs/operators';
+import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import { Label } from 'ng2-charts';
 
 @Component({
   selector: 'page-dashboard',
@@ -42,10 +44,18 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
     tranche5060: number,
     tranchePlus60: number,
     caisseSociales: Array<any>,
-    recrutementCourant: Array<any>,
-    recrutementPrecedent: Array<any>
+    recrutement: Array<any>
   };
 
+  public SRbarChartOptions: ChartOptions = {
+    responsive: true,
+  };
+  public SRbarChartLabels: Label[];
+  public SRbarChartType: ChartType;
+  public SRbarChartLegend;
+  public SRbarChartPlugins;
+
+  public SRbarChartData: ChartDataSets[];
   handlePostLoad() {
   }
 
@@ -104,6 +114,18 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
     super.ngOnDestroy();
   }
 
+  setSuiviRecrutementChart() {
+    this.SRbarChartLabels = this.tabStatsByType.recrutement.map(r => r.annee); 
+    this.SRbarChartType = 'bar';
+    this.SRbarChartLegend = true;
+    this.SRbarChartPlugins = [];
+    this.SRbarChartData = [
+      { data: this.tabStatsByType.recrutement.map(r => r.nombreRecrutementFemme), label: 'Femme' },
+      { data: this.tabStatsByType.recrutement.map(r => r.nombreRecrutementHomme), label: 'Homme' }
+    ];
+
+  }
+
 
   fetchTypeEmployes() {
     if (!this.typeEmployes.length) {
@@ -131,7 +153,8 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
         this.setPGOptions();
         this.setPAOptions();
         this.setDOptions();
-        this.setHSOptions();
+        // this.setHSOptions();
+        this.setSuiviRecrutementChart();
       }, err => {
         this.employeSrv.httpSrv.handleError(err);
       })
@@ -147,7 +170,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
       });
   }
 
-  setHSOptions() {
+  /*setHSOptions() {
     const courant: Array<any> = [];
     const precedent: Array<any> = [];
     const abCourant: string[] = [];
@@ -252,7 +275,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
         }
       ]
     };
-  }
+  }*/
 
   setPAOptions() {
     const data: Array<{ value: number, name: string }> = [];
