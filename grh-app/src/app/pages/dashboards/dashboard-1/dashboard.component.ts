@@ -31,6 +31,14 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
   typeEmployes: TypeEmploye[] = [];
   selectedTypeEmploye: TypeEmploye[] = [];
   fetching = false;
+  statTypes: { code: string, title: string }[] = [
+    { code: 'SR', title: 'Suivi des recrutement' }
+  ];
+  typeDiagrams: { value: string, title: string }[] = [
+    { value: 'bar', title: 'Barre vertical' },
+    { value: 'horizontalBar', title: 'Barre Horizontal' },
+  ];
+  selectedStatType: { code: string, title: string };
 
   // custom types
   tabCountEmploye = [];
@@ -47,15 +55,37 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
     recrutement: Array<any>
   };
 
+  suiviRecrutementTypeDataChart: any;
+  suiviRecrutementGenreDataChart: any;
+  loading = false;
+  /* Chart suivi recrutement */
+  public SRbarChartLabels: Label[] = [];
+  public SRbarChartType: ChartType = 'bar';
+  public SRbarChartLegend = true;
+  public SRbarChartPlugins = [];
+
+  public SRbarChartData: ChartDataSets[] = [];
+
   public SRbarChartOptions: ChartOptions = {
     responsive: true,
   };
-  public SRbarChartLabels: Label[];
-  public SRbarChartType: ChartType;
-  public SRbarChartLegend;
-  public SRbarChartPlugins;
+  selectedSRTypeDiagram: string = 'bar';
 
-  public SRbarChartData: ChartDataSets[];
+  public SRGenrebarChartLabels: Label[] = [];
+  public SRGenrebarChartType: ChartType = 'bar';
+  public SRGenrebarChartLegend = true;
+  public SRGenrebarChartPlugins = [];
+
+  public SRGenrebarChartData: ChartDataSets[] = [];
+
+  public SRGenrebarChartOptions: ChartOptions = {
+    responsive: true,
+  };
+  selectedSRGenreTypeDiagram: string = 'bar';
+
+
+  /* Fin Chart suivi recrutement */
+
   handlePostLoad() {
   }
 
@@ -114,16 +144,76 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
     super.ngOnDestroy();
   }
 
-  setSuiviRecrutementChart() {
-    this.SRbarChartLabels = this.tabStatsByType.recrutement.map(r => r.annee); 
+  setSuiviRecrutementTypeChart() {
+    const chartData: ChartDataSets[] = [];
+    const typeEmployes = this.suiviRecrutementTypeDataChart[0].recrutements.map((r) => ({ code: r.typeEmployeCode, label: r.typeEmployeLabel }));
+    for (const te of typeEmployes) {
+      const arr: number[] = [];
+      for (const chartData of this.suiviRecrutementTypeDataChart) {
+        for (const recrutement of chartData.recrutements) {
+          if (te.code === recrutement.typeEmployeCode) {
+            arr.push(recrutement.nombreRecrutement);
+          }
+        }
+      }
+      chartData.push({ data: arr, label: te.label });
+    }
+
+    this.SRbarChartLabels = this.suiviRecrutementTypeDataChart.map((data: { annee: number, recrutement: { typeEmployeLabel: string, nombreRecrutement: number, typeEmployeCode: number } }) => data.annee);
     this.SRbarChartType = 'bar';
     this.SRbarChartLegend = true;
     this.SRbarChartPlugins = [];
-    this.SRbarChartData = [
-      { data: this.tabStatsByType.recrutement.map(r => r.nombreRecrutementFemme), label: 'Femme' },
-      { data: this.tabStatsByType.recrutement.map(r => r.nombreRecrutementHomme), label: 'Homme' }
-    ];
+    this.SRbarChartData = chartData;
+  }
 
+  switchDiagram(event: any) {
+
+    switch (event.code) {
+      case 'SR':
+        this.buildSuiviRecrutementDiagrams();
+        break;
+    }
+
+  }
+
+  buildSuiviRecrutementDiagrams() {
+    this.loading = true;
+    this
+      .employeSrv
+      .calculateStatsSuiviRecrutementGroupedByType()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe((data: any) => {
+        this.suiviRecrutementTypeDataChart = data;
+        this.setSuiviRecrutementTypeChart();
+      }, err => {
+        this.employeSrv.httpSrv.handleError(err);
+      });
+
+    this
+      .employeSrv
+      .calculateRecrutementGroupedByGenres()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe((data: any) => {
+        this.suiviRecrutementGenreDataChart = data;
+        this.setSuiviRecrutementGenreChart();
+      }, err => {
+        this.employeSrv.httpSrv.handleError(err);
+      });
+  }
+
+  setSuiviRecrutementGenreChart() {
+    this.SRGenrebarChartOptions = {
+      responsive: true,
+    };
+    this.SRGenrebarChartLabels = this.suiviRecrutementGenreDataChart.map(r => r.annee);
+    this.SRGenrebarChartType = 'bar';
+    this.SRGenrebarChartLegend = true;
+    this.SRGenrebarChartPlugins = [];
+  
+    this.SRGenrebarChartData = [
+      { data: this.suiviRecrutementGenreDataChart.map(r => r.nombreRecrutementFemme), label: 'Femme' },
+      { data: this.suiviRecrutementGenreDataChart.map(r => r.nombreRecrutementHomme), label: 'Homme' }
+    ];
   }
 
 
@@ -154,10 +244,10 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
         this.setPAOptions();
         this.setDOptions();
         // this.setHSOptions();
-        this.setSuiviRecrutementChart();
+        this.setSuiviRecrutementTypeChart();
       }, err => {
         this.employeSrv.httpSrv.handleError(err);
-      })
+      });
 
   }
 

@@ -257,6 +257,113 @@ class EmployeController extends AbstractController
         return count($tab) ? $tab : [];
     }
 
+    /**
+     * @Rest\Get(path="/statistics/suivi-recrutement-type", name="statistic_suivi_recrutement_type")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function calculateStatsSuiviRecrutementGroupedByType(Request $request)
+    {
+        /** @var EntityManagerInterface $em */
+        $em = $this->getDoctrine()->getManager();
+        $anneeCourante = date("Y");
+        $typeEmployes = $em->getRepository(TypeEmploye::class)->findAll();
+        $annees = [$anneeCourante];
+        $tabRecrutement = [];
+        foreach (range(1,4) as $i) {
+            $annees[] = date("Y", strtotime("-{$i} year"));
+        }
+        foreach ($annees as $annee) {
+            $tabNombres = [];
+            /** @var TypeEmploye $typeEmploye */
+            foreach ($typeEmployes as $typeEmploye) {
+                try {
+                    $nombreRecrutement = $em->createQuery('
+                    SELECT COUNT(e)
+                    FROM App\Entity\Employe e
+                    WHERE e.typeEmploye = :te
+                        AND e.dateRecrutement LIKE :dr
+                ')->setParameters([
+                        'dr' => '%' . $annee . '%',
+                        'te' => $typeEmploye,
+                    ])->getSingleScalarResult();
+                } catch (NoResultException $e) {
+                    $nombreRecrutement = 0;
+                } catch (NonUniqueResultException $e) {
+                    $nombreRecrutement = 0;
+                }
+                $tabNombres[] = [
+                    'typeEmployeLabel' => $typeEmploye->getNom(),
+                    'typeEmployeCode' => $typeEmploye->getCode(),
+                    'nombreRecrutement' => $nombreRecrutement
+                ];
+            }
+            $tabRecrutement[] = [
+                "annee" => $annee,
+                "recrutements" => $tabNombres
+            ];
+        }
+
+        return count($tabRecrutement) ? $tabRecrutement : [];
+
+    }
+
+    /**
+     * @Rest\Get(path="/statistics/suivi-recrutement-genre", name="statistic_by_genre")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function calculateRecrutementGroupedByGenres(Request $request){
+        /** @var EntityManagerInterface $em */
+        $em = $this->getDoctrine()->getManager();
+        $anneeCourante = date("Y");
+        $annees = [$anneeCourante];
+        $tabRecrutement = [];
+        foreach (range(1,4) as $i) {
+            $annees[] = date("Y", strtotime("-{$i} year"));
+        }
+        foreach ($annees as $annee) {
+            /** @var int $nombreEmployeH nombre de recrutement homme */
+            try {
+                $nombreRecrutementH = $em->createQuery('
+                    SELECT COUNT(e)
+                    FROM App\Entity\Employe e
+                    WHERE e.dateRecrutement LIKE :dr
+                        AND e.genre = :genre
+                ')->setParameters([
+                    'dr' => '%' . $annee . '%',
+                    'genre' => 'Masculin'
+                ])->getSingleScalarResult();
+            } catch (NoResultException $e) {
+                $nombreRecrutementH = 0;
+            } catch (NonUniqueResultException $e) {
+                $nombreRecrutementH = 0;
+            }
+            try {
+                /** @var int $nombreRecrutementF nombre de recrutement femme */
+                $nombreRecrutementF = $em->createQuery('
+                    SELECT COUNT(e)
+                    FROM App\Entity\Employe e
+                    WHERE e.dateRecrutement LIKE :dr
+                        AND e.genre = :genre
+                ')->setParameters([
+                    'dr' => '%' . $annee . '%',
+                    'genre' => 'Féminin'
+                ])->getSingleScalarResult();
+            } catch (NoResultException $e) {
+                $nombreRecrutementF = 0;
+            } catch (NonUniqueResultException $e) {
+                $nombreRecrutementF = 0;
+            }
+            $tabRecrutement[] = [
+                "annee" => $annee,
+                "nombreRecrutementHomme" => $nombreRecrutementH,
+                "nombreRecrutementFemme" => $nombreRecrutementF
+            ];
+        }
+        return count($tabRecrutement) ? $tabRecrutement : [];
+    }
+
 
     /**
      * @Rest\Get(path="/{id}/typeemploye", name="employe_by_typeemploye")
