@@ -78,6 +78,7 @@ class EmployeController extends AbstractController
         $tabCaisse = [];
         $tabRecrutementCourant = [];
         $tabRecrutementPrecedent = [];
+        $tabRecrutement = [];
         $nbrHomme = 0;
         $nbrFemme = 0;
         $tranche1830 = 0;
@@ -86,7 +87,11 @@ class EmployeController extends AbstractController
         $tranche5060 = 0;
         $tranche60Plus = 0;
         $anneeCourante = date("Y");
-        $anneePrecendente = date("Y", strtotime("-1 year"));
+//        $anneePrecendente = date("Y", strtotime("-1 year"));
+        $annees = [$anneeCourante];
+        foreach (range(1,4) as $i) {
+            $annees[] = date("Y", strtotime("-{$i} year"));
+        }
         $typeEmployes = $em->createQuery('
             SELECT te
             FROM App\Entity\TypeEmploye te
@@ -99,55 +104,101 @@ class EmployeController extends AbstractController
         ')->setParameter('te', $typeEmployes)->getResult();
         $caisseSociales = $em->getRepository(CaisseSociale::class)->findAll();
 
-
-        foreach (range(1, 12) as $mois) {
-            if ($mois >= 1 AND $mois <= 9)
-                $mois = '0' . $mois;
-            $mois = (string)$mois;
+        foreach ($annees as $annee) {
+            /** @var int $nombreEmployeH nombre de recrutement homme */
             try {
-                $nombreEmployeCourant = $em
-                    ->createQuery('
-                            SELECT COUNT(e) 
-                            FROM App\Entity\Employe e 
-                            WHERE e.dateRecrutement LIKE :dr 
-                            AND e.typeEmploye IN (:te)
-                        ')
-                    ->setParameter('dr', "{$anneeCourante}-{$mois}%")
-                    ->setParameter('te', $typeEmployes)
-                    ->getSingleScalarResult();
+                $nombreRecrutementH = $em->createQuery('
+                    SELECT COUNT(e)
+                    FROM App\Entity\Employe e
+                    WHERE e.typeEmploye IN (:te)
+                        AND e.dateRecrutement LIKE :dr
+                        AND e.genre = :genre
+                ')->setParameters([
+                    'dr' => '%' . $annee . '%',
+                    'te' => $typeEmployes,
+                    'genre' => 'Masculin'
+                ])->getSingleScalarResult();
             } catch (NoResultException $e) {
-                $nombreEmployeCourant = 0;
+                $nombreRecrutementH = 0;
             } catch (NonUniqueResultException $e) {
-                $nombreEmployeCourant = 0;
+                $nombreRecrutementH = 0;
             }
 
             try {
-                $nombreEmployePrecendent = $em
-                    ->createQuery('
-                            SELECT COUNT(e) 
-                            FROM App\Entity\Employe e 
-                            WHERE e.dateRecrutement LIKE :dr 
-                            AND e.typeEmploye IN (:te)
-                        ')
-                    ->setParameter('dr', "{$anneePrecendente}-{$mois}%")
-                    ->setParameter('te', $typeEmployes)
-                    ->getSingleScalarResult();
+                /** @var int $nombreRecrutementF nombre de recrutement femme */
+                $nombreRecrutementF = $em->createQuery('
+                    SELECT COUNT(e)
+                    FROM App\Entity\Employe e
+                    WHERE e.typeEmploye IN (:te)
+                        AND e.dateRecrutement LIKE :dr
+                        AND e.genre = :genre
+                ')->setParameters([
+                    'dr' => '%' . $annee . '%',
+                    'te' => $typeEmployes,
+                    'genre' => 'Féminin'
+                ])->getSingleScalarResult();
             } catch (NoResultException $e) {
-                $nombreEmployePrecendent = 0;
+                $nombreRecrutementF = 0;
             } catch (NonUniqueResultException $e) {
-                $nombreEmployePrecendent = 0;
+                $nombreRecrutementF = 0;
             }
 
-            $tabRecrutementCourant[] = [
-                'mois' => $mois,
-                'nombre' => $nombreEmployeCourant
-            ];
-
-            $tabRecrutementPrecedent[] = [
-                'mois' => $mois,
-                'nombre' => $nombreEmployePrecendent
+            $tabRecrutement[] = [
+                "annee" => $annee,
+                "nombreRecrutementHomme" => $nombreRecrutementH,
+                "nombreRecrutementFemme" => $nombreRecrutementF
             ];
         }
+
+
+//        foreach (range(1, 12) as $mois) {
+//            if ($mois >= 1 AND $mois <= 9)
+//                $mois = '0' . $mois;
+//            $mois = (string)$mois;
+//            try {
+//                $nombreEmployeCourant = $em
+//                    ->createQuery('
+//                            SELECT COUNT(e)
+//                            FROM App\Entity\Employe e
+//                            WHERE e.dateRecrutement LIKE :dr
+//                            AND e.typeEmploye IN (:te)
+//                        ')
+//                    ->setParameter('dr', "{$anneeCourante}-{$mois}%")
+//                    ->setParameter('te', $typeEmployes)
+//                    ->getSingleScalarResult();
+//            } catch (NoResultException $e) {
+//                $nombreEmployeCourant = 0;
+//            } catch (NonUniqueResultException $e) {
+//                $nombreEmployeCourant = 0;
+//            }
+//
+//            try {
+//                $nombreEmployePrecendent = $em
+//                    ->createQuery('
+//                            SELECT COUNT(e)
+//                            FROM App\Entity\Employe e
+//                            WHERE e.dateRecrutement LIKE :dr
+//                            AND e.typeEmploye IN (:te)
+//                        ')
+//                    ->setParameter('dr', "{$anneePrecendente}-{$mois}%")
+//                    ->setParameter('te', $typeEmployes)
+//                    ->getSingleScalarResult();
+//            } catch (NoResultException $e) {
+//                $nombreEmployePrecendent = 0;
+//            } catch (NonUniqueResultException $e) {
+//                $nombreEmployePrecendent = 0;
+//            }
+//
+//            $tabRecrutementCourant[] = [
+//                'mois' => $mois,
+//                'nombre' => $nombreEmployeCourant
+//            ];
+//
+//            $tabRecrutementPrecedent[] = [
+//                'mois' => $mois,
+//                'nombre' => $nombreEmployePrecendent
+//            ];
+//        }
 
         /** @var CaisseSociale $caisseSociale */
         foreach ($caisseSociales as $caisseSociale) {
@@ -196,8 +247,10 @@ class EmployeController extends AbstractController
             'tranche3040' => $tranche3040,
             'tranchePlus60' => $tranche60Plus,
             'caisseSociales' => $tabCaisse,
-            'recrutementCourant' => $tabRecrutementCourant,
-            'recrutementPrecedent' => $tabRecrutementPrecedent
+            'anneePrec' => $annees,
+            'recrutement' => $tabRecrutement
+//            'recrutementCourant' => $tabRecrutementCourant,
+//            'recrutementPrecedent' => $tabRecrutementPrecedent
         ];
 
 

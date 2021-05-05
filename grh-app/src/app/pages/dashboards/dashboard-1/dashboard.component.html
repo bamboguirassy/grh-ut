@@ -24,8 +24,8 @@
   <div class="col-12">
     <tc-form-group>
       <tc-form-label>Type d'employé</tc-form-label>
-      <nz-select nzMode="multiple" (nzOpenChange)="fetchTypeEmployes()" (ngModelChange)="findStatsByType($event)" nzAllowClear
-        nzShowSearch  style="width: 100%" name="typeEmploye" id="typeEmploye"
+      <nz-select nzMode="multiple" (nzOpenChange)="fetchTypeEmployes()" (ngModelChange)="findStatsByType($event)"
+        nzAllowClear nzShowSearch style="width: 100%" name="typeEmploye" id="typeEmploye"
         nzPlaceHolder="Selectionner le type d'employe" [(ngModel)]="selectedTypeEmploye">
         <ng-container *ngFor="let typeEmploye of typeEmployes">
           <nz-option *ngIf="!fetching" [nzLabel]="typeEmploye.nom" [nzValue]="typeEmploye">
@@ -40,8 +40,14 @@
 </div>
 
 
-<tc-card [title]="'Suivi Recrutement'" *ngIf="selectedTypeEmploye.length">
+<!--<tc-card [title]="'Suivi Recrutement'" *ngIf="selectedTypeEmploye.length">
   <div echarts [options]="hsOptions" class="chat-container container-h-400"></div>
+</tc-card>-->
+
+<tc-card [title]="'Suivi Recrutement'" [hidden]="!tabStatsByType?.recrutement?.length">
+  <canvas baseChart [datasets]="SRbarChartData" [labels]="SRbarChartLabels" [options]="SRbarChartOptions"
+    [plugins]="SRbarChartPlugins" [legend]="SRbarChartLegend" [chartType]="SRbarChartType">
+  </canvas>
 </tc-card>
 
 <div class="row" *ngIf="selectedTypeEmploye.length">
@@ -68,14 +74,14 @@
     </tc-card>
   </div>
 
-  <div class="col col-12 col-md-4" >
+  <div class="col col-12 col-md-4">
     <tc-card [title]="'Genre'">
       <div echarts [options]="pgOptions" class="chat-container container-h-300"></div>
     </tc-card>
   </div>
 
 
-   <div class="col col-12 col-md-4">
+  <div class="col col-12 col-md-4">
     <tc-card [title]="'Caisse Sociale'">
       <div echarts [options]="dOptions" class="chat-container container-h-300"></div>
     </tc-card>
