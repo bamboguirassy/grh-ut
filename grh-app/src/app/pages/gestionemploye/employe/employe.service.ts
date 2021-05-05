@@ -10,15 +10,15 @@ import { ToastrService } from 'ngx-toastr';
 export class EmployeService extends BamboAbstractService {
 
   public situationMatrimoniales: any[] = [
-    {label:'Célibataire', value:'Célibataire'},
-    {label:'Marié(e)', value:'Marié(e)'},
-    {label:'Divorcé(e)', value:'Divorcé(e)'},
-    {label:'Veuf(ve)', value:'Veuf(ve)'}
+    { label: 'Célibataire', value: 'Célibataire' },
+    { label: 'Marié(e)', value: 'Marié(e)' },
+    { label: 'Divorcé(e)', value: 'Divorcé(e)' },
+    { label: 'Veuf(ve)', value: 'Veuf(ve)' }
   ];
 
   public genres: any[] = [
-    {label: 'Masculin', value: 'Masculin'},
-    {label: 'Féminin', value: 'Féminin'},
+    { label: 'Masculin', value: 'Masculin' },
+    { label: 'Féminin', value: 'Féminin' },
   ];
 
   constructor(public httpSrv: BamboHttpService, public toastr: ToastrService) {
@@ -28,11 +28,15 @@ export class EmployeService extends BamboAbstractService {
   }
 
   findByTypeEmploye(typeEmploye: TypeEmploye) {
-    return this.httpSrv.get(this.routePrefix+typeEmploye.id+'/typeemploye')
+    return this.httpSrv.get(this.routePrefix + typeEmploye.id + '/typeemploye')
   }
 
   countByType() {
-    return this.httpSrv.get(this.routePrefix+'statistics/count-by-type/');
+    return this.httpSrv.get(this.routePrefix + 'statistics/count-by-type/');
   }
-  
+
+  findStatsByType(typeEmployes: TypeEmploye[]) {
+    return this.httpSrv.post(this.routePrefix + 'statistics/by-type', { 'typeEmployes': typeEmployes.map(te => te.id) });
+  }
+
 }

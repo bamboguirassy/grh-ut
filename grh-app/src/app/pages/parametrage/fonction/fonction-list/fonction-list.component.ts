@@ -17,7 +17,7 @@ export class FonctionListComponent extends BasePageComponent<Fonction> implement
     super(store, fonctionSrv);
 
     this.pageData = {
-      title: 'Liste des Fonctions',
+      title: 'Liste des fonctions',
       breadcrumbs: [
         {
           title: 'Accueil',

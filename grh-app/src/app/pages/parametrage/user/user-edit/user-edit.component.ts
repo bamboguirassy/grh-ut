@@ -28,14 +28,14 @@ export class UserEditComponent extends BasePageComponent<User> implements OnInit
               public location: Location) {
     super(store, userSrv);
     this.pageData = {
-      title: 'Modification - User',
+      title: 'Modification - Utilisateur',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Users',
+          title: 'Liste des utilisateurs',
           route: '/user'
         },
         {

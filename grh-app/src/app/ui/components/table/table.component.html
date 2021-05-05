@@ -67,10 +67,11 @@
 
   <div class="no-data" *ngIf="!rows">No table's data</div>
 </div>
-
-<tc-pagination
-  *ngIf="pagination && pagesCount > 1"
-  [pagesNumber]="pagesCount"
-  [pageNum]="page"
-  (goToPage)="goToPage($event)"
-></tc-pagination>
+<div style="overflow-y: auto;">
+  <tc-pagination
+    *ngIf="pagination && pagesCount > 1"
+    [pagesNumber]="pagesCount"
+    [pageNum]="page"
+    (goToPage)="goToPage($event)">
+  </tc-pagination>
+</div>

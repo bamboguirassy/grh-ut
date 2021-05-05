@@ -16,21 +16,21 @@ import { Location } from '@angular/common';
 export class TypeEmployeEditComponent extends BasePageComponent<TypeEmploye> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public typeEmployeSrv: TypeEmployeService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
+    public typeEmployeSrv: TypeEmployeService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location) {
     super(store, typeEmployeSrv);
     this.pageData = {
-      title: 'Modification - TypeEmploye',
+      title: 'Modification - Type d\'employés',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'TypeEmployes',
-          route: '/'+this.orientation+'/typeemploye'
+          title: 'Types d\'employés',
+          route: '/' + this.orientation + '/typeemploye'
         },
         {
           title: 'Modification'
