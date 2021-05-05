@@ -49,6 +49,7 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
     this.selectedFonctionId = this.entity.fonction?.id;
     this.selectedStructure = this.entity.structure?.id;
     this.entity.datePriseFonction = this.datePipe.transform(this.entity.datePriseFonction, 'yyyy-MM-dd');
+    this.entity.dateFin = this.datePipe.transform(this.entity.dateFin, 'yyyy-MM-dd');
     this.findFonctions();
     this.findStructures();
     this.findTypeContrats();
@@ -69,7 +70,8 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
   update() {
     this.entity.typeContrat = this.selectedTypeContrat;
     this.entity.fonction = this.selectedFonctionId;
-    this.entity.structure = this.selectedStructure;    
+    this.entity.structure = this.selectedStructure; 
+    this.entity.dateFin = this.datePipe.transform(this.entity.dateFin, 'yyyy-MM-dd');   
     this.fonctionEmployeSrv.update(this.entity)
       .subscribe((resp: any) => {
         this.closeModal();

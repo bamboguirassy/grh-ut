@@ -130,6 +130,16 @@
                 </tc-form-description>
               </tc-form-group>
             </div>
+            <div class="col-12 col-md-6">
+              <tc-form-group>
+                <tc-form-label>Date Fin</tc-form-label>
+                <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateFin"
+                  name="dateFin" id="dateFin" #dateFin="ngModel"></nz-date-picker>
+                <tc-form-description>
+                  <app-form-field-validation-message [formField]="dateFin"></app-form-field-validation-message>
+                </tc-form-description>
+              </tc-form-group>
+            </div>
             <div class="col-12 col-md-6" *ngIf="entity.typeContrat?.code!='CDI'">
               <tc-form-group>
                 <tc-form-label>Durée en année (Optionnel)</tc-form-label>
