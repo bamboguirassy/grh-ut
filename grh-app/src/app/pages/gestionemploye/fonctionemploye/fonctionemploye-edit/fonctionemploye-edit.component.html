@@ -1,4 +1,4 @@
-<tc-card *ngIf="entity && fonctionEmployeSrv.resourceName|editable" [tcGradient]="lightGradient">
+<!-- <tc-card *ngIf="entity && fonctionEmployeSrv.resourceName|editable" [tcGradient]="lightGradient">
     <form #form="ngForm" novalidate>
         <tc-card [view]="secondViewBorder" [outline]="true">
             <div class="actions justify-content-between">
@@ -56,4 +56,102 @@
         </tc-card>
     </form>
 </tc-card>
+-->
+<!-- Modal window -->
+
+<nz-modal nzWidth="70%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Modification'"
+  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+  <ng-template #modalBody>
+      <form #form="ngForm" novalidate>
+        <div class="row">
+            <div class="col-12 col-md-6">
+              <tc-form-group>
+                <tc-form-label>Fonction</tc-form-label>
+                <nz-select [required]="true" name="fonction" id="fonction" #fonction="ngModel"
+                  nzAllowClear nzShowSearch [(ngModel)]="selectedFonctionId">
+                  <ng-container *ngFor="let fonction of fonctions">
+                    <nz-option [nzValue]="fonction.id" [nzLabel]="fonction.nom"></nz-option>
+                  </ng-container>
+                </nz-select>
+                <tc-form-description>
+                  <app-form-field-validation-message [formField]="fonction"></app-form-field-validation-message>
+                </tc-form-description>
+              </tc-form-group>
+            </div>
+            <div class="col-12 col-md-6">
+              <tc-form-group>
+                <tc-form-label>Structure</tc-form-label>
+                <nz-select [required]="true" name="structure" id="structure" #structure="ngModel"
+                  nzPlaceHolder="Selectionner la structure" nzAllowClear nzShowSearch [(ngModel)]="selectedStructure">
+                  <ng-container *ngFor="let structure of structures">
+                    <nz-option [nzValue]="structure.id" [nzLabel]="structure.nom+' ('+structure.code+')'"></nz-option>
+                  </ng-container>
+                </nz-select>
+                <tc-form-description>
+                  <app-form-field-validation-message [formField]="structure"></app-form-field-validation-message>
+                </tc-form-description>
+              </tc-form-group>
+            </div>
+            <div class="col-12 col-md-6">
+              <tc-form-group>
+                <tc-form-label>Type Contrat (Optionnel)</tc-form-label>
+                <nz-select name="typeContrat" id="typeContrat" #typeContrat="ngModel"
+                  nzPlaceHolder="Selectionner le type de contrat" nzAllowClear nzShowSearch
+                  [(ngModel)]="selectedTypeContrat">
+                  <ng-container *ngFor="let typeContrat of typeContrats">
+                    <nz-option [nzValue]="typeContrat.id" [nzLabel]="typeContrat.nom"></nz-option>
+                  </ng-container>
+                </nz-select>
+                <tc-form-description>
+                  <app-form-field-validation-message [formField]="typeContrat"></app-form-field-validation-message>
+                </tc-form-description>
+              </tc-form-group>
+            </div>
+            <div class="col-12 col-md-6">
+              <tc-form-group>
+                <tc-form-label>Date Prise Fonction</tc-form-label>
+                <nz-date-picker [required]="true" [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="entity.datePriseFonction"
+                  name="datePriseFonction" id="datePriseFonction" #datePriseFonction="ngModel"></nz-date-picker>
+                <tc-form-description>
+                  <app-form-field-validation-message [formField]="datePriseFonction"></app-form-field-validation-message>
+                </tc-form-description>
+              </tc-form-group>
+            </div>
+            <div class="col-12 col-md-6" *ngIf="entity.typeContrat?.code!='CDI'">
+              <tc-form-group>
+                <tc-form-label>Durée en année (Optionnel)</tc-form-label>
+                <tc-input type="number" [(ngModel)]="entity.duree" name="duree" id="duree" #duree="ngModel">
+                </tc-input>
+                <tc-form-description>
+                  <app-form-field-validation-message [formField]="duree"></app-form-field-validation-message>
+                </tc-form-description>
+              </tc-form-group>
+            </div>
+            <div class="col-12 col-md-6">
+              <tc-form-group>
+                <tc-form-label>En cours ?</tc-form-label>
+                <tc-switcher [bgColor]="['transparent', 'transparent', '#ed5564']"
+                  [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']"
+                  [labelColor]="['#000', '#000', '#ed5564']" [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel"></tc-switcher>
+                <tc-form-description>
+                  <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
+                </tc-form-description>
+              </tc-form-group>
+            </div>
+          </div>
+      </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'"
+        (click)="closeModal()">Fermer</button>
+      <button type="button"class="float-right" (click)="update()"
+                    beforeIcon="icofont-save" tc-button view="warning">
+                    Mettre à jour
+                </button>
+    </div>
+  </ng-template>
+</nz-modal>
+<!-- end Modal window -->
 <app-access-denied *ngIf="!(fonctionEmployeSrv.resourceName|editable)"></app-access-denied>
