@@ -34,5 +34,8 @@ export class EmployeService extends BamboAbstractService {
   countByType() {
     return this.httpSrv.get(this.routePrefix+'statistics/count-by-type/');
   }
+  uploadPhoto(photo: any, fileName: any) {
+    return this.httpSrv.put(this.routePrefix+ 'change_image_employe', {photo, fileName});
+}
   
 }

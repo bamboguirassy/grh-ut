@@ -13,8 +13,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Utils\Utils;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\File;
+use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
@@ -129,7 +133,7 @@ class EmployeController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_EMPLOYE_EDIT")
      */
-    public function edit(Request $request, Employe $employe): Employe
+    public function edit(Request $request, Employe $employe,\App\Service\FileUploader $uploader): Employe
     {
         $form = $this->createForm(EmployeType::class, $employe);
         $form->submit(Utils::serializeRequestContent($request));
@@ -142,6 +146,9 @@ class EmployeController extends AbstractController
         }
         $employe->setDateNaissance(new \DateTime($reqData->dateNaissance));
         $employe->setDateRecrutement(new \DateTime($reqData->dateRecrutement));
+        
+        /* 
+        }*/
         $this->getDoctrine()->getManager()->flush();
 
         return $employe;
@@ -247,5 +254,34 @@ class EmployeController extends AbstractController
             $em->persist($employe);
         }
         $em->flush();
+    }
+    
+    /**
+     * @Rest\Put(path="/change_image_employe", name="edit_image_picture")
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @param Request $request
+     * @param FileUploader $uploader
+     * @return Employe
+     * @throws Exception
+     */
+    public function uploadPhoto(Request $request,  Employe $employe,\App\Service\FileUploader $uploader) {
+        $manager = $this->getDoctrine()->getManager();
+        $host = $request->getHttpHost();
+        $scheme = $request->getScheme();
+        $data = Utils::getObjectFromRequest($request);
+        $filename = $data->filename;
+
+        file_put_contents($filename, base64_decode($data->photo));
+        $file = new File($filename);
+        $authorizedExtensions = ['jpeg', 'jpg', 'png'];
+        if (!in_array($file->guessExtension(), $authorizedExtensions))
+            throw new BadRequestHttpException('Fichier non pris en charge');
+        $newFileName = $uploader->setTargetDirectory('employe_photo_directory')->upload($file, $employe->getFilename()); // old fileName
+        $employe->setFilepath("$scheme://$host/" . $uploader->getTargetDirectory() . $newFileName);
+        $employe->setFilename($newFileName);
+        $manager->flush();
+
+        return $employe;
     }
 }
