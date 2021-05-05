@@ -53,6 +53,7 @@ export class FonctionEmployeNewComponent implements OnInit {
     this.entity.fonction = this.selectedFonction.id;
     this.entity.structure = this.selectedStructure.id;
     this.entity.datePriseFonction = this.datePipe.transform(this.entity.datePriseFonction,'yyyy-MM-dd');
+    this.entity.dateFin = this.datePipe.transform(this.entity.dateFin,'yyyy-MM-dd');
     this.fonctionEmployeSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();

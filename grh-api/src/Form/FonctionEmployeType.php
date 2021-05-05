@@ -19,6 +19,7 @@ class FonctionEmployeType extends AbstractType
             ->add('fonction')
             ->add('structure')
             ->add('typeContrat')
+            ->add('dateFin')
         ;
     }
 

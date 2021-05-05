@@ -89,6 +89,10 @@ class FonctionEmployeController extends AbstractController
         }
 
         $fonctionEmploye->setDatePriseFonction(new \DateTime($reqData->datePriseFonction));
+        if (isset($reqData->dateFin)) {
+            $fonctionEmploye->setDateFin(new \DateTime($reqData->dateFin));
+        }
+
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($fonctionEmploye);
