@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\GClasseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,22 @@ class GClasse
      * @ORM\Column(type="integer")
      */
     private $ordre;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=GCategorie::class)
+     */
+    private $categories;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=GNiveau::class)
+     */
+    private $niveaux;
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+        $this->niveaux = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +104,58 @@ class GClasse
     public function setOrdre(int $ordre): self
     {
         $this->ordre = $ordre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|GCategorie[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(GCategorie $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(GCategorie $category): self
+    {
+        if ($this->categories->contains($category)) {
+            $this->categories->removeElement($category);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|GNiveau[]
+     */
+    public function getNiveaux(): Collection
+    {
+        return $this->niveaux;
+    }
+
+    public function addNiveau(GNiveau $niveau): self
+    {
+        if (!$this->niveaux->contains($niveau)) {
+            $this->niveaux[] = $niveau;
+        }
+
+        return $this;
+    }
+
+    public function removeNiveau(GNiveau $niveau): self
+    {
+        if ($this->niveaux->contains($niveau)) {
+            $this->niveaux->removeElement($niveau);
+        }
 
         return $this;
     }
