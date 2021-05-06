@@ -32,8 +32,7 @@ class FonctionEmploye
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="etat", type="boolean", nullable=true, options={"comment"="true ou false pour savoir si la fonction est toujours d'actualité
-Donner la possibilité de définir une fonction comme étant la courante"})
+     * @ORM\Column(name="etat", type="boolean", nullable=true, options={"comment"="true ou false pour savoir si la fonction est toujours d'actualité Donner la possibilité de définir une fonction comme étant la courante"})
      */
     private $etat;
 

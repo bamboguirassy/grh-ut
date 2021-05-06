@@ -122,6 +122,9 @@ class FonctionEmployeController extends AbstractController
         $form = $this->createForm(FonctionEmployeType::class, $fonctionEmploye);
         $reqData = Utils::getObjectFromRequest($request);
         $form->submit(Utils::serializeRequestContent($request));
+        if (isset($reqData->datePriseFonction)) {
+            $fonctionEmploye->setDatePriseFonction(new \DateTime($reqData->datePriseFonction));
+        }
         if (isset($reqData->dateFin)) {
             $fonctionEmploye->setDateFin(new \DateTime($reqData->dateFin));
         }
