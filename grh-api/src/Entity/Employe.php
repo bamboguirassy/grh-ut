@@ -197,6 +197,11 @@ class Employe
      */
     private $typeEmploye;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Profession::class)
+     */
+    private $profession;
+
     public function getId()
     {
         return $this->id;
@@ -474,6 +479,18 @@ class Employe
     public function setTypeEmploye($typeEmploye): self
     {
         $this->typeEmploye = $typeEmploye;
+
+        return $this;
+    }
+
+    public function getProfession(): ?Profession
+    {
+        return $this->profession;
+    }
+
+    public function setProfession(?Profession $profession): self
+    {
+        $this->profession = $profession;
 
         return $this;
     }
