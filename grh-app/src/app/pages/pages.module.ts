@@ -79,7 +79,6 @@ import { GroupShowComponent } from './parametrage/group/group-show/group-show.co
 import { TypeEntiteEditComponent } from './parametrage/typeentite/typeentite-edit/typeentite-edit.component';
 import { TypeEntiteListComponent } from './parametrage/typeentite/typeentite-list/typeentite-list.component';
 import { TypeEntiteShowComponent } from './parametrage/typeentite/typeentite-show/typeentite-show.component';
-import { EmployeCloneComponent } from './gestionemploye/employe/employe-clone/employe-clone.component';
 import { EmployeEditComponent } from './gestionemploye/employe/employe-edit/employe-edit.component';
 import { EmployeListComponent } from './gestionemploye/employe/employe-list/employe-list.component';
 import { EmployeShowComponent } from './gestionemploye/employe/employe-show/employe-show.component';
@@ -241,7 +240,6 @@ import { FonctionEmployeShowComponent } from './gestionemploye/fonctionemploye/f
     EmployeListComponent,
     EmployeEditComponent,
     EmployeShowComponent,
-    EmployeCloneComponent,
     EmployeNewComponent,
     // adresse components
     AdresseListComponent,
