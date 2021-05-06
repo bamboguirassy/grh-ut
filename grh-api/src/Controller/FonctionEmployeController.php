@@ -117,7 +117,12 @@ class FonctionEmployeController extends AbstractController
     {
         $form = $this->createForm(FonctionEmployeType::class, $fonctionEmploye);
         $form->submit(Utils::serializeRequestContent($request));
-
+        
+        $req = Utils::getObjectFromRequest($request);
+        if (!isset($req->datePriseFonction)) {
+            throw $this->createNotFoundException("La date de prise de fonction est introuvable !");
+        }
+        $fonctionEmploye->setDatePriseFonction(new \DateTime($req->datePriseFonction));
         $this->getDoctrine()->getManager()->flush();
 
         return $fonctionEmploye;
