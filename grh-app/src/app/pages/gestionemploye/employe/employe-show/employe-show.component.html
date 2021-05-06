@@ -1,5 +1,5 @@
 <tc-card *ngIf="employeSrv.resourceName|showable" [tcGradient]="lightGradient">
-    <tc-card [view]="secondViewBorder" [tcGradient]="secondGradient" [padding]="0.5">
+    <tc-card [outline]="true" [view]="secondViewBorder" [tcGradient]="secondGradient" [padding]="0.5">
         <div class="row">
             <div class="d-none d-md-block col-md-1">
                 <i *ngIf="!entity?.filepath" class="icofont icofont-data icofont-4x"></i>
