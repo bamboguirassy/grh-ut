@@ -83,7 +83,6 @@ import { EmployeEditComponent } from './gestionemploye/employe/employe-edit/empl
 import { EmployeListComponent } from './gestionemploye/employe/employe-list/employe-list.component';
 import { EmployeShowComponent } from './gestionemploye/employe/employe-show/employe-show.component';
 import { EmployeNewComponent } from './gestionemploye/employe/employe-new/employe-new.component';
-import { GradeCloneComponent } from './gestiongrade/grade/grade-clone/grade-clone.component';
 import { GradeEditComponent } from './gestiongrade/grade/grade-edit/grade-edit.component';
 import { GradeListComponent } from './gestiongrade/grade/grade-list/grade-list.component';
 import { GradeShowComponent } from './gestiongrade/grade/grade-show/grade-show.component';
@@ -234,7 +233,6 @@ import { FonctionEmployeShowComponent } from './gestionemploye/fonctionemploye/f
     GradeListComponent,
     GradeEditComponent,
     GradeShowComponent,
-    GradeCloneComponent,
     GradeNewComponent,
     // employe components
     EmployeListComponent,
