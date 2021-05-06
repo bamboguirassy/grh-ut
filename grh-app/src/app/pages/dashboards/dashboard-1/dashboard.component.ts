@@ -32,11 +32,11 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
   selectedTypeEmploye: TypeEmploye[] = [];
   fetching = false;
   statTypes: { code: string, title: string }[] = [
-    { code: 'SR', title: 'Suivi des recrutement' }
+    { code: 'SR', title: 'Suivi des recrutements' }
   ];
   typeDiagrams: { value: string, title: string }[] = [
-    { value: 'bar', title: 'Barre vertical' },
-    { value: 'horizontalBar', title: 'Barre Horizontal' },
+    { value: 'bar', title: 'Barre verticale' },
+    { value: 'horizontalBar', title: 'Barre Horizontale' },
   ];
   selectedStatType: { code: string, title: string };
 
@@ -129,7 +129,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
 
   ngOnInit() {
     super.ngOnInit();
-
+    this.getEmployeCountStatistics();
     this.getData('assets/data/last-appointments.json', 'appointments', 'setLoaded');
 
     // this.setHSOptions();
