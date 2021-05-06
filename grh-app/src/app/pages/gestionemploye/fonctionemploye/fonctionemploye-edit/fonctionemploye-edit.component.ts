@@ -24,8 +24,10 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
   @ViewChildren('form') form;
   entity: FonctionEmploye;
   @Output() modification: EventEmitter<FonctionEmploye> = new EventEmitter();
+  @Output() onClose: EventEmitter<any> = new EventEmitter();
   @Input() set selectedFonction(value){
     this.entity = value;
+    this.handlePostLoad();
     this.openModal();
   }
   structures: Structure[] = [];
@@ -45,11 +47,6 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.selectedTypeContrat = this.entity.typeContrat?.id;
-    this.selectedFonctionId = this.entity.fonction?.id;
-    this.selectedStructure = this.entity.structure?.id;
-    this.entity.datePriseFonction = this.datePipe.transform(this.entity.datePriseFonction, 'yyyy-MM-dd');
-    this.entity.dateFin = this.datePipe.transform(this.entity.dateFin, 'yyyy-MM-dd');
     this.findFonctions();
     this.findStructures();
     this.findTypeContrats();
@@ -60,7 +57,11 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
   }
 
   handlePostLoad() {
-   
+    this.selectedTypeContrat = this.entity.typeContrat?.id;
+    this.selectedFonctionId = this.entity.fonction?.id;
+    this.selectedStructure = this.entity.structure?.id;
+    this.entity.datePriseFonction = this.datePipe.transform(this.entity.datePriseFonction, 'yyyy-MM-dd');
+    this.entity.dateFin = this.datePipe.transform(this.entity.dateFin, 'yyyy-MM-dd');
   }
 
   prepareUpdate() {
@@ -68,11 +69,11 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
   }
 
   update() {
-    this.entity.datePriseFonction = this.datePipe.transform(this.entity.datePriseFonction, 'yyyy-MM-dd');
     this.entity.typeContrat = this.selectedTypeContrat;
     this.entity.fonction = this.selectedFonctionId;
     this.entity.structure = this.selectedStructure; 
     this.entity.dateFin = this.datePipe.transform(this.entity.dateFin, 'yyyy-MM-dd');   
+    this.entity.datePriseFonction = this.datePipe.transform(this.entity.datePriseFonction, 'yyyy-MM-dd');
     this.fonctionEmployeSrv.update(this.entity)
       .subscribe((resp: any) => {
         console.log(this.entity);
@@ -94,6 +95,7 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
 
   // close modal window
   closeModal() {
+    this.onClose.emit();
     this.isModalVisible = false;
   }
 

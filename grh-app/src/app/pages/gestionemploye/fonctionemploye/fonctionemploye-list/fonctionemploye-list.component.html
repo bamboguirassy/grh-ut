@@ -55,7 +55,7 @@
       </ng-template>
     </tc-table-col>
   </tc-table>
-  <app-fonctionemploye-edit *ngIf="selectedFonction" [selectedFonction]="selectedFonction" (modification)="findByEmploye()"></app-fonctionemploye-edit>
+  <app-fonctionemploye-edit *ngIf="selectedFonction" [selectedFonction]="selectedFonction" (modification)="findByEmploye()" (onClose)="onClose()"></app-fonctionemploye-edit>
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
 </tc-card>
 <app-access-denied *ngIf="!(fonctionEmployeSrv.resourceName|listable)"></app-access-denied>
