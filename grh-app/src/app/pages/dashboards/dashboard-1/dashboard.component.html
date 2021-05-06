@@ -1,7 +1,6 @@
 <div class="row">
   <div class="col col-12">
-    Nombre d'employé(s) par catégorie - <a href="javascript:void(0)" (click)="getEmployeCountStatistics()">charger les
-      données</a>
+    Nombre d'employés par catégorie
     <hr>
   </div>
   <div class="col col-12 col-md-6 col-xl-3" *ngFor="let employeCountItem of tabCountEmploye">
@@ -20,12 +19,12 @@
     </tc-card>
   </div>
 </div>
-<div class="row">
+<!--<div class="row">
   <div class="col-12">
     <tc-form-group>
       <tc-form-label>Type d'employé</tc-form-label>
-      <nz-select nzMode="multiple" (nzOpenChange)="fetchTypeEmployes()" (ngModelChange)="findStatsByType($event)" nzAllowClear
-        nzShowSearch  style="width: 100%" name="typeEmploye" id="typeEmploye"
+      <nz-select nzMode="multiple" (nzOpenChange)="fetchTypeEmployes()" (ngModelChange)="findStatsByType($event)"
+        nzAllowClear nzShowSearch style="width: 100%" name="typeEmploye" id="typeEmploye"
         nzPlaceHolder="Selectionner le type d'employe" [(ngModel)]="selectedTypeEmploye">
         <ng-container *ngFor="let typeEmploye of typeEmployes">
           <nz-option *ngIf="!fetching" [nzLabel]="typeEmploye.nom" [nzValue]="typeEmploye">
@@ -37,11 +36,61 @@
       </nz-select>
     </tc-form-group>
   </div>
+</div>-->
+
+<div class="row">
+  <div class="col-12">
+    <tc-form-group>
+      <tc-form-label>Visualisation</tc-form-label>
+      <nz-select (ngModelChange)="switchDiagram($event)" nzAllowClear nzShowSearch style="width: 100%" name="typeStat"
+        id="typeStat" nzPlaceHolder="Selectionner les informations à visualiser" [(ngModel)]="selectedStatType">
+        <ng-container *ngFor="let statType of statTypes">
+          <nz-option [nzLabel]="statType.title" [nzValue]="statType">
+          </nz-option>
+        </ng-container>
+      </nz-select>
+    </tc-form-group>
+  </div>
 </div>
 
-
-<tc-card [title]="'Suivi Recrutement'" *ngIf="selectedTypeEmploye.length">
+<!--<tc-card [title]="'Suivi Recrutement'" *ngIf="selectedTypeEmploye.length">
   <div echarts [options]="hsOptions" class="chat-container container-h-400"></div>
+</tc-card>-->
+
+<tc-card [title]="'Suivi Recrutement'" *ngIf="selectedStatType?.code === 'SR' && !loading">
+  <div class="row">
+    <div class="col-6 col-sm-12 col-lg-6 col-xl-6">
+      <tc-form-group>
+        <tc-form-label>Type de diagram</tc-form-label>
+        <nz-select  nzAllowClear nzShowSearch style="width: 100%" name="typeDiagram"
+          id="typeDiagram" nzPlaceHolder="Selectionner type diagram" [(ngModel)]="selectedSRTypeDiagram">
+          <ng-container *ngFor="let diagramType of typeDiagrams">
+            <nz-option [nzLabel]="diagramType?.title" [nzValue]="diagramType?.value">
+            </nz-option>
+          </ng-container>
+        </nz-select>
+      </tc-form-group>
+      <canvas baseChart [datasets]="SRbarChartData" [labels]="SRbarChartLabels" [options]="SRbarChartOptions"
+        [plugins]="SRbarChartPlugins" [legend]="SRbarChartLegend" [chartType]="selectedSRTypeDiagram">
+      </canvas>
+    </div>
+    <div class="col-6 col-sm-12 col-lg-6 col-xl-6">
+      <tc-form-group>
+        <tc-form-label>Type de diagram</tc-form-label>
+        <nz-select nzAllowClear nzShowSearch style="width: 100%" name="typeDiagram"
+          id="typeDiagram" nzPlaceHolder="Selectionner type diagram" [(ngModel)]="selectedSRGenreTypeDiagram">
+          <ng-container *ngFor="let diagramType of typeDiagrams">
+            <nz-option [nzLabel]="diagramType?.title" [nzValue]="diagramType?.value">
+            </nz-option>
+          </ng-container>
+        </nz-select>
+      </tc-form-group>
+      <canvas baseChart [datasets]="SRGenrebarChartData" [labels]="SRGenrebarChartLabels" [options]="SRGenrebarChartOptions"
+        [plugins]="SRGenrebarChartPlugins" [legend]="SRGenrebarChartLegend" [chartType]="selectedSRGenreTypeDiagram">
+      </canvas>
+    </div>
+  </div>
+
 </tc-card>
 
 <div class="row" *ngIf="selectedTypeEmploye.length">
@@ -62,64 +111,65 @@
       <div echarts [options]="heOptions" class="chat-container"></div>
     </tc-card>
   </div>
-  <div class="col col-12 col-md-4">
+  <!-- <div class="col col-12 col-md-4">
     <tc-card [title]="'Age'">
       <div echarts [options]="paOptions" class="chat-container container-h-300"></div>
     </tc-card>
   </div>
 
-  <div class="col col-12 col-md-4" >
+  <div class="col col-12 col-md-4">
     <tc-card [title]="'Genre'">
       <div echarts [options]="pgOptions" class="chat-container container-h-300"></div>
     </tc-card>
   </div>
 
 
-   <div class="col col-12 col-md-4">
+  <div class="col col-12 col-md-4">
     <tc-card [title]="'Caisse Sociale'">
       <div echarts [options]="dOptions" class="chat-container container-h-300"></div>
     </tc-card>
   </div>
-</div>
+</div>-->
 
-<tc-card [title]="'Last appointments'" class="mb-0">
-  <tc-table [rows]="appointments" [hovered]="true" [pagination]="true">
-    <tc-table-col [columnTitle]="'Photo'" [columnName]="'img'">
-      <ng-template #tableTDTemplate let-value>
-        <tc-avatar [src]="value"></tc-avatar>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Name'" [columnName]="'name'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <strong>{{ value }}</strong>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Email'" [columnName]="'email'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" [tcColor]="'#336cfb'">
-          <tc-icon [iconClass]="'icofont-ui-email'" [tcFontSize]="16" [padding]="0" class="mr-1"></tc-icon> {{ value }}
-        </span>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Date'" [columnName]="'date'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" [tcColor]="'#a5a5a5'">{{ value }}</span>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Visit time'" [columnName]="'fromTo'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" [tcColor]="'#a5a5a5'">{{ value }}</span>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Number'" [columnName]="'number'">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" [tcColor]="'#336cfb'">
-          <tc-icon [iconClass]="'icofont-ui-cell-phone'" [tcFontSize]="16" [padding]="0" class="mr-1"></tc-icon>
-          {{ value }}
-        </span>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Doctor'" [columnName]="'doctor'" [enableSorting]="true"></tc-table-col>
-    <tc-table-col [columnTitle]="'Injury / Condition'" [columnName]="'injury'" [enableSorting]="true"></tc-table-col>
-  </tc-table>
-</tc-card>
+  <tc-card [title]="'Last appointments'" class="mb-0">
+    <tc-table [rows]="appointments" [hovered]="true" [pagination]="true">
+      <tc-table-col [columnTitle]="'Photo'" [columnName]="'img'">
+        <ng-template #tableTDTemplate let-value>
+          <tc-avatar [src]="value"></tc-avatar>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Name'" [columnName]="'name'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <strong>{{ value }}</strong>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Email'" [columnName]="'email'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <span class="nowrap" [tcColor]="'#336cfb'">
+            <tc-icon [iconClass]="'icofont-ui-email'" [tcFontSize]="16" [padding]="0" class="mr-1"></tc-icon>
+            {{ value }}
+          </span>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Date'" [columnName]="'date'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <span class="nowrap" [tcColor]="'#a5a5a5'">{{ value }}</span>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Visit time'" [columnName]="'fromTo'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <span class="nowrap" [tcColor]="'#a5a5a5'">{{ value }}</span>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Number'" [columnName]="'number'">
+        <ng-template #tableTDTemplate let-value>
+          <span class="nowrap" [tcColor]="'#336cfb'">
+            <tc-icon [iconClass]="'icofont-ui-cell-phone'" [tcFontSize]="16" [padding]="0" class="mr-1"></tc-icon>
+            {{ value }}
+          </span>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Doctor'" [columnName]="'doctor'" [enableSorting]="true"></tc-table-col>
+      <tc-table-col [columnTitle]="'Injury / Condition'" [columnName]="'injury'" [enableSorting]="true"></tc-table-col>
+    </tc-table>
+  </tc-card>

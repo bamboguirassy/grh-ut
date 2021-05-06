@@ -79,12 +79,10 @@ import { GroupShowComponent } from './parametrage/group/group-show/group-show.co
 import { TypeEntiteEditComponent } from './parametrage/typeentite/typeentite-edit/typeentite-edit.component';
 import { TypeEntiteListComponent } from './parametrage/typeentite/typeentite-list/typeentite-list.component';
 import { TypeEntiteShowComponent } from './parametrage/typeentite/typeentite-show/typeentite-show.component';
-import { EmployeCloneComponent } from './gestionemploye/employe/employe-clone/employe-clone.component';
 import { EmployeEditComponent } from './gestionemploye/employe/employe-edit/employe-edit.component';
 import { EmployeListComponent } from './gestionemploye/employe/employe-list/employe-list.component';
 import { EmployeShowComponent } from './gestionemploye/employe/employe-show/employe-show.component';
 import { EmployeNewComponent } from './gestionemploye/employe/employe-new/employe-new.component';
-import { GradeCloneComponent } from './gestiongrade/grade/grade-clone/grade-clone.component';
 import { GradeEditComponent } from './gestiongrade/grade/grade-edit/grade-edit.component';
 import { GradeListComponent } from './gestiongrade/grade/grade-list/grade-list.component';
 import { GradeShowComponent } from './gestiongrade/grade/grade-show/grade-show.component';
@@ -235,13 +233,11 @@ import { FonctionEmployeShowComponent } from './gestionemploye/fonctionemploye/f
     GradeListComponent,
     GradeEditComponent,
     GradeShowComponent,
-    GradeCloneComponent,
     GradeNewComponent,
     // employe components
     EmployeListComponent,
     EmployeEditComponent,
     EmployeShowComponent,
-    EmployeCloneComponent,
     EmployeNewComponent,
     // adresse components
     AdresseListComponent,

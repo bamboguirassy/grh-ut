@@ -89,6 +89,10 @@ class FonctionEmployeController extends AbstractController
         }
 
         $fonctionEmploye->setDatePriseFonction(new \DateTime($reqData->datePriseFonction));
+        if (isset($reqData->dateFin)) {
+            $fonctionEmploye->setDateFin(new \DateTime($reqData->dateFin));
+        }
+
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($fonctionEmploye);
@@ -116,13 +120,14 @@ class FonctionEmployeController extends AbstractController
     public function edit(Request $request, FonctionEmploye $fonctionEmploye): FonctionEmploye
     {
         $form = $this->createForm(FonctionEmployeType::class, $fonctionEmploye);
+        $reqData = Utils::getObjectFromRequest($request);
         $form->submit(Utils::serializeRequestContent($request));
-        
-        $req = Utils::getObjectFromRequest($request);
-        if (!isset($req->datePriseFonction)) {
-            throw $this->createNotFoundException("La date de prise de fonction est introuvable !");
+        if (isset($reqData->datePriseFonction)) {
+            $fonctionEmploye->setDatePriseFonction(new \DateTime($reqData->datePriseFonction));
         }
-        $fonctionEmploye->setDatePriseFonction(new \DateTime($req->datePriseFonction));
+        if (isset($reqData->dateFin)) {
+            $fonctionEmploye->setDateFin(new \DateTime($reqData->dateFin));
+        }
         $this->getDoctrine()->getManager()->flush();
 
         return $fonctionEmploye;

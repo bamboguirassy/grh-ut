@@ -28,12 +28,6 @@ class FonctionEmploye
      */
     private $datePriseFonction;
 
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="duree", type="integer", nullable=true, options={"comment"="non obligatoire si le type est cdi mais l'est pour cdd"})
-     */
-    private $duree;
 
     /**
      * @var bool|null
@@ -83,6 +77,11 @@ Donner la possibilité de définir une fonction comme étant la courante"})
      */
     private $typeContrat;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateFin;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -99,19 +98,7 @@ Donner la possibilité de définir une fonction comme étant la courante"})
 
         return $this;
     }
-
-    public function getDuree(): ?int
-    {
-        return $this->duree;
-    }
-
-    public function setDuree(?int $duree): self
-    {
-        $this->duree = $duree;
-
-        return $this;
-    }
-
+   
     public function getEtat(): ?bool
     {
         return $this->etat;
@@ -168,6 +155,18 @@ Donner la possibilité de définir une fonction comme étant la courante"})
     public function setTypeContrat(?TypeContrat $typeContrat): self
     {
         $this->typeContrat = $typeContrat;
+
+        return $this;
+    }
+
+    public function getDateFin(): ?\DateTimeInterface
+    {
+        return $this->dateFin;
+    }
+
+    public function setDateFin(?\DateTimeInterface $dateFin): self
+    {
+        $this->dateFin = $dateFin;
 
         return $this;
     }

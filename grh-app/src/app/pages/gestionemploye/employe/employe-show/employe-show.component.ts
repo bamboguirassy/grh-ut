@@ -9,6 +9,7 @@ import { Location } from '@angular/common';
 import { FonctionEmployeService } from '../../fonctionemploye/fonctionemploye.service';
 import { first } from 'rxjs/operators';
 import { FonctionEmploye } from '../../fonctionemploye/fonctionemploye';
+import { SETTINGS } from 'src/environments/settings';
 
 @Component({
   selector: 'app-employe-show',

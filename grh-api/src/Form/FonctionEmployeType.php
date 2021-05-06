@@ -13,12 +13,12 @@ class FonctionEmployeType extends AbstractType
     {
         $builder
             ->add('datePriseFonction')
-            ->add('duree')
             ->add('etat')
             ->add('employe')
             ->add('fonction')
             ->add('structure')
             ->add('typeContrat')
+            ->add('dateFin')
         ;
     }
 

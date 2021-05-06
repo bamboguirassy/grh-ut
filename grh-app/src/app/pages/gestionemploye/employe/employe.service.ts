@@ -39,4 +39,12 @@ export class EmployeService extends BamboAbstractService {
     return this.httpSrv.post(this.routePrefix + 'statistics/by-type', { 'typeEmployes': typeEmployes.map(te => te.id) });
   }
 
+  calculateStatsSuiviRecrutementGroupedByType() {
+    return this.httpSrv.get(this.routePrefix  + 'statistics/suivi-recrutement-type');
+  }
+
+  calculateRecrutementGroupedByGenres() {
+    return this.httpSrv.get(this.routePrefix  + 'statistics/suivi-recrutement-genre');
+  }
+
 }

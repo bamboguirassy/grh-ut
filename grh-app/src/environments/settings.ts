@@ -1,10 +1,10 @@
 
 export const SETTINGS = {
-  boxed: true,// boolean
+  boxed: false,// boolean
   layout: 'horizontal',// horizontal | vertical
-  sidebarBg: '#8c410b',// string
+  sidebarBg: '#0747a6',// string
   sidebarColor: '#fff',// string
   sidebarOpened: false,// boolean
-  topbarBg: '#fd6a01',// string
-  topbarColor: '#fff'// string
+  topbarBg: '#dadce3',// string
+  topbarColor: '#0747a6'// string
 };
