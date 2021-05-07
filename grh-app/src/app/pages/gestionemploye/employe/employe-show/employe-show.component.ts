@@ -52,12 +52,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
         }
       ]
     };
-    this.defaultAvatar = this.entity?.filepath;
-    this.currentAvatar = this.defaultAvatar;
-    this.changes = false;
-      if(this.entity.filepath) {
-        this.currentAvatar = this.entity.filepath;
-      }
+    
   
    
     

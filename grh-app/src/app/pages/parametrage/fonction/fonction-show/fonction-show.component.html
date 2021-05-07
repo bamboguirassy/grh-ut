@@ -27,14 +27,33 @@
         <div class="col-12 col-md-4">
             <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
                 <table class="table">
-                                                                                                <tr>
-                            <th>Nom</th>
+                    <tr>
+                          <th>Nom</th>
                             <td>
                                 <span *ngIf="entity?.nom">{{ entity?.nom }}</span>
                                 <tc-badge view="error" *ngIf="!entity?.nom">Indéfinie</tc-badge>
                             </td>
+
+                       </tr>
+                       <tr>     
+                           
+                       <th>Etat</th>
+                            <td>
+                               
+                                <tc-badge view="error" *ngIf="!entity?.etat">Non</tc-badge>
+                                <tc-badge view="success" *ngIf="entity?.etat">Oui</tc-badge>
+                                
+                            </td>
                         </tr>
-                                                    </table>
+                        <tr>
+                            <th>Rang</th>
+                            <td>
+                                <tc-badge view="success" *ngIf="entity?.rang">{{entity?.rang}}</tc-badge>
+                                <tc-badge view="error" *ngIf="!entity?.rang">Indéfinie</tc-badge>
+                            </td>
+                        </tr>
+                                                   
+                    </table>
             </tc-card>
         </div>
     </div>
