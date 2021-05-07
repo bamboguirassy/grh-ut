@@ -2,34 +2,34 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BasePageComponent } from 'src/app/pages/base-page';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
-import { GCategorieService } from '../gcategorie.service';
+import { DiplomeService } from '../diplome.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { GCategorie } from '../gcategorie';
+import { Diplome } from '../diplome';
 
 @Component({
-  selector: 'app-gcategorie-clone',
-  templateUrl: './gcategorie-clone.component.html',
-  styleUrls: ['./gcategorie-clone.component.scss']
+  selector: 'app-diplome-clone',
+  templateUrl: './diplome-clone.component.html',
+  styleUrls: ['./diplome-clone.component.scss']
 })
-export class GCategorieCloneComponent extends BasePageComponent<GCategorie> implements OnInit, OnDestroy {
+export class DiplomeCloneComponent extends BasePageComponent<Diplome> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public gCategorieSrv: GCategorieService,
+              public diplomeSrv: DiplomeService,
               public router: Router,
               private activatedRoute: ActivatedRoute,
               public location: Location) {
-    super(store, gCategorieSrv);
+    super(store, diplomeSrv);
     this.pageData = {
-      title: 'Clonage - GCategorie',
+      title: 'Clonage - Diplome',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'GCategories',
-          route: '/'+this.orientation+'/gcategorie'
+          title: 'Diplomes',
+          route: '/'+this.orientation+'/diplome'
         },
         {
           title: 'Clonage'
@@ -40,7 +40,7 @@ export class GCategorieCloneComponent extends BasePageComponent<GCategorie> impl
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.getData(this.gCategorieSrv.getRoutePrefix() + this.activatedRoute.snapshot.params.id, 'original', 'setLoaded');
+    this.getData(this.diplomeSrv.getRoutePrefix() + this.activatedRoute.snapshot.params.id, 'original', 'setLoaded');
   }
 
   ngOnDestroy() {
@@ -52,8 +52,8 @@ export class GCategorieCloneComponent extends BasePageComponent<GCategorie> impl
     this.entity.id = null;
   }
 
-  handlePostClone(data: GCategorie) {
-    this.gCategorieSrv.httpSrv.router.navigate([this.orientation,this.gCategorieSrv.getRoutePrefixWithoutSlash(),data.id]);
+  handlePostClone(data: Diplome) {
+    this.diplomeSrv.httpSrv.router.navigate([this.orientation,this.diplomeSrv.getRoutePrefixWithoutSlash(),data.id]);
   }
 
   prepareClone() {}

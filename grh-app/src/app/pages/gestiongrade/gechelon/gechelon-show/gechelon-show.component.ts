@@ -21,14 +21,14 @@ export class GEchelonShowComponent extends BasePageComponent<GEchelon> implement
     public location: Location) {
     super(store, gEchelonSrv);
     this.pageData = {
-      title: 'Détails - GEchelon',
+      title: 'Détails - Echelon',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des géchelons',
+          title: 'Liste des échelons',
           route: '/'+this.orientation+'/gechelon'
         },
         {
@@ -48,7 +48,7 @@ export class GEchelonShowComponent extends BasePageComponent<GEchelon> implement
   }
 
   handlePostLoad() {
-    this.title = 'GEchelon - ' + this.entity?.id;
+    this.title = 'Echelon - ' + this.entity?.id;
   }
 
   handlePostDelete() {

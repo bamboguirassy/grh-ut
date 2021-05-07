@@ -401,8 +401,16 @@ class EmployeController extends AbstractController
         if (!isset($reqData->dateRecrutement)) {
             throw $this->createNotFoundException("La date de recrutement est introuvable !");
         }
+        if (!isset($reqData->datePriseService)) {
+            throw $this->createNotFoundException("La date prise de service est introuvable !");
+        }
+        if (!isset($reqData->dateSortie)) {
+            throw $this->createNotFoundException("La date de sortie est introuvable !");
+        }
         $employe->setDateNaissance(new \DateTime($reqData->dateNaissance));
         $employe->setDateRecrutement(new \DateTime($reqData->dateRecrutement));
+        $employe->setDatePriseService(new \DateTime($reqData->datePriseService));
+        $employe->setDateSortie(new \DateTime($reqData->dateSortie));
 
         //check if file provided
         if ($employe->getFilepath()) {
@@ -453,11 +461,16 @@ class EmployeController extends AbstractController
         if (!isset($reqData->dateRecrutement)) {
             throw $this->createNotFoundException("La date de recrutement est introuvable !");
         }
+        if (!isset($reqData->datePriseService)) {
+            throw $this->createNotFoundException("La date prise de service est introuvable !");
+        }
+        if (!isset($reqData->dateSortie)) {
+            throw $this->createNotFoundException("La date de sortie est introuvable !");
+        }
         $employe->setDateNaissance(new \DateTime($reqData->dateNaissance));
         $employe->setDateRecrutement(new \DateTime($reqData->dateRecrutement));
-        
-        /* 
-        }*/
+        $employe->setDatePriseService(new \DateTime($reqData->datePriseService));
+        $employe->setDateSortie(new \DateTime($reqData->dateSortie));
         $this->getDoctrine()->getManager()->flush();
 
         return $employe;
