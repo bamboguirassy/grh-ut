@@ -3,5 +3,5 @@ import { BamboAbstractObject } from './../../../shared/classes/bambo-abstract-ob
 export class GClasse extends BamboAbstractObject {
     nom: string;
     indice: string;
-    ordre: string;
+    ordre: number;
 }

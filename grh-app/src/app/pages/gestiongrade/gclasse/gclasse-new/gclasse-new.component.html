@@ -33,7 +33,8 @@
         <div class="col-12 col-md-6">
           <tc-form-group>
             <tc-form-label>Ordre</tc-form-label>
-            <tc-input required="required" [(ngModel)]="entity.ordre" name="ordre" id="ordre" #ordre="ngModel">
+            <tc-input required="required" [(ngModel)]="entity.ordre" type="number" name="ordre" id="ordre"
+              #ordre="ngModel">
             </tc-input>
             <tc-form-description>
               <app-form-field-validation-message [formField]="ordre"></app-form-field-validation-message>

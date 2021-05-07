@@ -17,14 +17,14 @@ export class GCategorieListComponent extends BasePageComponent<GCategorie> imple
     super(store, gCategorieSrv);
 
     this.pageData = {
-      title: 'Liste des categories',
+      title: 'Liste des catégories',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des categories'
+          title: 'Liste des catégories'
         }
       ]
     };
