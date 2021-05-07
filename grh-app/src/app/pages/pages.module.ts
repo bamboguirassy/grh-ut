@@ -141,6 +141,8 @@ import { FonctionEmployeCloneComponent } from './gestionemploye/fonctionemploye/
 import { FonctionEmployeEditComponent } from './gestionemploye/fonctionemploye/fonctionemploye-edit/fonctionemploye-edit.component';
 import { FonctionEmployeListComponent } from './gestionemploye/fonctionemploye/fonctionemploye-list/fonctionemploye-list.component';
 import { FonctionEmployeShowComponent } from './gestionemploye/fonctionemploye/fonctionemploye-show/fonctionemploye-show.component';
+import { RecrutementGenreComponent } from './dashboards/recrutement/recrutement-genre/recrutement-genre.component';
+import { RecrutementTypeComponent } from './dashboards/recrutement/recrutement-type/recrutement-type.component';
 
 @NgModule({
   imports: [
@@ -337,6 +339,8 @@ import { FonctionEmployeShowComponent } from './gestionemploye/fonctionemploye/f
     EchelonClasseShowComponent,
     EchelonClasseCloneComponent,
     EchelonClasseNewComponent,
+    RecrutementGenreComponent,
+    RecrutementTypeComponent,
   ],
   exports: [],
   entryComponents: []
