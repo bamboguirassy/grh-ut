@@ -29,7 +29,7 @@ export class ProfessionEditComponent extends BasePageComponent<Profession> imple
           route: ''
         },
         {
-          title: 'Professions',
+          title: 'Liste des professions',
           route: '/'+this.orientation+'/profession'
         },
         {

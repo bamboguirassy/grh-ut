@@ -17,7 +17,7 @@ export class ProfessionListComponent extends BasePageComponent<Profession> imple
     super(store, professionSrv);
 
     this.pageData = {
-      title: 'Liste des Professions',
+      title: 'Liste des professions',
       breadcrumbs: [
         {
           title: 'Accueil',

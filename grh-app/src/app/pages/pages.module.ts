@@ -29,7 +29,6 @@ import { FonctionListComponent } from './parametrage/fonction/fonction-list/fonc
 import { ProfessionListComponent } from './parametrage/profession/profession-list/profession-list.component';
 import { ProfessionShowComponent } from './parametrage/profession/profession-show/profession-show.component';
 import { ProfessionEditComponent } from './parametrage/profession/profession-edit/profession-edit.component';
-import { ProfessionCloneComponent } from './parametrage/profession/profession-clone/profession-clone.component';
 import { ProfessionNewComponent } from './parametrage/profession/profession-new/profession-new.component';
 import { CaisseSocialeNewComponent } from './parametrage/caissesociale/caissesociale-new/caissesociale-new.component';
 import { CaisseSocialeEditComponent } from './parametrage/caissesociale/caissesociale-edit/caissesociale-edit.component';
@@ -327,7 +326,6 @@ import { FonctionEmployeShowComponent } from './gestionemploye/fonctionemploye/f
     ProfessionListComponent,
     ProfessionEditComponent,
     ProfessionShowComponent,
-    ProfessionCloneComponent,
     ProfessionNewComponent,
     // echelonclasse components
     EchelonClasseListComponent,

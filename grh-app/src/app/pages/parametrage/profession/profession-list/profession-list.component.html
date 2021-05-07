@@ -23,8 +23,6 @@
         <div class="actions">
           <button *ngIf="professionSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'" [square]="true" [tcShape]="500"
             [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-          <button *ngIf="professionSrv.resourceName|clonable" [outline]="true" tc-button [afterIcon]="'icofont-copy'" [square]="true" [tcShape]="500"
-            [size]="'sm'" [routerLink]="[row.id,'clone']"></button>
           <button *ngIf="professionSrv.resourceName|deletable" (click)="remove(row)" tc-button [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
             [size]="'sm'"></button>
           <button *ngIf="professionSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'" [view]="'accent'" [square]="true" [tcShape]="500"
