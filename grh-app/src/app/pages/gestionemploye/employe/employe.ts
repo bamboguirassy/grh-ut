@@ -29,4 +29,8 @@ export class Employe extends BamboAbstractObject {
     caisseSociale: CaisseSociale;
     mutuelleSante: MutuelleSante;
     grade: Grade;
+    datePriseService: string;
+    dateSortie: string;
+    motifSortie: string;
+    numeroMainOeuvre: string;
 }

@@ -2,4 +2,6 @@ import { BamboAbstractObject } from './../../../shared/classes/bambo-abstract-ob
 
 export class Fonction extends BamboAbstractObject {
                                     nom: string;
+                                    etat: boolean;
+                                    rang: number;
             }

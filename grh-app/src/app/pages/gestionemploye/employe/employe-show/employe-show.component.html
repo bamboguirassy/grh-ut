@@ -1,10 +1,32 @@
 <tc-card *ngIf="employeSrv.resourceName|showable" [tcGradient]="lightGradient">
     <tc-card [outline]="true" [view]="secondViewBorder" [tcGradient]="secondGradient" [padding]="0.5">
         <div class="row">
-            <div class="d-none d-md-block col-md-1">
-                <i *ngIf="!entity?.filepath" class="icofont icofont-data icofont-4x"></i>
-                <tc-avatar size="80" *ngIf="entity?.filepath" [src]="entity?.filepath"></tc-avatar>
-            </div>
+            <!-- <form 
+            [formGroup]="employeForm" novalidate
+            class="mb-4"
+            (ngSubmit)="updateProfile(employeForm)"
+          >
+            <tc-form-group>
+                <tc-form-label>Photo</tc-form-label>
+                <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
+        
+                <div class="d-flex align-items-center">
+                  <tc-avatar [src]="entity?.filepath" [size]="100"></tc-avatar>
+                  <button
+                    tc-button
+                    [type]="'button'"
+                    [afterIcon]="'icofont-ui-user'"
+                    [view]="'accent'"
+                    [outline]="true"
+                    (click)="fileInput.click()"
+                  >
+                    Changer photo
+                  </button>
+                </div>
+              </tc-form-group>
+              </form> -->
+     
+              
             <div class="col-12 col-md-7">
                 <blockquote class="blockquote">
                     <p class="mb-0">{{title}}</p>

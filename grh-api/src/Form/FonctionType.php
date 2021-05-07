@@ -13,6 +13,9 @@ class FonctionType extends AbstractType
     {
         $builder
             ->add('nom')
+            ->add('etat')
+            ->add('rang')
+                
         ;
     }
 

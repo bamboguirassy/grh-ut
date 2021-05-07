@@ -39,6 +39,7 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
   ngOnInit(): void {
     super.ngOnInit();
     this.findTypeEmployes();
+    
   }
 
   ngOnDestroy() {

@@ -107,12 +107,11 @@ import { GClasseNewComponent } from './gestiongrade/gclasse/gclasse-new/gclasse-
 import { GEchelonListComponent } from './gestiongrade/gechelon/gechelon-list/gechelon-list.component';
 import { GEchelonShowComponent } from './gestiongrade/gechelon/gechelon-show/gechelon-show.component';
 import { GEchelonEditComponent } from './gestiongrade/gechelon/gechelon-edit/gechelon-edit.component';
-import { GEchelonCloneComponent } from './gestiongrade/gechelon/gechelon-clone/gechelon-clone.component';
+
 import { GEchelonNewComponent } from './gestiongrade/gechelon/gechelon-new/gechelon-new.component';
 import { GNiveauListComponent } from './gestiongrade/gniveau/gniveau-list/gniveau-list.component';
 import { GNiveauShowComponent } from './gestiongrade/gniveau/gniveau-show/gniveau-show.component';
 import { GNiveauEditComponent } from './gestiongrade/gniveau/gniveau-edit/gniveau-edit.component';
-import { GNiveauCloneComponent } from './gestiongrade/gniveau/gniveau-clone/gniveau-clone.component';
 import { GNiveauNewComponent } from './gestiongrade/gniveau/gniveau-new/gniveau-new.component';
 
 
@@ -312,13 +311,11 @@ import { FonctionEmployeShowComponent } from './gestionemploye/fonctionemploye/f
     GEchelonListComponent,
     GEchelonEditComponent,
     GEchelonShowComponent,
-    GEchelonCloneComponent,
     GEchelonNewComponent,
     // gniveau components
     GNiveauListComponent,
     GNiveauEditComponent,
     GNiveauShowComponent,
-    GNiveauCloneComponent,
     GNiveauNewComponent,
     // profession components
     ProfessionListComponent,

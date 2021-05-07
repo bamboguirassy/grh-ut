@@ -29,7 +29,7 @@ export class GEchelonEditComponent extends BasePageComponent<GEchelon> implement
           route: ''
         },
         {
-          title: 'GEchelons',
+          title: 'Liste des géchelons',
           route: '/'+this.orientation+'/gechelon'
         },
         {
