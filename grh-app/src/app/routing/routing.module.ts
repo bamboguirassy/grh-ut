@@ -5,6 +5,8 @@ import { membreFamilleRoutes } from './../pages/gestionemploye/membrefamille/mem
 import { adresseRoutes } from './../pages/gestionemploye/adresse/adresse.routes';
 import { employeRoutes } from './../pages/gestionemploye/employe/employe.routes';
 import { gradeRoutes } from './../pages/gestiongrade/grade/grade.routes';
+import {gNiveauRoutes} from './../pages/gestiongrade/gniveau/gniveau.routes';
+import {gEchelonRoutes} from './../pages/gestiongrade/gechelon/gechelon.routes';
 import { syndicatRoutes } from './../pages/parametrage/syndicat/syndicat.routes';
 import { structureRoutes } from './../pages/parametrage/structure/structure.routes';
 import { paysRoutes } from './../pages/parametrage/pays/pays.routes';
@@ -31,7 +33,9 @@ import { typeEntiteRoutes } from '../pages/parametrage/typeentite/typeentite.rou
 import { typeContratRoutes } from '../pages/parametrage/typecontrat/typecontrat.routes';
 import { typeDocumentRoutes } from '../pages/parametrage/typedocument/typedocument.routes';
 import { typeEmployeRoutes } from '../pages/parametrage/typeemploye/typeemploye.routes';
+import { professionRoutes } from '../pages/parametrage/profession/profession.routes';
 import { PageEditAccountComponent } from '../pages/apps/service-pages/edit-account/edit-account.component';
+import { gClasseRoutes } from '../pages/gestiongrade/gclasse/gclasse.routes';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -52,12 +56,16 @@ const VERTICAL_ROUTES: Routes = [
   structureRoutes,
   syndicatRoutes,
   gradeRoutes,
+  gNiveauRoutes,
+  gEchelonRoutes,
   employeRoutes,
   adresseRoutes,
   membreFamilleRoutes,
   membreSyndicatRoutes,
   documentRoutes,
-  fonctionEmployeRoutes
+  fonctionEmployeRoutes,
+  gClasseRoutes,
+  professionRoutes
 ];
 
 const PUBLIC_ROUTES: Routes = [

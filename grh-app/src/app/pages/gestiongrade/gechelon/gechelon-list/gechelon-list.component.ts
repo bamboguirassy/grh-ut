@@ -24,7 +24,7 @@ export class GEchelonListComponent extends BasePageComponent<GEchelon> implement
           route: ''
         },
         {
-          title: 'Liste des gechelons'
+          title: 'Liste des géchelons'
         }
       ]
     };

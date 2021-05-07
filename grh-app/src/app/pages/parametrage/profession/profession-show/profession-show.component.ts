@@ -28,7 +28,7 @@ export class ProfessionShowComponent extends BasePageComponent<Profession> imple
           route: ''
         },
         {
-          title: 'Professions',
+          title: 'listes des professions',
           route: '/'+this.orientation+'/profession'
         },
         {

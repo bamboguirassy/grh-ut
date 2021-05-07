@@ -28,7 +28,7 @@ export class GNiveauShowComponent extends BasePageComponent<GNiveau> implements 
           route: ''
         },
         {
-          title: 'GNiveaus',
+          title: 'Liste des gniveaux',
           route: '/'+this.orientation+'/gniveau'
         },
         {

@@ -22,14 +22,14 @@ export class GClasseEditComponent extends BasePageComponent<GClasse> implements 
               public location: Location) {
     super(store, gClasseSrv);
     this.pageData = {
-      title: 'Modification - GClasse',
+      title: 'Modification - Classe',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'GClasses',
+          title: 'Liste des classes',
           route: '/'+this.orientation+'/gclasse'
         },
         {
