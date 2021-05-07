@@ -21,14 +21,14 @@ export class GClasseShowComponent extends BasePageComponent<GClasse> implements 
     public location: Location) {
     super(store, gClasseSrv);
     this.pageData = {
-      title: 'Détails - GClasse',
+      title: 'Détails - Classe',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'GClasses',
+          title: 'Liste des classes',
           route: '/'+this.orientation+'/gclasse'
         },
         {
@@ -48,7 +48,7 @@ export class GClasseShowComponent extends BasePageComponent<GClasse> implements 
   }
 
   handlePostLoad() {
-    this.title = 'GClasse - ' + this.entity?.id;
+    this.title = 'Classe - ' + this.entity?.id;
   }
 
   handlePostDelete() {
