@@ -1,35 +1,35 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BasePageComponent } from 'src/app/pages/base-page';
-import { GCategorieService } from '../gcategorie.service';
+import { DiplomeService } from '../diplome.service';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
-import { GCategorie } from '../gcategorie';
+import { Diplome } from '../diplome';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-gcategorie-show',
-  templateUrl: './gcategorie-show.component.html',
-  styleUrls: ['./gcategorie-show.component.scss']
+  selector: 'app-diplome-show',
+  templateUrl: './diplome-show.component.html',
+  styleUrls: ['./diplome-show.component.scss']
 })
-export class GCategorieShowComponent extends BasePageComponent<GCategorie> implements OnInit, OnDestroy {
-  entity: GCategorie;
+export class DiplomeShowComponent extends BasePageComponent<Diplome> implements OnInit, OnDestroy {
+  entity: Diplome;
 
   constructor(store: Store<IAppState>,
-    public gCategorieSrv: GCategorieService,
+    public diplomeSrv: DiplomeService,
     private activatedRoute: ActivatedRoute,
     public location: Location) {
-    super(store, gCategorieSrv);
+    super(store, diplomeSrv);
     this.pageData = {
-      title: 'Détails - categorie',
+      title: 'Détails - Diplome',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des categories',
-          route: '/'+this.orientation+'/gcategorie'
+          title: 'Diplomes',
+          route: '/'+this.orientation+'/diplome'
         },
         {
           title: 'Affichage'
@@ -48,7 +48,7 @@ export class GCategorieShowComponent extends BasePageComponent<GCategorie> imple
   }
 
   handlePostLoad() {
-    this.title = 'Categorie - ' + this.entity?.id;
+    this.title = 'Diplome - ' + this.entity?.id;
   }
 
   handlePostDelete() {

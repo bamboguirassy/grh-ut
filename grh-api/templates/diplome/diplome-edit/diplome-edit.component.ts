@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { GNiveau } from '../gniveau';
-import { GNiveauService } from '../gniveau.service';
+import { Diplome } from '../diplome';
+import { DiplomeService } from '../diplome.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -9,28 +9,28 @@ import { BasePageComponent } from 'src/app/pages/base-page';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-gniveau-edit',
-  templateUrl: './gniveau-edit.component.html',
-  styleUrls: ['./gniveau-edit.component.scss']
+  selector: 'app-diplome-edit',
+  templateUrl: './diplome-edit.component.html',
+  styleUrls: ['./diplome-edit.component.scss']
 })
-export class GNiveauEditComponent extends BasePageComponent<GNiveau> implements OnInit, OnDestroy {
+export class DiplomeEditComponent extends BasePageComponent<Diplome> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public gNiveauSrv: GNiveauService,
+              public diplomeSrv: DiplomeService,
               public router: Router,
               private activatedRoute: ActivatedRoute,
               public location: Location) {
-    super(store, gNiveauSrv);
+    super(store, diplomeSrv);
     this.pageData = {
-      title: 'Modification - niveau',
+      title: 'Modification - Diplome',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des niveaux',
-          route: '/'+this.orientation+'/gniveau'
+          title: 'Diplomes',
+          route: '/'+this.orientation+'/diplome'
         },
         {
           title: 'Modification'
