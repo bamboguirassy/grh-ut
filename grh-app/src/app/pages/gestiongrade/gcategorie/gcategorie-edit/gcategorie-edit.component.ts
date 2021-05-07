@@ -22,14 +22,14 @@ export class GCategorieEditComponent extends BasePageComponent<GCategorie> imple
               public location: Location) {
     super(store, gCategorieSrv);
     this.pageData = {
-      title: 'Modification - GCategorie',
+      title: 'Modification - categorie',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'GCategories',
+          title: 'Liste des categories',
           route: '/'+this.orientation+'/gcategorie'
         },
         {

@@ -35,6 +35,7 @@ import { typeEmployeRoutes } from '../pages/parametrage/typeemploye/typeemploye.
 import { professionRoutes } from '../pages/parametrage/profession/profession.routes';
 import { PageEditAccountComponent } from '../pages/apps/service-pages/edit-account/edit-account.component';
 import { gClasseRoutes } from '../pages/gestiongrade/gclasse/gclasse.routes';
+import { gCategorieRoutes } from '../pages/gestiongrade/gcategorie/gcategorie.routes';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -63,7 +64,8 @@ const VERTICAL_ROUTES: Routes = [
   documentRoutes,
   fonctionEmployeRoutes,
   gClasseRoutes,
-  professionRoutes
+  professionRoutes,
+  gCategorieRoutes
 ];
 
 const PUBLIC_ROUTES: Routes = [

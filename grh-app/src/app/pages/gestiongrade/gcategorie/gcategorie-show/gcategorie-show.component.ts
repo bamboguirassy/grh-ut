@@ -21,14 +21,14 @@ export class GCategorieShowComponent extends BasePageComponent<GCategorie> imple
     public location: Location) {
     super(store, gCategorieSrv);
     this.pageData = {
-      title: 'Détails - GCategorie',
+      title: 'Détails - categorie',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'GCategories',
+          title: 'Liste des categories',
           route: '/'+this.orientation+'/gcategorie'
         },
         {
@@ -48,7 +48,7 @@ export class GCategorieShowComponent extends BasePageComponent<GCategorie> imple
   }
 
   handlePostLoad() {
-    this.title = 'GCategorie - ' + this.entity?.id;
+    this.title = 'Categorie - ' + this.entity?.id;
   }
 
   handlePostDelete() {

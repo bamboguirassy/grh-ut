@@ -99,7 +99,6 @@ import { EchelonClasseNewComponent } from './gestiongrade/echelonclasse/echelonc
 import { GCategorieListComponent } from './gestiongrade/gcategorie/gcategorie-list/gcategorie-list.component';
 import { GCategorieShowComponent } from './gestiongrade/gcategorie/gcategorie-show/gcategorie-show.component';
 import { GCategorieEditComponent } from './gestiongrade/gcategorie/gcategorie-edit/gcategorie-edit.component';
-import { GCategorieCloneComponent } from './gestiongrade/gcategorie/gcategorie-clone/gcategorie-clone.component';
 import { GCategorieNewComponent } from './gestiongrade/gcategorie/gcategorie-new/gcategorie-new.component';
 import { GClasseListComponent } from './gestiongrade/gclasse/gclasse-list/gclasse-list.component';
 import { GClasseShowComponent } from './gestiongrade/gclasse/gclasse-show/gclasse-show.component';
@@ -303,7 +302,6 @@ import { FonctionEmployeShowComponent } from './gestionemploye/fonctionemploye/f
     GCategorieListComponent,
     GCategorieEditComponent,
     GCategorieShowComponent,
-    GCategorieCloneComponent,
     GCategorieNewComponent,
     // gclasse components
     GClasseListComponent,
