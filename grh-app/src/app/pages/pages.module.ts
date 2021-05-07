@@ -137,6 +137,10 @@ import { FonctionEmployeCloneComponent } from './gestionemploye/fonctionemploye/
 import { FonctionEmployeEditComponent } from './gestionemploye/fonctionemploye/fonctionemploye-edit/fonctionemploye-edit.component';
 import { FonctionEmployeListComponent } from './gestionemploye/fonctionemploye/fonctionemploye-list/fonctionemploye-list.component';
 import { FonctionEmployeShowComponent } from './gestionemploye/fonctionemploye/fonctionemploye-show/fonctionemploye-show.component';
+import { DiplomeListComponent } from './parametrage/diplome/diplome-list/diplome-list.component';
+import { DiplomeEditComponent } from './parametrage/diplome/diplome-edit/diplome-edit.component';
+import { DiplomeShowComponent } from './parametrage/diplome/diplome-show/diplome-show.component';
+import { DiplomeNewComponent } from './parametrage/diplome/diplome-new/diplome-new.component';
 
 @NgModule({
   imports: [
@@ -328,6 +332,12 @@ import { FonctionEmployeShowComponent } from './gestionemploye/fonctionemploye/f
     EchelonClasseShowComponent,
     EchelonClasseCloneComponent,
     EchelonClasseNewComponent,
+
+    // diplome components
+    DiplomeListComponent,
+    DiplomeEditComponent,
+    DiplomeShowComponent,
+    DiplomeNewComponent,
   ],
   exports: [],
   entryComponents: []
