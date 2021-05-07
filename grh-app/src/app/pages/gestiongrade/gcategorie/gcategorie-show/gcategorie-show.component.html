@@ -14,12 +14,11 @@
                 <button *ngIf="gCategorieSrv.resourceName|editable"
                     [routerLink]="['/'+orientation,gCategorieSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
                     class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
-                <button (click)="remove(entity)" *ngIf="gCategorieSrv.resourceName|deletable" tc-button
-                    view="error" beforeIcon="icofont-trash" class=" float-right ml-1"></button>
+                <button (click)="remove(entity)" *ngIf="gCategorieSrv.resourceName|deletable" tc-button view="error"
+                    beforeIcon="icofont-trash" class=" float-right ml-1"></button>
                 <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
                     beforeIcon="icofont-refresh"></button>
-                <button tc-button class="float-right" (click)="location.back()"
-                    beforeIcon="icofont-reply"></button>
+                <button tc-button class="float-right" (click)="location.back()" beforeIcon="icofont-reply"></button>
             </div>
         </div>
     </tc-card>
@@ -27,28 +26,28 @@
         <div class="col-12 col-md-4">
             <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
                 <table class="table">
-                                                                                                <tr>
-                            <th>Nom</th>
-                            <td>
-                                <span *ngIf="entity?.nom">{{ entity?.nom }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.nom">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Indice</th>
-                            <td>
-                                <span *ngIf="entity?.indice">{{ entity?.indice }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.indice">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Ordre</th>
-                            <td>
-                                <span *ngIf="entity?.ordre">{{ entity?.ordre }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.ordre">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                    </table>
+                    <tr>
+                        <th>Nom</th>
+                        <td>
+                            <span *ngIf="entity?.nom">{{ entity?.nom }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.nom">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Indice</th>
+                        <td>
+                            <span *ngIf="entity?.indice">{{ entity?.indice }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.indice">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Ordre</th>
+                        <td>
+                            <span *ngIf="entity?.ordre">{{ entity?.ordre }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.ordre">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                </table>
             </tc-card>
         </div>
     </div>

@@ -17,14 +17,14 @@ export class GClasseListComponent extends BasePageComponent<GClasse> implements 
     super(store, gClasseSrv);
 
     this.pageData = {
-      title: 'Liste des GClasses',
+      title: 'Liste des classes',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des gclasses'
+          title: 'Liste des classes'
         }
       ]
     };

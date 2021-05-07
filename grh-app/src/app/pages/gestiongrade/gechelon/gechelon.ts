@@ -1,7 +1,7 @@
 import { BamboAbstractObject } from './../../../shared/classes/bambo-abstract-object';
 
 export class GEchelon extends BamboAbstractObject {
-                                    nom: string;
-                                indice: string;
-                                ordre: string;
-            }
+    nom: string;
+    indice: string;
+    ordre: string;
+}

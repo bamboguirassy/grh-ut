@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * FonctionEmploye
  *
- * @ORM\Table(name="fonction_employe", indexes={@ORM\Index(name="fk_fonction_employe_employe1_idx", columns={"employe"}), @ORM\Index(name="fk_fonction_employe_type_contrat1_idx", columns={"type_contrat"}), @ORM\Index(name="fk_fonction_employe_fonction1_idx", columns={"fonction"}), @ORM\Index(name="fk_fonction_employe_structure1_idx", columns={"structure"})})
+ * @ORM\Table(name="fonction_employe", indexes={@ORM\Index(name="fk_fonction_employe_employe1_idx", columns={"employe"}), @ORM\Index(name="fk_fonction_employe_fonction1_idx", columns={"fonction"}), @ORM\Index(name="fk_fonction_employe_structure1_idx", columns={"structure"})})
  * @ORM\Entity
  */
 class FonctionEmploye
@@ -66,15 +66,7 @@ class FonctionEmploye
      */
     private $structure;
 
-    /**
-     * @var \TypeContrat
-     *
-     * @ORM\ManyToOne(targetEntity="TypeContrat")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="type_contrat", referencedColumnName="id")
-     * })
-     */
-    private $typeContrat;
+    
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -146,17 +138,6 @@ class FonctionEmploye
         return $this;
     }
 
-    public function getTypeContrat(): ?TypeContrat
-    {
-        return $this->typeContrat;
-    }
-
-    public function setTypeContrat(?TypeContrat $typeContrat): self
-    {
-        $this->typeContrat = $typeContrat;
-
-        return $this;
-    }
 
     public function getDateFin(): ?\DateTimeInterface
     {

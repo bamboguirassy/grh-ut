@@ -135,6 +135,10 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
     this.selectedNationaliteId = this.entity.nationalite?.id;
     this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
     this.entity.dateRecrutement = this.datePipe.transform(this.entity.dateRecrutement, 'yyyy-MM-dd');
+    this.entity.datePriseService = this.datePipe.transform(this.entity.datePriseService, 'yyyy-MM-dd');
+    this.entity.dateSortie = this.datePipe.transform(this.entity.dateSortie, 'yyyy-MM-dd');
+    this.entity.filename = this.fileModel.fileName;
+    this.entity.filepath = this.fileModel.fileContent;
     this.findCaisseSociales();
     this.findMutuelleSantes();
     this.findNationalites();
@@ -142,6 +146,10 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
   }
 
   prepareUpdate() {
+    if(this.entity.etat){
+      this.entity.dateSortie = null;
+      this.entity.motifSortie = null;
+    }
     this.entity.caisseSociale = this.selectedCaisseSocialeId;
     this.entity.grade = this.selectedGradeId;
     this.entity.nationalite = this.selectedNationaliteId;

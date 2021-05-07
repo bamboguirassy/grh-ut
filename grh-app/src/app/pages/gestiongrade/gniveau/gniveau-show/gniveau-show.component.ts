@@ -21,14 +21,14 @@ export class GNiveauShowComponent extends BasePageComponent<GNiveau> implements 
     public location: Location) {
     super(store, gNiveauSrv);
     this.pageData = {
-      title: 'Détails - GNiveau',
+      title: 'Détails - Niveau',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'GNiveaus',
+          title: 'Liste des niveaux',
           route: '/'+this.orientation+'/gniveau'
         },
         {
@@ -48,7 +48,7 @@ export class GNiveauShowComponent extends BasePageComponent<GNiveau> implements 
   }
 
   handlePostLoad() {
-    this.title = 'GNiveau - ' + this.entity?.id;
+    this.title = 'Niveau - ' + this.entity?.id;
   }
 
   handlePostDelete() {

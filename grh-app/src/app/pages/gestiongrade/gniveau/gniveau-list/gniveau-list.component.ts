@@ -17,14 +17,14 @@ export class GNiveauListComponent extends BasePageComponent<GNiveau> implements 
     super(store, gNiveauSrv);
 
     this.pageData = {
-      title: 'Liste des GNiveaus',
+      title: 'Liste des Niveaux',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des gniveaus'
+          title: 'Liste des niveaux'
         }
       ]
     };

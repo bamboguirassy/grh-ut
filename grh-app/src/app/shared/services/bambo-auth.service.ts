@@ -168,6 +168,11 @@ export class BamboAuthService {
             routing: "syndicat",
             enabled: this.checkListAccess('syndicat')
           },
+          {
+            title: "Professions",
+            routing: "profession",
+            enabled: this.checkListAccess('profession')
+          }
         ],
         enabled: false
       },
@@ -181,6 +186,26 @@ export class BamboAuthService {
             title: "Grades",
             routing: "grade",
             enabled: this.checkListAccess('grade')
+          },
+          {
+            title: "Classes",
+            routing: "gclasse",
+            enabled: this.checkListAccess('gclasse')
+          },
+          {
+            title: "Niveaux",
+            routing: "gniveau",
+            enabled: this.checkListAccess('gniveau')
+          },
+          {
+            title: "Catégories",
+            routing: "gcategorie",
+            enabled: this.checkListAccess('gcategorie')
+          },
+          {
+            title: "Echelons",
+            routing: "echelonclasse",
+            enabled: this.checkListAccess('gechelon')
           }
         ],
         enabled: false

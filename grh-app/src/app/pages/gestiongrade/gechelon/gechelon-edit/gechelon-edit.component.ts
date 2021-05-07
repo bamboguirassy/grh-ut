@@ -22,14 +22,14 @@ export class GEchelonEditComponent extends BasePageComponent<GEchelon> implement
               public location: Location) {
     super(store, gEchelonSrv);
     this.pageData = {
-      title: 'Modification - GEchelon',
+      title: 'Modification - Echelon',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'GEchelons',
+          title: 'Liste des échelons',
           route: '/'+this.orientation+'/gechelon'
         },
         {

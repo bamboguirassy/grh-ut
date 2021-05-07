@@ -149,10 +149,17 @@ class GroupController extends AbstractController {
                 new AccessModel('TYPEEMPLOYE', "Catégorie d'employé"),
                 new AccessModel('STRUCTURE', "Structure/établissement"),
                 new AccessModel('SYNDICAT', "Syndicat"),
+                new AccessModel('PROFESSION', "Profession"),
+                new AccessModel('DIPLOME', "Diplome"),
                     ]
             ),
             new AccessGroup("Gestion des grades", [
                 new AccessModel('GRADE', "Grade"),
+                new AccessModel('GCLASSE', "Classe"),
+                new AccessModel('GCATEGORIE', "Catégorie"),
+                new AccessModel('GNIVEAU', "Niveau"),
+                new AccessModel('GECHELON', "Echelon"),
+                new AccessModel('ECHELONCLASSE', "Echelon Classe"),
                     ]
             ),
             new AccessGroup("Gestion des employés", [
