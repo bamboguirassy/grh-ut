@@ -144,8 +144,6 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
   }
 
   prepareUpdate() {
-    console.log(this.entity);
-    
     this.entity.caisseSociale = this.selectedCaisseSocialeId;
     this.entity.grade = this.selectedGradeId;
     this.entity.nationalite = this.selectedNationaliteId;
