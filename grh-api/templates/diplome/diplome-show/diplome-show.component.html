@@ -1,0 +1,42 @@
+<tc-card *ngIf="diplomeSrv.resourceName|showable" [tcGradient]="lightGradient">
+    <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
+        <div class="row">
+            <div class="d-none d-md-block col-md-1">
+                <i class="icofont icofont-data icofont-4x"></i>
+            </div>
+            <div class="col-12 col-md-7">
+                <blockquote class="blockquote">
+                    <p class="mb-0">{{title}}</p>
+                    <footer class="blockquote-footer"> <cite title="Source Title">sous titre</cite></footer>
+                </blockquote>
+            </div>
+            <div class="col-12 col-md-4">
+                <button *ngIf="diplomeSrv.resourceName|editable"
+                    [routerLink]="['/'+orientation,diplomeSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+                    class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
+                <button (click)="remove(entity)" *ngIf="diplomeSrv.resourceName|deletable" tc-button
+                    view="error" beforeIcon="icofont-trash" class=" float-right ml-1"></button>
+                <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
+                    beforeIcon="icofont-refresh"></button>
+                <button tc-button class="float-right" (click)="location.back()"
+                    beforeIcon="icofont-reply"></button>
+            </div>
+        </div>
+    </tc-card>
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
+                <table class="table">
+                                                                                                <tr>
+                            <th>Nom</th>
+                            <td>
+                                <span *ngIf="entity?.nom">{{ entity?.nom }}</span>
+                                <tc-badge view="error" *ngIf="!entity?.nom">Indéfinie</tc-badge>
+                            </td>
+                        </tr>
+                                                    </table>
+            </tc-card>
+        </div>
+    </div>
+</tc-card>
+<app-access-denied *ngIf="!(diplomeSrv.resourceName|showable)"></app-access-denied>
