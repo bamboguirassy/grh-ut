@@ -47,6 +47,10 @@ export class FonctionEmployeListComponent implements OnInit {
     this.items = [item, ...this.items];
   }
 
+  onClose(){
+    this.selectedFonction = null;
+  }
+
   remove(entity: FonctionEmploye) {
     Swal.fire({
       title: 'Êtes-vous sûr ?',

@@ -23,16 +23,19 @@ export class BasePageComponent<T extends BamboAbstractObject> implements OnInit,
   original: T;
   orientation = 'horizontal';
   subscriptions: Subscription[] = [];
+  sidebarBg: string; 
 
   lightGradient = ['#fff', SETTINGS.topbarBg];
   deepGradient = ['#fff', SETTINGS.sidebarBg];
   secondGradient = ['#fff', '#F5F6F1'];
-  secondViewBorder = 'warning';
+  secondViewBorder = 'info';
 
   constructor(
     public store: Store<IAppState>,
     public httpSv: BamboAbstractService
-  ) { }
+  ) {
+    this.sidebarBg = SETTINGS.sidebarBg;
+  }
 
   ngOnInit() {
     this.pageData ? this.store.dispatch(new PageActions.Set(this.pageData)) : null;

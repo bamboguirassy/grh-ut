@@ -12,6 +12,7 @@ import { first } from 'rxjs/operators';
 import { FonctionEmploye } from '../../fonctionemploye/fonctionemploye';
 import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
 import { FormGroup } from '@angular/forms';
+import { SETTINGS } from 'src/environments/settings';
 
 @Component({
   selector: 'app-employe-show',

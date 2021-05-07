@@ -6,7 +6,6 @@ import { BamboAbstractObject } from './../../../shared/classes/bambo-abstract-ob
 
 export class FonctionEmploye extends BamboAbstractObject {
     datePriseFonction: string;
-    duree: number;
     etat: boolean;
     fonction: Fonction;
     employe: Employe;

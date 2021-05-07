@@ -1,5 +1,5 @@
 <tc-card *ngIf="employeSrv.resourceName|showable" [tcGradient]="lightGradient">
-    <tc-card [view]="secondViewBorder" [tcGradient]="secondGradient" [padding]="0.5">
+    <tc-card [outline]="true" [view]="secondViewBorder" [tcGradient]="secondGradient" [padding]="0.5">
         <div class="row">
             <form 
             [formGroup]="employeForm" novalidate
@@ -32,7 +32,7 @@
                     <p class="mb-0">{{title}}</p>
                     <footer class="blockquote-footer">
                         <cite title="Poste actuelle">
-                            <span *ngIf="latestFonction else fallback" class="fonction">&nbsp;
+                            <span *ngIf="latestFonction else fallback" [ngStyle]="{'background-color': sidebarBg}" class="fonction">&nbsp;
                                 {{latestFonction?.fonction?.nom}} depuis le
                                 {{latestFonction?.datePriseFonction | date :'dd/MM/yyyy'}} &nbsp;</span>
                             <ng-template #fallback>

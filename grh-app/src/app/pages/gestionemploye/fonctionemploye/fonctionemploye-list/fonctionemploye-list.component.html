@@ -38,12 +38,6 @@
         <tc-badge view="error" *ngIf="!value"><span class="nowrap">Non précisé</span></tc-badge>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Duree'" [columnName]="'duree'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéterminée</tc-badge>
-      </ng-template>
-    </tc-table-col>
     <tc-table-col [columnTitle]="'Etat'" [columnName]="'etat'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <tc-badge view="error" *ngIf="!value">Expirée</tc-badge>
@@ -61,7 +55,7 @@
       </ng-template>
     </tc-table-col>
   </tc-table>
-  <app-fonctionemploye-edit *ngIf="selectedFonction" [selectedFonction]="selectedFonction" (modification)="findByEmploye()"></app-fonctionemploye-edit>
+  <app-fonctionemploye-edit *ngIf="selectedFonction" [selectedFonction]="selectedFonction" (modification)="findByEmploye()" (onClose)="onClose()"></app-fonctionemploye-edit>
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
 </tc-card>
 <app-access-denied *ngIf="!(fonctionEmployeSrv.resourceName|listable)"></app-access-denied>

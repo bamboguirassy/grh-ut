@@ -197,6 +197,31 @@ class Employe
      */
     private $typeEmploye;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Profession::class)
+     */
+    private $profession;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $datePriseService;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateSortie;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $motifSortie;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $numeroMainOeuvre;
+
     public function getId()
     {
         return $this->id;
@@ -474,6 +499,66 @@ class Employe
     public function setTypeEmploye($typeEmploye): self
     {
         $this->typeEmploye = $typeEmploye;
+
+        return $this;
+    }
+
+    public function getProfession(): ?Profession
+    {
+        return $this->profession;
+    }
+
+    public function setProfession(?Profession $profession): self
+    {
+        $this->profession = $profession;
+
+        return $this;
+    }
+
+    public function getDatePriseService(): ?\DateTimeInterface
+    {
+        return $this->datePriseService;
+    }
+
+    public function setDatePriseService(?\DateTimeInterface $datePriseService): self
+    {
+        $this->datePriseService = $datePriseService;
+
+        return $this;
+    }
+
+    public function getDateSortie(): ?\DateTimeInterface
+    {
+        return $this->dateSortie;
+    }
+
+    public function setDateSortie(?\DateTimeInterface $dateSortie): self
+    {
+        $this->dateSortie = $dateSortie;
+
+        return $this;
+    }
+
+    public function getMotifSortie(): ?string
+    {
+        return $this->motifSortie;
+    }
+
+    public function setMotifSortie(?string $motifSortie): self
+    {
+        $this->motifSortie = $motifSortie;
+
+        return $this;
+    }
+
+    public function getNumeroMainOeuvre(): ?string
+    {
+        return $this->numeroMainOeuvre;
+    }
+
+    public function setNumeroMainOeuvre(?string $numeroMainOeuvre): self
+    {
+        $this->numeroMainOeuvre = $numeroMainOeuvre;
 
         return $this;
     }

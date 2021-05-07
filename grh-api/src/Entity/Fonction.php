@@ -28,6 +28,16 @@ class Fonction
      */
     private $nom;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $etat;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $rang;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -41,6 +51,30 @@ class Fonction
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getEtat(): ?bool
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(?bool $etat): self
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getRang(): ?int
+    {
+        return $this->rang;
+    }
+
+    public function setRang(int $rang): self
+    {
+        $this->rang = $rang;
 
         return $this;
     }

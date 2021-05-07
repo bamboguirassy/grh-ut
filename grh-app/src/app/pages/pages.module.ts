@@ -26,6 +26,11 @@ import { FonctionNewComponent } from './parametrage/fonction/fonction-new/foncti
 import { FonctionShowComponent } from './parametrage/fonction/fonction-show/fonction-show.component';
 import { FonctionEditComponent } from './parametrage/fonction/fonction-edit/fonction-edit.component';
 import { FonctionListComponent } from './parametrage/fonction/fonction-list/fonction-list.component';
+import { ProfessionListComponent } from './parametrage/profession/profession-list/profession-list.component';
+import { ProfessionShowComponent } from './parametrage/profession/profession-show/profession-show.component';
+import { ProfessionEditComponent } from './parametrage/profession/profession-edit/profession-edit.component';
+import { ProfessionCloneComponent } from './parametrage/profession/profession-clone/profession-clone.component';
+import { ProfessionNewComponent } from './parametrage/profession/profession-new/profession-new.component';
 import { CaisseSocialeNewComponent } from './parametrage/caissesociale/caissesociale-new/caissesociale-new.component';
 import { CaisseSocialeEditComponent } from './parametrage/caissesociale/caissesociale-edit/caissesociale-edit.component';
 import { CaisseSocialeListComponent } from './parametrage/caissesociale/caissesociale-list/caissesociale-list.component';
@@ -79,16 +84,41 @@ import { GroupShowComponent } from './parametrage/group/group-show/group-show.co
 import { TypeEntiteEditComponent } from './parametrage/typeentite/typeentite-edit/typeentite-edit.component';
 import { TypeEntiteListComponent } from './parametrage/typeentite/typeentite-list/typeentite-list.component';
 import { TypeEntiteShowComponent } from './parametrage/typeentite/typeentite-show/typeentite-show.component';
-import { EmployeCloneComponent } from './gestionemploye/employe/employe-clone/employe-clone.component';
 import { EmployeEditComponent } from './gestionemploye/employe/employe-edit/employe-edit.component';
 import { EmployeListComponent } from './gestionemploye/employe/employe-list/employe-list.component';
 import { EmployeShowComponent } from './gestionemploye/employe/employe-show/employe-show.component';
 import { EmployeNewComponent } from './gestionemploye/employe/employe-new/employe-new.component';
-import { GradeCloneComponent } from './gestiongrade/grade/grade-clone/grade-clone.component';
 import { GradeEditComponent } from './gestiongrade/grade/grade-edit/grade-edit.component';
 import { GradeListComponent } from './gestiongrade/grade/grade-list/grade-list.component';
 import { GradeShowComponent } from './gestiongrade/grade/grade-show/grade-show.component';
 import { GradeNewComponent } from './gestiongrade/grade/grade-new/grade-new.component';
+import { EchelonClasseListComponent } from './gestiongrade/echelonclasse/echelonclasse-list/echelonclasse-list.component';
+import { EchelonClasseShowComponent } from './gestiongrade/echelonclasse/echelonclasse-show/echelonclasse-show.component';
+import { EchelonClasseEditComponent } from './gestiongrade/echelonclasse/echelonclasse-edit/echelonclasse-edit.component';
+import { EchelonClasseCloneComponent } from './gestiongrade/echelonclasse/echelonclasse-clone/echelonclasse-clone.component';
+import { EchelonClasseNewComponent } from './gestiongrade/echelonclasse/echelonclasse-new/echelonclasse-new.component';
+import { GCategorieListComponent } from './gestiongrade/gcategorie/gcategorie-list/gcategorie-list.component';
+import { GCategorieShowComponent } from './gestiongrade/gcategorie/gcategorie-show/gcategorie-show.component';
+import { GCategorieEditComponent } from './gestiongrade/gcategorie/gcategorie-edit/gcategorie-edit.component';
+import { GCategorieCloneComponent } from './gestiongrade/gcategorie/gcategorie-clone/gcategorie-clone.component';
+import { GCategorieNewComponent } from './gestiongrade/gcategorie/gcategorie-new/gcategorie-new.component';
+import { GClasseListComponent } from './gestiongrade/gclasse/gclasse-list/gclasse-list.component';
+import { GClasseShowComponent } from './gestiongrade/gclasse/gclasse-show/gclasse-show.component';
+import { GClasseEditComponent } from './gestiongrade/gclasse/gclasse-edit/gclasse-edit.component';
+import { GClasseCloneComponent } from './gestiongrade/gclasse/gclasse-clone/gclasse-clone.component';
+import { GClasseNewComponent } from './gestiongrade/gclasse/gclasse-new/gclasse-new.component';
+import { GEchelonListComponent } from './gestiongrade/gechelon/gechelon-list/gechelon-list.component';
+import { GEchelonShowComponent } from './gestiongrade/gechelon/gechelon-show/gechelon-show.component';
+import { GEchelonEditComponent } from './gestiongrade/gechelon/gechelon-edit/gechelon-edit.component';
+import { GEchelonCloneComponent } from './gestiongrade/gechelon/gechelon-clone/gechelon-clone.component';
+import { GEchelonNewComponent } from './gestiongrade/gechelon/gechelon-new/gechelon-new.component';
+import { GNiveauListComponent } from './gestiongrade/gniveau/gniveau-list/gniveau-list.component';
+import { GNiveauShowComponent } from './gestiongrade/gniveau/gniveau-show/gniveau-show.component';
+import { GNiveauEditComponent } from './gestiongrade/gniveau/gniveau-edit/gniveau-edit.component';
+import { GNiveauCloneComponent } from './gestiongrade/gniveau/gniveau-clone/gniveau-clone.component';
+import { GNiveauNewComponent } from './gestiongrade/gniveau/gniveau-new/gniveau-new.component';
+
+
 import { AdresseCloneComponent } from './gestionemploye/adresse/adresse-clone/adresse-clone.component';
 import { AdresseEditComponent } from './gestionemploye/adresse/adresse-edit/adresse-edit.component';
 import { AdresseListComponent } from './gestionemploye/adresse/adresse-list/adresse-list.component';
@@ -235,13 +265,11 @@ import { FonctionEmployeShowComponent } from './gestionemploye/fonctionemploye/f
     GradeListComponent,
     GradeEditComponent,
     GradeShowComponent,
-    GradeCloneComponent,
     GradeNewComponent,
     // employe components
     EmployeListComponent,
     EmployeEditComponent,
     EmployeShowComponent,
-    EmployeCloneComponent,
     EmployeNewComponent,
     // adresse components
     AdresseListComponent,
@@ -273,6 +301,42 @@ import { FonctionEmployeShowComponent } from './gestionemploye/fonctionemploye/f
     FonctionEmployeShowComponent,
     FonctionEmployeCloneComponent,
     FonctionEmployeNewComponent,
+    // gcategorie components
+    GCategorieListComponent,
+    GCategorieEditComponent,
+    GCategorieShowComponent,
+    GCategorieCloneComponent,
+    GCategorieNewComponent,
+    // gclasse components
+    GClasseListComponent,
+    GClasseEditComponent,
+    GClasseShowComponent,
+    GClasseCloneComponent,
+    GClasseNewComponent,
+    // gechelon components
+    GEchelonListComponent,
+    GEchelonEditComponent,
+    GEchelonShowComponent,
+    GEchelonCloneComponent,
+    GEchelonNewComponent,
+    // gniveau components
+    GNiveauListComponent,
+    GNiveauEditComponent,
+    GNiveauShowComponent,
+    GNiveauCloneComponent,
+    GNiveauNewComponent,
+    // profession components
+    ProfessionListComponent,
+    ProfessionEditComponent,
+    ProfessionShowComponent,
+    ProfessionCloneComponent,
+    ProfessionNewComponent,
+    // echelonclasse components
+    EchelonClasseListComponent,
+    EchelonClasseEditComponent,
+    EchelonClasseShowComponent,
+    EchelonClasseCloneComponent,
+    EchelonClasseNewComponent,
   ],
   exports: [],
   entryComponents: []
