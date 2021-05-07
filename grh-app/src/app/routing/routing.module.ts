@@ -33,7 +33,9 @@ import { typeEntiteRoutes } from '../pages/parametrage/typeentite/typeentite.rou
 import { typeContratRoutes } from '../pages/parametrage/typecontrat/typecontrat.routes';
 import { typeDocumentRoutes } from '../pages/parametrage/typedocument/typedocument.routes';
 import { typeEmployeRoutes } from '../pages/parametrage/typeemploye/typeemploye.routes';
+import { professionRoutes } from '../pages/parametrage/profession/profession.routes';
 import { PageEditAccountComponent } from '../pages/apps/service-pages/edit-account/edit-account.component';
+import { gClasseRoutes } from '../pages/gestiongrade/gclasse/gclasse.routes';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -61,7 +63,9 @@ const VERTICAL_ROUTES: Routes = [
   membreFamilleRoutes,
   membreSyndicatRoutes,
   documentRoutes,
-  fonctionEmployeRoutes
+  fonctionEmployeRoutes,
+  gClasseRoutes,
+  professionRoutes
 ];
 
 const PUBLIC_ROUTES: Routes = [
