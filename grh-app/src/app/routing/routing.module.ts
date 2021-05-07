@@ -5,6 +5,7 @@ import { membreFamilleRoutes } from './../pages/gestionemploye/membrefamille/mem
 import { adresseRoutes } from './../pages/gestionemploye/adresse/adresse.routes';
 import { employeRoutes } from './../pages/gestionemploye/employe/employe.routes';
 import { gradeRoutes } from './../pages/gestiongrade/grade/grade.routes';
+import {gNiveauRoutes} from './../pages/gestiongrade/gniveau/gniveau.routes';
 import { syndicatRoutes } from './../pages/parametrage/syndicat/syndicat.routes';
 import { structureRoutes } from './../pages/parametrage/structure/structure.routes';
 import { paysRoutes } from './../pages/parametrage/pays/pays.routes';
@@ -53,6 +54,7 @@ const VERTICAL_ROUTES: Routes = [
   structureRoutes,
   syndicatRoutes,
   gradeRoutes,
+  gNiveauRoutes,
   employeRoutes,
   adresseRoutes,
   membreFamilleRoutes,
