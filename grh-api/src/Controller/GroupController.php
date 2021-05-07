@@ -156,8 +156,8 @@ class GroupController extends AbstractController {
                 new AccessModel('GRADE', "Grade"),
                 new AccessModel('GCLASSE', "Classe"),
                 new AccessModel('GCATEGORIE', "Catégorie"),
-                new AccessModel('GNiveau', "Niveau"),
-                new AccessModel('GEchelon', "Echelon"),
+                new AccessModel('GNIVEAU', "Niveau"),
+                new AccessModel('GECHELON', "Echelon"),
                 new AccessModel('ECHELONCLASSE', "Echelon Classe"),
                     ]
             ),
