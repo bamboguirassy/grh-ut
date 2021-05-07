@@ -35,6 +35,10 @@ class EmployeType extends AbstractType
             ->add('mutuelleSante')
             ->add('nationalite')
             ->add('typeEmploye')
+            ->add('datePriseService')
+            ->add('dateSortie')
+            ->add('motifSortie')
+            ->add('numeroMainOeuvre')
         ;
     }
 
