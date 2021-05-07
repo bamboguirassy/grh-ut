@@ -113,7 +113,6 @@ import { GEchelonNewComponent } from './gestiongrade/gechelon/gechelon-new/geche
 import { GNiveauListComponent } from './gestiongrade/gniveau/gniveau-list/gniveau-list.component';
 import { GNiveauShowComponent } from './gestiongrade/gniveau/gniveau-show/gniveau-show.component';
 import { GNiveauEditComponent } from './gestiongrade/gniveau/gniveau-edit/gniveau-edit.component';
-import { GNiveauCloneComponent } from './gestiongrade/gniveau/gniveau-clone/gniveau-clone.component';
 import { GNiveauNewComponent } from './gestiongrade/gniveau/gniveau-new/gniveau-new.component';
 
 
@@ -319,7 +318,6 @@ import { FonctionEmployeShowComponent } from './gestionemploye/fonctionemploye/f
     GNiveauListComponent,
     GNiveauEditComponent,
     GNiveauShowComponent,
-    GNiveauCloneComponent,
     GNiveauNewComponent,
     // profession components
     ProfessionListComponent,
