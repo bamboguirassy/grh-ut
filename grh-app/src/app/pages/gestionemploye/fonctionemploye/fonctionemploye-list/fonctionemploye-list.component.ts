@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 import { FonctionEmployeService } from '../fonctionemploye.service';
 import { FonctionEmploye } from '../fonctionemploye';
@@ -13,15 +14,23 @@ import { Employe } from '../../employe/employe';
 export class FonctionEmployeListComponent implements OnInit {
 
   @Input() employe: Employe;
+  selectedFonction: FonctionEmploye;
+
   items: Document[] = [];
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];
 
-  constructor(public fonctionEmployeSrv: FonctionEmployeService) {}
+  constructor(public fonctionEmployeSrv: FonctionEmployeService,  private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.findByEmploye();
+    
   }
+
+  setSelectedFonction(element: FonctionEmploye){
+      this.selectedFonction = element;
+  }
+  
 
   handlePostDelete() {
     this.findByEmploye();

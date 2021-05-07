@@ -38,7 +38,7 @@ export class StructureEditComponent extends BasePageComponent<Structure> impleme
           route: ''
         },
         {
-          title: 'Structures',
+          title: 'Liste des structures',
           route: '/'+this.orientation+'/structure'
         },
         {

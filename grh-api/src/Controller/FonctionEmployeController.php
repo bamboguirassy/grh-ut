@@ -89,6 +89,10 @@ class FonctionEmployeController extends AbstractController
         }
 
         $fonctionEmploye->setDatePriseFonction(new \DateTime($reqData->datePriseFonction));
+        if (isset($reqData->dateFin)) {
+            $fonctionEmploye->setDateFin(new \DateTime($reqData->dateFin));
+        }
+
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($fonctionEmploye);
@@ -116,8 +120,11 @@ class FonctionEmployeController extends AbstractController
     public function edit(Request $request, FonctionEmploye $fonctionEmploye): FonctionEmploye
     {
         $form = $this->createForm(FonctionEmployeType::class, $fonctionEmploye);
+        $reqData = Utils::getObjectFromRequest($request);
         $form->submit(Utils::serializeRequestContent($request));
-
+        if (isset($reqData->dateFin)) {
+            $fonctionEmploye->setDateFin(new \DateTime($reqData->dateFin));
+        }
         $this->getDoctrine()->getManager()->flush();
 
         return $fonctionEmploye;

@@ -48,9 +48,6 @@
                   <button *ngIf="structureSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
                     [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"
                     [routerLink]="[item.id,'edit']"></button>
-                  <button *ngIf="structureSrv.resourceName|clonable" [outline]="true" tc-button
-                    [afterIcon]="'icofont-copy'" [square]="true" [tcShape]="500" [size]="'sm'"
-                    [routerLink]="[item.id,'clone']"></button>
                   <button *ngIf="structureSrv.resourceName|deletable" (click)="remove(item)" tc-button
                     [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
                     [size]="'sm'"></button>

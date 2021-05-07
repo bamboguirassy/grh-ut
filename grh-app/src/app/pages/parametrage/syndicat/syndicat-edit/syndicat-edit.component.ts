@@ -29,7 +29,7 @@ export class SyndicatEditComponent extends BasePageComponent<Syndicat> implement
           route: ''
         },
         {
-          title: 'Syndicats',
+          title: 'Liste des syndicats',
           route: '/'+this.orientation+'/syndicat'
         },
         {

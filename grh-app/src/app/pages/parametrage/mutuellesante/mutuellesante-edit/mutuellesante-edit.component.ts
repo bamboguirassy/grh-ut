@@ -22,14 +22,14 @@ export class MutuelleSanteEditComponent extends BasePageComponent<MutuelleSante>
               public location: Location) {
     super(store, mutuelleSanteSrv);
     this.pageData = {
-      title: 'Modification - MutuelleSante',
+      title: 'Modification - Mutuelle de Santé',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'MutuelleSantes',
+          title: 'Liste des mutuelle de santé',
           route: '/'+this.orientation+'/mutuellesante'
         },
         {

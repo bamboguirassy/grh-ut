@@ -29,7 +29,7 @@ export class FonctionEditComponent extends BasePageComponent<Fonction> implement
           route: ''
         },
         {
-          title: 'Fonctions',
+          title: 'Liste des fonctions',
           route: '/'+this.orientation+'/fonction'
         },
         {
