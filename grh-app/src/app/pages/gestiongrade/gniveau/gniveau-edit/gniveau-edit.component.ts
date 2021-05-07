@@ -22,14 +22,14 @@ export class GNiveauEditComponent extends BasePageComponent<GNiveau> implements 
               public location: Location) {
     super(store, gNiveauSrv);
     this.pageData = {
-      title: 'Modification - GNiveau',
+      title: 'Modification - niveau',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des gniveaux',
+          title: 'Liste des niveaux',
           route: '/'+this.orientation+'/gniveau'
         },
         {

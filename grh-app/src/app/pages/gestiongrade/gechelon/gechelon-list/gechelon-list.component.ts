@@ -17,14 +17,14 @@ export class GEchelonListComponent extends BasePageComponent<GEchelon> implement
     super(store, gEchelonSrv);
 
     this.pageData = {
-      title: 'Liste des GEchelons',
+      title: 'Liste des Echelons',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des géchelons'
+          title: 'Liste des échelons'
         }
       ]
     };
