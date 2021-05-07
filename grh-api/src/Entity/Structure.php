@@ -45,7 +45,7 @@ class Structure
     private $adresse;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="telephone", type="string", length=45, nullable=true)
      */

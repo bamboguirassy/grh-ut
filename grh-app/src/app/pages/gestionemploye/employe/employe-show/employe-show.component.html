@@ -41,6 +41,9 @@
                         </cite> <br>
                         <cite title="Date Recrutement">- Récruté(e) le
                             {{entity?.dateRecrutement|date:'dd/MM/yyyy'}}</cite>
+                        <br>
+                        <cite title="Date Prise Service">- A pris service le
+                            {{entity?.datePriseService|date:'dd/MM/yyyy'}}</cite>
                     </footer>
                 </blockquote>
             </div>
@@ -186,6 +189,13 @@
                                 <td>
                                     <span *ngIf="entity?.mutuelleSante">{{ entity?.mutuelleSante?.nom }}</span>
                                     <tc-badge view="error" *ngIf="!entity?.mutuelleSante">Indéfinie</tc-badge>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Numéro Main d'Oeuvre</th>
+                                <td>
+                                    <span *ngIf="entity?.numeroMainOeuvre">{{ entity?.numeroMainOeuvre }}</span>
+                                    <tc-badge view="error" *ngIf="!entity?.numeroMainOeuvre">Indéfinie</tc-badge>
                                 </td>
                             </tr>
                         </table>

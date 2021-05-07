@@ -401,17 +401,15 @@ class EmployeController extends AbstractController
         if (!isset($reqData->dateRecrutement)) {
             throw $this->createNotFoundException("La date de recrutement est introuvable !");
         }
-        if (!isset($reqData->datePriseService)) {
-            throw $this->createNotFoundException("La date prise de service est introuvable !");
+        if (isset($reqData->dateSortie)) {
+            $employe->setDateSortie(new \DateTime($reqData->dateSortie));
         }
-        if (!isset($reqData->dateSortie)) {
-            throw $this->createNotFoundException("La date de sortie est introuvable !");
+        if (isset($reqData->datePriseService)) {
+            $employe->setDatePriseService(new \DateTime($reqData->datePriseService));
         }
         $employe->setDateNaissance(new \DateTime($reqData->dateNaissance));
         $employe->setDateRecrutement(new \DateTime($reqData->dateRecrutement));
-        $employe->setDatePriseService(new \DateTime($reqData->datePriseService));
-        $employe->setDateSortie(new \DateTime($reqData->dateSortie));
-
+        
         //check if file provided
         if ($employe->getFilepath()) {
             $host = $request->getHttpHost();
@@ -461,16 +459,15 @@ class EmployeController extends AbstractController
         if (!isset($reqData->dateRecrutement)) {
             throw $this->createNotFoundException("La date de recrutement est introuvable !");
         }
-        if (!isset($reqData->datePriseService)) {
-            throw $this->createNotFoundException("La date prise de service est introuvable !");
+        if (isset($reqData->dateSortie)) {
+            $employe->setDateSortie(new \DateTime($reqData->dateSortie));
         }
-        if (!isset($reqData->dateSortie)) {
-            throw $this->createNotFoundException("La date de sortie est introuvable !");
+        if (isset($reqData->datePriseService)) {
+            $employe->setDatePriseService(new \DateTime($reqData->datePriseService));
         }
+       
         $employe->setDateNaissance(new \DateTime($reqData->dateNaissance));
         $employe->setDateRecrutement(new \DateTime($reqData->dateRecrutement));
-        $employe->setDatePriseService(new \DateTime($reqData->datePriseService));
-        $employe->setDateSortie(new \DateTime($reqData->dateSortie));
         $this->getDoctrine()->getManager()->flush();
 
         return $employe;

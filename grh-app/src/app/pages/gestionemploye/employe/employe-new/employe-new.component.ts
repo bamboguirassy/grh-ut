@@ -60,7 +60,8 @@ export class EmployeNewComponent implements OnInit {
   }
 
   save() {
-    if (this.selectedCaisseSociale) {
+   
+   if (this.selectedCaisseSociale) {
       this.entity.caisseSociale = this.selectedCaisseSociale.id;
     }
     if (this.selectedMutuelleSante) {
@@ -72,7 +73,9 @@ export class EmployeNewComponent implements OnInit {
     this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
     this.entity.dateRecrutement = this.datePipe.transform(this.entity.dateRecrutement, 'yyyy-MM-dd');
     this.entity.datePriseService = this.datePipe.transform(this.entity.datePriseService, 'yyyy-MM-dd');
-    this.entity.dateSortie = this.datePipe.transform(this.entity.dateSortie, 'yyyy-MM-dd');
+    if(this.entity.dateSortie){
+      this.entity.dateSortie = this.datePipe.transform(this.entity.dateSortie, 'yyyy-MM-dd');
+   }
     this.entity.filename = this.fileModel.fileName;
     this.entity.filepath = this.fileModel.fileContent;
     this.employeSrv.create(this.entity)

@@ -252,6 +252,18 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
+                        <tc-form-label>Numero Main Oeuvre</tc-form-label>
+                        <tc-input prefixIcon="icofont-key-hole" [(ngModel)]="entity.numeroMainOeuvre" name="numeroMainOeuvre" id="numeroMainOeuvre"
+                            #numeroMainOeuvre="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="numeroMainOeuvre">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="!entity.etat">
+                    <tc-form-group>
                         <tc-form-label>Date Sortie</tc-form-label>
                         <nz-date-picker [nzFormat]="'dd/MM/yyyy'"
                             [(ngModel)]="entity.dateSortie" name="dateSortie" id="dateSortie"
@@ -262,26 +274,14 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="!entity.etat">
                     <tc-form-group>
-                        <tc-form-label>Motif Sortie</tc-form-label>
+                        <tc-form-label>Motif Sortie</tc-form-label> 
                         <tc-input [(ngModel)]="entity.motifSortie" name="motifSortie" id="motifSortie"
                             #motifSortie="ngModel">
                         </tc-input>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="motifSortie">
-                            </app-form-field-validation-message>
-                        </tc-form-description>
-                    </tc-form-group>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <tc-form-group>
-                        <tc-form-label>Numero Main Oeuvre</tc-form-label>
-                        <tc-input prefixIcon="icofont-key-hole" [(ngModel)]="entity.numeroMainOeuvre" name="numeroMainOeuvre" id="numeroMainOeuvre"
-                            #numeroMainOeuvre="ngModel">
-                        </tc-input>
-                        <tc-form-description>
-                            <app-form-field-validation-message [formField]="numeroMainOeuvre">
                             </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>
