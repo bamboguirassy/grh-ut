@@ -32,8 +32,6 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
   }
   structures: Structure[] = [];
   selectedStructure: any;
-  typeContrats: TypeContrat[] = [];
-  selectedTypeContrat: any;
   isModalVisible = false;
   fonctions: Fonction[] = [];
   selectedFonctionId: any;
@@ -41,7 +39,7 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
   constructor(store: Store<IAppState>,
               public fonctionEmployeSrv: FonctionEmployeService,
               public router: Router,  public fonctionSrv: FonctionService,
-              private activatedRoute: ActivatedRoute, public structureSrv: StructureService, public typeContratSrv: TypeContratService,
+              private activatedRoute: ActivatedRoute, public structureSrv: StructureService,
               public location: Location, public datePipe: DatePipe) {
     
   }
@@ -49,7 +47,7 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.findFonctions();
     this.findStructures();
-    this.findTypeContrats();
+   
   }
 
   ngOnDestroy() {
@@ -57,7 +55,7 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
   }
 
   handlePostLoad() {
-    this.selectedTypeContrat = this.entity.typeContrat?.id;
+    
     this.selectedFonctionId = this.entity.fonction?.id;
     this.selectedStructure = this.entity.structure?.id;
     this.entity.datePriseFonction = this.datePipe.transform(this.entity.datePriseFonction, 'yyyy-MM-dd');
@@ -69,7 +67,7 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
   }
 
   update() {
-    this.entity.typeContrat = this.selectedTypeContrat;
+   
     this.entity.fonction = this.selectedFonctionId;
     this.entity.structure = this.selectedStructure; 
     this.entity.dateFin = this.datePipe.transform(this.entity.dateFin, 'yyyy-MM-dd');   
@@ -113,12 +111,7 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
       }, err => this.structureSrv.httpSrv.catchError(err));
   }
 
-  findTypeContrats() {
-    return this.typeContratSrv.findAll()
-      .subscribe((data: any) => {
-        this.typeContrats = data;
-      }, err => this.typeContratSrv.httpSrv.catchError(err));
-  }
+  
 
 
 }

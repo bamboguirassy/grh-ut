@@ -29,26 +29,22 @@ export class FonctionEmployeNewComponent implements OnInit {
   @Input() employe: Employe;
   structures: Structure[] = [];
   selectedStructure: Structure;
-  typeContrats: TypeContrat[] = [];
-  selectedTypeContrat: TypeContrat;
+  
 
   constructor(public fonctionEmployeSrv: FonctionEmployeService,
     public router: Router, public fonctionSrv: FonctionService,
-    public structureSrv: StructureService, public typeContratSrv: TypeContratService,
-    public datePipe: DatePipe) {
+    public structureSrv: StructureService, public datePipe: DatePipe) {
     this.entity = new FonctionEmploye();
   }
 
   ngOnInit(): void {
     this.findFonctions();
     this.findStructures();
-    this.findTypeContrats();
+   
   }
 
   save() {
-    if (this.selectedTypeContrat) {
-      this.entity.typeContrat = this.selectedTypeContrat.id;
-    }
+    
     this.entity.employe = this.employe.id;
     this.entity.fonction = this.selectedFonction.id;
     this.entity.structure = this.selectedStructure.id;
@@ -86,12 +82,7 @@ export class FonctionEmployeNewComponent implements OnInit {
       }, err => this.structureSrv.httpSrv.catchError(err));
   }
 
-  findTypeContrats() {
-    return this.typeContratSrv.findAll()
-      .subscribe((data: any) => {
-        this.typeContrats = data;
-      }, err => this.typeContratSrv.httpSrv.catchError(err));
-  }
+  
 
 }
 
