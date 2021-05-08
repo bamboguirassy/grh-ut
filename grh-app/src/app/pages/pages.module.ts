@@ -137,6 +137,8 @@ import { FonctionEmployeCloneComponent } from './gestionemploye/fonctionemploye/
 import { FonctionEmployeEditComponent } from './gestionemploye/fonctionemploye/fonctionemploye-edit/fonctionemploye-edit.component';
 import { FonctionEmployeListComponent } from './gestionemploye/fonctionemploye/fonctionemploye-list/fonctionemploye-list.component';
 import { FonctionEmployeShowComponent } from './gestionemploye/fonctionemploye/fonctionemploye-show/fonctionemploye-show.component';
+import { RecrutementGenreComponent } from './dashboards/recrutement/recrutement-genre/recrutement-genre.component';
+import { RecrutementTypeComponent } from './dashboards/recrutement/recrutement-type/recrutement-type.component';
 import { DiplomeListComponent } from './parametrage/diplome/diplome-list/diplome-list.component';
 import { DiplomeEditComponent } from './parametrage/diplome/diplome-edit/diplome-edit.component';
 import { DiplomeShowComponent } from './parametrage/diplome/diplome-show/diplome-show.component';
@@ -332,6 +334,8 @@ import { DiplomeNewComponent } from './parametrage/diplome/diplome-new/diplome-n
     EchelonClasseShowComponent,
     EchelonClasseCloneComponent,
     EchelonClasseNewComponent,
+    RecrutementGenreComponent,
+    RecrutementTypeComponent,
 
     // diplome components
     DiplomeListComponent,
