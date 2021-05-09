@@ -16,6 +16,7 @@ class GClasseType extends AbstractType
             ->add('indice')
             ->add('ordre')
             ->add('suivant')
+            ->add('typeEmploye')
         ;
     }
 

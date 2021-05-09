@@ -48,6 +48,16 @@ class GClasse
      * @ORM\ManyToMany(targetEntity=GNiveau::class)
      */
     private $niveaux;
+    
+    /**
+     * @var \TypeEmploye
+     *
+     * @ORM\ManyToOne(targetEntity="TypeEmploye")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="type_employe", referencedColumnName="id")
+     * })
+     */
+    private $typeEmploye;
 
     public function __construct()
     {
@@ -156,6 +166,18 @@ class GClasse
         if ($this->niveaux->contains($niveau)) {
             $this->niveaux->removeElement($niveau);
         }
+
+        return $this;
+    }
+    
+    public function getTypeEmploye()
+    {
+        return $this->typeEmploye;
+    }
+
+    public function setTypeEmploye($typeEmploye): self
+    {
+        $this->typeEmploye = $typeEmploye;
 
         return $this;
     }
