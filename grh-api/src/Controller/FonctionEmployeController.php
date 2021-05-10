@@ -87,13 +87,11 @@ class FonctionEmployeController extends AbstractController
         if (!isset($reqData->datePriseFonction)) {
             throw $this->createNotFoundException("La date de prise de service est obligatoire !");
         }
-
         $fonctionEmploye->setDatePriseFonction(new \DateTime($reqData->datePriseFonction));
         if (isset($reqData->dateFin)) {
             $fonctionEmploye->setDateFin(new \DateTime($reqData->dateFin));
         }
-
-
+        
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($fonctionEmploye);
         $entityManager->flush();

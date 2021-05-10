@@ -12,24 +12,30 @@
         <i class="icofont-data icofont-2x"></i>
       </ng-template>
     </tc-table-col>
-                                    <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
+            <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
                 <ng-template #tableTDTemplate let-value>
                     <span class="nowrap" *ngIf="value">{{ value }}</span>
                     <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
                 </ng-template>
             </tc-table-col>
-                                <tc-table-col [columnTitle]="'Indice'" [columnName]="'indice'" [enableSorting]="true">
+           <tc-table-col [columnTitle]="'Indice'" [columnName]="'indice'" [enableSorting]="true">
                 <ng-template #tableTDTemplate let-value>
                     <span class="nowrap" *ngIf="value">{{ value }}</span>
                     <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
                 </ng-template>
             </tc-table-col>
-                                <tc-table-col [columnTitle]="'Ordre'" [columnName]="'ordre'" [enableSorting]="true">
+            <tc-table-col [columnTitle]="'Ordre'" [columnName]="'ordre'" [enableSorting]="true">
                 <ng-template #tableTDTemplate let-value>
                     <span class="nowrap" *ngIf="value">{{ value }}</span>
                     <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
                 </ng-template>
             </tc-table-col>
+            <tc-table-col [columnTitle]="'Suivant'" [columnName]="'suivant'" [enableSorting]="true">
+              <ng-template #tableTDTemplate let-value>
+                  <span class="nowrap" *ngIf="value">{{ value.nom }}</span>
+                  <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+              </ng-template>
+          </tc-table-col>
                 <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
       <ng-template #tableTDTemplate let-row="row">
         <div class="actions">

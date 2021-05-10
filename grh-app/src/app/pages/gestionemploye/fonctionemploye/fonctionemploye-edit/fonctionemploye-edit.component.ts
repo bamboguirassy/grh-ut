@@ -67,10 +67,13 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
   }
 
   update() {
-   
+    
     this.entity.fonction = this.selectedFonctionId;
     this.entity.structure = this.selectedStructure; 
     this.entity.dateFin = this.datePipe.transform(this.entity.dateFin, 'yyyy-MM-dd');   
+    if(this.entity.etat){
+      this.entity.dateFin = null;
+    }
     this.entity.datePriseFonction = this.datePipe.transform(this.entity.datePriseFonction, 'yyyy-MM-dd');
     this.fonctionEmployeSrv.update(this.entity)
       .subscribe((resp: any) => {

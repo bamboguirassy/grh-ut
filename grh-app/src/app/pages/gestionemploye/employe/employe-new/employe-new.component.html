@@ -263,18 +263,6 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Etat</tc-form-label>
-                        <tc-switcher [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel"
-                            [bgColor]="['transparent', 'transparent', '#ed5564']"
-                            [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']">
-                        </tc-switcher>
-                        <tc-form-description>
-                            <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
-                        </tc-form-description>
-                    </tc-form-group>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <tc-form-group>
                         <tc-form-label>En retraite ?</tc-form-label>
                         <tc-switcher [(ngModel)]="entity.retraite" name="retraite" id="retraite" #retraite="ngModel"
                             [bgColor]="['transparent', 'transparent', '#ed5564']"
@@ -286,9 +274,19 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div [hidden]="entity.etat" class="col-12 col-md-6 col-lg-4"></div>
-                <div [hidden]="entity.etat" class="col-12 col-md-6 col-lg-4"></div>
-                <div class="col-12 col-md-6 col-lg-4" *ngIf="!entity.etat">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Etat</tc-form-label>
+                        <tc-switcher [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel"
+                            [bgColor]="['transparent', 'transparent', '#ed5564']"
+                            [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']">
+                        </tc-switcher>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4" [hidden]="entity.etat">
                     <tc-form-group>
                         <tc-form-label>Date Sortie</tc-form-label>
                         <nz-date-picker [nzFormat]="'dd/MM/yyyy'"
@@ -300,7 +298,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4" *ngIf="!entity.etat">
+                <div class="col-12 col-md-6 col-lg-4" [hidden]="entity.etat">
                     <tc-form-group>
                         <tc-form-label>Motif Sortie</tc-form-label>
                         <tc-input [(ngModel)]="entity.motifSortie" name="motifSortie" id="motifSortie"

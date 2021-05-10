@@ -50,16 +50,6 @@
         </div>
         <div class="col-12 col-md-6">
           <tc-form-group>
-            <tc-form-label>Date Fin fonction</tc-form-label>
-            <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateFin"
-              name="dateFin" id="dateFin" #dateFin="ngModel"></nz-date-picker>
-            <tc-form-description>
-              <app-form-field-validation-message [formField]="dateFin"></app-form-field-validation-message>
-            </tc-form-description>
-          </tc-form-group>
-        </div>
-        <div class="col-12 col-md-6">
-          <tc-form-group>
             <tc-form-label>En cours ?</tc-form-label>
             <tc-switcher [bgColor]="['transparent', 'transparent', '#ed5564']"
               [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']"
@@ -67,6 +57,16 @@
               #etat="ngModel"></tc-switcher>
             <tc-form-description>
               <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div [hidden]="entity.etat" class="col-12 col-md-6">
+          <tc-form-group>
+            <tc-form-label>Date Fin fonction</tc-form-label>
+            <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateFin"
+              name="dateFin" id="dateFin" #dateFin="ngModel"></nz-date-picker>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="dateFin"></app-form-field-validation-message>
             </tc-form-description>
           </tc-form-group>
         </div>

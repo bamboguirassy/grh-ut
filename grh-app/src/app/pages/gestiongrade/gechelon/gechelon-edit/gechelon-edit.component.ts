@@ -15,6 +15,9 @@ import { Location } from '@angular/common';
 })
 export class GEchelonEditComponent extends BasePageComponent<GEchelon> implements OnInit, OnDestroy {
 
+  entity:GEchelon;
+  selectedEchelon:any;
+  echelons:GEchelon[]=[];
   constructor(store: Store<IAppState>,
               public gEchelonSrv: GEchelonService,
               public router: Router,
@@ -42,6 +45,7 @@ export class GEchelonEditComponent extends BasePageComponent<GEchelon> implement
   ngOnInit(): void {
     super.ngOnInit();
     this.findEntity(this.activatedRoute.snapshot.params.id);
+    this.findEchelons();
   }
 
   ngOnDestroy() {
@@ -52,10 +56,21 @@ export class GEchelonEditComponent extends BasePageComponent<GEchelon> implement
   }
 
   prepareUpdate() {
-  }
+    this.entity.suivant=this.selectedEchelon.id;
+ }
 
   handlePostUpdate() {
     this.location.back();
+  }
+
+  findEchelons(){
+    this.gEchelonSrv.findAll()
+    .subscribe((data:any)=>{
+      this.echelons=data;
+     
+    },error => this.gEchelonSrv.httpSrv.catchError(error))
+
+
   }
 
 }
