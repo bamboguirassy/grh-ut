@@ -16,10 +16,10 @@ import { Location } from '@angular/common';
 export class GCategorieEditComponent extends BasePageComponent<GCategorie> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public gCategorieSrv: GCategorieService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
+    public gCategorieSrv: GCategorieService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location) {
     super(store, gCategorieSrv);
     this.pageData = {
       title: 'Modification - catégorie',
@@ -30,7 +30,7 @@ export class GCategorieEditComponent extends BasePageComponent<GCategorie> imple
         },
         {
           title: 'Liste des catégories',
-          route: '/'+this.orientation+'/gcategorie'
+          route: '/' + this.orientation + '/gcategorie'
         },
         {
           title: 'Modification'

@@ -168,15 +168,14 @@
                             <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                   <tc-table-col [columnTitle]="'Date Prise Service'" [columnName]="'datePriseService'"
+                    <tc-table-col [columnTitle]="'Date Prise Service'" [columnName]="'datePriseService'"
                         [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
                             <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                   <tc-table-col [columnTitle]="'Date Sortie'" [columnName]="'dateSortie'"
-                        [enableSorting]="true">
+                    <tc-table-col [columnTitle]="'Date Sortie'" [columnName]="'dateSortie'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
                             <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
@@ -190,7 +189,8 @@
                             <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                    <tc-table-col [columnTitle]="'Numero Main d\'Oeuvre'" [columnName]="'numeroMainOeuvre'" [enableSorting]="true">
+                    <tc-table-col [columnTitle]="'Numero Main d\'Oeuvre'" [columnName]="'numeroMainOeuvre'"
+                        [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value let-row="row">
                             <span class="nowrap" *ngIf="value">
                                 {{ value }}
@@ -198,7 +198,7 @@
                             <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                   <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+                    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
                         <ng-template #tableTDTemplate let-row="row">
                             <div class="actions">
                                 <button *ngIf="employeSrv.resourceName|editable" tc-button

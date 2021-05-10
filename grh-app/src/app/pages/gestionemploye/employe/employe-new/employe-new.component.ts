@@ -38,6 +38,7 @@ export class EmployeNewComponent implements OnInit {
   selectedMutuelleSante: MutuelleSante;
   grades: Grade[] = [];
   selectedGrade: Grade;
+  
 
   constructor(public employeSrv: EmployeService,
     public router: Router, public paysSrv: PaysService,
