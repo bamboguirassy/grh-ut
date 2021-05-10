@@ -10,6 +10,5 @@ export class FonctionEmploye extends BamboAbstractObject {
     fonction: Fonction;
     employe: Employe;
     structure: Structure;
-    typeContrat: TypeContrat;
     dateFin: string;
 }
