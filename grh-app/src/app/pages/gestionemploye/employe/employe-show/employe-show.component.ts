@@ -29,6 +29,12 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   currentAvatar: any;
   defaultAvatar: string;
   changes: boolean;
+  isAdresseLoader = false;
+  isFamilleLoader = false;
+  isSyndicatsLoader = false;
+  isDocumentsLoader = false;
+  isFonctionsLoader = false;
+  isGradeLoader = false;
 
   constructor(store: Store<IAppState>,
     public employeSrv: EmployeService, public fonctionEmployeSrv: FonctionEmployeService,
@@ -106,5 +112,34 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     };
     reader.readAsDataURL(file);
   }
+  adresseLoader(){
+    this.isAdresseLoader = true;
+  }
+
+  familleLoader(){
+    this.isFamilleLoader = true;
+  }
+
+  syndicatsLoader(){
+    this.isSyndicatsLoader = true;
+  }
+  
+  focumentsLoader(){
+    this.isDocumentsLoader = true; 
+  }
+  
+  fonctionsLoader(){
+    this.isFonctionsLoader = true;
+  }
+  
+  gradeLoader(){ 
+    this.isGradeLoader = true;
+  }
+
+
+
+  
+
+
 
 }
