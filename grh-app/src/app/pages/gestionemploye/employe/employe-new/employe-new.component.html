@@ -116,7 +116,7 @@
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
                         <tc-form-label>Situtation Matrimoniale</tc-form-label>
-                        <tc-select required="required" [(ngModel)]="entity.situtationMatrimoniale"
+                        <tc-select [(ngModel)]="entity.situtationMatrimoniale"
                             name="situtationMatrimoniale" id="situtationMatrimoniale" #situtationMatrimoniale="ngModel"
                             [placeholder]="'Selectionner la situation matrimoniale'"
                             [options]="employeSrv.situationMatrimoniales"></tc-select>

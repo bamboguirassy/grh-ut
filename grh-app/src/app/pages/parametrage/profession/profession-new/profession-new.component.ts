@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChi
 import { ProfessionService } from '../profession.service';
 import { Profession } from '../profession';
 import { Router } from '@angular/router';
+import { GClasse } from 'src/app/pages/gestiongrade/gclasse/gclasse';
+import { GClasseService } from 'src/app/pages/gestiongrade/gclasse/gclasse.service';
+import { ClassElement } from 'typescript';
 
 @Component({
   selector: 'app-profession-new',
@@ -17,14 +20,25 @@ export class ProfessionNewComponent implements OnInit {
   @Output() creation: EventEmitter<Profession> = new EventEmitter();
   isModalVisible = false;
 
+  classes: GClasse[] = [];
+  selectedClasse: GClasse;
+
+
   constructor(public professionSrv: ProfessionService,
-    public router: Router) {
+    public router: Router,
+    public gClasseService: GClasseService,) {
     this.entity = new Profession();
+
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.findClasses();
+  }
 
   save() {
+    if (this.selectedClasse) {
+      this.entity.classe = this.selectedClasse.id;
+    }
     this.professionSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
@@ -41,6 +55,13 @@ export class ProfessionNewComponent implements OnInit {
   // close modal window
   closeModal() {
     this.isModalVisible = false;
+  }
+  
+  findClasses() {
+    this.gClasseService.findAll()
+      .subscribe((data: any) => {
+        this.classes = data;
+      }, err => this.gClasseService.httpSrv.catchError(err));
   }
 
 }
