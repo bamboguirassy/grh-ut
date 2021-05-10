@@ -204,7 +204,7 @@ export class BamboAuthService {
           },
           {
             title: "Echelons",
-            routing: "echelonclasse",
+            routing: "gechelon",
             enabled: this.checkListAccess('gechelon')
           }
         ],
