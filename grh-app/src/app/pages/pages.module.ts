@@ -91,11 +91,6 @@ import { GradeEditComponent } from './gestiongrade/grade/grade-edit/grade-edit.c
 import { GradeListComponent } from './gestiongrade/grade/grade-list/grade-list.component';
 import { GradeShowComponent } from './gestiongrade/grade/grade-show/grade-show.component';
 import { GradeNewComponent } from './gestiongrade/grade/grade-new/grade-new.component';
-import { EchelonClasseListComponent } from './gestiongrade/echelonclasse/echelonclasse-list/echelonclasse-list.component';
-import { EchelonClasseShowComponent } from './gestiongrade/echelonclasse/echelonclasse-show/echelonclasse-show.component';
-import { EchelonClasseEditComponent } from './gestiongrade/echelonclasse/echelonclasse-edit/echelonclasse-edit.component';
-import { EchelonClasseCloneComponent } from './gestiongrade/echelonclasse/echelonclasse-clone/echelonclasse-clone.component';
-import { EchelonClasseNewComponent } from './gestiongrade/echelonclasse/echelonclasse-new/echelonclasse-new.component';
 import { GCategorieListComponent } from './gestiongrade/gcategorie/gcategorie-list/gcategorie-list.component';
 import { GCategorieShowComponent } from './gestiongrade/gcategorie/gcategorie-show/gcategorie-show.component';
 import { GCategorieEditComponent } from './gestiongrade/gcategorie/gcategorie-edit/gcategorie-edit.component';
@@ -329,11 +324,6 @@ import { DiplomeNewComponent } from './parametrage/diplome/diplome-new/diplome-n
     ProfessionShowComponent,
     ProfessionNewComponent,
     // echelonclasse components
-    EchelonClasseListComponent,
-    EchelonClasseEditComponent,
-    EchelonClasseShowComponent,
-    EchelonClasseCloneComponent,
-    EchelonClasseNewComponent,
     RecrutementGenreComponent,
     RecrutementTypeComponent,
 
