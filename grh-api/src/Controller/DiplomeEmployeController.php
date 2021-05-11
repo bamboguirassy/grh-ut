@@ -95,9 +95,6 @@ class DiplomeEmployeController extends AbstractController
         $diplomeEmployes = $this->getDoctrine()
                 ->getRepository(DiplomeEmploye::class)
                 ->findByEmploye($employe);
-        //$em = $this->getDoctrine()->getManager();
-        //$diplomeEmployes = $em->getRepository('App\Entity\DiplomeEmploye')->findBy(['diplome'=>$employe->getId()]);
-        //throw $this->createNotFoundException("Dip => ".count($diplomeEmployes));
         return count($diplomeEmployes) ? $diplomeEmployes : [];
     }
 

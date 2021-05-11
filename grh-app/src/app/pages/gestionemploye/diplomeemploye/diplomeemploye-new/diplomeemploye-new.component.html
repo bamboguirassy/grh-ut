@@ -1,6 +1,4 @@
-<!--<button tc-button [afterIcon]="'icofont-plus'" [view]="'accent'" [square]="true" [tcShape]="500"
-  (click)="openModal()"></button>-->
-  <button *ngIf="diplomeServ.resourceName|creable" tc-button [afterIcon]="'icofont-plus'" [view]="'accent'" [square]="true"
+ <button *ngIf="diplomeServ.resourceName|creable" tc-button [afterIcon]="'icofont-plus'" [view]="'accent'" [square]="true"
   (click)="openModal()"></button>
 <app-access-denied *ngIf="!(diplomeEmployeSrv.resourceName|creable)"></app-access-denied>
 
