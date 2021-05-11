@@ -151,7 +151,7 @@ export class BamboAuthService {
           {
             "title": "Organigramme",
             "routing": "organigramme",
-            enabled: true
+            enabled: this.checkListAccess('structurefonction')
           },
           {
             "title": "Caisses Sociales",
