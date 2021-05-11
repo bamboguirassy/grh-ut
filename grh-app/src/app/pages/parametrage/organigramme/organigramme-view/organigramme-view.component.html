@@ -1,0 +1,41 @@
+<tc-card [tcGradient]="lightGradient" *ngIf="structureSrv.resourceName | listable">
+    <tc-card [view]="secondViewBorder" [outline]="true">
+        <div class="row">
+            <div class="col-12">
+                <nz-select class="float-left col-4" nzAllowClear nzShowSearch style="width: 100%" name="orientationType" id="orientationType"
+                    nzPlaceHolder="Selectionner l'orientation" [(ngModel)]="selectedOrientationType">
+                    <ng-container *ngFor="let orientationType of ['horizontal', 'vertical']">
+                        <nz-option [nzLabel]="orientationType" [nzValue]="orientationType">
+                        </nz-option>
+                    </ng-container>
+                </nz-select>
+                <button class="float-right" tc-button afterIcon="icofont-refresh"
+                    (click)="findStructures()">Rafraichir</button>
+            </div>
+        </div>
+    </tc-card>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+            <tc-card>
+                <ngx-org-chart [nodes]="nodes" [direction]="selectedOrientationType" (itemClick)="openFonctionAdderModal($event)">
+                </ngx-org-chart>
+            </tc-card>
+        </div>
+    </div>
+</tc-card>
+
+<nz-modal [nzMaskClosable]="false" [(nzVisible)]="isFonctionModalVisible" [nzClosable]="true" [nzWidth]="'70%'"
+    [nzTitle]="fonctionModalTitle" [nzContent]="fonctionModalContent" [nzFooter]="null"
+    (nzOnCancel)="isFonctionModalVisible = false">
+    <ng-template #fonctionModalTitle>
+        <span class="font-weight-bold"> {{ selectedStructure?.nom }} - Ajouter des fonction</span>
+    </ng-template>
+
+    <ng-template #fonctionModalContent>
+        <app-structurefonction-list [structure]="selectedStructure" ></app-structurefonction-list>
+    </ng-template>
+
+    <ng-template #newModalFooter>
+        <button nz-button nzType="primary" (click)="isNewModalVisible = false">Fermer</button>
+    </ng-template>
+</nz-modal>

@@ -8,4 +8,5 @@ export class Structure extends BamboAbstractObject {
     telephone: string;
     structureParente: Structure;
     typeEntite: TypeEntite;
+    children: Structure[];
 }

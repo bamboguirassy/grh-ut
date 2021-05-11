@@ -26,6 +26,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
   ];
   selectedStatType: { code: string, title: string };
 
+
   // custom types
   tabCountEmploye = [];
 
@@ -91,6 +92,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
         this.employeSrv.httpSrv.catchError(error);
       });
   }
+
 
 
 
