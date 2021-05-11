@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Employe
  *
- * @ORM\Table(name="employe", indexes={@ORM\Index(name="fk_employe_mutuelle_sante1_idx", columns={"mutuelle_sante"}),@ORM\Index(name="IDX_F804D3B99C2214AD", columns={"structure"}), @ORM\Index(name="fk_employe_pays1_idx", columns={"nationalite"}), @ORM\Index(name="fk_employe_caisse_sociale1_idx", columns={"caisse_sociale"}), @ORM\Index(name="fk_employe_grade1_idx", columns={"grade"}), @ORM\Index(name="fk_employe_type_employe1_idx", columns={"type_employe"})})
+ * @ORM\Table(name="employe", indexes={@ORM\Index(name="fk_employe_mutuelle_sante1_idx", columns={"mutuelle_sante"}),@ORM\Index(name="IDX_F804D3B99C2214AD", columns={"structure_id"}), @ORM\Index(name="fk_employe_pays1_idx", columns={"nationalite"}), @ORM\Index(name="fk_employe_caisse_sociale1_idx", columns={"caisse_sociale"}), @ORM\Index(name="fk_employe_grade1_idx", columns={"grade"}), @ORM\Index(name="fk_employe_type_employe1_idx", columns={"type_employe"})})
  * @ORM\Entity
  */
 class Employe
@@ -230,7 +230,7 @@ class Employe
     /**
      * @ORM\ManyToOne(targetEntity="Structure")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="structure", referencedColumnName="id",nullable=false)
+     *   @ORM\JoinColumn(name="structure_id", referencedColumnName="id",nullable=false)
      * })
      */
     
