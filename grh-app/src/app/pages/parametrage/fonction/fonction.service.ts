@@ -2,6 +2,7 @@ import { BamboAbstractService } from '../../../shared/services/bambo-abstract.se
 import { BamboHttpService } from './../../../shared/services/bambo-http.service';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { Structure } from '../structure/structure';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,10 @@ export class FonctionService extends BamboAbstractService {
     super(httpSrv, toastr);
     this.routePrefix = 'fonction/';
     this.resourceName = 'FONCTION';
+  }
+
+  findNotBindedByStructure(structure: Structure) {
+    return this.httpSrv.get(this.routePrefix + 'not-binded/' + structure.id + '/structure');
   }
   
 }

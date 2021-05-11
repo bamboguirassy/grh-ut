@@ -14,6 +14,7 @@ import { fonctionRoutes } from './../pages/parametrage/fonction/fonction.routes'
 import { mutuelleSanteRoutes } from './../pages/parametrage/mutuellesante/mutuellesante.routes';
 import { caisseSocialeRoutes } from './../pages/parametrage/caissesociale/caissesociale.routes';
 import { diplomeRoutes } from './../pages/parametrage/diplome/diplome.routes';
+import { organigrammeRoutes } from './../pages/parametrage/organigramme/organigramme.routes';
 
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -70,7 +71,8 @@ const VERTICAL_ROUTES: Routes = [
   fonctionEmployeRoutes,
   gClasseRoutes,
   professionRoutes,
-  gCategorieRoutes
+  gCategorieRoutes,
+  organigrammeRoutes,
 ];
 
 const PUBLIC_ROUTES: Routes = [
