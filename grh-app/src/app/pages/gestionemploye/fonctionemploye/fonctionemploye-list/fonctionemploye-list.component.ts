@@ -25,17 +25,18 @@ export class FonctionEmployeListComponent implements OnInit {
 
   ngOnInit(): void {
     this.findByEmploye();
+   
     
   }
   
   setTimeline() {
    
     const sectionData = this.items.map((i: any) => ({
-      date:  this.datePipe.transform(`${i.datePriseFonction}`, 'dd-MM-yyyy')  ,  
+      date: `${this.datePipe.transform(`${i.datePriseFonction}` , 'dd/MM/yyyy')} - ${i.etat?'En Cours':''}`,
       title: i.fonction.nom,
       content: i.structure.nom,
       icon: "icofont-business-man-alt-1",
-      iconBg: this.lightGradient,
+      iconBg: "#64B5F6",
       iconColor: "#fff"
     }))
     this.tab = [

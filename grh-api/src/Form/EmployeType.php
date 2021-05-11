@@ -39,6 +39,8 @@ class EmployeType extends AbstractType
             ->add('dateSortie')
             ->add('motifSortie')
             ->add('numeroMainOeuvre')
+            ->add('structure')
+            ->add('numeroAffiliationIpres')
         ;
     }
 

@@ -150,6 +150,14 @@
                             <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
+                    <tc-table-col [columnTitle]="'Structure'" [columnName]="'structure'" [enableSorting]="true">
+                        <ng-template #tableTDTemplate let-value>
+                            <span class="nowrap" *ngIf="value">
+                                {{value?.nom}}
+                            </span>
+                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                        </ng-template>
+                    </tc-table-col>
                     <tc-table-col [columnTitle]="'Caisse Sociale'" [columnName]="'caisseSociale'"
                         [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
@@ -190,6 +198,15 @@
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Numero Main d\'Oeuvre'" [columnName]="'numeroMainOeuvre'"
+                        [enableSorting]="true">
+                        <ng-template #tableTDTemplate let-value let-row="row">
+                            <span class="nowrap" *ngIf="value">
+                                {{ value }}
+                            </span>
+                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                        </ng-template>
+                    </tc-table-col>
+                    <tc-table-col [columnTitle]="'Numero Affiliation Ipres'" [columnName]="'numeroAffiliationIpres'"
                         [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value let-row="row">
                             <span class="nowrap" *ngIf="value">
