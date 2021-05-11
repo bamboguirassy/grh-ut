@@ -172,6 +172,11 @@ export class BamboAuthService {
             title: "Professions",
             routing: "profession",
             enabled: this.checkListAccess('profession')
+          },
+          {
+            title: "Diplomes",
+            routing: "diplome",
+            enabled: this.checkListAccess('diplome')
           }
         ],
         enabled: false
