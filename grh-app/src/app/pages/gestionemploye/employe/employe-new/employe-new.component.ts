@@ -138,9 +138,7 @@ export class EmployeNewComponent implements OnInit {
 
   findGrades() {
     this.gradeSrv.findAll()
-      .subscribe((data: any) => {
-        console.log(data);
-        
+      .subscribe((data: any) => {      
         this.grades = data;
       }, err => this.gradeSrv.httpSrv.catchError(err));
   }
