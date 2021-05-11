@@ -29,6 +29,13 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   currentAvatar: any;
   defaultAvatar: string;
   changes: boolean;
+  isAdresseLoaded = false;
+  isFamilleLoaded = false;
+  isSyndicatsLoaded = false;
+  isDocumentsLoaded = false;
+  isFonctionsLoaded = false;
+  isGradeLoaded = false;
+  isDiplomeLoaded = false;
 
   constructor(store: Store<IAppState>,
     public employeSrv: EmployeService, public fonctionEmployeSrv: FonctionEmployeService,
@@ -106,5 +113,38 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     };
     reader.readAsDataURL(file);
   }
+  loadAdressesTab(){
+    this.isAdresseLoaded = true;
+  }
+
+  loadFamillesTab(){
+    this.isFamilleLoaded = true;
+  }
+
+  loadSyndicatsTab(){
+    this.isSyndicatsLoaded = true;
+  }
+  
+  loaderDocumentsTab(){
+    this.isDocumentsLoaded = true; 
+  }
+  
+  loadFonctionsTab(){
+    this.isFonctionsLoaded = true;
+  }
+  
+  loadGradesTab(){ 
+    this.isGradeLoaded = true;
+  }
+
+  loaderDiplomesTab(){
+    this.isDiplomeLoaded = true;
+  }
+
+
+
+  
+
+
 
 }

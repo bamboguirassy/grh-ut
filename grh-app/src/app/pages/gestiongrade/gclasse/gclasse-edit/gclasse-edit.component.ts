@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ViewChildren, Output, EventEmitter } from '@angular/core';
 import { GClasse } from '../gclasse';
 import { GClasseService } from '../gclasse.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -7,6 +7,10 @@ import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { BasePageComponent } from 'src/app/pages/base-page';
 import { Location } from '@angular/common';
+import { Profession } from 'src/app/pages/parametrage/profession/profession';
+import { UploadFileModel } from 'src/app/shared/classes/upload-file-model';
+import { TypeEmploye } from 'src/app/pages/parametrage/typeemploye/typeemploye';
+import { TypeEmployeService } from 'src/app/pages/parametrage/typeemploye/typeemploye.service';
 
 @Component({
   selector: 'app-gclasse-edit',
@@ -15,11 +19,26 @@ import { Location } from '@angular/common';
 })
 export class GClasseEditComponent extends BasePageComponent<GClasse> implements OnInit, OnDestroy {
 
+  @ViewChild('modalBody', { static: true }) modalBody: ElementRef<any>;
+  @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
+  @ViewChildren('form') form;
+  entity: GClasse;
+  @Output() creation: EventEmitter<Profession> = new EventEmitter();
+  isModalVisible = false;
+  currentAvatar: any;
+  fileModel: UploadFileModel = new UploadFileModel();
+
+  classes: GClasse[] = [];
+  selectedClasseId: any;
+  typeEmployes: TypeEmploye[] = [];
+  selectedTypeEmployeId: any;
+
   constructor(store: Store<IAppState>,
-              public gClasseSrv: GClasseService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
+    public gClasseSrv: GClasseService,
+    public typeEmployeSrv: TypeEmployeService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location) {
     super(store, gClasseSrv);
     this.pageData = {
       title: 'Modification - Classe',
@@ -30,7 +49,7 @@ export class GClasseEditComponent extends BasePageComponent<GClasse> implements 
         },
         {
           title: 'Liste des classes',
-          route: '/'+this.orientation+'/gclasse'
+          route: '/' + this.orientation + '/gclasse'
         },
         {
           title: 'Modification'
@@ -49,13 +68,37 @@ export class GClasseEditComponent extends BasePageComponent<GClasse> implements 
   }
 
   handlePostLoad() {
+    this.selectedClasseId = this.entity.suivant?.id;
+    this.selectedTypeEmployeId = this.entity.typeEmploye?.id;
+    this.findClasses();
+    this.findTypeEmployes();
   }
+  
 
   prepareUpdate() {
+    this.entity.suivant = this.selectedClasseId;
+    this.entity.typeEmploye = this.selectedTypeEmployeId;
+
   }
 
   handlePostUpdate() {
     this.location.back();
   }
+
+  findClasses() {
+    this.gClasseSrv.findAll()
+      .subscribe((data: any) => {
+        this.classes = data;
+      }, err => this.gClasseSrv.httpSrv.catchError(err));
+  }
+  
+  findTypeEmployes() {
+    this.typeEmployeSrv.findAll()
+      .subscribe((data: any) => {
+        this.typeEmployes = data;
+      }, err => this.typeEmployeSrv.httpSrv.catchError(err));
+  }
+
+ 
 
 }

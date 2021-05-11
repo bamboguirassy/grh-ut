@@ -28,6 +28,24 @@ class Grade
      */
     private $classification;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=GEchelon::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $echelon;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=GNiveau::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $niveau;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=GCategorie::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $categorie;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -41,6 +59,42 @@ class Grade
     public function setClassification(string $classification): self
     {
         $this->classification = $classification;
+
+        return $this;
+    }
+
+    public function getEchelon(): ?GEchelon
+    {
+        return $this->echelon;
+    }
+
+    public function setEchelon(?GEchelon $echelon): self
+    {
+        $this->echelon = $echelon;
+
+        return $this;
+    }
+
+    public function getNiveau(): ?GNiveau
+    {
+        return $this->niveau;
+    }
+
+    public function setNiveau(?GNiveau $niveau): self
+    {
+        $this->niveau = $niveau;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?GCategorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?GCategorie $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }

@@ -43,15 +43,16 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
   grades: Grade[] = [];
   selectedGradeId: any;
 
+
   constructor(store: Store<IAppState>,
-              public employeSrv: EmployeService,
-              public router: Router,
-              public paysSrv: PaysService,
-              public mutuelleSanteSrv: MutuelleSanteService,
-              public caisseSocialeSrv: CaisseSocialeService,
-              private activatedRoute: ActivatedRoute,
-              public gradeSrv: GradeService,
-              public location: Location,public datePipe: DatePipe) {
+    public employeSrv: EmployeService,
+    public router: Router,
+    public paysSrv: PaysService,
+    public mutuelleSanteSrv: MutuelleSanteService,
+    public caisseSocialeSrv: CaisseSocialeService,
+    private activatedRoute: ActivatedRoute,
+    public gradeSrv: GradeService,
+    public location: Location, public datePipe: DatePipe) {
     super(store, employeSrv);
     this.pageData = {
       title: 'Modification - Employe',
@@ -62,7 +63,7 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
         },
         {
           title: 'Employes',
-          route: '/'+this.orientation+'/employe'
+          route: '/' + this.orientation + '/employe'
         },
         {
           title: 'Modification'
@@ -145,8 +146,8 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
     this.findGrades();
   }
 
-  prepareUpdate() {
-    if(this.entity.etat){
+  prepareUpdate() { 
+    if (this.entity.etat) {
       this.entity.dateSortie = null;
       this.entity.motifSortie = null;
     }

@@ -151,15 +151,15 @@ class GroupController extends AbstractController {
                 new AccessModel('SYNDICAT', "Syndicat"),
                 new AccessModel('PROFESSION', "Profession"),
                 new AccessModel('DIPLOME', "Diplome"),
+                new AccessModel('STRUCTUREFONCTION', "Structure Fonction"),
                     ]
             ),
             new AccessGroup("Gestion des grades", [
-                new AccessModel('GRADE', "Grade"),
                 new AccessModel('GCLASSE', "Classe"),
                 new AccessModel('GCATEGORIE', "Catégorie"),
                 new AccessModel('GNIVEAU', "Niveau"),
                 new AccessModel('GECHELON', "Echelon"),
-                new AccessModel('ECHELONCLASSE', "Echelon Classe"),
+                new AccessModel('GRADE', "Grade"),
                     ]
             ),
             new AccessGroup("Gestion des employés", [
@@ -169,6 +169,9 @@ class GroupController extends AbstractController {
                 new AccessModel('MEMBRESYNDICAT', "Syndicat employé"),
                 new AccessModel('DOCUMENT', "Documents Employé"),
                 new AccessModel('FONCTIONEMPLOYE', "Fonctions occupées"),
+                new AccessModel('DIPLOMEEMPLOYE', "Diplomes obtenus"),
+                new AccessModel('CONTRAT', "Contrats signés"),
+                new AccessModel('Affectation', "Affectations"),
                     ]
             ),
         ];

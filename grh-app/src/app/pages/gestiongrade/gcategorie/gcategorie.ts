@@ -4,4 +4,5 @@ export class GCategorie extends BamboAbstractObject {
     nom: string;
     indice: string;
     ordre: number;
+    suivant: GCategorie;
 }

@@ -2,6 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChi
 import { GClasseService } from '../gclasse.service';
 import { GClasse } from '../gclasse';
 import { Router } from '@angular/router';
+import { TypeEmploye } from 'src/app/pages/parametrage/typeemploye/typeemploye';
+import { TypeEmployeService } from 'src/app/pages/parametrage/typeemploye/typeemploye.service';
+import { UploadFileModel } from 'src/app/shared/classes/upload-file-model';
+
 
 @Component({
   selector: 'app-gclasse-new',
@@ -16,15 +20,35 @@ export class GClasseNewComponent implements OnInit {
   entity: GClasse;
   @Output() creation: EventEmitter<GClasse> = new EventEmitter();
   isModalVisible = false;
+  currentAvatar: any;
+  fileModel: UploadFileModel = new UploadFileModel();
+
+
+  classes: GClasse[] =[];
+  selectedClasse: GClasse;
+  typeEmployes: TypeEmploye[] =[];
+  selectedTypeEmploye: TypeEmploye;
+  
 
   constructor(public gClasseSrv: GClasseService,
-    public router: Router) {
+    public router: Router,
+    public classeServive : GClasseService,
+    public typeEmployeServive : TypeEmployeService) {
     this.entity = new GClasse();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.findClasses();
+    this.findTypeEmployes();
+  }
 
   save() {
+    if (this.selectedClasse) {
+      this.classes = this.selectedClasse.id;
+    }
+    if (this.selectedTypeEmploye) {
+      this.typeEmployes = this.selectedTypeEmploye.id;
+    }
     this.gClasseSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
@@ -42,6 +66,22 @@ export class GClasseNewComponent implements OnInit {
   closeModal() {
     this.isModalVisible = false;
   }
+
+   findClasses() {
+    this.classeServive.findAll()
+      .subscribe((data: any) => {
+        this.classes = data;
+      }, err => this.classeServive.httpSrv.catchError(err));
+  }
+
+   findTypeEmployes() {
+    this.typeEmployeServive.findAll()
+      .subscribe((data: any) => {
+        this.typeEmployes = data;
+      }, err => this.typeEmployeServive.httpSrv.catchError(err));
+  }
+
+  
 
 }
 

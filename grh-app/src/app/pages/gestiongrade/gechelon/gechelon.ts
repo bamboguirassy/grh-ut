@@ -3,5 +3,6 @@ import { BamboAbstractObject } from './../../../shared/classes/bambo-abstract-ob
 export class GEchelon extends BamboAbstractObject {
     nom: string;
     indice: string;
-    ordre: string;
+    ordre: number;
+    suivant:GEchelon;
 }

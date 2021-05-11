@@ -13,6 +13,9 @@ class GradeType extends AbstractType
     {
         $builder
             ->add('classification')
+            ->add('echelon')
+            ->add('niveau')
+            ->add('categorie')
         ;
     }
 
