@@ -132,9 +132,7 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
   findStructures() {
     this.structureSrv.findAll()
       .subscribe((data: any) => {
-        this.structures = data;   
-        console.log(this.structures);
-        
+        this.structures = data;          
       }, err => this.structureSrv.httpSrv.catchError(err));
   }
 
