@@ -79,6 +79,15 @@ export class EmployeNewComponent implements OnInit {
     this.entity.structure = this.selectedStructure.id;
     
   
+    if (this.selectedGrade) {
+      this.entity.grade = this.selectedGrade.id;
+    }
+    if (this.selectedNationalite) {
+      this.entity.nationalite = this.selectedNationalite.id;
+    }
+    if (this.typeEmploye) {
+      this.entity.typeEmploye = this.typeEmploye.id;
+    }
     this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
     this.entity.dateRecrutement = this.datePipe.transform(this.entity.dateRecrutement, 'yyyy-MM-dd');
     this.entity.datePriseService = this.datePipe.transform(this.entity.datePriseService, 'yyyy-MM-dd');
@@ -142,17 +151,14 @@ export class EmployeNewComponent implements OnInit {
 
   findGrades() {
     this.gradeSrv.findAll()
-      .subscribe((data: any) => {
-        this.grades = data;  
-        console.log(this.grades);
-            
+      .subscribe((data: any) => {      
+        this.grades = data;
       }, err => this.gradeSrv.httpSrv.catchError(err));
   }
   findStructures() {
     this.structureSrv.findAll()
       .subscribe((data: any) => {
         this.structures = data;   
-        console.log(this.structures);
         
       }, err => this.structureSrv.httpSrv.catchError(err));
   }

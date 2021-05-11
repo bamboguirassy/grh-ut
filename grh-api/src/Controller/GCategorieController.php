@@ -39,6 +39,15 @@ class GCategorieController extends AbstractController
         $form->submit(Utils::serializeRequestContent($request));
 
         $entityManager = $this->getDoctrine()->getManager();
+        /** verification duplication suivant */
+        if($gCategorie->getSuivant()!=null) {
+            $categories = $entityManager->getRepository(GCategorie::class)
+            ->findBySuivant($gCategorie->getSuivant());
+            if(count($categories)>0) {
+                throw $this->createNotFoundException("Attention ! Le suivant que vous avez selectionné est déja associé à l'enregistrement: {$categories[0]->getNom()}");
+            }
+        }
+        /** fin test duplication suivant */
         $entityManager->persist($gCategorie);
         $entityManager->flush();
 
@@ -64,7 +73,17 @@ class GCategorieController extends AbstractController
         $form = $this->createForm(GCategorieType::class, $gCategorie);
         $form->submit(Utils::serializeRequestContent($request));
 
-        $this->getDoctrine()->getManager()->flush();
+        $entityManager = $this->getDoctrine()->getManager();
+        /** verification duplication suivant */
+        if($gCategorie->getSuivant()!=null) {
+            $categories = $entityManager->getRepository(GCategorie::class)
+            ->findBySuivant($gCategorie->getSuivant());
+            if(count($categories)>0 && $categories[0]->getId()!=$gCategorie->getId()) {
+               throw $this->createNotFoundException("Attention ! Le suivant que vous avez selectionné est déja associé à l'enregistrement: {$categories[0]->getNom()}");
+            }
+        }
+        /** fin test duplication suivant */
+        $entityManager->flush();
 
         return $gCategorie;
     }
@@ -117,5 +136,20 @@ class GCategorieController extends AbstractController
         $entityManager->flush();
 
         return $gCategories;
+    }
+
+    /**
+     * @Rest\Get(path="/no-suivant/", name="find_catgorie_no_suivant")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_GCATEGORIE_INDEX")
+     */
+    public function findNonSuivants(GCategorieRepository $gCategorieRepository): array
+    {
+        $em = $this->getDoctrine()->getManager();
+        $categories = $em->createQuery('select c from App\Entity\GCategorie c
+         where (select count(c1) from App\Entity\GCategorie c1 where c1.suivant=c)<1')
+         ->getResult();
+
+        return $categories;
     }
 }

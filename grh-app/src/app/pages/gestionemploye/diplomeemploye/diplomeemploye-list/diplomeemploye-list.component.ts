@@ -15,6 +15,7 @@ export class DiplomeEmployeListComponent implements OnInit {
   items: DiplomeEmploye[] = [];
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];
+  selectedDiplome: DiplomeEmploye;
   constructor(public diplomeEmployeSrv: DiplomeEmployeService) {
   
   }
@@ -39,7 +40,13 @@ export class DiplomeEmployeListComponent implements OnInit {
     this.items = [item, ...this.items];
   }
 
+  setSelectedDiplome(element: DiplomeEmploye){
+    this.selectedDiplome = element;
+  }
 
+  onClose(){
+    this.selectedDiplome = null;
+  }
 
   remove(entity: DiplomeEmploye) {
     Swal.fire({
