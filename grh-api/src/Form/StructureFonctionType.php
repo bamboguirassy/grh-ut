@@ -2,27 +2,26 @@
 
 namespace App\Form;
 
-use App\Entity\Grade;
+use App\Entity\StructureFonction;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GradeType extends AbstractType
+class StructureFonctionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('classification')
-            ->add('echelon')
-            ->add('niveau')
-            ->add('categorie')
+            ->add('etat')
+            ->add('structure')
+            ->add('fonction')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Grade::class,
+            'data_class' => StructureFonction::class,
         ]);
     }
 }
