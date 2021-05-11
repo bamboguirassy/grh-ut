@@ -1,3 +1,6 @@
+import { DiplomeEmployeEditComponent } from './gestionemploye/diplomeemploye/diplomeemploye-edit/diplomeemploye-edit.component';
+import { DiplomeEmployeNewComponent } from './gestionemploye/diplomeemploye/diplomeemploye-new/diplomeemploye-new.component';
+import { DiplomeEmployeListComponent } from './gestionemploye/diplomeemploye/diplomeemploye-list/diplomeemploye-list.component';
 import { FonctionEmployeNewComponent } from './gestionemploye/fonctionemploye/fonctionemploye-new/fonctionemploye-new.component';
 import { DocumentNewComponent } from './gestionemploye/document/document-new/document-new.component';
 import { MembreSyndicatNewComponent } from './gestionemploye/membresyndicat/membresyndicat-new/membresyndicat-new.component';
@@ -332,6 +335,11 @@ import { DiplomeNewComponent } from './parametrage/diplome/diplome-new/diplome-n
     DiplomeEditComponent,
     DiplomeShowComponent,
     DiplomeNewComponent,
+
+    // diplomeemploye components
+    DiplomeEmployeListComponent,
+    DiplomeEmployeNewComponent,
+    DiplomeEmployeEditComponent,
   ],
   exports: [],
   entryComponents: []

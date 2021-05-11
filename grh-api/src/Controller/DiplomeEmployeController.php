@@ -85,6 +85,21 @@ class DiplomeEmployeController extends AbstractController
 
         return $diplomeEmployeNew;
     }
+    
+    /**
+     * @Rest\Get(path="/{id}/employe", name="diplome_employe")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_DIPLOMEEMPLOYE_INDEX")
+     */
+    public function findByEmploye(\App\Entity\Employe $employe): array {
+        $diplomeEmployes = $this->getDoctrine()
+                ->getRepository(DiplomeEmploye::class)
+                ->findByEmploye($employe);
+        //$em = $this->getDoctrine()->getManager();
+        //$diplomeEmployes = $em->getRepository('App\Entity\DiplomeEmploye')->findBy(['diplome'=>$employe->getId()]);
+        //throw $this->createNotFoundException("Dip => ".count($diplomeEmployes));
+        return count($diplomeEmployes) ? $diplomeEmployes : [];
+    }
 
     /**
      * @Rest\Delete("/{id}", name="diplome_employe_delete",requirements = {"id"="\d+"})
