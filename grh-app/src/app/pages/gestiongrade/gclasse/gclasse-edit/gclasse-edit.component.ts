@@ -73,7 +73,6 @@ export class GClasseEditComponent extends BasePageComponent<GClasse> implements 
     this.findClasses();
     this.findTypeEmployes();
   }
-  
 
   prepareUpdate() {
     this.entity.suivant = this.selectedClasseId;
@@ -86,7 +85,7 @@ export class GClasseEditComponent extends BasePageComponent<GClasse> implements 
   }
 
   findClasses() {
-    this.gClasseSrv.findAll()
+    this.gClasseSrv.findNonSuivants()
       .subscribe((data: any) => {
         this.classes = data;
       }, err => this.gClasseSrv.httpSrv.catchError(err));

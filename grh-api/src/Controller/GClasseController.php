@@ -39,6 +39,14 @@ class GClasseController extends AbstractController
         $form->submit(Utils::serializeRequestContent($request));
 
         $entityManager = $this->getDoctrine()->getManager();
+        /** verification duplication suivant */
+        if($gClasse->getSuivant()!=null) {
+            $classes = $entityManager->getRepository(GClasse::class)
+            ->findBySuivant($gClasse->getSuivant());
+            if(count($classes)>0) {
+                throw $this->createNotFoundException("Attention ! Le suivant que vous avez selectionné est déja associé à l'enregistrement: {$classes[0]->getNom()}");
+            }
+        }
         $entityManager->persist($gClasse);
         $entityManager->flush();
 
@@ -64,7 +72,17 @@ class GClasseController extends AbstractController
         $form = $this->createForm(GClasseType::class, $gClasse);
         $form->submit(Utils::serializeRequestContent($request));
 
-        $this->getDoctrine()->getManager()->flush();
+        $entityManager = $this->getDoctrine()->getManager();
+         /** verification duplication suivant */
+         if($gClasse->getSuivant()!=null) {
+            $classes = $entityManager->getRepository(GClasse::class)
+            ->findBySuivant($gClasse->getSuivant());
+            if(count($classes)>0 && $classes[0]->getId()!=$gClasse->getId()) {
+               throw $this->createNotFoundException("Attention ! Le suivant que vous avez selectionné est déja associé à l'enregistrement: {$classes[0]->getNom()}");
+            }
+        }
+        /** fin test duplication suivant */
+        $entityManager->flush();
 
         return $gClasse;
     }
@@ -117,5 +135,20 @@ class GClasseController extends AbstractController
         $entityManager->flush();
 
         return $gClasses;
+    }
+
+    /** 
+     * @Rest\Get(path="/no-suivant/", name="find_classe_no_suivant")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_GCATEGORIE_INDEX")
+     */
+    public function findNonSuivants(GClasseRepository $gClasseRepository): array
+    {
+        $em = $this->getDoctrine()->getManager();
+        $classes = $em->createQuery('select c from App\Entity\GClasse c
+         where (select count(c1) from App\Entity\GClasse c1 where c1.suivant=c)<1')
+         ->getResult();
+
+        return $classes;
     }
 }
