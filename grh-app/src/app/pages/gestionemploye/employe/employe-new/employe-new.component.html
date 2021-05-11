@@ -207,6 +207,23 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
+                        <tc-form-label>Structure</tc-form-label>
+                        <nz-select style="width: 100%" nzPlaceHolder="Sélectionner structure" nzAllowClear nzShowSearch
+                            [(ngModel)]="selectedStructure" name="structure" id="structure"
+                            #structure="ngModel">
+                            <ng-container *ngFor="let structure of structures">
+                                <nz-option [nzValue]="structure" [nzLabel]="structure.nom"></nz-option>
+                            </ng-container>
+                        </nz-select>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="structure">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
                         <tc-form-label>Caisse Sociale</tc-form-label>
                         <nz-select style="width: 100%" nzPlaceHolder="Sélectionner caisse sociale" nzAllowClear nzShowSearch
                             [(ngModel)]="selectedCaisseSociale" name="caisseSociale" id="caisseSociale"
@@ -261,6 +278,19 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Numero Affiliation Ipres</tc-form-label>
+                        <tc-input prefixIcon="icofont-key-hole" [(ngModel)]="entity.numeroAffiliationIpres" name="numeroAffiliationIpres" id="numeroAffiliationIpres"
+                            #numeroAffiliationIpres="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="numeroAffiliationIpres">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
                         <tc-form-label>En retraite ?</tc-form-label>

@@ -65,6 +65,7 @@ import { AgmCoreModule } from '@agm/core';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { NzDatePickerModule, NzDividerModule, NzTableModule, NzAvatarModule, NzButtonModule, NzCardModule, NzCarouselModule, NzCollapseModule, NzDescriptionsModule, NzDropDownModule, NzEmptyModule, NzFormModule, NzGridModule, NzIconModule, NzInputModule, NzListModule, NzModalModule, NzPopconfirmModule, NzSelectModule, NzSpinModule, NzStatisticModule, NzTabsModule, NzTypographyModule, NzUploadModule } from 'ng-zorro-antd';
+import { NgxOrgChartModule } from 'ngx-org-chart';
 
 import { environment } from '../../environments/environment';
 import { UIModule } from '../ui/ui.module';
@@ -141,6 +142,9 @@ import { DiplomeListComponent } from './parametrage/diplome/diplome-list/diplome
 import { DiplomeEditComponent } from './parametrage/diplome/diplome-edit/diplome-edit.component';
 import { DiplomeShowComponent } from './parametrage/diplome/diplome-show/diplome-show.component';
 import { DiplomeNewComponent } from './parametrage/diplome/diplome-new/diplome-new.component';
+import { OrganigrammeViewComponent } from './parametrage/organigramme/organigramme-view/organigramme-view.component';
+import { StructureFonctionListComponent } from './parametrage/structurefonction/structurefonction-list/structurefonction-list.component';
+import { StructureFonctionNewComponent } from './parametrage/structurefonction/structurefonction-new/structurefonction-new.component';
 
 @NgModule({
   imports: [
@@ -189,7 +193,7 @@ import { DiplomeNewComponent } from './parametrage/diplome/diplome-new/diplome-n
     NzUploadModule,
     UIModule,
     LayoutModule,
-
+    NgxOrgChartModule,
     SharedModule
   ],
   declarations: [
@@ -340,6 +344,12 @@ import { DiplomeNewComponent } from './parametrage/diplome/diplome-new/diplome-n
     DiplomeEmployeListComponent,
     DiplomeEmployeNewComponent,
     DiplomeEmployeEditComponent,
+    OrganigrammeViewComponent,
+
+    //structurefonction components
+    StructureFonctionListComponent,
+    StructureFonctionNewComponent,
+
   ],
   exports: [],
   entryComponents: []
