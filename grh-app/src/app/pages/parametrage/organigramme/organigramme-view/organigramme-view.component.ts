@@ -49,7 +49,6 @@ export class OrganigrammeViewComponent implements OnInit {
   }
 
   openFonctionAdderModal(event: any) {
-    console.log(event);
     this.selectedStructure = event.data;
     this.isFonctionModalVisible = true;
   }
