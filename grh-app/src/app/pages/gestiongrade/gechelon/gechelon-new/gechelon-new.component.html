@@ -45,10 +45,10 @@
                       <tc-form-group>
                         <tc-form-label>Suivant</tc-form-label>
                         <nz-select  style="width: 100%"  nzAllowClear nzShowSearch
-                            [(ngModel)]="selectedEchelon" name="suivant" id="suivant"
+                            [(ngModel)]="selectedEchelonId" name="suivant" id="suivant"
                             #suivant="ngModel">
                             <ng-container *ngFor="let echelon of echelons">
-                                <nz-option *ngIf="echelon.suivant!=null" [nzValue]="echelon" [nzLabel]="echelon?.suivant?.nom"></nz-option>
+                                <nz-option  [nzValue]="echelon.id" [nzLabel]="echelon.nom"></nz-option>
                             </ng-container>
                         </nz-select>
                         <tc-form-description>

@@ -45,15 +45,15 @@
                    
                       <tc-form-group>
                         <tc-form-label>Suivant</tc-form-label>
-                        <nz-select  style="width: 100%"  nzAllowClear nzShowSearch
-                            [(ngModel)]="selectedNiveau" name="suivant" id="suivant"
-                            #suivant="ngModel">
-                            <ng-container *ngFor="let niveau of niveaux">
-                                <nz-option *ngIf="niveau.suivant!=null" [nzValue]="niveau" [nzLabel]="niveau?.suivant?.nom"></nz-option>
+                        <nz-select  style="width: 100%" nzPlaceHolder="Sélectionner suivant"  nzAllowClear nzShowSearch
+                            [(ngModel)]="selectedNiveauId" name="niveau" id="niveau"
+                            #niveau="ngModel">
+                            <ng-container *ngFor="let niv of niveaux">
+                                <nz-option  [nzValue]="niv.id" [nzLabel]="niv.nom"></nz-option>
                             </ng-container>
                         </nz-select>
                         <tc-form-description>
-                            <app-form-field-validation-message [formField]="suivant">
+                            <app-form-field-validation-message [formField]="niveau">
                             </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>

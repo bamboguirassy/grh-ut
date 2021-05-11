@@ -17,23 +17,20 @@ export class GNiveauNewComponent implements OnInit {
   entity: GNiveau;
   @Output() creation: EventEmitter<GNiveau> = new EventEmitter();
   isModalVisible = false;
-  selectedNiveau:GEchelon;
-  niveaux:GEchelon[]=[];
+  selectedNiveauId:any;
+  niveaux:GNiveau[]=[];
   constructor(public gNiveauSrv: GNiveauService,
     public router: Router) {
     this.entity = new GNiveau();
   }
 
   ngOnInit(): void {
-    this.findNiveau();
+    this.findNiveaux();
   }
 
   save() {
-
-    if (this.selectedNiveau)
-    {
-      this.entity.suivant = this.selectedNiveau.id;
-    }
+    
+    this.entity.suivant=this.selectedNiveauId;
     this.gNiveauSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
@@ -52,8 +49,8 @@ export class GNiveauNewComponent implements OnInit {
     this.isModalVisible = false;
   }
 
-  findNiveau(){
-    this.gNiveauSrv.findAll()
+  findNiveaux(){
+    this.gNiveauSrv.findNonSuivant()
     .subscribe((data:any)=>{
       this.niveaux=data;
      

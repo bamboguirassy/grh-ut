@@ -37,8 +37,21 @@ class GNiveauController extends AbstractController
         $gNiveau = new GNiveau();
         $form = $this->createForm(GNiveauType::class, $gNiveau);
         $form->submit(Utils::serializeRequestContent($request));
-
         $entityManager = $this->getDoctrine()->getManager();
+        
+        /** verification duplication suivant */
+        if($gNiveau->getSuivant()!=null)
+        {
+            $niveaux=$entityManager->getRepository(GNiveau::class)
+             ->findBySuivant($gNiveau->getSuivant());     
+            if(count($niveaux)>0) {
+                throw $this->createNotFoundException("Attention ! Le suivant que vous avez selectionné est déja associé à l'enregistrement: {$categories[0]->getNom()}");
+            }
+            
+        }
+        
+          /** fin test duplication suivant */
+        
         $entityManager->persist($gNiveau);
         $entityManager->flush();
 
@@ -62,28 +75,11 @@ class GNiveauController extends AbstractController
      */
     public function edit(Request $request, GNiveau $gNiveau): GNiveau    {
         $form = $this->createForm(GNiveauType::class, $gNiveau);
-         $em = $this->getDoctrine()->getManager();
-          $reqData = Utils::getObjectFromRequest($request);
-        $entity = $em->getRepository('App\Entity\GNiveau')->find($reqData->suivant);
-        $gNiveau->getSuivant()->getId();
-        
-       throw $this->createNotFoundException($reqData->id);
-        if ($entity==null)
-        {
-            throw $this->createNotFoundException("le champs a déjà été assigner!");
-        }
-        else
-        {
-          $form->submit(Utils::serializeRequestContent($request));
+        $form->submit(Utils::serializeRequestContent($request));
 
-          $this->getDoctrine()->getManager()->flush();
+        $this->getDoctrine()->getManager()->flush();
 
-          return $gNiveau;
-            
-        }
-        
-        
-        
+        return $gNiveau;
     }
     
     /**
@@ -134,5 +130,21 @@ class GNiveauController extends AbstractController
         $entityManager->flush();
 
         return $gNiveaus;
+    }
+    
+    
+     /**
+     * @Rest\Get(path="/nosuivant/", name="find_niveau_no_suivant")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_GNIVEAU_INDEX")
+     */
+    public function findNonsuivant(GNiveauRepository $gNiveauRepository): array
+    {
+        $em = $this->getDoctrine()->getManager();
+        $niveaux=$em->createQuery('select c from App\Entity\GNiveau c
+         where (select count(c1) from App\Entity\GNiveau c1 where c1.suivant=c)<1')
+         ->getResult();
+        
+        return $niveaux;
     }
 }

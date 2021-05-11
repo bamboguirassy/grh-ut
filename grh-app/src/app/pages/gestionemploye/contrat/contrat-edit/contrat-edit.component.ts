@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { GNiveau } from '../gniveau';
-import { GNiveauService } from '../gniveau.service';
+import { Contrat } from '../contrat';
+import { ContratService } from '../contrat.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -9,33 +9,28 @@ import { BasePageComponent } from 'src/app/pages/base-page';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-gniveau-edit',
-  templateUrl: './gniveau-edit.component.html',
-  styleUrls: ['./gniveau-edit.component.scss']
+  selector: 'app-contrat-edit',
+  templateUrl: './contrat-edit.component.html',
+  styleUrls: ['./contrat-edit.component.scss']
 })
-export class GNiveauEditComponent extends BasePageComponent<GNiveau> implements OnInit, OnDestroy {
-
-niveaux:GNiveau[]=[];
-entity:GNiveau;
-selectedNiveauId:any;
-
+export class ContratEditComponent extends BasePageComponent<Contrat> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public gNiveauSrv: GNiveauService,
+              public contratSrv: ContratService,
               public router: Router,
               private activatedRoute: ActivatedRoute,
               public location: Location) {
-    super(store, gNiveauSrv);
+    super(store, contratSrv);
     this.pageData = {
-      title: 'Modification - niveau',
+      title: 'Modification - Contrat',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des niveaux',
-          route: '/'+this.orientation+'/gniveau'
+          title: 'Contrats',
+          route: '/'+this.orientation+'/contrat'
         },
         {
           title: 'Modification'
@@ -47,7 +42,6 @@ selectedNiveauId:any;
   ngOnInit(): void {
     super.ngOnInit();
     this.findEntity(this.activatedRoute.snapshot.params.id);
-    this.findNiveaux();
   }
 
   ngOnDestroy() {
@@ -55,32 +49,13 @@ selectedNiveauId:any;
   }
 
   handlePostLoad() {
-    this.selectedNiveauId = this.entity.suivant?.id;
-    this.findNiveaux();
   }
 
   prepareUpdate() {
-    this.entity.suivant=this.selectedNiveauId;
-    
   }
 
   handlePostUpdate() {
     this.location.back();
-  }
-
-  
-  findNiveaux(){
-    this.gNiveauSrv.findNonSuivant()
-    .subscribe((data:any)=>{
-      this.niveaux=data;
-      if(this.entity.suivant)
-      {
-        this.niveaux.unshift(this.entity.suivant);
-      }
-     
-    },error => this.gNiveauSrv.httpSrv.catchError(error))
-
-
   }
 
 }

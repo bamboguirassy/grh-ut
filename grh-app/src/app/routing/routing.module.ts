@@ -39,6 +39,7 @@ import { professionRoutes } from '../pages/parametrage/profession/profession.rou
 import { PageEditAccountComponent } from '../pages/apps/service-pages/edit-account/edit-account.component';
 import { gClasseRoutes } from '../pages/gestiongrade/gclasse/gclasse.routes';
 import { gCategorieRoutes } from '../pages/gestiongrade/gcategorie/gcategorie.routes';
+import { contratRoutes } from '../pages/gestionemploye/contrat/contrat.routes';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -70,7 +71,8 @@ const VERTICAL_ROUTES: Routes = [
   fonctionEmployeRoutes,
   gClasseRoutes,
   professionRoutes,
-  gCategorieRoutes
+  gCategorieRoutes,
+  contratRoutes,
 ];
 
 const PUBLIC_ROUTES: Routes = [
