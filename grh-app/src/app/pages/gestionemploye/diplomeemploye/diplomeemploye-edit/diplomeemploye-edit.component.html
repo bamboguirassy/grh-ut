@@ -1,4 +1,4 @@
-<tc-card *ngIf="entity && diplomeEmployeSrv.resourceName|editable" [tcGradient]="lightGradient">
+<!--<tc-card *ngIf="entity && diplomeEmployeSrv.resourceName|editable" [tcGradient]="lightGradient">
     <form #form="ngForm" novalidate>
         <tc-card [view]="secondViewBorder" [outline]="true">
             <div class="actions justify-content-between">
@@ -46,4 +46,59 @@
         </tc-card>
     </form>
 </tc-card>
+<app-access-denied *ngIf="!(diplomeEmployeSrv.resourceName|editable)"></app-access-denied>-->
+
+<nz-modal nzWidth="70%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Modification'"
+  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+  <ng-template #modalBody>
+    <form #form="ngForm" novalidate>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                      <tc-form-label>Diplome</tc-form-label>
+                      <nz-select [required]="true" name="diplome" id="diplome" #diplome="ngModel"
+                        nzPlaceHolder="Selectionner le diplome" nzAllowClear nzShowSearch [(ngModel)]="selectedDiplomeId">
+                        <ng-container *ngFor="let diplome of diplomes">
+                          <nz-option [nzValue]="diplome.id" [nzLabel]="diplome.nom"></nz-option>
+                        </ng-container>
+                      </nz-select>
+                      <tc-form-description>
+                        <app-form-field-validation-message [formField]="diplome"></app-form-field-validation-message>
+                      </tc-form-description>
+                    </tc-form-group>
+                  </div>
+                <div class="col-12 col-md-6">
+                     <tc-form-group>
+                        <tc-form-label>Année Obtention</tc-form-label>
+                                <tc-input required="required" [(ngModel)]="entity.anneeObtention" name="anneeObtention" id="anneeObtention" #anneeObtention="ngModel">
+                                </tc-input>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="anneeObtention"></app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                </div>
+                                                                                <div class="col-12 col-md-6">
+                            <tc-form-group>
+                                <tc-form-label>Etablissement</tc-form-label>
+                                <tc-input required="required" [(ngModel)]="entity.etablissement" name="etablissement" id="etablissement" #etablissement="ngModel">
+                                </tc-input>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="etablissement"></app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                        </div>
+                                                </div>
+    </form>
+  </ng-template>
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'"
+        (click)="closeModal()">Fermer</button>
+      <button type="button"class="float-right" (click)="update()"
+                    beforeIcon="icofont-save" tc-button view="warning">
+                    Mettre à jour
+                </button>
+    </div>
+  </ng-template>
+</nz-modal>
 <app-access-denied *ngIf="!(diplomeEmployeSrv.resourceName|editable)"></app-access-denied>
