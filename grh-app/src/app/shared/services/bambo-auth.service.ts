@@ -149,6 +149,11 @@ export class BamboAuthService {
             enabled: this.checkListAccess('mutuellesante')
           },
           {
+            "title": "Organigramme",
+            "routing": "organigramme",
+            enabled: true
+          },
+          {
             "title": "Caisses Sociales",
             "routing": "caissesociale",
             enabled: this.checkListAccess('caissesociale')

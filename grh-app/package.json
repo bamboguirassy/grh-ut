@@ -41,6 +41,7 @@
     "ng2-dragula": "2.1.1",
     "ngx-echarts": "5.1.2",
     "ngx-malihu-scrollbar": "9.0.0",
+    "ngx-org-chart": "^1.1.1",
     "ngx-toastr": "^13.0.0",
     "rxjs": "6.6.2",
     "sweetalert2": "^10.0.1",
