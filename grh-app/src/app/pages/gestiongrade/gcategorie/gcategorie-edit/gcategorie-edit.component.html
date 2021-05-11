@@ -42,6 +42,21 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Suivant</tc-form-label>
+                        <nz-select style="width: 100%" nzPlaceHolder="Sélectionner suivant" nzAllowClear nzShowSearch
+                            [(ngModel)]="selectedCategorieId" name="categorie" id="categorie" #categorie="ngModel">
+                            <ng-container *ngFor="let cat of categories">
+                                <nz-option *ngIf="cat.id!=entity.id" [nzValue]="cat.id" [nzLabel]="cat.nom"></nz-option>
+                            </ng-container>
+                        </nz-select>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="categorie">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
             </div>
         </tc-card>
         <tc-card [view]="secondViewBorder" [outline]="true">
