@@ -200,17 +200,20 @@
                             </tr>
                         </table>
                     </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Adresses" (click)="adresseLoader()">
-                        <app-adresse-list *ngIf="entity && isAdresseLoader" [employe]="entity"></app-adresse-list>
+                    <nz-collapse-panel nzHeader="Adresses" (click)="loadAdressesTab()">
+                        <app-adresse-list *ngIf="entity && isAdresseLoaded" [employe]="entity"></app-adresse-list>
                     </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Famille" (click)="familleLoader(isFamilleLoader)">
-                        <app-membrefamille-list *ngIf="entity && isFamilleLoader" [employe]="entity"></app-membrefamille-list>
+                    <nz-collapse-panel nzHeader="Famille" (click)="loadFamillesTab()">
+                        <app-membrefamille-list *ngIf="entity && isFamilleLoaded" [employe]="entity"></app-membrefamille-list>
                     </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Syndicats" (click)="syndicatsLoader(isSyndicatsLoader)">
-                        <app-membresyndicat-list *ngIf="entity && isSyndicatsLoader" [employe]="entity"></app-membresyndicat-list>
+                    <nz-collapse-panel nzHeader="Syndicats" (click)="loadSyndicatsTab()">
+                        <app-membresyndicat-list *ngIf="entity && isSyndicatsLoaded" [employe]="entity"></app-membresyndicat-list>
                     </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Documents" (click)="focumentsLoader(isDocumentsLoader)">
-                        <app-document-list *ngIf="entity && isDocumentsLoader" [employe]="entity"></app-document-list>
+                    <nz-collapse-panel nzHeader="Documents" (click)="loaderDocumentsTab()">
+                        <app-document-list *ngIf="entity && isDocumentsLoaded" [employe]="entity"></app-document-list>
+                    </nz-collapse-panel>
+                    <nz-collapse-panel nzHeader="Diplomes" (click)="loaderDiplomesTab()">
+                        <app-diplomeemploye-list *ngIf="entity && isDiplomeLoaded" [employe]="entity"></app-diplomeemploye-list>
                     </nz-collapse-panel>
                 </nz-collapse>
             </tc-card>
@@ -220,10 +223,10 @@
         <div class="col-12">
             <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
                 <nz-collapse nzAccordion>
-                    <nz-collapse-panel nzHeader="Fonctions & Responsabilités" [nzActive]="false" (click)="fonctionsLoader(isFonctionsLoader)">
-                        <app-fonctionemploye-list *ngIf="entity && isFonctionsLoader" [employe]="entity"></app-fonctionemploye-list>
+                    <nz-collapse-panel nzHeader="Fonctions & Responsabilités" [nzActive]="false" (click)="loadFonctionsTab()">
+                        <app-fonctionemploye-list *ngIf="entity && isFonctionsLoaded" [employe]="entity"></app-fonctionemploye-list>
                     </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Grade & Avancements" [nzActive]="false" (click)="gradeLoader(isGradeLoader)">
+                    <nz-collapse-panel nzHeader="Grade & Avancements" [nzActive]="false" (click)="loadGradesTab()">
                     </nz-collapse-panel>
                 </nz-collapse>
             </tc-card>
