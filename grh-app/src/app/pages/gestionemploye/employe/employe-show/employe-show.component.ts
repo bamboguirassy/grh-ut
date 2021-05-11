@@ -29,12 +29,13 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   currentAvatar: any;
   defaultAvatar: string;
   changes: boolean;
-  isAdresseLoader = false;
-  isFamilleLoader = false;
-  isSyndicatsLoader = false;
-  isDocumentsLoader = false;
-  isFonctionsLoader = false;
-  isGradeLoader = false;
+  isAdresseLoaded = false;
+  isFamilleLoaded = false;
+  isSyndicatsLoaded = false;
+  isDocumentsLoaded = false;
+  isFonctionsLoaded = false;
+  isGradeLoaded = false;
+  isDiplomeLoaded = false;
 
   constructor(store: Store<IAppState>,
     public employeSrv: EmployeService, public fonctionEmployeSrv: FonctionEmployeService,
@@ -112,28 +113,32 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     };
     reader.readAsDataURL(file);
   }
-  adresseLoader(){
-    this.isAdresseLoader = true;
+  loadAdressesTab(){
+    this.isAdresseLoaded = true;
   }
 
-  familleLoader(){
-    this.isFamilleLoader = true;
+  loadFamillesTab(){
+    this.isFamilleLoaded = true;
   }
 
-  syndicatsLoader(){
-    this.isSyndicatsLoader = true;
+  loadSyndicatsTab(){
+    this.isSyndicatsLoaded = true;
   }
   
-  focumentsLoader(){
-    this.isDocumentsLoader = true; 
+  loaderDocumentsTab(){
+    this.isDocumentsLoaded = true; 
   }
   
-  fonctionsLoader(){
-    this.isFonctionsLoader = true;
+  loadFonctionsTab(){
+    this.isFonctionsLoaded = true;
   }
   
-  gradeLoader(){ 
-    this.isGradeLoader = true;
+  loadGradesTab(){ 
+    this.isGradeLoaded = true;
+  }
+
+  loaderDiplomesTab(){
+    this.isDiplomeLoaded = true;
   }
 
 

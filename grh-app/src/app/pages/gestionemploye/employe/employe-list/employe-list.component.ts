@@ -71,5 +71,6 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
   handleTabChange(event) {
     this.findByTypeEmploye(this.typeEmployes[event.index]);
   }
+  
 
 }
