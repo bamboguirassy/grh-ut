@@ -44,11 +44,11 @@
                    
                       <tc-form-group>
                         <tc-form-label>Suivant</tc-form-label>
-                        <nz-select required="required" style="width: 100%"  nzAllowClear nzShowSearch
+                        <nz-select  style="width: 100%"  nzAllowClear nzShowSearch
                             [(ngModel)]="selectedEchelon" name="suivant" id="suivant"
                             #suivant="ngModel">
-                            <ng-container *ngFor="let eche of echelons">
-                                <nz-option [nzValue]="eche" [nzLabel]="eche?.suivant?.nom"></nz-option>
+                            <ng-container *ngFor="let echelon of echelons">
+                                <nz-option *ngIf="echelon.suivant!=null" [nzValue]="echelon" [nzLabel]="echelon?.suivant?.nom"></nz-option>
                             </ng-container>
                         </nz-select>
                         <tc-form-description>

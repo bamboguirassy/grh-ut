@@ -15,6 +15,11 @@ import { Location } from '@angular/common';
 })
 export class GNiveauEditComponent extends BasePageComponent<GNiveau> implements OnInit, OnDestroy {
 
+niveaux:GNiveau[]=[];
+entity:GNiveau;
+selectedNiveau:any;
+
+
   constructor(store: Store<IAppState>,
               public gNiveauSrv: GNiveauService,
               public router: Router,
@@ -42,6 +47,7 @@ export class GNiveauEditComponent extends BasePageComponent<GNiveau> implements 
   ngOnInit(): void {
     super.ngOnInit();
     this.findEntity(this.activatedRoute.snapshot.params.id);
+    this.findNiveaux();
   }
 
   ngOnDestroy() {
@@ -49,13 +55,27 @@ export class GNiveauEditComponent extends BasePageComponent<GNiveau> implements 
   }
 
   handlePostLoad() {
+    this.selectedNiveau = this.entity.id
   }
 
   prepareUpdate() {
+    this.entity.suivant=this.selectedNiveau.id;
+    
   }
 
   handlePostUpdate() {
     this.location.back();
+  }
+
+  
+  findNiveaux(){
+    this.gNiveauSrv.findAll()
+    .subscribe((data:any)=>{
+      this.niveaux=data;
+     
+    },error => this.gNiveauSrv.httpSrv.catchError(error))
+
+
   }
 
 }

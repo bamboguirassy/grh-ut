@@ -62,11 +62,28 @@ class GNiveauController extends AbstractController
      */
     public function edit(Request $request, GNiveau $gNiveau): GNiveau    {
         $form = $this->createForm(GNiveauType::class, $gNiveau);
-        $form->submit(Utils::serializeRequestContent($request));
+         $em = $this->getDoctrine()->getManager();
+          $reqData = Utils::getObjectFromRequest($request);
+        $entity = $em->getRepository('App\Entity\GNiveau')->find($reqData->suivant);
+        $gNiveau->getSuivant()->getId();
+        
+       throw $this->createNotFoundException($reqData->id);
+        if ($entity==null)
+        {
+            throw $this->createNotFoundException("le champs a déjà été assigner!");
+        }
+        else
+        {
+          $form->submit(Utils::serializeRequestContent($request));
 
-        $this->getDoctrine()->getManager()->flush();
+          $this->getDoctrine()->getManager()->flush();
 
-        return $gNiveau;
+          return $gNiveau;
+            
+        }
+        
+        
+        
     }
     
     /**

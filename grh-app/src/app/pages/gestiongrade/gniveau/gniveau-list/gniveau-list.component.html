@@ -11,32 +11,41 @@
       <ng-template #tableTDTemplate let-row="row">
         <i class="icofont-data icofont-2x"></i>
       </ng-template>
+
     </tc-table-col>
-                                    <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
+           <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
                 <ng-template #tableTDTemplate let-value>
                     <span class="nowrap" *ngIf="value">{{ value }}</span>
                     <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
                 </ng-template>
             </tc-table-col>
-                                <tc-table-col [columnTitle]="'Indice'" [columnName]="'indice'" [enableSorting]="true">
+
+             <tc-table-col [columnTitle]="'Indice'" [columnName]="'indice'" [enableSorting]="true">
                 <ng-template #tableTDTemplate let-value>
                     <span class="nowrap" *ngIf="value">{{ value }}</span>
                     <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
                 </ng-template>
             </tc-table-col>
-                                <tc-table-col [columnTitle]="'Ordre'" [columnName]="'ordre'" [enableSorting]="true">
+
+           <tc-table-col [columnTitle]="'Ordre'" [columnName]="'ordre'" [enableSorting]="true">
                 <ng-template #tableTDTemplate let-value>
                     <span class="nowrap" *ngIf="value">{{ value }}</span>
                     <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
                 </ng-template>
             </tc-table-col>
+
+            <tc-table-col [columnTitle]="'Suivant'" [columnName]="'suivant'" [enableSorting]="true">
+              <ng-template #tableTDTemplate let-value>
+                  <span class="nowrap" *ngIf="value">{{ value.nom }}</span>
+                  <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+              </ng-template>
+          </tc-table-col>
+
                 <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
       <ng-template #tableTDTemplate let-row="row">
         <div class="actions">
           <button *ngIf="gNiveauSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'" [square]="true" [tcShape]="500"
             [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-          <button *ngIf="gNiveauSrv.resourceName|clonable" [outline]="true" tc-button [afterIcon]="'icofont-copy'" [square]="true" [tcShape]="500"
-            [size]="'sm'" [routerLink]="[row.id,'clone']"></button>
           <button *ngIf="gNiveauSrv.resourceName|deletable" (click)="remove(row)" tc-button [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
             [size]="'sm'"></button>
           <button *ngIf="gNiveauSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'" [view]="'accent'" [square]="true" [tcShape]="500"

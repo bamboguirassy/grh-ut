@@ -57,7 +57,6 @@ export class GEchelonNewComponent implements OnInit {
     this.gEchelonSrv.findAll()
     .subscribe((data:any)=>{
       this.echelons=data;
-      console.log('qsdfg'+JSON.stringify(this.echelons) )
     },error => this.gEchelonSrv.httpSrv.catchError(error))
 
 
