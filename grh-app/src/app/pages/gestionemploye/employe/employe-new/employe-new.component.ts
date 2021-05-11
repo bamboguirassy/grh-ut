@@ -68,9 +68,15 @@ export class EmployeNewComponent implements OnInit {
     if (this.selectedMutuelleSante) {
       this.entity.mutuelleSante = this.selectedMutuelleSante.id;
     }
-    this.entity.grade = this.selectedGrade.id;
-    this.entity.nationalite = this.selectedNationalite.id;
-    this.entity.typeEmploye = this.typeEmploye.id;
+    if (this.selectedGrade) {
+      this.entity.grade = this.selectedGrade.id;
+    }
+    if (this.selectedNationalite) {
+      this.entity.nationalite = this.selectedNationalite.id;
+    }
+    if (this.typeEmploye) {
+      this.entity.typeEmploye = this.typeEmploye.id;
+    }
     this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
     this.entity.dateRecrutement = this.datePipe.transform(this.entity.dateRecrutement, 'yyyy-MM-dd');
     this.entity.datePriseService = this.datePipe.transform(this.entity.datePriseService, 'yyyy-MM-dd');
@@ -132,7 +138,7 @@ export class EmployeNewComponent implements OnInit {
 
   findGrades() {
     this.gradeSrv.findAll()
-      .subscribe((data: any) => {
+      .subscribe((data: any) => {      
         this.grades = data;
       }, err => this.gradeSrv.httpSrv.catchError(err));
   }
