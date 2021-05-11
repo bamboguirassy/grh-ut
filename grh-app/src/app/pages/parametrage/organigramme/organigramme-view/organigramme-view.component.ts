@@ -49,6 +49,7 @@ export class OrganigrammeViewComponent implements OnInit {
   }
 
   openFonctionAdderModal(event: any) {
+    console.log(event);
     this.selectedStructure = event.data;
     this.isFonctionModalVisible = true;
   }
@@ -77,7 +78,7 @@ export class OrganigrammeViewComponent implements OnInit {
       cssClass: 'ngx-org-ceo',
       image: 'assets/img/university.svg',
       title: struct.typeEntite.nom,
-      data: structure,
+      data: struct,
       childs: this.getChartTreeItem(struct)
     }));
   }
