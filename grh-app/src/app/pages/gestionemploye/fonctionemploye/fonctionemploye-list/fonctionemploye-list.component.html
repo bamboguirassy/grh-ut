@@ -7,7 +7,10 @@
       </div>
     </div>
   </tc-card>
-  <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
+<tc-card>
+  <nz-tabset>
+    <nz-tab nzTitle="Fonction">
+    <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
     <tc-table-col [columnTitle]="'Fonction'" [columnName]="'fonction'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <span class="nowrap" *ngIf="value">{{ value?.nom }}</span>
@@ -50,6 +53,16 @@
       </ng-template>
     </tc-table-col>
   </tc-table>
+</nz-tab>
+<nz-tab nzTitle="Chronologie">
+  <tc-card  [tcGradient]="['#fff', '#fbfbfb']">
+    <tc-v-timeline [data]= "tab" ></tc-v-timeline>
+</tc-card>
+
+</nz-tab>
+</nz-tabset>
+
+</tc-card>
   <app-fonctionemploye-edit *ngIf="selectedFonction" [selectedFonction]="selectedFonction" (modification)="findByEmploye()" (onClose)="onClose()"></app-fonctionemploye-edit>
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
 </tc-card>
