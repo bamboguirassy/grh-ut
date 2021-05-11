@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Employe
  *
- * @ORM\Table(name="employe", indexes={@ORM\Index(name="fk_employe_mutuelle_sante1_idx", columns={"mutuelle_sante"}), @ORM\Index(name="fk_employe_pays1_idx", columns={"nationalite"}), @ORM\Index(name="fk_employe_caisse_sociale1_idx", columns={"caisse_sociale"}), @ORM\Index(name="fk_employe_grade1_idx", columns={"grade"}), @ORM\Index(name="fk_employe_type_employe1_idx", columns={"type_employe"})})
+ * @ORM\Table(name="employe", indexes={@ORM\Index(name="fk_employe_mutuelle_sante1_idx", columns={"mutuelle_sante"}),@ORM\Index(name="IDX_F804D3B99C2214AD", columns={"structure"}), @ORM\Index(name="fk_employe_pays1_idx", columns={"nationalite"}), @ORM\Index(name="fk_employe_caisse_sociale1_idx", columns={"caisse_sociale"}), @ORM\Index(name="fk_employe_grade1_idx", columns={"grade"}), @ORM\Index(name="fk_employe_type_employe1_idx", columns={"type_employe"})})
  * @ORM\Entity
  */
 class Employe
@@ -221,6 +221,20 @@ class Employe
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $numeroMainOeuvre;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $numeroAffiliationIpres;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Structure")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="structure", referencedColumnName="id",nullable=false)
+     * })
+     */
+    
+    private $structure;
 
     public function getId()
     {
@@ -559,6 +573,31 @@ class Employe
     public function setNumeroMainOeuvre(?string $numeroMainOeuvre): self
     {
         $this->numeroMainOeuvre = $numeroMainOeuvre;
+
+        return $this;
+    }
+
+    public function getNumeroAffiliationIpres(): ?string
+    {
+        return $this->numeroAffiliationIpres;
+    }
+    
+
+    public function setNumeroAffiliationIpres(?string $numeroAffiliationIpres): self
+    {
+        $this->numeroAffiliationIpres = $numeroAffiliationIpres;
+
+        return $this;
+    }
+
+    public function getStructure(): ?Structure
+    {
+        return $this->structure;
+    }
+
+    public function setStructure(?Structure $structure): self
+    {
+        $this->structure = $structure;
 
         return $this;
     }

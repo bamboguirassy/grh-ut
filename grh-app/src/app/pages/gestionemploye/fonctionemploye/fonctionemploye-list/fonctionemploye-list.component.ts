@@ -5,6 +5,7 @@ import { FonctionEmploye } from '../fonctionemploye';
 import Swal from 'sweetalert2';
 import { SETTINGS } from 'src/environments/settings';
 import { Employe } from '../../employe/employe';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-fonctionemploye-list',
@@ -15,16 +16,38 @@ export class FonctionEmployeListComponent implements OnInit {
 
   @Input() employe: Employe;
   selectedFonction: FonctionEmploye;
-
+  tab =  [];
   items: Document[] = [];
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];
 
-  constructor(public fonctionEmployeSrv: FonctionEmployeService,  private activatedRoute: ActivatedRoute) {}
+  constructor(public fonctionEmployeSrv: FonctionEmployeService,  private activatedRoute: ActivatedRoute, public datePipe: DatePipe) {}
 
   ngOnInit(): void {
     this.findByEmploye();
+   
     
+  }
+  
+  setTimeline() {
+   
+    const sectionData = this.items.map((i: any) => ({
+      date: `${this.datePipe.transform(`${i.datePriseFonction}` , 'dd/MM/yyyy')} - ${i.etat?'En Cours':''}`,
+      title: i.fonction.nom,
+      content: i.structure.nom,
+      icon: "icofont-business-man-alt-1",
+      iconBg: "#64B5F6",
+      iconColor: "#fff"
+    }))
+    this.tab = [
+      {
+        "sectionLabel": {
+          "text": "Fonction Structure",
+          "view": "error"
+        },
+        "sectionData": sectionData
+      },
+    ];
   }
 
   setSelectedFonction(element: FonctionEmploye){
@@ -40,8 +63,10 @@ export class FonctionEmployeListComponent implements OnInit {
     this.fonctionEmployeSrv.findByEmploye(this.employe)
     .subscribe((data: any)=>{
       this.items = data;
+      this.setTimeline();
     },err=>this.fonctionEmployeSrv.httpSrv.catchError(err));
   }
+  
 
   onCreate(item: Document) {
     this.items = [item, ...this.items];
@@ -50,6 +75,7 @@ export class FonctionEmployeListComponent implements OnInit {
   onClose(){
     this.selectedFonction = null;
   }
+ 
 
   remove(entity: FonctionEmploye) {
     Swal.fire({
@@ -76,5 +102,6 @@ export class FonctionEmployeListComponent implements OnInit {
       }
     });
   }
+  
 
 }

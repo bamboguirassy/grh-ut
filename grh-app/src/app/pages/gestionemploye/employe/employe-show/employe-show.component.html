@@ -112,6 +112,14 @@
                             <tc-badge view="success" *ngIf="entity?.etat">Actif</tc-badge>
                         </td>
                     </tr>
+                    <tr>
+                        <th>Structure</th>
+                        <td>
+                            <span *ngIf="entity?.structure">{{ entity?.structure.nom}}</span>
+                            <tc-badge view="error" *ngIf="!entity?.structure">Indéfinie</tc-badge>
+                            
+                        </td>
+                    </tr>
                 </table>
             </tc-card>
         </div>
@@ -196,6 +204,13 @@
                                 <td>
                                     <span *ngIf="entity?.numeroMainOeuvre">{{ entity?.numeroMainOeuvre }}</span>
                                     <tc-badge view="error" *ngIf="!entity?.numeroMainOeuvre">Indéfinie</tc-badge>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Numéro Affiliation Iprès</th>
+                                <td>
+                                    <span *ngIf="entity?.numeroAffiliationIpres">{{ entity?.numeroAffiliationIpres }}</span>
+                                    <tc-badge view="error" *ngIf="!entity?.numeroAffiliationIpres">Indéfinie</tc-badge>
                                 </td>
                             </tr>
                         </table>

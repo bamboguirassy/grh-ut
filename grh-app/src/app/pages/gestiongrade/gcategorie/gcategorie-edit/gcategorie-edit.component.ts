@@ -15,6 +15,10 @@ import { Location } from '@angular/common';
 })
 export class GCategorieEditComponent extends BasePageComponent<GCategorie> implements OnInit, OnDestroy {
 
+  
+  categories: GCategorie[] = [];
+  selectedCategorieId: any;
+
   constructor(store: Store<IAppState>,
     public gCategorieSrv: GCategorieService,
     public router: Router,
@@ -49,13 +53,26 @@ export class GCategorieEditComponent extends BasePageComponent<GCategorie> imple
   }
 
   handlePostLoad() {
+    this.selectedCategorieId = this.entity.suivant?.id;
+    this.findCategories();
   }
 
   prepareUpdate() {
+    this.entity.suivant = this.selectedCategorieId;
   }
 
   handlePostUpdate() {
     this.location.back();
+  }
+
+  findCategories() {
+    this.gCategorieSrv.findNonSuivants()
+    .subscribe((data: any)=>{
+      this.categories = data;
+      if(this.entity.suivant) {
+        this.categories.unshift(this.entity.suivant);
+      }
+    }, err =>this.gCategorieSrv.httpSrv.catchError(err));
   }
 
 }

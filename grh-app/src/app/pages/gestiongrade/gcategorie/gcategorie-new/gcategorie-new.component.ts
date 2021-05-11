@@ -16,15 +16,20 @@ export class GCategorieNewComponent implements OnInit {
   entity: GCategorie;
   @Output() creation: EventEmitter<GCategorie> = new EventEmitter();
   isModalVisible = false;
+  categories: GCategorie[] = [];
+  selectedCategorieId: any;
 
   constructor(public gCategorieSrv: GCategorieService,
     public router: Router) {
     this.entity = new GCategorie();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.findCategories();
+  }
 
   save() {
+    this.entity.suivant = this.selectedCategorieId;
     this.gCategorieSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
@@ -41,6 +46,13 @@ export class GCategorieNewComponent implements OnInit {
   // close modal window
   closeModal() {
     this.isModalVisible = false;
+  }
+
+  findCategories() {
+    this.gCategorieSrv.findNonSuivants()
+    .subscribe((data: any)=>{
+      this.categories = data;
+    }, err =>this.gCategorieSrv.httpSrv.catchError(err));
   }
 
 }
