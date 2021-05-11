@@ -73,7 +73,9 @@ export class EmployeNewComponent implements OnInit {
     if (this.selectedMutuelleSante) {
       this.entity.mutuelleSante = this.selectedMutuelleSante.id;
     }
-    this.entity.grade = this.selectedGrade.id;
+    if(this.selectedGrade) {
+      this.entity.grade = this.selectedGrade.id;
+    }
     this.entity.nationalite = this.selectedNationalite.id;
     this.entity.typeEmploye = this.typeEmploye.id;
     this.entity.structure = this.selectedStructure.id;
