@@ -30,7 +30,6 @@ export class FonctionEmployeListComponent implements OnInit {
   }
   
   setTimeline() {
-   
     const sectionData = this.items.map((i: any) => ({
       date: `${this.datePipe.transform(`${i.datePriseFonction}` , 'dd/MM/yyyy')} - ${i.etat?'En Cours':`${this.datePipe.transform(`${i.dateFin}` , 'dd/MM/yyyy')}`}`,
       title: i.fonction.nom,
