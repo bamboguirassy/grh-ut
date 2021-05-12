@@ -54,7 +54,7 @@ class GClasse
      *
      * @ORM\ManyToOne(targetEntity="TypeEmploye")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="type_employe", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="type_employe", referencedColumnName="id", nullable=false)
      * })
      */
     private $typeEmploye;
