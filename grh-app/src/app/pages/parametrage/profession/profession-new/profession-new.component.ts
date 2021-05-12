@@ -44,6 +44,7 @@ export class ProfessionNewComponent implements OnInit {
         this.closeModal();
         this.creation.emit(data);
         this.entity = new Profession();
+        this.selectedClasse = null;
       }, error => this.professionSrv.httpSrv.catchError(error));
   }
 

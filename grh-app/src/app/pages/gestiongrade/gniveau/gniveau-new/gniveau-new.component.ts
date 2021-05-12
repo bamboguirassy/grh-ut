@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChi
 import { GNiveauService } from '../gniveau.service';
 import { GNiveau } from '../gniveau';
 import { Router } from '@angular/router';
+import { GEchelon } from '../../gechelon/gechelon';
 
 @Component({
   selector: 'app-gniveau-new',
@@ -16,15 +17,20 @@ export class GNiveauNewComponent implements OnInit {
   entity: GNiveau;
   @Output() creation: EventEmitter<GNiveau> = new EventEmitter();
   isModalVisible = false;
-
+  selectedNiveauId:any;
+  niveaux:GNiveau[]=[];
   constructor(public gNiveauSrv: GNiveauService,
     public router: Router) {
     this.entity = new GNiveau();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.findNiveaux();
+  }
 
   save() {
+    
+    this.entity.suivant=this.selectedNiveauId;
     this.gNiveauSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
@@ -41,6 +47,16 @@ export class GNiveauNewComponent implements OnInit {
   // close modal window
   closeModal() {
     this.isModalVisible = false;
+  }
+
+  findNiveaux(){
+    this.gNiveauSrv.findNonSuivant()
+    .subscribe((data:any)=>{
+      this.niveaux=data;
+     
+    },error => this.gNiveauSrv.httpSrv.catchError(error))
+
+
   }
 
 }

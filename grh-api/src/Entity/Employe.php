@@ -230,10 +230,9 @@ class Employe
     /**
      * @ORM\ManyToOne(targetEntity="Structure")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="structure_id", referencedColumnName="id",nullable=false)
+     *   @ORM\JoinColumn(name="structure_id", referencedColumnName="id",nullable=true)
      * })
      */
-    
     private $structure;
 
     public function getId()

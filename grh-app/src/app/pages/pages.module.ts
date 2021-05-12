@@ -65,7 +65,7 @@ import { AgmCoreModule } from '@agm/core';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { NzDatePickerModule, NzDividerModule, NzTableModule, NzAvatarModule, NzButtonModule, NzCardModule, NzCarouselModule, NzCollapseModule, NzDescriptionsModule, NzDropDownModule, NzEmptyModule, NzFormModule, NzGridModule, NzIconModule, NzInputModule, NzListModule, NzModalModule, NzPopconfirmModule, NzSelectModule, NzSpinModule, NzStatisticModule, NzTabsModule, NzTypographyModule, NzUploadModule } from 'ng-zorro-antd';
-import { NgxOrgChartModule } from 'ngx-org-chart';
+
 
 import { environment } from '../../environments/environment';
 import { UIModule } from '../ui/ui.module';
@@ -112,8 +112,11 @@ import { GNiveauListComponent } from './gestiongrade/gniveau/gniveau-list/gnivea
 import { GNiveauShowComponent } from './gestiongrade/gniveau/gniveau-show/gniveau-show.component';
 import { GNiveauEditComponent } from './gestiongrade/gniveau/gniveau-edit/gniveau-edit.component';
 import { GNiveauNewComponent } from './gestiongrade/gniveau/gniveau-new/gniveau-new.component';
-
-
+import {ContratListComponent} from './gestionemploye/contrat/contrat-list/contrat-list.component';
+import {ContratEditComponent} from './gestionemploye/contrat/contrat-edit/contrat-edit.component';
+import {ContratShowComponent} from './gestionemploye/contrat/contrat-show/contrat-show.component';
+import {ContratNewComponent} from './gestionemploye/contrat/contrat-new/contrat-new.component';
+import {ContratCloneComponent} from './gestionemploye/contrat/contrat-clone/contrat-clone.component';
 import { AdresseCloneComponent } from './gestionemploye/adresse/adresse-clone/adresse-clone.component';
 import { AdresseEditComponent } from './gestionemploye/adresse/adresse-edit/adresse-edit.component';
 import { AdresseListComponent } from './gestionemploye/adresse/adresse-list/adresse-list.component';
@@ -142,9 +145,6 @@ import { DiplomeListComponent } from './parametrage/diplome/diplome-list/diplome
 import { DiplomeEditComponent } from './parametrage/diplome/diplome-edit/diplome-edit.component';
 import { DiplomeShowComponent } from './parametrage/diplome/diplome-show/diplome-show.component';
 import { DiplomeNewComponent } from './parametrage/diplome/diplome-new/diplome-new.component';
-import { OrganigrammeViewComponent } from './parametrage/organigramme/organigramme-view/organigramme-view.component';
-import { StructureFonctionListComponent } from './parametrage/structurefonction/structurefonction-list/structurefonction-list.component';
-import { StructureFonctionNewComponent } from './parametrage/structurefonction/structurefonction-new/structurefonction-new.component';
 
 @NgModule({
   imports: [
@@ -193,7 +193,6 @@ import { StructureFonctionNewComponent } from './parametrage/structurefonction/s
     NzUploadModule,
     UIModule,
     LayoutModule,
-    NgxOrgChartModule,
     SharedModule
   ],
   declarations: [
@@ -344,12 +343,13 @@ import { StructureFonctionNewComponent } from './parametrage/structurefonction/s
     DiplomeEmployeListComponent,
     DiplomeEmployeNewComponent,
     DiplomeEmployeEditComponent,
-    OrganigrammeViewComponent,
 
-    //structurefonction components
-    StructureFonctionListComponent,
-    StructureFonctionNewComponent,
-
+    // contrat components
+ContratListComponent,
+ContratEditComponent,
+ContratShowComponent,
+ContratCloneComponent,
+ContratNewComponent,
   ],
   exports: [],
   entryComponents: []

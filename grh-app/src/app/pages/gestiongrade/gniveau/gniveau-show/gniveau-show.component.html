@@ -48,7 +48,16 @@
                                 <tc-badge view="error" *ngIf="!entity?.ordre">Indéfinie</tc-badge>
                             </td>
                         </tr>
-                                                    </table>
+
+                        <tr>
+                            <th>Suivant</th>
+                            <td>
+                                <span *ngIf="entity?.suivant?.nom">{{ entity?.suivant?.nom}}</span>
+                                <tc-badge view="error" *ngIf="!entity?.suivant?.nom">Indéfinie</tc-badge>
+                            </td>
+                        </tr>
+
+              </table>
             </tc-card>
         </div>
     </div>

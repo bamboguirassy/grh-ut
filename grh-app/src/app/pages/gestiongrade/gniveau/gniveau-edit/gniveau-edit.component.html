@@ -33,14 +33,34 @@
                                                                                 <div class="col-12 col-md-6">
                             <tc-form-group>
                                 <tc-form-label>Ordre</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.ordre" name="ordre" id="ordre" #ordre="ngModel">
+                                <tc-input type="number" required="required" [(ngModel)]="entity.ordre" name="ordre" id="ordre" #ordre="ngModel">
                                 </tc-input>
                                 <tc-form-description>
                                     <app-form-field-validation-message [formField]="ordre"></app-form-field-validation-message>
                                 </tc-form-description>
                             </tc-form-group>
                         </div>
-                                                </div>
+
+                        
+                        <div class="col-12 col-md-6">
+                            <tc-form-group>
+                                <tc-form-label>Suivant</tc-form-label>
+                                <nz-select  style="width: 100%"  nzAllowClear nzShowSearch
+                                    [(ngModel)]="selectedNiveauId" name="niveau" id="niveau"
+                                    #niveau="ngModel">
+                                    <ng-container *ngFor="let niv of niveaux">
+                                        <nz-option *ngIf="niv.id!=entity.id" [nzValue]="niv.id" [nzLabel]="niv.nom"></nz-option>
+                                    </ng-container>
+                                </nz-select>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="niveau">
+                                    </app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                        </div>
+
+
+           </div>
         </tc-card>
         <tc-card [view]="secondViewBorder" [outline]="true">
             <div class="actions">
