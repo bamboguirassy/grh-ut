@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TCDropdownContentComponent } from './content.component';
 
@@ -6,7 +6,7 @@ describe('TCDropdownContentComponent', () => {
   let component: TCDropdownContentComponent;
   let fixture: ComponentFixture<TCDropdownContentComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ TCDropdownContentComponent ]
     })

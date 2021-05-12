@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TCRadioOptionComponent } from './radio-option.component';
 
@@ -6,7 +6,7 @@ describe('TCRadioOptionComponent', () => {
   let component: TCRadioOptionComponent;
   let fixture: ComponentFixture<TCRadioOptionComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ TCRadioOptionComponent ]
     })

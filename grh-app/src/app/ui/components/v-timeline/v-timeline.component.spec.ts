@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TCVTimelineComponent } from './v-timeline.component';
 
@@ -6,7 +6,7 @@ describe('TCVTimelineComponent', () => {
   let component: TCVTimelineComponent;
   let fixture: ComponentFixture<TCVTimelineComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ TCVTimelineComponent ]
     })

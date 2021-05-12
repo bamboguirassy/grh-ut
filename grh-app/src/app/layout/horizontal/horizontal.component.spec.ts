@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { HorizontalLayoutComponent } from './horizontal.component';
 
@@ -6,7 +6,7 @@ describe('HorizontalLayoutComponent', () => {
   let component: HorizontalLayoutComponent;
   let fixture: ComponentFixture<HorizontalLayoutComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ HorizontalLayoutComponent ]
     })
