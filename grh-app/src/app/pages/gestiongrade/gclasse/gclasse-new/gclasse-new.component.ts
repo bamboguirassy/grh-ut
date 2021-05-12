@@ -25,14 +25,13 @@ export class GClasseNewComponent implements OnInit {
 
 
   classes: GClasse[] =[];
-  selectedClasse: GClasse;
+  selectedClasseId: any;
   typeEmployes: TypeEmploye[] =[];
-  selectedTypeEmploye: TypeEmploye;
+  selectedTypeEmployeId: any;
   
 
   constructor(public gClasseSrv: GClasseService,
     public router: Router,
-    public classeServive : GClasseService,
     public typeEmployeServive : TypeEmployeService) {
     this.entity = new GClasse();
   }
@@ -41,14 +40,10 @@ export class GClasseNewComponent implements OnInit {
     this.findClasses();
     this.findTypeEmployes();
   }
-
   save() {
-    if (this.selectedClasse) {
-      this.classes = this.selectedClasse.id;
-    }
-    if (this.selectedTypeEmploye) {
-      this.typeEmployes = this.selectedTypeEmploye.id;
-    }
+
+    this.entity.suivant = this.selectedClasseId;
+    this.entity.typeEmploye = this.selectedClasseId;
     this.gClasseSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
@@ -68,10 +63,10 @@ export class GClasseNewComponent implements OnInit {
   }
 
    findClasses() {
-    this.classeServive.findAll()
+    this.gClasseSrv.findNonSuivants()
       .subscribe((data: any) => {
         this.classes = data;
-      }, err => this.classeServive.httpSrv.catchError(err));
+      }, err => this.gClasseSrv.httpSrv.catchError(err));
   }
 
    findTypeEmployes() {

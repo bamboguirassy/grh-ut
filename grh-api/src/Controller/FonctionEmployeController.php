@@ -44,7 +44,7 @@ class FonctionEmployeController extends AbstractController
     {
         $fonctionEmployes = $this->getDoctrine()
             ->getRepository(FonctionEmploye::class)
-            ->findByEmploye($employe);
+            ->findByEmploye($employe, ['datePriseFonction' => 'DESC']);
 
         return count($fonctionEmployes) ? $fonctionEmployes : [];
     }

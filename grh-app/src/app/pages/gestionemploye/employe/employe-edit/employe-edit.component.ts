@@ -17,6 +17,8 @@ import { PaysService } from 'src/app/pages/parametrage/pays/pays.service';
 import { MutuelleSanteService } from 'src/app/pages/parametrage/mutuellesante/mutuellesante.service';
 import { CaisseSocialeService } from 'src/app/pages/parametrage/caissesociale/caissesociale.service';
 import { GradeService } from 'src/app/pages/gestiongrade/grade/grade.service';
+import { StructureService } from 'src/app/pages/parametrage/structure/structure.service';
+import { Structure } from 'src/app/pages/parametrage/structure/structure';
 
 @Component({
   selector: 'app-employe-edit',
@@ -39,6 +41,8 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
   caisseSociales: CaisseSociale[] = [];
   selectedCaisseSocialeId: any;
   mutuelleSantes: MutuelleSante[] = [];
+  structures: Structure[]= [];
+  selectedStructureId: any;
   selectedMutuelleSanteId: any;
   grades: Grade[] = [];
   selectedGradeId: any;
@@ -52,6 +56,7 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
     public caisseSocialeSrv: CaisseSocialeService,
     private activatedRoute: ActivatedRoute,
     public gradeSrv: GradeService,
+    public structureSrv: StructureService,
     public location: Location, public datePipe: DatePipe) {
     super(store, employeSrv);
     this.pageData = {
@@ -124,6 +129,12 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
         this.grades = data;
       }, err => this.gradeSrv.httpSrv.catchError(err));
   }
+  findStructures() {
+    this.structureSrv.findAll()
+      .subscribe((data: any) => {
+        this.structures = data;          
+      }, err => this.structureSrv.httpSrv.catchError(err));
+  }
 
   ngOnDestroy() {
     super.ngOnDestroy();
@@ -133,6 +144,7 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
     this.selectedMutuelleSanteId = this.entity.mutuelleSante?.id;
     this.selectedCaisseSocialeId = this.entity.caisseSociale?.id;
     this.selectedGradeId = this.entity.grade?.id;
+    this.selectedStructureId = this.entity.structure?.id;
     this.selectedNationaliteId = this.entity.nationalite?.id;
     this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
     this.entity.dateRecrutement = this.datePipe.transform(this.entity.dateRecrutement, 'yyyy-MM-dd');
@@ -144,6 +156,7 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
     this.findMutuelleSantes();
     this.findNationalites();
     this.findGrades();
+    this.findStructures();
   }
 
   prepareUpdate() { 
@@ -155,6 +168,7 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
     this.entity.grade = this.selectedGradeId;
     this.entity.nationalite = this.selectedNationaliteId;
     this.entity.mutuelleSante = this.selectedMutuelleSanteId;
+    this.entity.structure = this.selectedStructureId;
   }
 
   handlePostUpdate() {

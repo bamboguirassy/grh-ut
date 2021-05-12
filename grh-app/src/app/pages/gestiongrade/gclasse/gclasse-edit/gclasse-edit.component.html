@@ -44,34 +44,36 @@
                 </div>
                 <div class="col-12  col-md-6">
                     <tc-form-group>
-                      <tc-form-label>Suivant</tc-form-label>
-                      <nz-select style="width: 100%" nzPlaceHolder="Sélectionner la classe" nzAllowClear nzShowSearch
-                        [(ngModel)]="selectedClasseId" name="classe" id="classe" #classe="ngModel">
-                        <ng-container *ngFor="let classe of classes">
-                          <nz-option [nzValue]="classe.id" [nzLabel]="classe.nom" *ngIf="entity.id != classe.id"></nz-option>
-                        </ng-container>
-                      </nz-select>
-                      <tc-form-description>
-                        <app-form-field-validation-message [formField]="classe">
-                        </app-form-field-validation-message>
-                      </tc-form-description>
+                        <tc-form-label>Suivant</tc-form-label>
+                        <nz-select style="width: 100%" nzPlaceHolder="Sélectionner la classe" nzAllowClear nzShowSearch
+                            [(ngModel)]="selectedClasseId" name="classe" id="classe" #classe="ngModel">
+                            <ng-container *ngFor="let classeItem of classes">
+                                <nz-option [nzValue]="classeItem.id" [nzLabel]="classeItem.nom"
+                                    *ngIf="entity.id != classeItem.id"></nz-option>
+                            </ng-container>
+                        </nz-select>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="classe">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
                     </tc-form-group>
-                  </div>
-                  <div class="col-12  col-md-6">
+                </div>
+                <div class="col-12  col-md-6">
                     <tc-form-group>
-                      <tc-form-label>Type employé</tc-form-label>
-                      <nz-select style="width: 100%" nzPlaceHolder="Sélectionner le type d'employé" nzAllowClear nzShowSearch
-                        [(ngModel)]="selectedTypeEmployeId" name="typeEmploye" id="typeEmploye" #typeEmploye="ngModel">
-                        <ng-container *ngFor="let typeEmploye of typeEmployes">
-                          <nz-option [nzValue]="typeEmploye.id" [nzLabel]="typeEmploye.nom"></nz-option>
-                        </ng-container>
-                      </nz-select>
-                      <tc-form-description>
-                        <app-form-field-validation-message [formField]="typeEmploye">
-                        </app-form-field-validation-message>
-                      </tc-form-description>
+                        <tc-form-label>Type employé</tc-form-label>
+                        <nz-select style="width: 100%" nzPlaceHolder="Sélectionner le type d'employé" nzAllowClear
+                            nzShowSearch [(ngModel)]="selectedTypeEmployeId" name="typeEmploye" id="typeEmploye"
+                            #typeEmploye="ngModel">
+                            <ng-container *ngFor="let typeEmployeItem of typeEmployes">
+                                <nz-option [nzValue]="typeEmployeItem.id" [nzLabel]="typeEmployeItem.nom"></nz-option>
+                            </ng-container>
+                        </nz-select>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="typeEmploye">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
                     </tc-form-group>
-                  </div>
+                </div>
             </div>
         </tc-card>
         <tc-card [view]="secondViewBorder" [outline]="true">

@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Structure;
 use App\Entity\StructureFonction;
 use App\Form\StructureFonctionType;
 use App\Repository\StructureFonctionRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,12 +48,48 @@ class StructureFonctionController extends AbstractController
     }
 
     /**
+     * @Rest\Post(path="/create-multiple", name="structure_fonction_create_multiple")
+     * @Rest\View(statusCode=200)
+     * @IsGranted("ROLE_STRUCTUREFONCTION_CREATE")
+     */
+    public function createMultiple(Request $request, EntityManagerInterface $entityManager)
+    {
+        $structureFonctions = Utils::serializeRequestContent($request)['structureFonctions'];
+        $createdStructureFonctions = [];
+        foreach ($structureFonctions as $deserializedStructureFonction)
+        {
+            $structureFonction = new StructureFonction();
+            $form = $this->createForm(StructureFonctionType::class, $structureFonction);
+            $form->submit($deserializedStructureFonction);
+
+            $entityManager->persist($structureFonction);
+            $createdStructureFonctions[] = $structureFonction;
+        }
+
+        $entityManager->flush();
+        return $createdStructureFonctions;
+    }
+
+    /**
      * @Rest\Get(path="/{id}", name="structure_fonction_show",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_STRUCTUREFONCTION_SHOW")
      */
     public function show(StructureFonction $structureFonction): StructureFonction    {
         return $structureFonction;
+    }
+
+    /**
+     * @Rest\Get(path="/structure/{id}", name="find_by_structure",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_STRUCTUREFONCTION_SHOW")
+     */
+    public function findByStructure(Structure $structure, EntityManagerInterface $entityManager)   {
+        return $entityManager->createQuery('
+            SELECT sf
+            FROM App\Entity\StructureFonction sf
+            WHERE sf.structure = :structure
+        ')->setParameter('structure', $structure)->getResult();
     }
 
     

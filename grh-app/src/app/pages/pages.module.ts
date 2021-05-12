@@ -66,6 +66,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { NzDatePickerModule, NzDividerModule, NzTableModule, NzAvatarModule, NzButtonModule, NzCardModule, NzCarouselModule, NzCollapseModule, NzDescriptionsModule, NzDropDownModule, NzEmptyModule, NzFormModule, NzGridModule, NzIconModule, NzInputModule, NzListModule, NzModalModule, NzPopconfirmModule, NzSelectModule, NzSpinModule, NzStatisticModule, NzTabsModule, NzTypographyModule, NzUploadModule } from 'ng-zorro-antd';
 
+
 import { environment } from '../../environments/environment';
 import { UIModule } from '../ui/ui.module';
 import { LayoutModule } from '../layout/layout.module';
@@ -144,7 +145,6 @@ import { DiplomeListComponent } from './parametrage/diplome/diplome-list/diplome
 import { DiplomeEditComponent } from './parametrage/diplome/diplome-edit/diplome-edit.component';
 import { DiplomeShowComponent } from './parametrage/diplome/diplome-show/diplome-show.component';
 import { DiplomeNewComponent } from './parametrage/diplome/diplome-new/diplome-new.component';
-import { from } from 'rxjs';
 
 @NgModule({
   imports: [
@@ -193,7 +193,6 @@ import { from } from 'rxjs';
     NzUploadModule,
     UIModule,
     LayoutModule,
-
     SharedModule
   ],
   declarations: [

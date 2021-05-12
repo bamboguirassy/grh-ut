@@ -16,7 +16,6 @@ import { Location } from '@angular/common';
 export class GNiveauEditComponent extends BasePageComponent<GNiveau> implements OnInit, OnDestroy {
 
 niveaux:GNiveau[]=[];
-entity:GNiveau;
 selectedNiveauId:any;
 
 
@@ -73,7 +72,7 @@ selectedNiveauId:any;
     this.gNiveauSrv.findNonSuivant()
     .subscribe((data:any)=>{
       this.niveaux=data;
-      if(this.entity.suivant)
+      if(this.entity?.suivant)
       {
         this.niveaux.unshift(this.entity.suivant);
       }

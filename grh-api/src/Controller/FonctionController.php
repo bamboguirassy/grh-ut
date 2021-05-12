@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Fonction;
+use App\Entity\Structure;
 use App\Form\FonctionType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +30,7 @@ class FonctionController extends AbstractController
             ->getRepository(Fonction::class)
             ->findAll();
 
-        return count($fonctions)?$fonctions:[];
+        return count($fonctions) ? $fonctions : [];
     }
 
     /**
@@ -36,7 +38,8 @@ class FonctionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_FONCTION_CREATE")
      */
-    public function create(Request $request): Fonction    {
+    public function create(Request $request): Fonction
+    {
         $fonction = new Fonction();
         $form = $this->createForm(FonctionType::class, $fonction);
         $form->submit(Utils::serializeRequestContent($request));
@@ -53,17 +56,38 @@ class FonctionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_FONCTION_SHOW")
      */
-    public function show(Fonction $fonction): Fonction    {
+    public function show(Fonction $fonction): Fonction
+    {
         return $fonction;
     }
 
-    
+    /**
+     * @Rest\Get(path="/not-binded/{id}/structure", name="find_not_binded_by_structure",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_FONCTION_SHOW")
+     */
+    public function findNotBindedByStructure(Structure $structure, EntityManagerInterface $entityManager)
+    {
+        return $entityManager->createQuery('
+            SELECT f
+            FROM App\Entity\Fonction f
+            WHERE f NOT IN (
+                SELECT bf
+                FROM App\Entity\StructureFonction sf
+                JOIN sf.fonction bf
+                WHERE sf.structure = :structure
+            )
+        ')->setParameter('structure', $structure)->getResult();
+    }
+
+
     /**
      * @Rest\Put(path="/{id}/edit", name="fonction_edit",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_FONCTION_EDIT")
      */
-    public function edit(Request $request, Fonction $fonction): Fonction    {
+    public function edit(Request $request, Fonction $fonction): Fonction
+    {
         $form = $this->createForm(FonctionType::class, $fonction);
         $form->submit(Utils::serializeRequestContent($request));
 
@@ -71,15 +95,16 @@ class FonctionController extends AbstractController
 
         return $fonction;
     }
-    
+
     /**
      * @Rest\Put(path="/{id}/clone", name="fonction_clone",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_FONCTION_CLONE")
      */
-    public function cloner(Request $request, Fonction $fonction):  Fonction {
-        $em=$this->getDoctrine()->getManager();
-        $fonctionNew=new Fonction();
+    public function cloner(Request $request, Fonction $fonction): Fonction
+    {
+        $em = $this->getDoctrine()->getManager();
+        $fonctionNew = new Fonction();
         $form = $this->createForm(FonctionType::class, $fonctionNew);
         $form->submit(Utils::serializeRequestContent($request));
         $em->persist($fonctionNew);
@@ -94,20 +119,22 @@ class FonctionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_FONCTION_EDIT")
      */
-    public function delete(Fonction $fonction): Fonction    {
+    public function delete(Fonction $fonction): Fonction
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($fonction);
         $entityManager->flush();
 
         return $fonction;
     }
-    
+
     /**
      * @Rest\Post("/delete-selection/", name="fonction_selection_delete")
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_FONCTION_DELETE")
      */
-    public function deleteMultiple(Request $request): array {
+    public function deleteMultiple(Request $request): array
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $fonctions = Utils::getObjectFromRequest($request);
         if (!count($fonctions)) {

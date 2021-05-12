@@ -107,7 +107,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
       this.employeSrv.uploadPhoto(this.currentAvatar.split(',')[1], file.name.split('.')[0])
         .subscribe(
           (user: any) => {
-            this.employeSrv.toastr.success('Photo de profil mise à jour !')
+            this.employeSrv.toastr.success('votre photo mise à jour !')
           },
           error => this.employeSrv.httpSrv.catchError(error))
     };

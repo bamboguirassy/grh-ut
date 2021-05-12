@@ -13,6 +13,8 @@ import { Employe } from '../employe';
 import { Router } from '@angular/router';
 import { UploadFileModel } from 'src/app/shared/classes/upload-file-model';
 import { DatePipe } from '@angular/common';
+import { StructureService } from 'src/app/pages/parametrage/structure/structure.service';
+import { Structure } from 'src/app/pages/parametrage/structure/structure';
 
 @Component({
   selector: 'app-employe-new',
@@ -37,6 +39,8 @@ export class EmployeNewComponent implements OnInit {
   mutuelleSantes: MutuelleSante[] = [];
   selectedMutuelleSante: MutuelleSante;
   grades: Grade[] = [];
+  structures: Structure[] =[];
+  selectedStructure: Structure;
   selectedGrade: Grade;
   
 
@@ -44,7 +48,7 @@ export class EmployeNewComponent implements OnInit {
     public router: Router, public paysSrv: PaysService,
     public mutuelleSanteSrv: MutuelleSanteService,
     public caisseSocialeSrv: CaisseSocialeService,
-    public gradeSrv: GradeService, public datePipe: DatePipe) {
+    public gradeSrv: GradeService, public structureSrv: StructureService, public datePipe: DatePipe) {
     this.initNewEmploye();
   }
 
@@ -53,6 +57,7 @@ export class EmployeNewComponent implements OnInit {
     this.findCaisseSociales();
     this.findMutuelleSantes();
     this.findGrades();
+    this.findStructures();
   }
 
   initNewEmploye() {
@@ -68,6 +73,14 @@ export class EmployeNewComponent implements OnInit {
     if (this.selectedMutuelleSante) {
       this.entity.mutuelleSante = this.selectedMutuelleSante.id;
     }
+    if(this.selectedGrade) {
+      this.entity.grade = this.selectedGrade.id;
+    }
+    this.entity.nationalite = this.selectedNationalite.id;
+    this.entity.typeEmploye = this.typeEmploye.id;
+    this.entity.structure = this.selectedStructure.id;
+    
+  
     if (this.selectedGrade) {
       this.entity.grade = this.selectedGrade.id;
     }
@@ -119,6 +132,8 @@ export class EmployeNewComponent implements OnInit {
     this.paysSrv.findAll()
       .subscribe((data: any) => {
         this.nationalites = data;
+       
+        
       }, err => this.paysSrv.httpSrv.catchError(err));
   }
 
@@ -141,6 +156,13 @@ export class EmployeNewComponent implements OnInit {
       .subscribe((data: any) => {      
         this.grades = data;
       }, err => this.gradeSrv.httpSrv.catchError(err));
+  }
+  findStructures() {
+    this.structureSrv.findAll()
+      .subscribe((data: any) => {
+        this.structures = data;   
+        
+      }, err => this.structureSrv.httpSrv.catchError(err));
   }
 
 }
