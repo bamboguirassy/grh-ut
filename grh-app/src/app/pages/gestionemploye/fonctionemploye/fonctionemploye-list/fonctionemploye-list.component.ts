@@ -36,7 +36,7 @@ export class FonctionEmployeListComponent implements OnInit {
       title: i.fonction.nom,
       content: i.structure.nom,
       icon: "icofont-business-man-alt-1",
-      iconBg: "#64B5F6",
+      iconBg: SETTINGS.sidebarBg,
       iconColor: "#fff"
     }))
     this.tab = [
