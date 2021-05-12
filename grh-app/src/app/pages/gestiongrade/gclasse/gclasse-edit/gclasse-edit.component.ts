@@ -88,6 +88,9 @@ export class GClasseEditComponent extends BasePageComponent<GClasse> implements 
     this.gClasseSrv.findNonSuivants()
       .subscribe((data: any) => {
         this.classes = data;
+        if(this.entity.suivant) {
+          this.classes.unshift(this.entity.suivant);
+        }
       }, err => this.gClasseSrv.httpSrv.catchError(err));
   }
   

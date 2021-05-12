@@ -59,7 +59,7 @@
         <div class="col-12  col-md-6">
           <tc-form-group>
             <tc-form-label>Type employé</tc-form-label>
-            <nz-select style="width: 100%" nzPlaceHolder="Sélectionner le type d'employé" nzAllowClear nzShowSearch
+            <nz-select required="required" style="width: 100%" nzPlaceHolder="Sélectionner le type d'employé" nzAllowClear nzShowSearch
               [(ngModel)]="selectedTypeEmployeId" name="typeEmploye" id="typeEmploye" #typeEmploye="ngModel">
               <ng-container *ngFor="let typeEmployeItem of typeEmployes">
                 <nz-option [nzValue]="typeEmployeItem.id" [nzLabel]="typeEmployeItem.nom"></nz-option>

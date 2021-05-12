@@ -39,10 +39,12 @@ export class EmployeNewComponent implements OnInit {
   mutuelleSantes: MutuelleSante[] = [];
   selectedMutuelleSante: MutuelleSante;
   grades: Grade[] = [];
-  structures: Structure[] =[];
+  structures: Structure[] = [];
   selectedStructure: Structure;
   selectedGrade: Grade;
-  
+
+  areDataLoaded = false;
+
 
   constructor(public employeSrv: EmployeService,
     public router: Router, public paysSrv: PaysService,
@@ -52,13 +54,7 @@ export class EmployeNewComponent implements OnInit {
     this.initNewEmploye();
   }
 
-  ngOnInit(): void {
-    this.findNationalites();
-    this.findCaisseSociales();
-    this.findMutuelleSantes();
-    this.findGrades();
-    this.findStructures();
-  }
+  ngOnInit(): void {}
 
   initNewEmploye() {
     this.entity = new Employe();
@@ -66,21 +62,21 @@ export class EmployeNewComponent implements OnInit {
   }
 
   save() {
-   
-   if (this.selectedCaisseSociale) {
+
+    if (this.selectedCaisseSociale) {
       this.entity.caisseSociale = this.selectedCaisseSociale.id;
     }
     if (this.selectedMutuelleSante) {
       this.entity.mutuelleSante = this.selectedMutuelleSante.id;
     }
-    if(this.selectedGrade) {
+    if (this.selectedGrade) {
       this.entity.grade = this.selectedGrade.id;
     }
     this.entity.nationalite = this.selectedNationalite.id;
     this.entity.typeEmploye = this.typeEmploye.id;
     this.entity.structure = this.selectedStructure.id;
-    
-  
+
+
     if (this.selectedGrade) {
       this.entity.grade = this.selectedGrade.id;
     }
@@ -93,9 +89,9 @@ export class EmployeNewComponent implements OnInit {
     this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
     this.entity.dateRecrutement = this.datePipe.transform(this.entity.dateRecrutement, 'yyyy-MM-dd');
     this.entity.datePriseService = this.datePipe.transform(this.entity.datePriseService, 'yyyy-MM-dd');
-    if(this.entity.dateSortie){
+    if (this.entity.dateSortie) {
       this.entity.dateSortie = this.datePipe.transform(this.entity.dateSortie, 'yyyy-MM-dd');
-   }
+    }
     this.entity.filename = this.fileModel.fileName;
     this.entity.filepath = this.fileModel.fileContent;
     this.employeSrv.create(this.entity)
@@ -109,6 +105,14 @@ export class EmployeNewComponent implements OnInit {
   // open modal window
   openModal() {
     this.isModalVisible = true;
+    if (!this.areDataLoaded) {
+      this.findNationalites();
+      this.findCaisseSociales();
+      this.findMutuelleSantes();
+      this.findGrades();
+      this.findStructures();
+      this.areDataLoaded = true;
+    }
   }
 
   // close modal window
@@ -132,8 +136,6 @@ export class EmployeNewComponent implements OnInit {
     this.paysSrv.findAll()
       .subscribe((data: any) => {
         this.nationalites = data;
-       
-        
       }, err => this.paysSrv.httpSrv.catchError(err));
   }
 
@@ -153,15 +155,16 @@ export class EmployeNewComponent implements OnInit {
 
   findGrades() {
     this.gradeSrv.findAll()
-      .subscribe((data: any) => {      
+      .subscribe((data: any) => {
         this.grades = data;
       }, err => this.gradeSrv.httpSrv.catchError(err));
   }
+
   findStructures() {
     this.structureSrv.findAll()
       .subscribe((data: any) => {
-        this.structures = data;   
-        
+        this.structures = data;
+
       }, err => this.structureSrv.httpSrv.catchError(err));
   }
 
