@@ -40,6 +40,7 @@ import { PageEditAccountComponent } from '../pages/apps/service-pages/edit-accou
 import { gClasseRoutes } from '../pages/gestiongrade/gclasse/gclasse.routes';
 import { gCategorieRoutes } from '../pages/gestiongrade/gcategorie/gcategorie.routes';
 import { contratRoutes } from '../pages/gestionemploye/contrat/contrat.routes';
+import { organigrammeRoutes } from '../pages/parametrage/organigramme/organigramme.routes';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -73,6 +74,7 @@ const VERTICAL_ROUTES: Routes = [
   professionRoutes,
   gCategorieRoutes,
   contratRoutes,
+  organigrammeRoutes
 ];
 
 const PUBLIC_ROUTES: Routes = [

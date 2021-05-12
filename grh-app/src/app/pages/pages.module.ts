@@ -112,11 +112,11 @@ import { GNiveauListComponent } from './gestiongrade/gniveau/gniveau-list/gnivea
 import { GNiveauShowComponent } from './gestiongrade/gniveau/gniveau-show/gniveau-show.component';
 import { GNiveauEditComponent } from './gestiongrade/gniveau/gniveau-edit/gniveau-edit.component';
 import { GNiveauNewComponent } from './gestiongrade/gniveau/gniveau-new/gniveau-new.component';
-import {ContratListComponent} from './gestionemploye/contrat/contrat-list/contrat-list.component';
-import {ContratEditComponent} from './gestionemploye/contrat/contrat-edit/contrat-edit.component';
-import {ContratShowComponent} from './gestionemploye/contrat/contrat-show/contrat-show.component';
-import {ContratNewComponent} from './gestionemploye/contrat/contrat-new/contrat-new.component';
-import {ContratCloneComponent} from './gestionemploye/contrat/contrat-clone/contrat-clone.component';
+import { ContratListComponent } from './gestionemploye/contrat/contrat-list/contrat-list.component';
+import { ContratEditComponent } from './gestionemploye/contrat/contrat-edit/contrat-edit.component';
+import { ContratShowComponent } from './gestionemploye/contrat/contrat-show/contrat-show.component';
+import { ContratNewComponent } from './gestionemploye/contrat/contrat-new/contrat-new.component';
+import { ContratCloneComponent } from './gestionemploye/contrat/contrat-clone/contrat-clone.component';
 import { AdresseCloneComponent } from './gestionemploye/adresse/adresse-clone/adresse-clone.component';
 import { AdresseEditComponent } from './gestionemploye/adresse/adresse-edit/adresse-edit.component';
 import { AdresseListComponent } from './gestionemploye/adresse/adresse-list/adresse-list.component';
@@ -145,6 +145,10 @@ import { DiplomeListComponent } from './parametrage/diplome/diplome-list/diplome
 import { DiplomeEditComponent } from './parametrage/diplome/diplome-edit/diplome-edit.component';
 import { DiplomeShowComponent } from './parametrage/diplome/diplome-show/diplome-show.component';
 import { DiplomeNewComponent } from './parametrage/diplome/diplome-new/diplome-new.component';
+import { OrganigrammeViewComponent } from './parametrage/organigramme/organigramme-view/organigramme-view.component';
+import { NgxOrgChartModule } from 'ngx-org-chart';
+import { StructureFonctionListComponent } from './parametrage/structurefonction/structurefonction-list/structurefonction-list.component';
+import { StructureFonctionNewComponent } from './parametrage/structurefonction/structurefonction-new/structurefonction-new.component';
 
 @NgModule({
   imports: [
@@ -193,7 +197,8 @@ import { DiplomeNewComponent } from './parametrage/diplome/diplome-new/diplome-n
     NzUploadModule,
     UIModule,
     LayoutModule,
-    SharedModule
+    SharedModule,
+    NgxOrgChartModule
   ],
   declarations: [
     BasePageComponent,
@@ -345,11 +350,18 @@ import { DiplomeNewComponent } from './parametrage/diplome/diplome-new/diplome-n
     DiplomeEmployeEditComponent,
 
     // contrat components
-ContratListComponent,
-ContratEditComponent,
-ContratShowComponent,
-ContratCloneComponent,
-ContratNewComponent,
+    ContratListComponent,
+    ContratEditComponent,
+    ContratShowComponent,
+    ContratCloneComponent,
+    ContratNewComponent,
+
+    //organigramme
+    OrganigrammeViewComponent,
+
+    //structure fonction
+    StructureFonctionListComponent,
+    StructureFonctionNewComponent
   ],
   exports: [],
   entryComponents: []

@@ -14,7 +14,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./structurefonction-list.component.scss']
 })
 export class StructureFonctionListComponent extends BasePageComponent<StructureFonction> implements OnInit, OnDestroy {
+  
   @Input() structure: Structure;
+
   constructor(store: Store<IAppState>,
     public structureFonctionSrv: StructureFonctionService) {
     super(store, structureFonctionSrv);

@@ -33,7 +33,7 @@
                     <footer class="blockquote-footer">
                         <cite title="Poste actuelle">
                             <span *ngIf="latestFonction else fallback" [ngStyle]="{'background-color': sidebarBg}" class="fonction">&nbsp;
-                                {{latestFonction?.fonction?.nom}} depuis le
+                                {{latestFonction?.responsabilite?.fonction?.nom}} depuis le
                                 {{latestFonction?.datePriseFonction | date :'dd/MM/yyyy'}} &nbsp;</span>
                             <ng-template #fallback>
                                 <span class="fonction">&nbsp;Aucun poste occupé&nbsp;</span>

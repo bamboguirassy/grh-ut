@@ -12,6 +12,8 @@ import { Location, DatePipe } from '@angular/common';
 import { Fonction } from 'src/app/pages/parametrage/fonction/fonction';
 import { Structure } from 'src/app/pages/parametrage/structure/structure';
 import { TypeContrat } from 'src/app/pages/parametrage/typecontrat/typecontrat';
+import { StructureFonctionService } from 'src/app/pages/parametrage/structurefonction/structurefonction.service';
+import { StructureFonction } from 'src/app/pages/parametrage/structurefonction/structurefonction';
 
 @Component({
   selector: 'app-fonctionemploye-edit',
@@ -33,19 +35,18 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
   structures: Structure[] = [];
   selectedStructure: any;
   isModalVisible = false;
-  fonctions: Fonction[] = [];
+  fonctions: StructureFonction[] = [];
   selectedFonctionId: any;
 
   constructor(store: Store<IAppState>,
               public fonctionEmployeSrv: FonctionEmployeService,
-              public router: Router,  public fonctionSrv: FonctionService,
+              public router: Router,  public structureFonctionSrv: StructureFonctionService,
               private activatedRoute: ActivatedRoute, public structureSrv: StructureService,
               public location: Location, public datePipe: DatePipe) {
     
   }
 
   ngOnInit(): void {
-    this.findFonctions();
     this.findStructures();
    
   }
@@ -55,9 +56,10 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
   }
 
   handlePostLoad() {
-    
-    this.selectedFonctionId = this.entity.fonction?.id;
-    this.selectedStructure = this.entity.structure?.id;
+    this.selectedFonctionId = this.entity.responsabilite?.id;
+    if(this.entity.responsabilite) {
+      this.fonctions.push(this.entity.responsabilite);
+    }
     this.entity.datePriseFonction = this.datePipe.transform(this.entity.datePriseFonction, 'yyyy-MM-dd');
     this.entity.dateFin = this.datePipe.transform(this.entity.dateFin, 'yyyy-MM-dd');
   }
@@ -67,9 +69,7 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
   }
 
   update() {
-    
-    this.entity.fonction = this.selectedFonctionId;
-    this.entity.structure = this.selectedStructure; 
+    this.entity.responsabilite = this.selectedFonctionId;
     this.entity.dateFin = this.datePipe.transform(this.entity.dateFin, 'yyyy-MM-dd');   
     if(this.entity.etat){
       this.entity.dateFin = null;
@@ -81,7 +81,7 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
         this.closeModal();
         this.modification.emit(resp);
       },(err)=>{
-        this.fonctionSrv.httpSrv.catchError(err);
+        this.fonctionEmployeSrv.httpSrv.catchError(err);
       });
   }
 
@@ -100,11 +100,11 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
     this.isModalVisible = false;
   }
 
-  findFonctions() {
-    return this.fonctionSrv.findAll()
+  findFonctionsByStructure(structure: Structure) {
+    return this.structureFonctionSrv.findByStructure(structure)
       .subscribe((data: any) => {
         this.fonctions = data;
-      }, err => this.fonctionSrv.httpSrv.catchError(err));
+      }, err => this.fonctionEmployeSrv.httpSrv.catchError(err));
   }
 
   findStructures() {

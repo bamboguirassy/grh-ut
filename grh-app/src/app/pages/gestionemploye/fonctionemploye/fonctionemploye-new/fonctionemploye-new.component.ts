@@ -25,7 +25,8 @@ export class FonctionEmployeNewComponent implements OnInit {
   structureFonctions: StructureFonction[] = [];
   selectedStructureFonction: StructureFonction;
   @Input() employe: Employe;
-  structures: Structure[] = [];   
+  structures: Structure[] = [];
+  selectedStructure: Structure;
 
   constructor(public fonctionEmployeSrv: FonctionEmployeService,
     public router: Router, public structureFonctionSrv: StructureFonctionService,
