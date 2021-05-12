@@ -141,10 +141,4 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     this.isDiplomeLoaded = true;
   }
 
-
-
-  
-
-
-
 }
