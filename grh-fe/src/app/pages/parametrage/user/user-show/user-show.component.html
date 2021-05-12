@@ -1,0 +1,59 @@
+<tc-card *ngIf="userSrv.resourceName|showable" [tcGradient]="lightGradient">
+    <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
+        <div class="row">
+            <div class="d-none d-md-block col-md-1">
+                <i class="icofont icofont-ui-user icofont-4x"></i>
+            </div>
+            <div class="col-12 col-md-7">
+                <blockquote class="blockquote">
+                    <p class="mb-0">{{title}}</p>
+                    <footer class="blockquote-footer"> <cite title="Source Title">Vu dernièrement le
+                            {{entity?.lastLogin|date:'dd/MM/yyyy à HH:mm'}}</cite></footer>
+                </blockquote>
+            </div>
+            <div class="col-12 col-md-4">
+                <button *ngIf="userSrv.resourceName|editable"
+                    [routerLink]="['/'+orientation,userSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+                    class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
+                <button (click)="remove(entity)" *ngIf="userSrv.resourceName|deletable" tc-button
+                    view="error" beforeIcon="icofont-trash" class=" float-right ml-1"></button>
+                <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
+                    beforeIcon="icofont-refresh"></button>
+                <button tc-button class="float-right" (click)="location.back()"
+                    beforeIcon="icofont-reply"></button>
+            </div>
+        </div>
+    </tc-card>
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <tc-card [outline]="true" [view]="secondViewBorder" [title]="'Infos.'" [tcGradient]="secondGradient">
+                <table class="table">
+                    <tr>
+                        <th>Prenom</th>
+                        <td>{{ entity?.prenom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ entity?.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Telephone</th>
+                        <td>{{ entity?.telephone }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ entity?.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Etat Compte</th>
+                        <td>
+                            <tc-badge *ngIf="entity?.enabled" view="success">Activé</tc-badge>
+                            <tc-badge *ngIf="!entity?.enabled" view="danger">Désactivé</tc-badge>
+                        </td>
+                    </tr>
+                </table>
+            </tc-card>
+        </div>
+    </div>
+</tc-card>
+<app-access-denied *ngIf="!(userSrv.resourceName|showable)"></app-access-denied>

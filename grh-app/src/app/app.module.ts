@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe, HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 
 import { StoreModule } from '@ngrx/store';
-import { fr_FR, NgZorroAntdModule, NZ_I18N } from 'ng-zorro-antd';
+import { fr_FR, NgZorroAntdModule, NZ_I18N } from 'ng-zorro-antd/**';
 
 import { AppComponent } from './app.component';
 import { ROUTES, RoutingModule } from './routing/routing.module';

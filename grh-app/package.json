@@ -36,7 +36,7 @@
     "echarts-gl": "1.1.1",
     "leaflet": "1.6.0",
     "ng-http-loader": "^8.0.0",
-    "ng-zorro-antd": "9.3.0",
+    "ng-zorro-antd": "11.4.1",
     "ng2-charts": "2.4.0",
     "ng2-dragula": "2.1.1",
     "ngx-echarts": "5.1.2",
