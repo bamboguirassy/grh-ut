@@ -137,7 +137,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     this.isGradeLoaded = true;
   }
 
-  loaderDiplomesTab(){
+  loadDiplomesTab(){
     this.isDiplomeLoaded = true;
   }
 

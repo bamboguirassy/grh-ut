@@ -227,7 +227,7 @@
                     <nz-collapse-panel nzHeader="Documents" (click)="loaderDocumentsTab()">
                         <app-document-list *ngIf="entity && isDocumentsLoaded" [employe]="entity"></app-document-list>
                     </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Diplomes" (click)="loaderDiplomesTab()">
+                    <nz-collapse-panel nzHeader="Diplomes" (click)="loadDiplomesTab()">
                         <app-diplomeemploye-list *ngIf="entity && isDiplomeLoaded" [employe]="entity"></app-diplomeemploye-list>
                     </nz-collapse-panel>
                 </nz-collapse>
