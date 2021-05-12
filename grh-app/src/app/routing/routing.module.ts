@@ -14,7 +14,6 @@ import { fonctionRoutes } from './../pages/parametrage/fonction/fonction.routes'
 import { mutuelleSanteRoutes } from './../pages/parametrage/mutuellesante/mutuellesante.routes';
 import { caisseSocialeRoutes } from './../pages/parametrage/caissesociale/caissesociale.routes';
 import { diplomeRoutes } from './../pages/parametrage/diplome/diplome.routes';
-import { organigrammeRoutes } from './../pages/parametrage/organigramme/organigramme.routes';
 
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -40,6 +39,7 @@ import { professionRoutes } from '../pages/parametrage/profession/profession.rou
 import { PageEditAccountComponent } from '../pages/apps/service-pages/edit-account/edit-account.component';
 import { gClasseRoutes } from '../pages/gestiongrade/gclasse/gclasse.routes';
 import { gCategorieRoutes } from '../pages/gestiongrade/gcategorie/gcategorie.routes';
+import { contratRoutes } from '../pages/gestionemploye/contrat/contrat.routes';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -72,7 +72,7 @@ const VERTICAL_ROUTES: Routes = [
   gClasseRoutes,
   professionRoutes,
   gCategorieRoutes,
-  organigrammeRoutes,
+  contratRoutes,
 ];
 
 const PUBLIC_ROUTES: Routes = [
