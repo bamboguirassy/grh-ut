@@ -54,7 +54,6 @@ import { AdresseEditComponent } from './gestionemploye/adresse/adresse-edit/adre
 import { AdresseListComponent } from './gestionemploye/adresse/adresse-list/adresse-list.component';
 import { AdresseNewComponent } from './gestionemploye/adresse/adresse-new/adresse-new.component';
 import { AdresseShowComponent } from './gestionemploye/adresse/adresse-show/adresse-show.component';
-import { ContratCloneComponent } from './gestionemploye/contrat/contrat-clone/contrat-clone.component';
 import { ContratEditComponent } from './gestionemploye/contrat/contrat-edit/contrat-edit.component';
 import { ContratListComponent } from './gestionemploye/contrat/contrat-list/contrat-list.component';
 import { ContratNewComponent } from './gestionemploye/contrat/contrat-new/contrat-new.component';
@@ -161,6 +160,7 @@ import { UserEditComponent } from './parametrage/user/user-edit/user-edit.compon
 import { UserListComponent } from './parametrage/user/user-list/user-list.component';
 import { UserNewComponent } from './parametrage/user/user-new/user-new.component';
 import { UserShowComponent } from './parametrage/user/user-show/user-show.component';
+import { NgPipesModule } from 'ng-pipes';
 
 
 
@@ -189,7 +189,7 @@ import { UserShowComponent } from './parametrage/user/user-show/user-show.compon
     UIModule,
     LayoutModule,
 
-    
+
     NzAvatarModule,
     NzButtonModule,
     NzCardModule,
@@ -213,7 +213,10 @@ import { UserShowComponent } from './parametrage/user/user-show/user-show.compon
     UIModule,
     LayoutModule,
     SharedModule,
-    NgxOrgChartModule
+    NgxOrgChartModule,
+    // imports all pipes module
+    NgPipesModule
+
   ],
   declarations: [
     BasePageComponent,
@@ -226,7 +229,7 @@ import { UserShowComponent } from './parametrage/user/user-show/user-show.compon
     Page404Component,
     Page500Component,
 
-    
+
     UserListComponent,
     UserEditComponent,
     UserShowComponent,
@@ -365,7 +368,6 @@ import { UserShowComponent } from './parametrage/user/user-show/user-show.compon
     ContratListComponent,
     ContratEditComponent,
     ContratShowComponent,
-    ContratCloneComponent,
     ContratNewComponent,
 
     //organigramme
@@ -375,7 +377,7 @@ import { UserShowComponent } from './parametrage/user/user-show/user-show.compon
     StructureFonctionListComponent,
     StructureFonctionNewComponent
   ],
-  exports: [ ],
-  entryComponents: [ ]
+  exports: [],
+  entryComponents: []
 })
-export class PagesModule {}
+export class PagesModule { }

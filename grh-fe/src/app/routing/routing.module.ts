@@ -14,7 +14,6 @@ import { PageSettingsComponent } from '../pages/settings';
 import { Page404Component } from '../pages/apps/sessions/page-404';
 import { Page500Component } from '../pages/apps/sessions/page-500';
 import { adresseRoutes } from '../pages/gestionemploye/adresse/adresse.routes';
-import { contratRoutes } from '../pages/gestionemploye/contrat/contrat.routes';
 import { documentRoutes } from '../pages/gestionemploye/document/document.routes';
 import { employeRoutes } from '../pages/gestionemploye/employe/employe.routes';
 import { fonctionEmployeRoutes } from '../pages/gestionemploye/fonctionemploye/fonctionemploye.routes';
@@ -72,7 +71,6 @@ const VERTICAL_ROUTES: Routes = [
   gClasseRoutes,
   professionRoutes,
   gCategorieRoutes,
-  contratRoutes,
   organigrammeRoutes
 ];
 
@@ -87,7 +85,7 @@ const PUBLIC_ROUTES: Routes = [
 export const ROUTES: Routes = [
   {
     path: '',
-    redirectTo: '/vertical/default-dashboard',
+    redirectTo: '/horizontal/default-dashboard',
     pathMatch: 'full'
   },
   {
