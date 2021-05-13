@@ -25,7 +25,7 @@
                 <nz-select [required]="true" name="fonction" id="fonction" #fonction="ngModel"
                   nzAllowClear nzShowSearch [(ngModel)]="selectedFonctionId">
                   <ng-container *ngFor="let fonction of fonctions">
-                    <nz-option [nzValue]="fonction.id" [nzLabel]="fonction?.fonction?.nom"></nz-option>
+                    <nz-option *ngIf="fonction.id==entity?.responsabilite?.id || fonction.etat" [nzValue]="fonction.id" [nzLabel]="fonction?.fonction?.nom"></nz-option>
                   </ng-container>
                 </nz-select>
                 <tc-form-description>

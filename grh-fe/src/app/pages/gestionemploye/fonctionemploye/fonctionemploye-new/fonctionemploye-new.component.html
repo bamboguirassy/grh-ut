@@ -29,7 +29,7 @@
             <nz-select [required]="true" name="structureFonction" id="structureFonction" [(ngModel)]="selectedStructureFonction"
               #structureFonctionModel="ngModel" nzPlaceHolder="Selectionner" nzAllowClear nzShowSearch>
               <ng-container *ngFor="let structureFonction of structureFonctions">
-                <nz-option [nzValue]="structureFonction" [nzLabel]="structureFonction.fonction.nom">
+                <nz-option *ngIf="structureFonction.etat" [nzValue]="structureFonction" [nzLabel]="structureFonction.fonction.nom">
                 </nz-option>
               </ng-container>
             </nz-select>
