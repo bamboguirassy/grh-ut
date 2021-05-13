@@ -24,6 +24,7 @@ export class DashboardBaseComponent<T extends BamboAbstractChartModel> implement
     responsive: true,
   };
   selectedTypeDiagram: ChartType = 'bar';
+  tableData: any;
 
   constructor(
     public httpSrv: BamboAbstractService,
@@ -54,6 +55,10 @@ export class DashboardBaseComponent<T extends BamboAbstractChartModel> implement
   handlePostFetch(data: T[]) {
     this.rawChartData = data;
     this.setDataChart();
+  }
+
+  buildTableData() {
+    throw new Error('Should be reimplemented');
   }
 
 }

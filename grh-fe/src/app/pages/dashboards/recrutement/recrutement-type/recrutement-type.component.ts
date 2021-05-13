@@ -50,4 +50,13 @@ export class RecrutementTypeComponent extends DashboardBaseComponent<Recrutement
     this.chartData = chartData;
   }
 
+  /*buildTableData() {
+    let tabHeaders = [];
+    let tabBody = [];
+    this.rawChartData.forEach((raw) => {
+      tabHeaders.push(raw.annee);
+    });
+    let data = [{typeEmploye:'', values: []}]
+  }*/
+
 }
