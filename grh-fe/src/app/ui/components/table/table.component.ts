@@ -157,7 +157,7 @@ export class TCTableComponent implements OnInit, OnChanges {
       columnList.forEach((column: any) => {
         if (column.config.filtering && column.config.name) {
           if (typeof item[column.config.name] !== 'undefined' && item[column.config.name] !== undefined) {
-            if (item[column.config.name].toString().toLowerCase().startsWith(config.filtering.filterString.toLowerCase())) {
+            if (item[column.config.name]?.toString().toLowerCase().startsWith(config.filtering.filterString.toLowerCase())) {
               flag = true;
             }
           }

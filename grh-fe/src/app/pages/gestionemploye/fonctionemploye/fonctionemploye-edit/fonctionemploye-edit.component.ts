@@ -56,6 +56,7 @@ export class FonctionEmployeEditComponent implements OnInit, OnDestroy {
   }
 
   handlePostLoad() {
+    this.fonctions = [];
     this.selectedFonctionId = this.entity.responsabilite?.id;
     if(this.entity.responsabilite) {
       this.fonctions.push(this.entity.responsabilite);

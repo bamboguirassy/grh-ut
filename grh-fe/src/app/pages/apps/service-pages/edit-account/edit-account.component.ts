@@ -74,6 +74,14 @@ export class PageEditAccountComponent extends BasePageComponent<User> implements
     this.defaultAvatar = 'assets/content/anonymous-400.jpg';
     this.currentAvatar = this.defaultAvatar;
     this.changes = false;
+    const subscription = authSrv.currentUserProvider.subscribe((data) => {
+      this.entity = data;
+      if(this.entity.pathImage) {
+        this.currentAvatar = this.entity.pathImage;
+      }
+      this.initUserForm(data);
+    });
+    this.addSubscription(subscription);
   }
 
   ngOnInit() {
@@ -88,11 +96,11 @@ export class PageEditAccountComponent extends BasePageComponent<User> implements
     this.setLoaded();
 
     this.currentAvatar = this.userInfo.img;
-    this.inituserForm(this.userInfo);
+    this.initUserForm(this.userInfo);
   }
 
   // init form
-  inituserForm(data: User) {
+  initUserForm(data: User) {
     this.userForm = this.formBuilder.group({
       pathImage: [this.currentAvatar],
       prenom: [data?.prenom, Validators.required],
