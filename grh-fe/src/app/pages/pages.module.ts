@@ -102,10 +102,6 @@ import { GNiveauEditComponent } from './gestiongrade/gniveau/gniveau-edit/gnivea
 import { GNiveauListComponent } from './gestiongrade/gniveau/gniveau-list/gniveau-list.component';
 import { GNiveauNewComponent } from './gestiongrade/gniveau/gniveau-new/gniveau-new.component';
 import { GNiveauShowComponent } from './gestiongrade/gniveau/gniveau-show/gniveau-show.component';
-import { GradeEditComponent } from './gestiongrade/grade/grade-edit/grade-edit.component';
-import { GradeListComponent } from './gestiongrade/grade/grade-list/grade-list.component';
-import { GradeNewComponent } from './gestiongrade/grade/grade-new/grade-new.component';
-import { GradeShowComponent } from './gestiongrade/grade/grade-show/grade-show.component';
 import { CaisseSocialeEditComponent } from './parametrage/caissesociale/caissesociale-edit/caissesociale-edit.component';
 import { CaisseSocialeListComponent } from './parametrage/caissesociale/caissesociale-list/caissesociale-list.component';
 import { CaisseSocialeNewComponent } from './parametrage/caissesociale/caissesociale-new/caissesociale-new.component';
@@ -290,11 +286,6 @@ import { UserShowComponent } from './parametrage/user/user-show/user-show.compon
     SyndicatEditComponent,
     SyndicatShowComponent,
     SyndicatNewComponent,
-    // grade components
-    GradeListComponent,
-    GradeEditComponent,
-    GradeShowComponent,
-    GradeNewComponent,
     // employe components
     EmployeListComponent,
     EmployeEditComponent,
