@@ -39,6 +39,11 @@ class DiplomeEmploye
      */
     private $etablissement;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $formation;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -88,6 +93,18 @@ class DiplomeEmploye
     public function setEtablissement(?string $etablissement): self
     {
         $this->etablissement = $etablissement;
+
+        return $this;
+    }
+
+    public function getFormation(): ?string
+    {
+        return $this->formation;
+    }
+
+    public function setFormation(string $formation): self
+    {
+        $this->formation = $formation;
 
         return $this;
     }

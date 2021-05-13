@@ -16,6 +16,7 @@ class DiplomeEmployeType extends AbstractType
             ->add('etablissement')
             ->add('employe')
             ->add('diplome')
+            ->add('formation')
         ;
     }
 
