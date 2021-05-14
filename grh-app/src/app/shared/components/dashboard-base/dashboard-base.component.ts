@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ChartDataset, ChartOptions, ChartType } from 'chart.js';
+import { ChartDataset, ChartOptions, ChartType, Color } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { finalize } from 'rxjs/operators';
+import { SETTINGS } from 'src/environments/settings';
 import { BamboAbstractChartModel } from '../../classes/bambo-abstract-chart-model';
 import { BamboAbstractService } from '../../services/bambo-abstract.service';
 
@@ -25,6 +26,7 @@ export class DashboardBaseComponent<T extends BamboAbstractChartModel> implement
   };
   selectedTypeDiagram: ChartType = 'bar';
   tableData: any;
+  // colors: Color[] = [SETTINGS.sidebarBg, 'red', 'green','orange'];
 
   constructor(
     public httpSrv: BamboAbstractService,
@@ -55,10 +57,6 @@ export class DashboardBaseComponent<T extends BamboAbstractChartModel> implement
   handlePostFetch(data: T[]) {
     this.rawChartData = data;
     this.setDataChart();
-  }
-
-  buildTableData() {
-    throw new Error('Should be reimplemented');
   }
 
 }

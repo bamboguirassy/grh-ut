@@ -25,8 +25,6 @@ export class FonctionEmployeListComponent implements OnInit {
 
   ngOnInit(): void {
     this.findByEmploye();
-   
-    
   }
   
   setTimeline() {

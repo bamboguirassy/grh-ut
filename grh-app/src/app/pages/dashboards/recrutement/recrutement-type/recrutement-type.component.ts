@@ -13,7 +13,6 @@ export class RecrutementTypeComponent extends DashboardBaseComponent<Recrutement
   @Input() canSwitchDiagramType: boolean = true;
   typeDiagrams: { value: string, title: string }[] = [
     { value: 'bar', title: 'Barre verticale' },
-    { value: 'horizontalBar', title: 'Barre Horizontale' },
     { value: 'line', title: 'Courbe' },
   ];
 
@@ -41,25 +40,13 @@ export class RecrutementTypeComponent extends DashboardBaseComponent<Recrutement
         }
       }
       chartData.push({ data: arr, label: te.label });
-    }
+    }    
 
     this.chartLabels = this.rawChartData.map((data) => data.annee);
     this.chartType = 'bar';
     this.chartLegend = true;
     this.chartPlugins = [];
     this.chartData = chartData;
-  }
-
-  buildTableData() {
-    let tabHeaders = [];
-    let tabBody = [];
-    this.rawChartData.forEach((raw) => {
-      tabHeaders.push(raw.annee);
-      raw.recrutements.forEach((recrutement)=>{
-        
-      })
-    });
-    let data = [{typeEmploye:'', values: []}]
   }
 
 }
