@@ -11,15 +11,15 @@
   <nz-tabset>
     <nz-tab nzTitle="Fonction">
     <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-    <tc-table-col [columnTitle]="'Fonction'" [columnName]="'fonction'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Fonction'" [columnName]="'responsabilite'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value?.nom }}</span>
+        <span class="nowrap" *ngIf="value">{{ value?.fonction?.nom }}</span>
         <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Structure'" [columnName]="'structure'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Structure'" [columnName]="'responsabilite'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value" [title]="value?.nom">{{value?.code}}</span>
+        <span class="nowrap" *ngIf="value">{{value?.structure?.nom}}</span>
         <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
       </ng-template>
     </tc-table-col>

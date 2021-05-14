@@ -17,7 +17,7 @@ export class SearchComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.data = [];
-    this.layout = 'horizontal';
+    this.layout = 'vertical';
   }
 
   ngOnInit() {
@@ -37,8 +37,6 @@ export class SearchComponent implements OnInit {
       currentPage = this.data.find(item => {
         return item.title === value;
       });
-
-      this.initSearchForm();
 
       if (currentPage && currentPage.routing) {
         this.router.navigate([currentPage.layout ? currentPage.layout : this.layout, currentPage.routing]);

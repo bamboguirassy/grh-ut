@@ -1,11 +1,12 @@
-import { BamboAuthService } from './../../../../shared/services/bambo-auth.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BasePageComponent } from '../../../base-page';
 import { Store } from '@ngrx/store';
 import { IAppState } from '../../../../interfaces/app-state';
 import { HttpService } from '../../../../services/http/http.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IOption } from '../../../../ui/interfaces/option';
 import { User } from 'src/app/pages/parametrage/user/user';
+import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
 import { UserService } from 'src/app/pages/parametrage/user/user.service';
 
 @Component({
@@ -56,5 +57,4 @@ export class PageUserProfileComponent extends BasePageComponent<User> implements
   ngOnDestroy() {
     super.ngOnDestroy();
   }
-
 }

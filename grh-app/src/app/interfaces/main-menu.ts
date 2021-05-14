@@ -26,9 +26,9 @@ export interface IMenuItemSub {
   disabled?: boolean,
   routing?: string,
   externalLink?: string,
-  layout?: string;
-  sub?: IMenuItemSub[]
-  enabled: boolean,
+  layout?: string,
+  sub?: IMenuItemSub[],
+  enabled: boolean
 }
 export interface IMenuItemBadge {
   text?: string,

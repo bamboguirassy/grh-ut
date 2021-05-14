@@ -11,7 +11,7 @@
                 <nz-select (ngModelChange)="findFonctionsByStructure($event)" [required]="true" name="structure" id="structure" #structure="ngModel"
                   nzPlaceHolder="Selectionner la structure" nzAllowClear nzShowSearch [(ngModel)]="selectedStructure">
                   <ng-container *ngFor="let structure of structures">
-                    <nz-option [nzValue]="structure.id" [nzLabel]="structure.nom+' ('+structure.code+')'"></nz-option>
+                    <nz-option [nzValue]="structure" [nzLabel]="structure.nom+' ('+structure.code+')'"></nz-option>
                   </ng-container>
                 </nz-select>
                 <tc-form-description>
@@ -25,7 +25,7 @@
                 <nz-select [required]="true" name="fonction" id="fonction" #fonction="ngModel"
                   nzAllowClear nzShowSearch [(ngModel)]="selectedFonctionId">
                   <ng-container *ngFor="let fonction of fonctions">
-                    <nz-option [nzValue]="fonction.id" [nzLabel]="fonction.nom"></nz-option>
+                    <nz-option *ngIf="fonction.id==entity?.responsabilite?.id || fonction.etat" [nzValue]="fonction.id" [nzLabel]="fonction?.fonction?.nom"></nz-option>
                   </ng-container>
                 </nz-select>
                 <tc-form-description>

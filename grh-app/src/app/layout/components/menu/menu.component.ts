@@ -1,5 +1,4 @@
-import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
-import { Component, HostBinding, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
@@ -9,7 +8,7 @@ import * as SettingsActions from '../../../store/actions/app-settings.actions';
 import { IAppState } from '../../../interfaces/app-state';
 import * as PageActions from '../../../store/actions/page.actions';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Subscription } from 'rxjs';
+import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -30,7 +29,7 @@ import { Subscription } from 'rxjs';
     ]
     )]
 })
-export class MenuComponent implements OnInit{
+export class MenuComponent implements OnInit {
   @HostBinding('class.main-menu') true;
   @HostBinding('class.horizontal') get horizontal() {
     return this.orientation === 'horizontal';

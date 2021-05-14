@@ -1,4 +1,4 @@
-<tc-dropdown class="item"  *ngIf="currentUser">
+<tc-dropdown class="item">
   <tc-dropdown-button>
     <tc-icon [iconClass]="'icofont icofont-notification'" [tcFontSize]="26"></tc-icon>
     <tc-badge *ngIf="notifications && notifications.length" [view]="'error'" [size]="'sm'">
@@ -42,22 +42,28 @@
         [block]="true"
         [afterIcon]="'icofont-tasks-alt'"
       >
-        View all notifications
+        Voir les notifications
       </a>
     </div>
   </tc-dropdown-content>
 </tc-dropdown>
 
-<tc-dropdown class="item" [close]="closeDropdown" *ngIf="currentUser">
+<tc-dropdown class="item" [close]="closeDropdown">
   <tc-dropdown-button>
     <div class="d-flex align-items-center">
-      <tc-avatar [src]="currentUser?.pathImage" class="mr-1"></tc-avatar>
+      <tc-avatar [src]="currentUser?.pathImage" class="me-1"></tc-avatar>
       <i class="icofont-simple-down"></i>
     </div>
   </tc-dropdown-button>
 
   <tc-dropdown-content [align]="'right'" [animation]="'fadeInUp'" [offset]="[10, 0]" [width]="180">
     <ul class="list">
+      <!-- <li>
+        <a href="#" (click)="goTo($event, 'edit-account')" class="align-items-center">
+          <span class="icon icofont-ui-home"></span>
+          Edit account
+        </a>
+      </li> -->
       <li>
         <a href="#" (click)="goTo($event, 'user-profile')" class="align-items-center">
           <span class="icon icofont-ui-user"></span>
@@ -65,9 +71,9 @@
         </a>
       </li>
       <li>
-        <a href="#" (click)="logout($event)" class="align-items-center">
+        <a href="#" (click)="goTo($event, 'sign-in', '../public/')" class="align-items-center">
           <span class="icon icofont-logout"></span>
-          Se déconnecter
+          Log Out
         </a>
       </li>
     </ul>

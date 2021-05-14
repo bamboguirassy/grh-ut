@@ -1,4 +1,4 @@
-@import '~src/assets/sass/variables';
+@import '~src/assets/scss/variables';
 
 @keyframes loaderAnimation{
   0%{
@@ -15,6 +15,7 @@
   height: 100%;
   justify-content: space-between;
   left: 0;
+  margin: 0 !important;
   overflow: hidden;
   padding: 0 $module-rem;
   position: absolute;
@@ -117,9 +118,6 @@
       padding: $module-rem ($module-rem * 3);
       width: 100%;
     }
-    .bottom-part {
-      padding-bottom: $module-rem * 3;
-    }
     .sk-logo {
       margin: 0;
     }
@@ -142,6 +140,14 @@
       border-radius: 6px;
       height: $module-rem * 4;
       margin-top: $module-rem * 3;
+    }
+    .bottom-part {
+      padding-bottom: $module-rem * 3;
+      padding-top: 0;
+
+      .sk-menu {
+        margin-top: 0;
+      }
     }
     .horizontal-menu {
       align-items: center;

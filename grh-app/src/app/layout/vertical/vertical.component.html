@@ -1,4 +1,8 @@
-<div class="app-container" [ngClass]="{ 'boxed': appSettings.boxed, 'scrolled': scrolled }" *ngIf="appSettings">
+<div
+  class="app-container"
+  [ngClass]="{ boxed: appSettings.boxed, scrolled: scrolled, loaded: loaded }"
+  *ngIf="appSettings"
+>
   <!-- Horizontal navbar -->
   <navbar
     [boxed]="appSettings.boxed"
@@ -41,6 +45,7 @@
       <button
         tc-button
         [view]="'accent'"
+        [block]="true"
         [beforeIcon]="'icofont-plus'"
         (click)="openModal(modalBody, 'Add new patient', modalFooter)"
       >Add Patient</button>

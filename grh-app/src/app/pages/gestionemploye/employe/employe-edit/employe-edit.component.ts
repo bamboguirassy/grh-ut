@@ -19,6 +19,8 @@ import { CaisseSocialeService } from 'src/app/pages/parametrage/caissesociale/ca
 import { GradeService } from 'src/app/pages/gestiongrade/grade/grade.service';
 import { StructureService } from 'src/app/pages/parametrage/structure/structure.service';
 import { Structure } from 'src/app/pages/parametrage/structure/structure';
+import { Profession } from 'src/app/pages/parametrage/profession/profession';
+import { ProfessionService } from 'src/app/pages/parametrage/profession/profession.service';
 
 @Component({
   selector: 'app-employe-edit',
@@ -46,6 +48,8 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
   selectedMutuelleSanteId: any;
   grades: Grade[] = [];
   selectedGradeId: any;
+  professions: Profession[] = [];
+  selectedProfession: Profession;
 
 
   constructor(store: Store<IAppState>,
@@ -57,6 +61,7 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
     private activatedRoute: ActivatedRoute,
     public gradeSrv: GradeService,
     public structureSrv: StructureService,
+    public professionSrv: ProfessionService,
     public location: Location, public datePipe: DatePipe) {
     super(store, employeSrv);
     this.pageData = {
@@ -102,6 +107,7 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
     };
     reader.readAsDataURL(file);
   }
+
   findNationalites() {
     this.paysSrv.findAll()
       .subscribe((data: any) => {
@@ -129,6 +135,7 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
         this.grades = data;
       }, err => this.gradeSrv.httpSrv.catchError(err));
   }
+
   findStructures() {
     this.structureSrv.findAll()
       .subscribe((data: any) => {
@@ -141,11 +148,12 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
   }
 
   handlePostLoad() {
-    this.selectedMutuelleSanteId = this.entity.mutuelleSante?.id;
-    this.selectedCaisseSocialeId = this.entity.caisseSociale?.id;
-    this.selectedGradeId = this.entity.grade?.id;
-    this.selectedStructureId = this.entity.structure?.id;
+    this.selectedMutuelleSanteId = this.entity?.mutuelleSante?.id;
+    this.selectedCaisseSocialeId = this.entity?.caisseSociale?.id;
+    this.selectedGradeId = this.entity?.grade?.id;
+    this.selectedStructureId = this.entity?.structure?.id;
     this.selectedNationaliteId = this.entity.nationalite?.id;
+    this.selectedProfession = this.entity?.profession?.id;
     this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
     this.entity.dateRecrutement = this.datePipe.transform(this.entity.dateRecrutement, 'yyyy-MM-dd');
     this.entity.datePriseService = this.datePipe.transform(this.entity.datePriseService, 'yyyy-MM-dd');
@@ -168,11 +176,21 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
     this.entity.grade = this.selectedGradeId;
     this.entity.nationalite = this.selectedNationaliteId;
     this.entity.mutuelleSante = this.selectedMutuelleSanteId;
-    this.entity.structure = this.selectedStructureId;
+    if(this.selectedStructureId) {
+      this.entity.structure = this.selectedStructureId;
+    }
+    this.entity.profession = this.selectedProfession.id;
   }
 
   handlePostUpdate() {
     this.location.back();
+  }
+
+  findProfessions() {
+    this.professionSrv.findAll()
+      .subscribe((data: any) => {
+        this.professions = data;
+      }, err => this.professionSrv.httpSrv.catchError(err));
   }
 
 

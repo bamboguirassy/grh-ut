@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -14,8 +14,8 @@ import { IPatient } from '../../interfaces/patient';
 import * as PatientsActions from '../../store/actions/patients.actions';
 import * as SettingsActions from '../../store/actions/app-settings.actions';
 import { Subscription } from 'rxjs';
-import { User } from 'src/app/pages/parametrage/user/user';
 import { IMenuItem } from 'src/app/interfaces/main-menu';
+import { User } from 'src/app/pages/parametrage/user/user';
 import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
 
 @Component({
@@ -26,7 +26,7 @@ import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
     './vertical.component.scss'
   ]
 })
-export class VerticalLayoutComponent extends BaseLayoutComponent implements OnInit, AfterViewInit {
+export class VerticalLayoutComponent extends BaseLayoutComponent implements OnInit {
   patientForm: FormGroup;
   gender: IOption[];
   currentAvatar: string | ArrayBuffer;
@@ -43,10 +43,10 @@ export class VerticalLayoutComponent extends BaseLayoutComponent implements OnIn
     router: Router,
     elRef: ElementRef,
     private modal: TCModalService,
-    private cdRef: ChangeDetectorRef,
     public authSrv: BamboAuthService
   ) {
     super(store, fb, httpSv, router, elRef);
+
     this.gender = [
       {
         label: 'Male',
@@ -74,10 +74,6 @@ export class VerticalLayoutComponent extends BaseLayoutComponent implements OnIn
         }
       });
     this.store.dispatch(new SettingsActions.Update({ layout: 'vertical' }));
-  }
-
-  ngAfterViewInit() {
-    this.cdRef.detectChanges();
   }
 
   // open modal window
@@ -137,5 +133,9 @@ export class VerticalLayoutComponent extends BaseLayoutComponent implements OnIn
       this.closeModal();
       this.patientForm.reset();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

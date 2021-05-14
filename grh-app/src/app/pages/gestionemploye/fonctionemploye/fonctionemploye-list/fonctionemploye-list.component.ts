@@ -30,11 +30,10 @@ export class FonctionEmployeListComponent implements OnInit {
   }
   
   setTimeline() {
-   
     const sectionData = this.items.map((i: any) => ({
       date: `${this.datePipe.transform(`${i.datePriseFonction}` , 'dd/MM/yyyy')} - ${i.etat?'En Cours':`${this.datePipe.transform(`${i.dateFin}` , 'dd/MM/yyyy')}`}`,
-      title: i.fonction.nom,
-      content: i.structure.nom,
+      title: i.responsabilite.fonction.nom,
+      content: i.responsabilite.structure.nom,
       icon: "icofont-business-man-alt-1",
       iconBg: SETTINGS.sidebarBg,
       iconColor: "#fff"

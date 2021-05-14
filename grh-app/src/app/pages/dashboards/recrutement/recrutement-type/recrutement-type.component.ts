@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ChartDataSets } from 'chart.js';
+import { ChartDataset } from 'chart.js';
 import { EmployeService } from 'src/app/pages/gestionemploye/employe/employe.service';
 import { DashboardBaseComponent } from 'src/app/shared/components/dashboard-base/dashboard-base.component';
 import { RecrutementTypeCM } from '../recrutement-type-cm';
@@ -29,7 +29,7 @@ export class RecrutementTypeComponent extends DashboardBaseComponent<Recrutement
   }
 
   setDataChart() {
-    const chartData: ChartDataSets[] = [];
+    const chartData: ChartDataset[] = [];
     const typeEmployes = this.rawChartData[0].recrutements.map((r) => ({ code: r.typeEmployeCode, label: r.typeEmployeLabel }));
     for (const te of typeEmployes) {
       const arr: number[] = [];
@@ -48,6 +48,18 @@ export class RecrutementTypeComponent extends DashboardBaseComponent<Recrutement
     this.chartLegend = true;
     this.chartPlugins = [];
     this.chartData = chartData;
+  }
+
+  buildTableData() {
+    let tabHeaders = [];
+    let tabBody = [];
+    this.rawChartData.forEach((raw) => {
+      tabHeaders.push(raw.annee);
+      raw.recrutements.forEach((recrutement)=>{
+        
+      })
+    });
+    let data = [{typeEmploye:'', values: []}]
   }
 
 }

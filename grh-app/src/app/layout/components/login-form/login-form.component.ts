@@ -1,4 +1,3 @@
-import { BamboAuthService } from './../../../shared/services/bambo-auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -10,17 +9,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder,
-    public authSrv: BamboAuthService) { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      login: ['', Validators.required],
+      pass: ['', Validators.required]
     });
-  }
-
-  login() {
-    this.authSrv.login(this.loginForm.value);
   }
 }

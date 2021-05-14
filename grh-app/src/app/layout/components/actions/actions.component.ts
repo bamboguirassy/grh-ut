@@ -1,17 +1,17 @@
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/pages/parametrage/user/user';
 import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
-import { Component, EventEmitter, Input, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { HttpService } from '../../../services/http/http.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'actions',
   templateUrl: './actions.component.html',
   styleUrls: ['./actions.component.scss']
 })
-export class ActionsComponent implements OnInit, OnDestroy {
+export class ActionsComponent implements OnInit {
   notifications: any[];
   messages: any[];
   files: any[];
@@ -42,9 +42,8 @@ export class ActionsComponent implements OnInit, OnDestroy {
   
 
   ngOnInit() {
-    this.getData('assets/data/navbar-notifications.json', 'notifications');
-    this.getData('assets/data/navbar-messages.json', 'messages');
-    this.getData('assets/data/navbar-files.json', 'files');
+    //this.getData('assets/data/navbar-notifications.json', 'notifications');
+    //this.getData('assets/data/navbar-messages.json', 'messages');
   }
 
   getData(url: string, dataName: string) {

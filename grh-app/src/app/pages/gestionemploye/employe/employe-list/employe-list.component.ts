@@ -62,6 +62,7 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
   }
 
   findByTypeEmploye(typeEmploye: TypeEmploye) {
+    this.items = [];
     this.employeSrv.findByTypeEmploye(typeEmploye)
       .subscribe((data: any) => {
         this.items = data;
