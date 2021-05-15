@@ -16,7 +16,7 @@ export class GClasseService extends BamboAbstractService {
   }
     
    findNonSuivants() {
-    return this.httpSrv.get(this.routePrefix+'no-suivant/').pipe(first());
+    return this.httpSrv.get(this.routePrefix+'no-suivant/');
   }
   
 }
