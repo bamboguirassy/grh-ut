@@ -13,7 +13,7 @@ export class RecrutementGenreComponent extends DashboardBaseComponent<Recrutemen
   @Input() canSwitchDiagramType: boolean = true;
   typeDiagrams: { value: string, title: string }[] = [
     { value: 'bar', title: 'Barre verticale' },
-    { value: 'horizontalBar', title: 'Barre Horizontale' },
+    // { value: 'pie', title: 'Pie' },
     { value: 'line', title: 'Courbe' },
   ];
   constructor(

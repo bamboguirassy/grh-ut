@@ -24,12 +24,9 @@ export class GNiveauNewComponent implements OnInit {
     this.entity = new GNiveau();
   }
 
-  ngOnInit(): void {
-    this.findNiveaux();
-  }
+  ngOnInit(): void {}
 
   save() {
-    
     this.entity.suivant=this.selectedNiveauId;
     this.gNiveauSrv.create(this.entity)
       .subscribe((data: any) => {
@@ -50,13 +47,10 @@ export class GNiveauNewComponent implements OnInit {
   }
 
   findNiveaux(){
-    this.gNiveauSrv.findNonSuivant()
+    this.gNiveauSrv.findAll()
     .subscribe((data:any)=>{
       this.niveaux=data;
-     
-    },error => this.gNiveauSrv.httpSrv.catchError(error))
-
-
+    },error => this.gNiveauSrv.httpSrv.catchError(error));
   }
 
 }

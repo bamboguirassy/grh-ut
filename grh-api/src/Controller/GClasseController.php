@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\GClasse;
+use App\Entity\TypeEmploye;
 use App\Form\GClasseType;
 use App\Repository\GClasseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,6 +30,18 @@ class GClasseController extends AbstractController
     }
 
     /**
+     * @Rest\Get(path="/{id}/typeemploye", name="g_classe_type_employe")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_GCLASSE_INDEX")
+     */
+    public function findByEmploye(TypeEmploye $typeEmploye): array
+    {
+        return $this->getDoctrine()->getManager()
+        ->getRepository(GClasse::class)
+        ->findByTypeEmploye($typeEmploye);
+    }
+
+    /**
      * @Rest\Post(Path="/create", name="g_classe_new")
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_GCLASSE_CREATE")
@@ -39,14 +52,13 @@ class GClasseController extends AbstractController
         $form->submit(Utils::serializeRequestContent($request));
 
         $entityManager = $this->getDoctrine()->getManager();
-        /** verification duplication suivant */
-        if($gClasse->getSuivant()!=null) {
-            $classes = $entityManager->getRepository(GClasse::class)
-            ->findBySuivant($gClasse->getSuivant());
-            if(count($classes)>0) {
-                throw $this->createNotFoundException("Attention ! Le suivant que vous avez selectionné est déja associé à l'enregistrement: {$classes[0]->getNom()}");
-            }
+        
+        //transformer le champ suivant en précédent
+        if($gClasse->getSuivant()) {
+            $gClasse->getSuivant()->setSuivant($gClasse);
+            $gClasse->setSuivant(NULL);
         }
+
         $entityManager->persist($gClasse);
         $entityManager->flush();
 

@@ -40,10 +40,11 @@ export class GClasseNewComponent implements OnInit {
     this.findClasses();
     this.findTypeEmployes();
   }
+
   save() {
 
     this.entity.suivant = this.selectedClasseId;
-    this.entity.typeEmploye = this.selectedClasseId;
+    this.entity.typeEmploye = this.selectedTypeEmployeId;
     this.gClasseSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();

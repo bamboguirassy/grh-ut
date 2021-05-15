@@ -25,7 +25,7 @@ class GEchelonController extends AbstractController
      */
     public function index(GEchelonRepository $gEchelonRepository): array
     {
-        return $gEchelonRepository->findAll();
+        return $gEchelonRepository->findBy([],['ordre'=>'ASC']);
     }
 
     /**
@@ -37,6 +37,12 @@ class GEchelonController extends AbstractController
         $gEchelon = new GEchelon();
         $form = $this->createForm(GEchelonType::class, $gEchelon);
         $form->submit(Utils::serializeRequestContent($request));
+
+        //transformer le champ suivant en précédent
+        if($gEchelon->getSuivant()) {
+            $gEchelon->getSuivant()->setSuivant($gEchelon);
+            $gEchelon->setSuivant(NULL);
+        }
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($gEchelon);
@@ -117,5 +123,20 @@ class GEchelonController extends AbstractController
         $entityManager->flush();
 
         return $gEchelons;
+    }
+
+    /** 
+     * @Rest\Get(path="/no-suivant/", name="find_echelon_no_suivant")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_GECHELON_INDEX")
+     */
+    public function findNonSuivants(GEchelonRepository $gEchelonRepository): array
+    {
+        $em = $this->getDoctrine()->getManager();
+        $echelons = $em->createQuery('select e from App\Entity\GEchelon e
+         where (select count(e1) from App\Entity\GEchelon e1 where e1.suivant=e)<1')
+         ->getResult();
+
+        return $echelons;
     }
 }

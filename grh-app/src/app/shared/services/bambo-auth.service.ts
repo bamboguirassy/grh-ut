@@ -20,8 +20,7 @@ export class BamboAuthService {
   constructor(public httpSrv: BamboHttpService) { }
 
   login(loginData: { username: string, password: string }) {
-    this.httpSrv.post('login_check', loginData).
-      pipe(first())
+    this.httpSrv.post('login_check', loginData)
       .subscribe((data: any) => {
         this.httpSrv.tokenSrv.setToken(data.token);
         this.getCurrentUser()
