@@ -39,15 +39,10 @@ class GNiveauController extends AbstractController
         $form->submit(Utils::serializeRequestContent($request));
         $entityManager = $this->getDoctrine()->getManager();
         
-        /** verification duplication suivant */
-        if($gNiveau->getSuivant()!=null)
-        {
-            $niveaux=$entityManager->getRepository(GNiveau::class)
-             ->findBySuivant($gNiveau->getSuivant());     
-            if(count($niveaux)>0) {
-                throw $this->createNotFoundException("Attention ! Le suivant que vous avez selectionné est déja associé à l'enregistrement: {$categories[0]->getNom()}");
-            }
-            
+        //transformer le champ suivant en précédent
+        if($gNiveau->getSuivant()) {
+            $gNiveau->getSuivant()->setSuivant($gNiveau);
+            $gNiveau->setSuivant(NULL);
         }
         
           /** fin test duplication suivant */
