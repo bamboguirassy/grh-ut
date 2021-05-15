@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\GCategorie;
+use App\Entity\GClasse;
+use App\Entity\GNiveau;
 use App\Entity\Grade;
 use App\Form\GradeType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,6 +32,84 @@ class GradeController extends AbstractController
             ->findAll();
 
         return count($grades)?$grades:[];
+    }
+
+    /**
+     * @Rest\Get(path="/map/{id}/classe", name="grade_map_classe")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_GRADE_INDEX")
+     */
+    public function mapByClasse(GClasse $classe): array
+    {
+        $categories = $classe->getCategories();
+        $niveaux = $classe->getNiveaux();
+        $tabNiveau = [];
+        foreach($niveaux as $niveau) {
+            $tabCategorie = [];
+            foreach($categories as $categorie) {
+                $grades = $this->getDoctrine()
+            ->getRepository(Grade::class)
+            ->findBy(['categorie'=>$categorie,'niveau'=>$niveau,'classe'=>$classe],['classification'=>'ASC']);
+            $tabCategorie[] = ['categorie'=>$categorie,'grades'=>$grades];
+            }
+            $tabNiveau[] = ['niveau'=>$niveau,'tabCategorie'=>$tabCategorie];
+        }
+        $tabFinal = ['categories'=>$categories, 'tabNiveau'=>$tabNiveau];
+        
+        return count($tabNiveau)?$tabFinal:[];
+    }
+
+    /**
+     * @Rest\Post(Path="/create-batch/{id}", name="grade_new_batch")
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_GRADE_CREATE")
+     */
+    public function createBatch(Request $request, GNiveau $niveau) {
+        $reqData = Utils::getObjectFromRequest($request);
+       $entityManager = $this->getDoctrine()->getManager();
+       $categorie = $entityManager->getRepository(GCategorie::class)
+       ->find($reqData->categorieId);
+       $classe = $entityManager->getRepository(GClasse::class)
+       ->find($reqData->selectedClasseId);
+       $selectedEchelonIds = $reqData->selectedEchelonIds;
+       $echelons = $entityManager->createQuery('select e from App\Entity\GEchelon e
+        where e.id in (?1)')
+        ->setParameter(1,$selectedEchelonIds)
+        ->getResult();
+        foreach($echelons as $echelon) {
+            // check if element already rattchaed
+            $grade = $entityManager->getRepository(Grade::class)
+            ->findOneBy(['echelon'=>$echelon,'niveau'=>$niveau,
+            'categorie'=>$categorie,'classe'=>$classe]);
+            if($grade==NULL) {
+               // créer le grade
+               $grade = new Grade();
+               $grade->setEchelon($echelon);
+               $grade->setNiveau($niveau);
+               $grade->setCategorie($categorie);
+               $grade->setClasse($classe);
+               $grade->setClassification($this->generateClassificationCode($grade));
+               $entityManager->persist($grade);
+            }
+        }
+        // trouver les grades précédement rattachés dont les echelonIds ne sont pas dans selectedEchelonIds
+        $dropedGrades = $entityManager->createQuery('select g from App\Entity\Grade g 
+        JOIN g.echelon e where g.niveau=?1 and g.classe=?2 and g.categorie=?3 and e.id not in (?4)')
+        ->setParameter(1,$niveau)
+        ->setParameter(2,$classe)
+        ->setParameter(3,$categorie)
+        ->setParameter(4,$selectedEchelonIds)
+        ->getResult();
+        foreach($dropedGrades as $dropedGrade) {
+            $entityManager->remove($dropedGrade);
+        }
+        $entityManager->flush();
+
+            $grades = $this->getDoctrine()
+        ->getRepository(Grade::class)
+        ->findBy(['categorie'=>$categorie,'niveau'=>$niveau,'classe'=>$classe],['classification'=>'ASC']);
+
+      return $grades;
     }
 
     /**
@@ -120,5 +201,10 @@ class GradeController extends AbstractController
         $entityManager->flush();
 
         return $grades;
+    }
+
+    public function generateClassificationCode(Grade $grade) {
+        return $grade->getClasse()->getIndice().$grade->getCategorie()->getIndice()
+        .$grade->getNiveau()->getIndice().$grade->getEchelon()->getIndice();
     }
 }

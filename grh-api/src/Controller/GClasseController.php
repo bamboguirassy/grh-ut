@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\GClasse;
+use App\Entity\TypeEmploye;
 use App\Form\GClasseType;
 use App\Repository\GClasseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,6 +27,18 @@ class GClasseController extends AbstractController
     public function index(GClasseRepository $gClasseRepository): array
     {
         return $gClasseRepository->findAll();
+    }
+
+    /**
+     * @Rest\Get(path="/{id}/typeemploye", name="g_classe_type_employe")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_GCLASSE_INDEX")
+     */
+    public function findByEmploye(TypeEmploye $typeEmploye): array
+    {
+        return $this->getDoctrine()->getManager()
+        ->getRepository(GClasse::class)
+        ->findByTypeEmploye($typeEmploye);
     }
 
     /**

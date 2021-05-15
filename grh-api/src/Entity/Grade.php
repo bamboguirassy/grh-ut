@@ -46,6 +46,12 @@ class Grade
      */
     private $categorie;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=GClasse::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $classe;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -95,6 +101,18 @@ class Grade
     public function setCategorie(?GCategorie $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getClasse(): ?GClasse
+    {
+        return $this->classe;
+    }
+
+    public function setClasse(?GClasse $classe): self
+    {
+        $this->classe = $classe;
 
         return $this;
     }

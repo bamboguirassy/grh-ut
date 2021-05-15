@@ -1,0 +1,74 @@
+<nz-radio-group (ngModelChange)="findClassesByTypeEmploye($event)" [(ngModel)]="selectedTypeEmploye"
+    nzButtonStyle="solid">
+    <label *ngFor="let typeEmploye of typeEmployes" nz-radio-button [nzValue]="typeEmploye">{{typeEmploye.code}}</label>
+</nz-radio-group>
+<hr class="m-2">
+<nz-radio-group (ngModelChange)="handleClasseChange($event)" [(ngModel)]="selectedClasse">
+    <label *ngFor="let classe of classes" nz-radio [nzValue]="classe">{{classe.nom}}</label>
+</nz-radio-group>
+<hr class="m-2" *ngIf="selectedClasse">
+<tc-card view="accent" [outline]="true" *ngIf="selectedClasse && gClasseSrv.resourceName|creable">
+    <a (click)="startClasseEdit()">Paramétrer les categories et niveaux de <b>{{selectedClasse.nom}}</b></a>
+    <div class="row" *ngIf="isClasseEditing">
+        <div class="col-4">
+            <tc-form-group>
+                <tc-form-label>Categories</tc-form-label>
+                <nz-select (ngModelChange)="updateClasseModel($event)" style="width: 100%;"
+                    (nzOpenChange)="findCategories()" nzMode="multiple" nzPlaceHolder="Categories"
+                    [(ngModel)]="selectedCategorieIds">
+                    <nz-option *ngFor="let categorie of categories" [nzLabel]="categorie.nom" [nzValue]="categorie.id">
+                    </nz-option>
+                </nz-select>
+            </tc-form-group>
+        </div>
+        <div class="col-4">
+            <tc-form-group>
+                <tc-form-label>Niveaux</tc-form-label>
+                <nz-select (ngModelChange)="updateClasseModel()" style="width: 100%;" (nzOpenChange)="findNiveaux()"
+                    nzMode="multiple" nzPlaceHolder="Niveaux" [(ngModel)]="selectedNiveauIds">
+                    <nz-option *ngFor="let niveau of niveaux" [nzLabel]="niveau.nom" [nzValue]="niveau.id"></nz-option>
+                </nz-select>
+            </tc-form-group>
+        </div>
+        <div class="col-4">
+            <button [disabled]="!isClasseModelChanged" (click)="updateClasse()" [afterIcon]="'icofont-save'" tc-button
+                [view]="'accent'">
+                Enregistrer
+            </button>
+        </div>
+    </div>
+</tc-card>
+<hr class="m-2" *ngIf="selectedClasse">
+<table class="table" *ngIf="selectedClasse && gradeMap">
+    <thead>
+        <tr>
+            <th>Niveau/Categorie</th>
+            <th *ngFor="let categorie of gradeMap.categories">{{categorie.nom}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let tabNiveauItem of gradeMap.tabNiveau">
+            <th scope="row">{{tabNiveauItem.niveau.nom}}</th>
+            <td *ngFor="let tabCategorieItem of tabNiveauItem.tabCategorie">
+                <ng-container *ngIf="!tabCategorieItem.editEnabled">
+                    <i (click)="enabledEdit(tabCategorieItem)" class="icofont-ui-edit"
+                        *ngIf="gradeSrv.resourceName|creable"></i>
+                    <br>
+                    <div class="echelon-item mb-1" *ngFor="let grade of tabCategorieItem.grades">{{grade.echelon.nom}}</div>
+                </ng-container>
+                <ng-container *ngIf="tabCategorieItem.editEnabled">
+                    <nz-select [(ngModel)]="tabCategorieItem.selectedEchelons" style="width: 100%;" nzMode="multiple" nzPlaceHolder="Echelons">
+                        <nz-option *ngFor="let echelon of echelons" [nzLabel]="echelon.nom" [nzValue]="echelon.id">
+                        </nz-option>
+                    </nz-select>
+                    <hr class="m-1">
+                    <button (click)="updateGrades(tabNiveauItem.niveau,tabCategorieItem)" tc-button [afterIcon]="'icofont-save'" [view]="'accent'" [square]="true" [tcShape]="500"
+                        [size]="'sm'"></button>
+                    <button class="ml-1" (click)="disableEdit(tabCategorieItem)" tc-button [afterIcon]="'icofont-close'" [view]="'error'" [square]="true" [tcShape]="500"
+                        [size]="'sm'"></button>
+                </ng-container>
+
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -161,6 +161,8 @@ import { UserListComponent } from './parametrage/user/user-list/user-list.compon
 import { UserNewComponent } from './parametrage/user/user-new/user-new.component';
 import { UserShowComponent } from './parametrage/user/user-show/user-show.component';
 import { NgPipesModule } from 'ng-pipes';
+import { GradeManagerComponent } from './gestiongrade/grade/grade-manager/grade-manager.component';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 
 
@@ -215,7 +217,8 @@ import { NgPipesModule } from 'ng-pipes';
     SharedModule,
     NgxOrgChartModule,
     // imports all pipes module
-    NgPipesModule
+    NgPipesModule,
+    NzRadioModule
 
   ],
   declarations: [
@@ -375,7 +378,8 @@ import { NgPipesModule } from 'ng-pipes';
 
     //structure fonction
     StructureFonctionListComponent,
-    StructureFonctionNewComponent
+    StructureFonctionNewComponent,
+    GradeManagerComponent
   ],
   exports: [],
   entryComponents: []

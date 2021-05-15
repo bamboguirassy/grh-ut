@@ -46,7 +46,7 @@
 
           <tc-form-group>
             <tc-form-label>Précédente</tc-form-label>
-            <nz-select style="width: 100%" nzPlaceHolder="Sélectionner suivant" nzAllowClear nzShowSearch
+            <nz-select (nzOpenChange)="findNiveaux()" style="width: 100%" nzPlaceHolder="Sélectionner suivant" nzAllowClear nzShowSearch
               [(ngModel)]="selectedNiveauId" name="niveau" id="niveau" #niveau="ngModel">
               <ng-container *ngFor="let niv of niveaux">
                 <nz-option [nzValue]="niv.id" [nzLabel]="niv.nom"></nz-option>
