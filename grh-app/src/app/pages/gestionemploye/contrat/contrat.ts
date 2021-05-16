@@ -11,4 +11,6 @@ export class Contrat extends BamboAbstractObject {
     employe: Employe;
     dateCreation: string;
     dateSignature: string;
+    dateDebut: string;
+    dateFin: any;
 }

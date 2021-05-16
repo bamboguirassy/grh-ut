@@ -42,8 +42,17 @@ export class ContratNewComponent implements OnInit {
       this.entity.motifRupture=null;
       this.entity.dateRupture=null;
     }
+    if (this.entity.dateDebut && this.entity.dureeEnMois){
+      const dateDeb= new Date(this.entity.dateDebut);
+      let dateFin =  dateDeb.setMonth(dateDeb.getMonth() + this.entity.dureeEnMois);
+      this.entity.dateFin =dateFin;
+      
+    }
     if(this.entity.typeContrat.code=='CDI'){
       this.entity.dureeEnMois=null;
+    }
+    if(this.entity.typeContrat.code=='CDI'){
+      this.entity.dateFin=null;
     }
     if (this.entity.dateRupture) {
       this.entity.dateRupture = this.datePipe.transform(this.entity.dateRupture, 'yyyy-MM-dd');
@@ -51,13 +60,24 @@ export class ContratNewComponent implements OnInit {
     if (this.entity.dateSignature) {
       this.entity.dateSignature = this.datePipe.transform(this.entity.dateSignature, 'yyyy-MM-dd');
     }
+    if (this.entity.dateDebut) {
+      this.entity.dateDebut = this.datePipe.transform(this.entity.dateDebut, 'yyyy-MM-dd');
+    }
+    if (this.entity.dateFin) {
+      this.entity.dateFin = this.datePipe.transform(this.entity.dateFin, 'yyyy-MM-dd');
+    }
     this.contratSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
         this.creation.emit(data);
+        this.selectedTypeContrat=null;
         this.entity = new Contrat();
       }, error => this.contratSrv.httpSrv.catchError(error));
     
+  }
+
+  initNewContrat() {
+    this.entity = new Contrat();
   }
 
   // open modal window

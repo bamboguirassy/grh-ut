@@ -15,7 +15,7 @@
                             nzShowSearch [(ngModel)]="selectedTypeContrat" name="typeContrat" id="typeContrat"
                             #typeContrat="ngModel">
                             <ng-container *ngFor="let typeContratItem of typeContrats">
-                                <nz-option [nzValue]="typeContratItem" [nzLabel]="typeContratItem.code"></nz-option>
+                                <nz-option [nzValue]="typeContratItem" [nzLabel]="typeContratItem.nom"></nz-option>
                             </ng-container>
                         </nz-select>
                         <tc-form-description>
@@ -24,10 +24,21 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Date de début</tc-form-label>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateDebut"
+                            name="dateDebut" id="dateDebut" #dateDebut="ngModel"></nz-date-picker>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="dateDebut">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
                 <div class="col-12 col-md-6" *ngIf="selectedTypeContrat?.code !='CDI' ">
                     <tc-form-group>
-                        <tc-form-label>Duree en mois</tc-form-label>
-                        <tc-input [(ngModel)]="entity.dureeEnMois" name="dureeEnMois" id="dureeEnMois"
+                        <tc-form-label>Durée en mois</tc-form-label>
+                        <tc-input type="number" [(ngModel)]="entity.dureeEnMois" name="dureeEnMois" id="dureeEnMois"
                             #dureeEnMois="ngModel"></tc-input>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="dureeEnMois">
@@ -35,9 +46,20 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
+                <div class="col-12 col-md-6"  *ngIf="selectedTypeContrat?.code !='CDI' ">
+                    <tc-form-group>
+                        <tc-form-label>Date Fin</tc-form-label>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateFin"
+                            name="dateFin" id="dateFin" #dateFin="ngModel" disabled></nz-date-picker>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="dateFin">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
                 <div class="col-12 col-md-6">
                     <tc-form-group>
-                        <tc-form-label>Date de siganture</tc-form-label>
+                        <tc-form-label>Date de signature</tc-form-label>
                         <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateSignature"
                             name="dateSignature" id="dateSignature" #dateSignature="ngModel"></nz-date-picker>
                         <tc-form-description>
