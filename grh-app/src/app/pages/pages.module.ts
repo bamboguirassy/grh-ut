@@ -198,7 +198,6 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     NzCarouselModule,
     NzCollapseModule,
     NzDatePickerModule,
-    NzDescriptionsModule,
     NzDividerModule,
     NzDropDownModule,
     NzEmptyModule,

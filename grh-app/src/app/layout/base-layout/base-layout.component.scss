@@ -22,7 +22,7 @@
         min-height: calc(100% - #{$module-rem * 4});
         margin: 0 auto;
         opacity: 0;
-        padding: ($module-rem * 3) ($module-rem * 2) ($module-rem * 4);
+        padding: ($module-rem) ($module-rem * 2) ($module-rem * 4);
         transition: .2s opacity 0s $animation;
 
         &.full-filled {
@@ -38,7 +38,7 @@
           .page-title {
             color: rgba(main-palette(500),.5);
             font-size: 2rem;
-            margin: 0 0 ($module-rem * 2);
+            margin: 0 0 0;
           }
           .page-breadcrumbs {
             color: rgba(main-palette(500),.5);
