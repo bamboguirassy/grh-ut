@@ -3,11 +3,12 @@ import { TypeContrat } from './../../parametrage/typecontrat/typecontrat';
 import { Employe } from './../../gestionemploye/employe/employe'
 export class Contrat extends BamboAbstractObject {
     dureeEnMois: number;
-    etat: boolean;
     dateRupture: string;
     motifRupture: string;
     expire: boolean;
     rompu: boolean;
     typeContrat: TypeContrat;
     employe: Employe;
+    dateCreation: string;
+    dateSignature: string;
 }

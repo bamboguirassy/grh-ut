@@ -2,7 +2,8 @@
   <tc-card [view]="secondViewBorder" [outline]="true">
     <div class="row">
       <div class="col-12">
-        <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
+        <app-contrat-new (creation)="onCreate($event)" [employe]="employe"></app-contrat-new>
+        <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findByEmploye()">Rafraichir</button>
       </div>
     </div>
   </tc-card>
@@ -12,58 +13,65 @@
         <i class="icofont-data icofont-2x"></i>
       </ng-template>
     </tc-table-col>
-                                    <tc-table-col [columnTitle]="'DureeEnMois'" [columnName]="'dureeEnMois'" [enableSorting]="true">
-                <ng-template #tableTDTemplate let-value>
-                    <span class="nowrap" *ngIf="value">{{ value }}</span>
-                    <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-                </ng-template>
-            </tc-table-col>
-                                <tc-table-col [columnTitle]="'Etat'" [columnName]="'etat'" [enableSorting]="true">
-                <ng-template #tableTDTemplate let-value>
-                    <span class="nowrap" *ngIf="value">{{ value }}</span>
-                    <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-                </ng-template>
-            </tc-table-col>
-                                <tc-table-col [columnTitle]="'DateRupture'" [columnName]="'dateRupture'" [enableSorting]="true">
-                <ng-template #tableTDTemplate let-value>
-                    <span class="nowrap" *ngIf="value">{{ value }}</span>
-                    <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-                </ng-template>
-            </tc-table-col>
-                                <tc-table-col [columnTitle]="'MotifRupture'" [columnName]="'motifRupture'" [enableSorting]="true">
-                <ng-template #tableTDTemplate let-value>
-                    <span class="nowrap" *ngIf="value">{{ value }}</span>
-                    <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-                </ng-template>
-            </tc-table-col>
-                                <tc-table-col [columnTitle]="'Expire'" [columnName]="'expire'" [enableSorting]="true">
-                <ng-template #tableTDTemplate let-value>
-                    <span class="nowrap" *ngIf="value">{{ value }}</span>
-                    <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-                </ng-template>
-            </tc-table-col>
-                                <tc-table-col [columnTitle]="'Rompu'" [columnName]="'rompu'" [enableSorting]="true">
-                <ng-template #tableTDTemplate let-value>
-                    <span class="nowrap" *ngIf="value">{{ value }}</span>
-                    <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-                </ng-template>
-            </tc-table-col>
-                <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+    <tc-table-col [columnTitle]="'Duree en mois'" [columnName]="'dureeEnMois'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap" *ngIf="value">{{ value }}</span>
+        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Type contrat'" [columnName]="'typeContrat'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap" *ngIf="value" title="{{ value?.nom }}">{{ value?.code }}</span>
+        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Date Creation'" [columnName]="'dateCreation'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
+        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Date Signature'" [columnName]="'dateSignature'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
+        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Expire'" [columnName]="'expire'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap" *ngIf="value">{{ value }}</span>
+        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Rompu'" [columnName]="'rompu'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap" *ngIf="value">{{ value }}</span>
+        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'DateRupture'" [columnName]="'dateRupture'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
+        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'MotifRupture'" [columnName]="'motifRupture'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap" *ngIf="value">{{ value }}</span>
+        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
       <ng-template #tableTDTemplate let-row="row">
         <div class="actions">
-          <button *ngIf="contratSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'" [square]="true" [tcShape]="500"
-            [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-          <button *ngIf="contratSrv.resourceName|clonable" [outline]="true" tc-button [afterIcon]="'icofont-copy'" [square]="true" [tcShape]="500"
-            [size]="'sm'" [routerLink]="[row.id,'clone']"></button>
-          <button *ngIf="contratSrv.resourceName|deletable" (click)="remove(row)" tc-button [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
-            [size]="'sm'"></button>
-          <button *ngIf="contratSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'" [view]="'accent'" [square]="true" [tcShape]="500"
-            [size]="'sm'" [routerLink]="[row.id]"></button>
+          <button *ngIf="contratSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'"
+            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
+          <button *ngIf="contratSrv.resourceName|deletable" (click)="remove(row)" tc-button
+            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
         </div>
       </ng-template>
     </tc-table-col>
   </tc-table>
-  <app-empty-table-message *ngIf="!items.length" ></app-empty-table-message>
-  <app-contrat-new (creation)="onCreate($event)"></app-contrat-new>
+  <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
 </tc-card>
 <app-access-denied *ngIf="!(contratSrv.resourceName|listable)"></app-access-denied>

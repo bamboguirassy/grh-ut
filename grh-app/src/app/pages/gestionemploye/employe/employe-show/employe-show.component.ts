@@ -36,6 +36,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   isFonctionsLoaded = false;
   isGradeLoaded = false;
   isDiplomeLoaded = false;
+  isContratLoaded = false;
 
   constructor(store: Store<IAppState>,
     public employeSrv: EmployeService, public fonctionEmployeSrv: FonctionEmployeService,
@@ -51,7 +52,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
           route: ''
         },
         {
-          title: 'Employés',
+          title: 'Liste des employés',
           route: '/'+this.orientation+'/employe'
         },
         {
@@ -139,6 +140,9 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
 
   loadDiplomesTab(){
     this.isDiplomeLoaded = true;
+  }
+  loadContratsTab(){
+    this.isContratLoaded = true;
   }
 
 }

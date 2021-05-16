@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Utils\Utils;
+use PhpParser\Node\Expr\AssignOp\Concat;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
@@ -33,10 +34,18 @@ class ContratController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CONTRAT_CREATE")
      */
-    public function create(Request $request): Contrat    {
+    public function create(Request $request): Contrat
+    {
         $contrat = new Contrat();
+        $contrat->setDateCreation(new \DateTime('now'));
         $form = $this->createForm(ContratType::class, $contrat);
         $form->submit(Utils::serializeRequestContent($request));
+        $reqData = Utils::getObjectFromRequest($request);
+        if (isset($reqData->dateSignature)) {
+            $contrat->setDateSignature(new \DateTime($reqData->dateSignature));
+        } if (isset($reqData->dateRupture)) {
+            $contrat->setDateRupture(new \DateTime($reqData->dateRupture));
+        }
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($contrat);
@@ -50,7 +59,8 @@ class ContratController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CONTRAT_SHOW")
      */
-    public function show(Contrat $contrat): Contrat    {
+    public function show(Contrat $contrat): Contrat
+    {
         return $contrat;
     }
 
@@ -60,7 +70,8 @@ class ContratController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CONTRAT_EDIT")
      */
-    public function edit(Request $request, Contrat $contrat): Contrat    {
+    public function edit(Request $request, Contrat $contrat): Contrat
+    {
         $form = $this->createForm(ContratType::class, $contrat);
         $form->submit(Utils::serializeRequestContent($request));
 
@@ -74,7 +85,8 @@ class ContratController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CONTRAT_CLONE")
      */
-    public function cloner(Request $request, Contrat $contrat):  Contrat {
+    public function cloner(Request $request, Contrat $contrat):  Contrat
+    {
         $em=$this->getDoctrine()->getManager();
         $contratNew=new Contrat();
         $form = $this->createForm(ContratType::class, $contratNew);
@@ -91,7 +103,8 @@ class ContratController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CONTRAT_EDIT")
      */
-    public function delete(Contrat $contrat): Contrat    {
+    public function delete(Contrat $contrat): Contrat
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($contrat);
         $entityManager->flush();
@@ -104,7 +117,8 @@ class ContratController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CONTRAT_DELETE")
      */
-    public function deleteMultiple(Request $request): array {
+    public function deleteMultiple(Request $request): array
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $contrats = Utils::getObjectFromRequest($request);
         if (!count($contrats)) {
@@ -116,6 +130,19 @@ class ContratController extends AbstractController
         }
         $entityManager->flush();
 
+        return $contrats;
+    }
+    /**
+    * @Rest\Get(path="/{id}/employe", name="contrat_employe")
+    * @Rest\View(StatusCode = 200)
+    * @IsGranted("ROLE_CONTRAT_INDEX")
+    */
+    public function findByEmploye(\App\Entity\Employe $employe): array
+    {
+        $contrats = $this->getDoctrine()
+            ->getRepository(Contrat::class)
+            ->findByEmploye($employe);
+            
         return $contrats;
     }
 }
