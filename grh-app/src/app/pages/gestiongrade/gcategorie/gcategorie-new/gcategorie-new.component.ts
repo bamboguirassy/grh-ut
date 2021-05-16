@@ -25,7 +25,6 @@ export class GCategorieNewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.findCategories();
   }
 
   save() {

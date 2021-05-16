@@ -37,12 +37,10 @@ export class GClasseNewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.findClasses();
     this.findTypeEmployes();
   }
 
   save() {
-
     this.entity.suivant = this.selectedClasseId;
     this.entity.typeEmploye = this.selectedTypeEmployeId;
     this.gClasseSrv.create(this.entity)
@@ -64,7 +62,7 @@ export class GClasseNewComponent implements OnInit {
   }
 
    findClasses() {
-    this.gClasseSrv.findNonSuivants()
+    this.gClasseSrv.findAll()
       .subscribe((data: any) => {
         this.classes = data;
       }, err => this.gClasseSrv.httpSrv.catchError(err));

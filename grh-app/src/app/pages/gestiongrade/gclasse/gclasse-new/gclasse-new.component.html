@@ -44,7 +44,7 @@
         <div class="col-12  col-md-6">
           <tc-form-group>
             <tc-form-label>Précédente</tc-form-label>
-            <nz-select style="width: 100%" nzPlaceHolder="Sélectionner la classe" nzAllowClear nzShowSearch
+            <nz-select (nzOpenChange)="findClasses()" style="width: 100%" nzPlaceHolder="Sélectionner la classe" nzAllowClear nzShowSearch
               [(ngModel)]="selectedClasseId" name="classe" id="classe" #classe="ngModel">
               <ng-container *ngFor="let classeItem of classes">
                 <nz-option [nzValue]="classeItem.id" [nzLabel]="classeItem.nom"></nz-option>

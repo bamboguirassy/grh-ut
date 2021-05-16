@@ -103,6 +103,19 @@ class GradeController extends AbstractController
         foreach($dropedGrades as $dropedGrade) {
             $entityManager->remove($dropedGrade);
         }
+        // if echelons vide (signifie qu'on supprime tout)
+        if(!$selectedEchelonIds) {
+            // trouver les grades précédement rattachés dont les echelonIds ne sont pas dans selectedEchelonIds
+        $dropedGrades = $entityManager->createQuery('select g from App\Entity\Grade g 
+        JOIN g.echelon e where g.niveau=?1 and g.classe=?2 and g.categorie=?3')
+        ->setParameter(1,$niveau)
+        ->setParameter(2,$classe)
+        ->setParameter(3,$categorie)
+        ->getResult();
+        foreach($dropedGrades as $dropedGrade) {
+            $entityManager->remove($dropedGrade);
+        }
+        }
         $entityManager->flush();
 
             $grades = $this->getDoctrine()
