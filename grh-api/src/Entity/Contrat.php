@@ -64,6 +64,16 @@ class Contrat
      */
     private $dateSignature;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateDebut;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateFin;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -185,6 +195,30 @@ class Contrat
     public function setDateSignature($dateSignature): self
     {
         $this->dateSignature = $dateSignature;
+
+        return $this;
+    }
+
+    public function getDateDebut()
+    {
+        return $this->dateDebut;
+    }
+
+    public function setDateDebut($dateDebut): self
+    {
+        $this->dateDebut = $dateDebut;
+
+        return $this;
+    }
+
+    public function getDateFin()
+    {
+        return $this->dateFin;
+    }
+
+    public function setDateFin($dateFin): self
+    {
+        $this->dateFin = $dateFin;
 
         return $this;
     }

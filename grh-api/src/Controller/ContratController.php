@@ -43,7 +43,14 @@ class ContratController extends AbstractController
         $reqData = Utils::getObjectFromRequest($request);
         if (isset($reqData->dateSignature)) {
             $contrat->setDateSignature(new \DateTime($reqData->dateSignature));
-        } if (isset($reqData->dateRupture)) {
+        }
+        if (isset($reqData->dateDebut)) {
+            $contrat->setDateDebut(new \DateTime($reqData->dateDebut));
+        }
+        if (isset($reqData->dateFin)) {
+            $contrat->setDateFin(new \DateTime($reqData->dateFin));
+        }
+        if (isset($reqData->dateRupture)) {
             $contrat->setDateRupture(new \DateTime($reqData->dateRupture));
         }
 

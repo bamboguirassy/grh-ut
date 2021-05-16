@@ -15,6 +15,8 @@ class ContratType extends AbstractType
             ->add('dureeEnMois')
             ->add('dateRupture')
             ->add('dateSignature')
+            ->add('dateDebut')
+            ->add('dateFin')
             ->add('motifRupture')
             ->add('expire')
             ->add('rompu')

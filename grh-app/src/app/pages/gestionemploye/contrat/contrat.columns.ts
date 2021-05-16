@@ -6,6 +6,7 @@ const contratColumns = [
             { header: 'Rompu', field: 'rompu', dataKey: 'rompu' },
             { header: 'DateCreation', field: 'dateCreation', dataKey: 'dateCreation' },
             { header: 'DateSignature', field: 'dateSignature', dataKey: 'dateSignature' },
+            { header: 'DateDebut', field: 'dateDebut', dataKey: 'dateDebut' },
         ];
 
 const allowedContratFieldsForFilter = [
@@ -16,6 +17,7 @@ const allowedContratFieldsForFilter = [
     'rompu',
     'dateCreation',
     'dateSignature',
+    'dateDebut',
     
 ];
 
