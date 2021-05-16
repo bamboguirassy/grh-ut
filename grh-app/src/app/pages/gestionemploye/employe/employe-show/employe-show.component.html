@@ -33,11 +33,12 @@
                         <button *ngIf="employeSrv.resourceName|editable"
                             [routerLink]="['/'+orientation,employeSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
                             class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
-                        <button (click)="remove(entity)" *ngIf="employeSrv.resourceName|deletable" tc-button view="error"
-                            beforeIcon="icofont-trash" class=" float-right ml-1"></button>
+                        <button (click)="remove(entity)" *ngIf="employeSrv.resourceName|deletable" tc-button
+                            view="error" beforeIcon="icofont-trash" class=" float-right ml-1"></button>
                         <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
                             beforeIcon="icofont-refresh"></button>
-                        <button tc-button class="float-right" (click)="location.back()" beforeIcon="icofont-reply"></button>
+                        <button tc-button class="float-right" (click)="location.back()"
+                            beforeIcon="icofont-reply"></button>
                     </div>
                     <!-- <div class="row">
                         <div class="col-12">
@@ -109,7 +110,7 @@
     <div class="col-12"></div>
 </div>
 
- <tc-card *ngIf="employeSrv.resourceName|showable" [tcGradient]="lightGradient">
+<tc-card *ngIf="employeSrv.resourceName|showable" [tcGradient]="lightGradient">
     <!-- <tc-card [outline]="true" [view]="secondViewBorder" [tcGradient]="secondGradient" [padding]="0.5">
         <div class="row">
              <form 
@@ -258,8 +259,6 @@
                                         <a href="mailto:{{entity?.emailUniv}}">{{entity?.emailUniv}}</a></span>
                                     <tc-badge view="error" *ngIf="!entity?.emailUniv">Indéfinie</tc-badge>
                                 </td>
-                            </tr>
-                            <tr>
                                 <th>Email Personnel</th>
                                 <td>
                                     <span *ngIf="entity?.email">
@@ -277,8 +276,6 @@
                                     </span>
                                     <tc-badge view="error" *ngIf="!entity?.telephonePrimaire">Indéfinie</tc-badge>
                                 </td>
-                            </tr>
-                            <tr>
                                 <th>Téléphone Secondaire</th>
                                 <td>
                                     <span *ngIf="entity?.telephoneSecondaire">
@@ -299,8 +296,6 @@
                                         }}</span>
                                     <tc-badge view="error" *ngIf="!entity?.situtationMatrimoniale">Indéfinie</tc-badge>
                                 </td>
-                            </tr>
-                            <tr>
                                 <th>Matricule Caisse Sociale</th>
                                 <td>
                                     <span *ngIf="entity?.matriculeCaisseSociale">{{ entity?.matriculeCaisseSociale
@@ -314,8 +309,6 @@
                                     <span *ngIf="entity?.caisseSociale">{{ entity?.caisseSociale?.nom }}</span>
                                     <tc-badge view="error" *ngIf="!entity?.caisseSociale">Indéfinie</tc-badge>
                                 </td>
-                            </tr>
-                            <tr>
                                 <th>Mutuelle de Santé</th>
                                 <td>
                                     <span *ngIf="entity?.mutuelleSante">{{ entity?.mutuelleSante?.nom }}</span>
@@ -328,8 +321,6 @@
                                     <span *ngIf="entity?.numeroMainOeuvre">{{ entity?.numeroMainOeuvre }}</span>
                                     <tc-badge view="error" *ngIf="!entity?.numeroMainOeuvre">Indéfinie</tc-badge>
                                 </td>
-                            </tr>
-                            <tr>
                                 <th>Numéro Affiliation Iprès</th>
                                 <td>
                                     <span *ngIf="entity?.numeroAffiliationIpres">{{ entity?.numeroAffiliationIpres
