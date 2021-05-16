@@ -24,7 +24,7 @@
         <div class="col-4">
             <tc-form-group>
                 <tc-form-label>Niveaux</tc-form-label>
-                <nz-select (ngModelChange)="updateClasseModel()" style="width: 100%;" (nzOpenChange)="findNiveaux()"
+                <nz-select (ngModelChange)="updateClasseModel($event)" style="width: 100%;" (nzOpenChange)="findNiveaux()"
                     nzMode="multiple" nzPlaceHolder="Niveaux" [(ngModel)]="selectedNiveauIds">
                     <nz-option *ngFor="let niveau of niveaux" [nzLabel]="niveau.nom" [nzValue]="niveau.id"></nz-option>
                 </nz-select>
