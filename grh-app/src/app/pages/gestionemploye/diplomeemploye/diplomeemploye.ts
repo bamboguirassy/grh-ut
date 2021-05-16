@@ -8,4 +8,6 @@ export class DiplomeEmploye extends BamboAbstractObject {
     etablissement: string;
     employe: Employe;
     formation: string;
+    statutFormation: string;
+    commentaire: string;
 }

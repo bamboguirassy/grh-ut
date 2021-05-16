@@ -9,6 +9,12 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class DiplomeEmployeService extends BamboAbstractService {
 
+  statutFormations: any[] = [
+    { label: 'En cours', color: 'orange' },
+    { label: 'Suspendue', color: '#E8273A' },
+    { label: 'Terminée', color: 'green' }
+  ];
+
   constructor(public httpSrv: BamboHttpService, public toastr: ToastrService) {
     super(httpSrv, toastr);
     this.routePrefix = 'diplomeemploye/';
@@ -18,5 +24,5 @@ export class DiplomeEmployeService extends BamboAbstractService {
   findByEmploye(employe: Employe) {
     return this.httpSrv.get(this.routePrefix + employe.id + '/employe');
   }
-  
+
 }

@@ -9,9 +9,14 @@
     </div>
   </tc-card>
   <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-    <tc-table-col [columnTitle]="'#'" [columnName]="'#'">
+    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
       <ng-template #tableTDTemplate let-row="row">
-        <i class="icofont-data icofont-2x"></i>
+        <div class="actions">
+          <button *ngIf="diplomeEmployeSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" (click)="setSelectedDiplome(row)"></button>
+          <button *ngIf="diplomeEmployeSrv.resourceName|deletable" (click)="remove(row)" tc-button
+            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+        </div>
       </ng-template>
     </tc-table-col>
     <tc-table-col [columnTitle]="'Diplome'" [columnName]="'diplome'" [enableSorting]="true">
@@ -23,6 +28,14 @@
     <tc-table-col [columnTitle]="'Formation'" [columnName]="'formation'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <span class="nowrap" *ngIf="value">{{ value }}</span>
+        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Statut'" [columnName]="'statutFormation'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <ng-container *ngIf="value">
+          <span class="nowrap badge" [ngClass]="{'badge-warning': value=='En cours', 'badge-danger':value=='Suspendue','badge-success':value=='Terminée'}">{{ value }}</span>
+        </ng-container>
         <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
       </ng-template>
     </tc-table-col>
@@ -38,14 +51,10 @@
         <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-      <ng-template #tableTDTemplate let-row="row">
-        <div class="actions">
-          <button *ngIf="diplomeEmployeSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" (click)="setSelectedDiplome(row)"></button>
-          <button *ngIf="diplomeEmployeSrv.resourceName|deletable" (click)="remove(row)" tc-button
-            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-        </div>
+    <tc-table-col [columnTitle]="'Commentaire'" [columnName]="'commentaire'">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap" *ngIf="value">{{ value }}</span>
+        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
       </ng-template>
     </tc-table-col>
   </tc-table>
