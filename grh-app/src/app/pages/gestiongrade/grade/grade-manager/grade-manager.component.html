@@ -1,6 +1,8 @@
-<nz-radio-group (ngModelChange)="findClassesByTypeEmploye($event)" [(ngModel)]="selectedTypeEmploye"
+<nz-radio-group (ngModelChange)="handleTypeEmployeChange($event)" [(ngModel)]="selectedTypeEmploye"
     nzButtonStyle="solid">
-    <label *ngFor="let typeEmploye of typeEmployes" nz-radio-button [nzValue]="typeEmploye">{{typeEmploye.code}}</label>
+    <ng-container *ngFor="let typeEmploye of typeEmployes">
+        <label *ngIf="typeEmployePrisEnCharges|contains:typeEmploye.code" nz-radio-button [nzValue]="typeEmploye">{{typeEmploye.code}}</label>
+    </ng-container>
 </nz-radio-group>
 <hr class="m-2">
 <nz-radio-group (ngModelChange)="handleClasseChange($event)" [(ngModel)]="selectedClasse">
@@ -24,8 +26,9 @@
         <div class="col-4">
             <tc-form-group>
                 <tc-form-label>Niveaux</tc-form-label>
-                <nz-select (ngModelChange)="updateClasseModel($event)" style="width: 100%;" (nzOpenChange)="findNiveaux()"
-                    nzMode="multiple" nzPlaceHolder="Niveaux" [(ngModel)]="selectedNiveauIds">
+                <nz-select (ngModelChange)="updateClasseModel($event)" style="width: 100%;"
+                    (nzOpenChange)="findNiveaux()" nzMode="multiple" nzPlaceHolder="Niveaux"
+                    [(ngModel)]="selectedNiveauIds">
                     <nz-option *ngFor="let niveau of niveaux" [nzLabel]="niveau.nom" [nzValue]="niveau.id"></nz-option>
                 </nz-select>
             </tc-form-group>
@@ -54,18 +57,27 @@
                     <i (click)="enabledEdit(tabCategorieItem)" class="icofont-ui-edit"
                         *ngIf="gradeSrv.resourceName|creable"></i>
                     <br>
-                    <div class="echelon-item mb-1" *ngFor="let grade of tabCategorieItem.grades">{{grade.echelon.nom}}</div>
+                    <div class="echelon-item mb-1" *ngFor="let grade of tabCategorieItem.grades">
+                        {{grade.echelon.nom}}
+                        <span *ngIf="!grade.editable && selectedClasse?.typeEmploye?.code=='PER'" class="badge"
+                            [ngStyle]="{'background-color': sidebarBg}">
+                            ({{grade.classification}}) <i class="icofont-edit-alt" (click)="grade.editable=true"></i>
+                        </span>
+                        <input style="width: 100px;" type="text" *ngIf="grade.editable" [(ngModel)]="grade.classification" (keyup.enter)="updateGrade(grade)">
+                    </div>
                 </ng-container>
                 <ng-container *ngIf="tabCategorieItem.editEnabled">
-                    <nz-select [(ngModel)]="tabCategorieItem.selectedEchelons" style="width: 100%;" nzMode="multiple" nzPlaceHolder="Echelons">
+                    <nz-select [(ngModel)]="tabCategorieItem.selectedEchelons" style="width: 100%;" nzMode="multiple"
+                        nzPlaceHolder="Echelons">
                         <nz-option *ngFor="let echelon of echelons" [nzLabel]="echelon.nom" [nzValue]="echelon.id">
                         </nz-option>
                     </nz-select>
                     <hr class="m-1">
-                    <button (click)="updateGrades(tabNiveauItem.niveau,tabCategorieItem)" tc-button [afterIcon]="'icofont-save'" [view]="'accent'" [square]="true" [tcShape]="500"
+                    <button (click)="updateGrades(tabNiveauItem.niveau,tabCategorieItem)" tc-button
+                        [afterIcon]="'icofont-save'" [view]="'accent'" [square]="true" [tcShape]="500"
                         [size]="'sm'"></button>
-                    <button class="ml-1" (click)="disableEdit(tabCategorieItem)" tc-button [afterIcon]="'icofont-close'" [view]="'error'" [square]="true" [tcShape]="500"
-                        [size]="'sm'"></button>
+                    <button class="ml-1" (click)="disableEdit(tabCategorieItem)" tc-button [afterIcon]="'icofont-close'"
+                        [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
                 </ng-container>
 
             </td>

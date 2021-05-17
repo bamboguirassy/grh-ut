@@ -34,6 +34,7 @@ export class GradeManagerComponent extends BasePageComponent<Grade> implements O
   isClasseModelChanged = false;
   selectedCategorieIds = [];
   selectedNiveauIds = [];
+  typeEmployePrisEnCharges = ['PATS', 'PER'];
 
   constructor(store: Store<IAppState>,
     public gradeSrv: GradeService,
@@ -67,8 +68,15 @@ export class GradeManagerComponent extends BasePageComponent<Grade> implements O
     this.typeEmployeSrv.findAll()
       .subscribe((data: any) => {
         this.typeEmployes = data;
+        this.selectedTypeEmploye = this.typeEmployes.find(typeEmploye => { return typeEmploye.code == 'PATS' });
+        this.findClassesByTypeEmploye(this.selectedTypeEmploye);
         this.setLoaded();
       }, err => this.typeEmployeSrv.httpSrv.catchError(err));
+  }
+
+  handleTypeEmployeChange(typeEmploye) {
+    this.gradeMap = null;
+    this.findClassesByTypeEmploye(typeEmploye);
   }
 
   findClassesByTypeEmploye(typeEmploye: TypeEmploye) {
@@ -153,6 +161,13 @@ export class GradeManagerComponent extends BasePageComponent<Grade> implements O
       .subscribe(data => {
         this.disableEdit(tabCategorieItem);
         tabCategorieItem.grades = data;
+      }, err => this.gradeSrv.httpSrv.catchError(err));
+  }
+
+  updateGrade(grade) {
+    this.gradeSrv.update(grade)
+      .subscribe(() => {
+        grade.editable = false;
       }, err => this.gradeSrv.httpSrv.catchError(err));
   }
 
