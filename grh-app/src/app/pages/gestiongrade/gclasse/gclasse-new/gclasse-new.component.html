@@ -56,21 +56,6 @@
             </tc-form-description>
           </tc-form-group>
         </div>
-        <div class="col-12  col-md-6">
-          <tc-form-group>
-            <tc-form-label>Type employé</tc-form-label>
-            <nz-select required="required" style="width: 100%" nzPlaceHolder="Sélectionner le type d'employé" nzAllowClear nzShowSearch
-              [(ngModel)]="selectedTypeEmployeId" name="typeEmploye" id="typeEmploye" #typeEmploye="ngModel">
-              <ng-container *ngFor="let typeEmployeItem of typeEmployes">
-                <nz-option [nzValue]="typeEmployeItem.id" [nzLabel]="typeEmployeItem.nom"></nz-option>
-              </ng-container>
-            </nz-select>
-            <tc-form-description>
-              <app-form-field-validation-message [formField]="typeEmploye">
-              </app-form-field-validation-message>
-            </tc-form-description>
-          </tc-form-group>
-        </div>
       </div>
     </form>
   </ng-template>
@@ -81,7 +66,7 @@
         (click)="closeModal()">Fermer</button>
       <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
         tc-button [view]="'accent'">
-        Enregistrer
+        Enregistrers
       </button>
     </div>
   </ng-template>
