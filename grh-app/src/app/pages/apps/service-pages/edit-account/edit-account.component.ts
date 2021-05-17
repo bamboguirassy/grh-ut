@@ -1,13 +1,13 @@
-import { UserService } from './../../../parametrage/user/user.service';
-import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
-import { User } from 'src/app/pages/parametrage/user/user';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BasePageComponent } from '../../../base-page';
 import { Store } from '@ngrx/store';
 import { IAppState } from '../../../../interfaces/app-state';
 import { HttpService } from '../../../../services/http/http.service';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IOption } from '../../../../ui/interfaces/option';
+import { User } from 'src/app/pages/parametrage/user/user';
+import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
+import { UserService } from 'src/app/pages/parametrage/user/user.service';
 
 @Component({
   selector: 'page-edit-account',
@@ -15,6 +15,7 @@ import { IOption } from '../../../../ui/interfaces/option';
   styleUrls: ['./edit-account.component.scss']
 })
 export class PageEditAccountComponent extends BasePageComponent<User> implements OnInit, OnDestroy {
+  userInfo: any;
   userForm: FormGroup;
   gender: IOption[];
   status: IOption[];
@@ -23,9 +24,11 @@ export class PageEditAccountComponent extends BasePageComponent<User> implements
   changes: boolean;
   passwordModel = { oldPassword: null, newPassword: null, confirmPassword: null };
 
+
   constructor(
     store: Store<IAppState>,
     private formBuilder: FormBuilder,
+    
     public authSrv: BamboAuthService,
     public userSrv: UserService
   ) {
@@ -87,6 +90,13 @@ export class PageEditAccountComponent extends BasePageComponent<User> implements
 
   ngOnDestroy() {
     super.ngOnDestroy();
+  }
+
+  loadedDetect() {
+    this.setLoaded();
+
+    this.currentAvatar = this.userInfo.img;
+    this.initUserForm(this.userInfo);
   }
 
   // init form

@@ -1,6 +1,6 @@
-import { BamboAuthService } from './../../../shared/services/bambo-auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
 
 @Component({
   selector: 'login-form',

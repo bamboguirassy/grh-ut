@@ -35,11 +35,6 @@ class Contrat
     private $employe;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $etat;
-
-    /**
      * @ORM\Column(type="date", nullable=true)
      */
     private $dateRupture;
@@ -58,6 +53,26 @@ class Contrat
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $rompu;
+
+    /**
+     * @ORM\Column(type="date", nullable=false)
+     */
+    private $dateCreation;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateSignature;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateDebut;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateFin;
 
     public function getId(): ?int
     {
@@ -112,12 +127,12 @@ class Contrat
         return $this;
     }
 
-    public function getDateRupture(): ?\DateTimeInterface
+    public function getDateRupture()
     {
         return $this->dateRupture;
     }
 
-    public function setDateRupture(?\DateTimeInterface $dateRupture): self
+    public function setDateRupture($dateRupture): self
     {
         $this->dateRupture = $dateRupture;
 
@@ -156,6 +171,54 @@ class Contrat
     public function setRompu(?bool $rompu): self
     {
         $this->rompu = $rompu;
+
+        return $this;
+    }
+
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
+    }
+
+    public function setDateCreation($dateCreation): self
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    public function getDateSignature()
+    {
+        return $this->dateSignature;
+    }
+
+    public function setDateSignature($dateSignature): self
+    {
+        $this->dateSignature = $dateSignature;
+
+        return $this;
+    }
+
+    public function getDateDebut()
+    {
+        return $this->dateDebut;
+    }
+
+    public function setDateDebut($dateDebut): self
+    {
+        $this->dateDebut = $dateDebut;
+
+        return $this;
+    }
+
+    public function getDateFin()
+    {
+        return $this->dateFin;
+    }
+
+    public function setDateFin($dateFin): self
+    {
+        $this->dateFin = $dateFin;
 
         return $this;
     }

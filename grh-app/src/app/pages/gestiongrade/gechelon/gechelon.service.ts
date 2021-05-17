@@ -14,8 +14,8 @@ export class GEchelonService extends BamboAbstractService {
     this.routePrefix = 'gechelon/';
     this.resourceName = 'GECHELON';
   }
-  
-  findNonSuivant() {
-    return this.httpSrv.get(this.routePrefix+'nosuivant/').pipe(first());
-  }
+    
+  findNonSuivants() {
+   return this.httpSrv.get(this.routePrefix+'no-suivant/');
+ }
 }

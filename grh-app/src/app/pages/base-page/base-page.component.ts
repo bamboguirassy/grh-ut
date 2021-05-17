@@ -1,14 +1,15 @@
-import { SETTINGS } from './../../../environments/settings';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { IPageData } from '../../interfaces/page-data';
 import { IAppState } from '../../interfaces/app-state';
+import { HttpService } from '../../services/http/http.service';
 import * as PageActions from '../../store/actions/page.actions';
-import { BamboAbstractService } from 'src/app/shared/services/bambo-abstract.service';
 import { BamboAbstractObject } from 'src/app/shared/classes/bambo-abstract-object';
-import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
+import { SETTINGS } from 'src/environments/settings';
+import { BamboAbstractService } from 'src/app/shared/services/bambo-abstract.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'base-page',
@@ -17,6 +18,7 @@ import { Subscription } from 'rxjs';
 })
 export class BasePageComponent<T extends BamboAbstractObject> implements OnInit, OnDestroy {
   pageData: IPageData;
+  
   title: string;
   entity: T;
   items: T[] = [];
@@ -73,7 +75,6 @@ export class BasePageComponent<T extends BamboAbstractObject> implements OnInit,
 
   setLoaded(during: number = 0) {
     setTimeout(() => this.store.dispatch(new PageActions.Update({ loaded: true })), during);
-    //this.handlePostLoad();
   }
 
   findAll() {
@@ -173,6 +174,4 @@ export class BasePageComponent<T extends BamboAbstractObject> implements OnInit,
         this.original = data;
       }, err => this.httpSv.httpSrv.catchError(err));
   }
-
-
 }

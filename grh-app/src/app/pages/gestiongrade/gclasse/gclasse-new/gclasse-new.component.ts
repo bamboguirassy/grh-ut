@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren, Input } from '@angular/core';
 import { GClasseService } from '../gclasse.service';
 import { GClasse } from '../gclasse';
 import { Router } from '@angular/router';
 import { TypeEmploye } from 'src/app/pages/parametrage/typeemploye/typeemploye';
-import { TypeEmployeService } from 'src/app/pages/parametrage/typeemploye/typeemploye.service';
 import { UploadFileModel } from 'src/app/shared/classes/upload-file-model';
 
 
@@ -22,33 +21,31 @@ export class GClasseNewComponent implements OnInit {
   isModalVisible = false;
   currentAvatar: any;
   fileModel: UploadFileModel = new UploadFileModel();
-
-
+  @Input() typeEmploye: TypeEmploye;
   classes: GClasse[] =[];
   selectedClasseId: any;
-  typeEmployes: TypeEmploye[] =[];
-  selectedTypeEmployeId: any;
+ 
   
-
   constructor(public gClasseSrv: GClasseService,
-    public router: Router,
-    public typeEmployeServive : TypeEmployeService) {
+    public router: Router) {
     this.entity = new GClasse();
   }
 
   ngOnInit(): void {
-    this.findClasses();
-    this.findTypeEmployes();
   }
-  save() {
 
+  save() {
     this.entity.suivant = this.selectedClasseId;
-    this.entity.typeEmploye = this.selectedClasseId;
+    this.entity.typeEmploye = this.typeEmploye.id;
+    if (this.typeEmploye) {
+      this.entity.typeEmploye = this.typeEmploye.id;
+    }
     this.gClasseSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
         this.creation.emit(data);
         this.entity = new GClasse();
+        this.selectedClasseId=null;
       }, error => this.gClasseSrv.httpSrv.catchError(error));
   }
 
@@ -63,18 +60,13 @@ export class GClasseNewComponent implements OnInit {
   }
 
    findClasses() {
-    this.gClasseSrv.findNonSuivants()
+    this.gClasseSrv.findAll()
       .subscribe((data: any) => {
         this.classes = data;
       }, err => this.gClasseSrv.httpSrv.catchError(err));
   }
 
-   findTypeEmployes() {
-    this.typeEmployeServive.findAll()
-      .subscribe((data: any) => {
-        this.typeEmployes = data;
-      }, err => this.typeEmployeServive.httpSrv.catchError(err));
-  }
+  
 
   
 

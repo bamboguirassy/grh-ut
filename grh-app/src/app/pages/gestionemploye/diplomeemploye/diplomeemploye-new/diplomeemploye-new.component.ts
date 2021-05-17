@@ -5,6 +5,7 @@ import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChi
 import { DiplomeEmployeService } from '../diplomeemploye.service';
 import { DiplomeEmploye } from '../diplomeemploye';
 import { Router } from '@angular/router';
+import { IOption } from 'src/app/ui/interfaces/option';
 
 @Component({
   selector: 'app-diplomeemploye-new',
@@ -22,10 +23,14 @@ export class DiplomeEmployeNewComponent implements OnInit {
   isModalVisible = false;
   selectedDiplome: Diplome;
   diplomes: Diplome[] = [];
+  statutFormations: IOption[] = [];
 
   constructor(public diplomeEmployeSrv: DiplomeEmployeService,
     public router: Router, public diplomeServ: DiplomeService) {
     this.entity = new DiplomeEmploye();
+    diplomeEmployeSrv.statutFormations.forEach(statut => {
+      this.statutFormations.push({value: statut.label, label: statut.label, color: statut.color});
+    });
   }
 
   ngOnInit(): void {
@@ -39,6 +44,7 @@ export class DiplomeEmployeNewComponent implements OnInit {
       .subscribe((data: any) => {
         this.closeModal();
         this.creation.emit(data);
+        this.selectedDiplome = null;
         this.entity = new DiplomeEmploye();
       }, error => this.diplomeEmployeSrv.httpSrv.catchError(error));
   }

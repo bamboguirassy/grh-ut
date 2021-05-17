@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { DragulaModule } from 'ng2-dragula';
-
 import { TCBorderColorDirective } from './directives/border-color/border-color.directive';
 import { TCFilterTableDirective } from './directives/filter-table/filter-table.directive';
 import { TCBorderStyleDirective } from './directives/border-style/border-style.directive';
@@ -49,8 +47,7 @@ import { TCPickerComponent } from './components/color-picker/picker/picker.compo
     CommonModule,
 		FormsModule,
     RouterModule,
-    ReactiveFormsModule,
-    DragulaModule.forRoot()
+    ReactiveFormsModule
   ],
   declarations: [
     TCBgColorDirective,

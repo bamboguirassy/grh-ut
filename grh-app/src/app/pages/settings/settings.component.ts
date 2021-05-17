@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 
@@ -11,11 +11,10 @@ import { HttpService } from '../../services/http/http.service';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
-export class PageSettingsComponent extends BasePageComponent<any> implements OnInit, AfterViewInit, OnDestroy {
+export class PageSettingsComponent  extends BasePageComponent<any> implements OnInit {
   constructor(
     store: Store<IAppState>,
-    httpSv: HttpService,
-    private cdRef: ChangeDetectorRef
+    httpSv: HttpService
   ) {
     super(store, httpSv);
 
@@ -39,7 +38,7 @@ export class PageSettingsComponent extends BasePageComponent<any> implements OnI
   }
 
   ngAfterViewInit() {
-    this.setLoaded();
+    this.setLoaded()
   }
 
   ngOnDestroy() {

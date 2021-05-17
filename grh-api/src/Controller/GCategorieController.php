@@ -39,15 +39,13 @@ class GCategorieController extends AbstractController
         $form->submit(Utils::serializeRequestContent($request));
 
         $entityManager = $this->getDoctrine()->getManager();
-        /** verification duplication suivant */
-        if($gCategorie->getSuivant()!=null) {
-            $categories = $entityManager->getRepository(GCategorie::class)
-            ->findBySuivant($gCategorie->getSuivant());
-            if(count($categories)>0) {
-                throw $this->createNotFoundException("Attention ! Le suivant que vous avez selectionné est déja associé à l'enregistrement: {$categories[0]->getNom()}");
-            }
+        
+        //transformer le champ suivant en précédent
+        if($gCategorie->getSuivant()) {
+            $gCategorie->getSuivant()->setSuivant($gCategorie);
+            $gCategorie->setSuivant(NULL);
         }
-        /** fin test duplication suivant */
+
         $entityManager->persist($gCategorie);
         $entityManager->flush();
 

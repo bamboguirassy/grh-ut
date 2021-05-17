@@ -30,7 +30,7 @@ class DiplomeEmploye
     private $diplome;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $anneeObtention;
 
@@ -38,6 +38,21 @@ class DiplomeEmploye
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $etablissement;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $formation;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $statutFormation;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $commentaire;
 
     public function getId(): ?int
     {
@@ -88,6 +103,42 @@ class DiplomeEmploye
     public function setEtablissement(?string $etablissement): self
     {
         $this->etablissement = $etablissement;
+
+        return $this;
+    }
+
+    public function getFormation(): ?string
+    {
+        return $this->formation;
+    }
+
+    public function setFormation(string $formation): self
+    {
+        $this->formation = $formation;
+
+        return $this;
+    }
+
+    public function getStatutFormation(): ?string
+    {
+        return $this->statutFormation;
+    }
+
+    public function setStatutFormation(string $statutFormation): self
+    {
+        $this->statutFormation = $statutFormation;
+
+        return $this;
+    }
+
+    public function getCommentaire(): ?string
+    {
+        return $this->commentaire;
+    }
+
+    public function setCommentaire(?string $commentaire): self
+    {
+        $this->commentaire = $commentaire;
 
         return $this;
     }

@@ -11,16 +11,16 @@
   <nz-tabset>
     <nz-tab nzTitle="Fonction">
     <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-    <tc-table-col [columnTitle]="'Fonction'" [columnName]="'fonction'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Fonction'" [columnName]="'responsabilite'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value?.nom }}</span>
+        <span class="nowrap" *ngIf="value">{{ value?.fonction?.nom }}</span>
         <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Structure'" [columnName]="'structure'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Structure'" [columnName]="'responsabilite'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value" [title]="value?.nom">{{value?.code}}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+        <span class="nowrap" *ngIf="value" [title]="value?.structure?.nom">{{value?.structure?.code}}</span>
+        <tc-badge view="error" *ngIf="!value">Aucune</tc-badge>
       </ng-template>
     </tc-table-col>
     <tc-table-col [columnTitle]="'Date Prise Fonction'" [columnName]="'datePriseFonction'" [enableSorting]="true">
@@ -29,17 +29,16 @@
         <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Date Fin Fonction'" [columnName]="'dateFin'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    
     <tc-table-col [columnTitle]="'Etat'" [columnName]="'etat'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <tc-badge view="error" *ngIf="!value">Expirée</tc-badge>
         <tc-badge view="success" *ngIf="value"><span class="nowrap">En cours</span></tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Date Fin Fonction'" [columnName]="'dateFin'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
+        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
       </ng-template>
     </tc-table-col>
     <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">

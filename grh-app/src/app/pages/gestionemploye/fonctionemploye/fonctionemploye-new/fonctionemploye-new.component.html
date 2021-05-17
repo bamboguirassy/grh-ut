@@ -10,33 +10,35 @@
       <div class="row">
         <div class="col-12 col-md-6">
           <tc-form-group>
-            <tc-form-label>Fonction</tc-form-label>
-            <nz-select [required]="true" name="fonction" id="fonction" #fonction="ngModel"
-              nzPlaceHolder="Selectionner la fonction occupée" nzAllowClear nzShowSearch [(ngModel)]="selectedFonction">
-              <ng-container *ngFor="let fonction of fonctions">
-                <nz-option [nzValue]="fonction" [nzLabel]="fonction.nom"></nz-option>
-              </ng-container>
-            </nz-select>
-            <tc-form-description>
-              <app-form-field-validation-message [formField]="fonction"></app-form-field-validation-message>
-            </tc-form-description>
-          </tc-form-group>
-        </div>
-        <div class="col-12 col-md-6">
-          <tc-form-group>
             <tc-form-label>Structure</tc-form-label>
-            <nz-select [required]="true" name="structure" id="structure" #structure="ngModel"
-              nzPlaceHolder="Selectionner la structure" nzAllowClear nzShowSearch [(ngModel)]="selectedStructure">
+            <nz-select (ngModelChange)="findStructureFonctionsByStructure($event)" [required]="true" name="structure"
+              id="structure" #structureModel="ngModel" nzPlaceHolder="Selectionner" nzAllowClear nzShowSearch
+              [(ngModel)]="selectedStructure">
               <ng-container *ngFor="let structure of structures">
                 <nz-option [nzValue]="structure" [nzLabel]="structure.nom+' ('+structure.code+')'"></nz-option>
               </ng-container>
             </nz-select>
             <tc-form-description>
-              <app-form-field-validation-message [formField]="structure"></app-form-field-validation-message>
+              <app-form-field-validation-message [formField]="structureModel"></app-form-field-validation-message>
             </tc-form-description>
           </tc-form-group>
         </div>
-        
+        <div class="col-12 col-md-6">
+          <tc-form-group>
+            <tc-form-label>Fonction</tc-form-label>
+            <nz-select [required]="true" name="structureFonction" id="structureFonction" [(ngModel)]="selectedStructureFonction"
+              #structureFonctionModel="ngModel" nzPlaceHolder="Selectionner" nzAllowClear nzShowSearch>
+              <ng-container *ngFor="let structureFonction of structureFonctions">
+                <nz-option *ngIf="structureFonction.etat" [nzValue]="structureFonction" [nzLabel]="structureFonction.fonction.nom">
+                </nz-option>
+              </ng-container>
+            </nz-select>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="structureFonctionModel">
+              </app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
         <div class="col-12 col-md-6">
           <tc-form-group>
             <tc-form-label>Date Prise Fonction</tc-form-label>
@@ -63,8 +65,8 @@
         <div [hidden]="entity.etat" class="col-12 col-md-6">
           <tc-form-group>
             <tc-form-label>Date Fin fonction</tc-form-label>
-            <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateFin"
-              name="dateFin" id="dateFin" #dateFin="ngModel"></nz-date-picker>
+            <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateFin" name="dateFin" id="dateFin"
+              #dateFin="ngModel"></nz-date-picker>
             <tc-form-description>
               <app-form-field-validation-message [formField]="dateFin"></app-form-field-validation-message>
             </tc-form-description>

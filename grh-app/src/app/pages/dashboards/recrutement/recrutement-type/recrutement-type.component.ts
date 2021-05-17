@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ChartDataSets } from 'chart.js';
+import { ChartDataset } from 'chart.js';
 import { EmployeService } from 'src/app/pages/gestionemploye/employe/employe.service';
 import { DashboardBaseComponent } from 'src/app/shared/components/dashboard-base/dashboard-base.component';
 import { RecrutementTypeCM } from '../recrutement-type-cm';
@@ -13,7 +13,6 @@ export class RecrutementTypeComponent extends DashboardBaseComponent<Recrutement
   @Input() canSwitchDiagramType: boolean = true;
   typeDiagrams: { value: string, title: string }[] = [
     { value: 'bar', title: 'Barre verticale' },
-    { value: 'horizontalBar', title: 'Barre Horizontale' },
     { value: 'line', title: 'Courbe' },
   ];
 
@@ -29,7 +28,7 @@ export class RecrutementTypeComponent extends DashboardBaseComponent<Recrutement
   }
 
   setDataChart() {
-    const chartData: ChartDataSets[] = [];
+    const chartData: ChartDataset[] = [];
     const typeEmployes = this.rawChartData[0].recrutements.map((r) => ({ code: r.typeEmployeCode, label: r.typeEmployeLabel }));
     for (const te of typeEmployes) {
       const arr: number[] = [];
@@ -41,7 +40,7 @@ export class RecrutementTypeComponent extends DashboardBaseComponent<Recrutement
         }
       }
       chartData.push({ data: arr, label: te.label });
-    }
+    }    
 
     this.chartLabels = this.rawChartData.map((data) => data.annee);
     this.chartType = 'bar';

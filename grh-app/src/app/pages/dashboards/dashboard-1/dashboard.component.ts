@@ -9,8 +9,6 @@ import { EmployeService } from '../../gestionemploye/employe/employe.service';
 import { TypeEmploye } from '../../parametrage/typeemploye/typeemploye';
 import { TypeEmployeService } from '../../parametrage/typeemploye/typeemploye.service';
 import { finalize } from 'rxjs/operators';
-import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
-import { Label } from 'ng2-charts';
 
 @Component({
   selector: 'page-dashboard',
@@ -60,7 +58,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
   ngOnInit() {
     super.ngOnInit();
     this.getEmployeCountStatistics();
-    this.getData('assets/data/last-appointments.json', 'appointments', 'setLoaded');
+    // this.getData('assets/data/last-appointments.json', 'appointments', 'setLoaded');
   }
 
   ngOnDestroy() {
@@ -88,6 +86,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
     this.employeSrv.countByType()
       .subscribe((data: any) => {
         this.tabCountEmploye = data;
+        this.setLoaded();
       }, error => {
         this.employeSrv.httpSrv.catchError(error);
       });

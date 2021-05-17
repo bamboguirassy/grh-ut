@@ -15,6 +15,8 @@ import { UploadFileModel } from 'src/app/shared/classes/upload-file-model';
 import { DatePipe } from '@angular/common';
 import { StructureService } from 'src/app/pages/parametrage/structure/structure.service';
 import { Structure } from 'src/app/pages/parametrage/structure/structure';
+import { Profession } from 'src/app/pages/parametrage/profession/profession';
+import { ProfessionService } from 'src/app/pages/parametrage/profession/profession.service';
 
 @Component({
   selector: 'app-employe-new',
@@ -42,6 +44,8 @@ export class EmployeNewComponent implements OnInit {
   structures: Structure[] = [];
   selectedStructure: Structure;
   selectedGrade: Grade;
+  professions: Profession[] = [];
+  selectedProfession: Profession;
 
   areDataLoaded = false;
 
@@ -50,11 +54,12 @@ export class EmployeNewComponent implements OnInit {
     public router: Router, public paysSrv: PaysService,
     public mutuelleSanteSrv: MutuelleSanteService,
     public caisseSocialeSrv: CaisseSocialeService,
+    public professionSrv: ProfessionService,
     public gradeSrv: GradeService, public structureSrv: StructureService, public datePipe: DatePipe) {
     this.initNewEmploye();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   initNewEmploye() {
     this.entity = new Employe();
@@ -74,7 +79,10 @@ export class EmployeNewComponent implements OnInit {
     }
     this.entity.nationalite = this.selectedNationalite.id;
     this.entity.typeEmploye = this.typeEmploye.id;
-    this.entity.structure = this.selectedStructure.id;
+    if(this.selectedStructure) {
+      this.entity.structure = this.selectedStructure.id;
+    }
+    this.entity.profession = this.selectedProfession.id;
 
 
     if (this.selectedGrade) {
@@ -166,6 +174,13 @@ export class EmployeNewComponent implements OnInit {
         this.structures = data;
 
       }, err => this.structureSrv.httpSrv.catchError(err));
+  }
+
+  findProfessions() {
+    this.professionSrv.findAll()
+      .subscribe((data: any) => {
+        this.professions = data;
+      }, err => this.professionSrv.httpSrv.catchError(err));
   }
 
 }

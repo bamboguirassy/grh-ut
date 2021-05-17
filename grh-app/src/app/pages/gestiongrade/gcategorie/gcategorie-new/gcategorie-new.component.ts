@@ -25,7 +25,6 @@ export class GCategorieNewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.findCategories();
   }
 
   save() {
@@ -49,7 +48,7 @@ export class GCategorieNewComponent implements OnInit {
   }
 
   findCategories() {
-    this.gCategorieSrv.findNonSuivants()
+    this.gCategorieSrv.findAll()
     .subscribe((data: any)=>{
       this.categories = data;
     }, err =>this.gCategorieSrv.httpSrv.catchError(err));

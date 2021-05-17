@@ -14,7 +14,7 @@ export class GEchelonNewComponent implements OnInit {
   @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
   @ViewChildren('form') form;
   entity: GEchelon;
-  selectedEchelonId:any;
+  selectedEchelonId: any;
   @Output() creation: EventEmitter<GEchelon> = new EventEmitter();
   isModalVisible = false;
   echelons:GEchelon[]=[];
@@ -23,14 +23,13 @@ export class GEchelonNewComponent implements OnInit {
   constructor(public gEchelonSrv: GEchelonService,
     public router: Router) {
     this.entity = new GEchelon();
-    
   }
 
   ngOnInit(): void {
-    this.findEchelons();
   }
+
   save() {
-    this.entity.suivant = this.selectedEchelonId.id;
+    this.entity.suivant = this.selectedEchelonId;
     this.gEchelonSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
@@ -50,12 +49,15 @@ export class GEchelonNewComponent implements OnInit {
   }
 
   findEchelons(){
-    this.gEchelonSrv.findNonSuivant()
+    this.gEchelonSrv.findAll()
     .subscribe((data:any)=>{
       this.echelons=data;
-    },error => this.gEchelonSrv.httpSrv.catchError(error))
+    },error => this.gEchelonSrv.httpSrv.catchError(error));
 
+  }
 
+  onCreate(item: GEchelon) {
+    this.findEchelons();
   }
 
 }

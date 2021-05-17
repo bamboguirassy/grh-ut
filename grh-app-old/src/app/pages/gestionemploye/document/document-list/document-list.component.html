@@ -1,0 +1,43 @@
+<tc-card *ngIf="documentSrv.resourceName|listable" [tcGradient]="lightGradient">
+  <tc-card [view]="secondViewBorder" [outline]="true">
+    <div class="row">
+      <div class="col-12">
+        <app-document-new [employe]="employe" *ngIf="employe" (creation)="onCreate($event)"></app-document-new>
+        <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findByEmploye()">Rafraichir</button>
+      </div>
+    </div>
+  </tc-card>
+  <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
+    <tc-table-col [columnTitle]="'#'" [columnName]="'#'">
+      <ng-template #tableTDTemplate let-row="row">
+        <i class="icofont-ui-file icofont-2x"></i>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value let-row="row">
+        <span class="nowrap" *ngIf="value">
+          <a [href]="row.filepath" target="blank">{{ value }}</a>
+        </span>
+        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Type Document'" [columnName]="'typeDocument'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap" *ngIf="value">{{ value?.nom }}</span>
+        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+      <ng-template #tableTDTemplate let-row="row">
+        <div class="actions">
+          <button *ngIf="documentSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'"
+            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
+          <button *ngIf="documentSrv.resourceName|deletable" (click)="remove(row)" tc-button
+            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+        </div>
+      </ng-template>
+    </tc-table-col>
+  </tc-table>
+  <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
+</tc-card>
+<app-access-denied *ngIf="!(documentSrv.resourceName|listable)"></app-access-denied>

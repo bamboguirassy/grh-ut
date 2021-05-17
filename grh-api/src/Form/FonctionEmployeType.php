@@ -15,8 +15,7 @@ class FonctionEmployeType extends AbstractType
             ->add('datePriseFonction')
             ->add('etat')
             ->add('employe')
-            ->add('fonction')
-            ->add('structure')
+            ->add('responsabilite')
             ->add('dateFin')
         ;
     }

@@ -1,6 +1,17 @@
-.fonction {
-    color: white; border-radius: 3px; 
-    display: inline-block; 
-    padding: 1.5px;
-    
+@import "~src/assets/scss/variables";
+
+.det-item {
+    margin: 15px;
+    margin-bottom: 20px;
+   // padding: 15px;
+    font-size: 17px;
+    display: inline;
+    //border-right: 2px solid #dadce3;
+    .det-label {
+        font-weight: bold;
+        margin-right: 2px;
+        // text-decoration: underline;
+    }
+    .det-content {
+    }
 }

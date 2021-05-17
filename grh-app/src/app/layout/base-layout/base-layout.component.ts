@@ -50,7 +50,7 @@ export class BaseLayoutComponent implements OnInit {
       settings ? this.appSettings = settings : null;
     });
 
-    this.getData('assets/data/patients.json', 'patients', 'setPatients');
+   // this.getData('assets/data/patients.json', 'patients', 'setPatients');
     this.initSearchForm();
     this.scrollToTop();
   }
@@ -70,6 +70,17 @@ export class BaseLayoutComponent implements OnInit {
       },
       () => {
         (callbackFnName && typeof this[callbackFnName] === 'function') ? this[callbackFnName](this[dataName]) : null;
+      }
+    );
+  }
+
+  getSearchData(url: string) {
+    this.httpSv.getData(url).subscribe(
+      data => {
+        this.getItemsRouters(data);
+      },
+      err => {
+        console.log(err);
       }
     );
   }
@@ -121,10 +132,10 @@ export class BaseLayoutComponent implements OnInit {
       if (!(evt instanceof NavigationEnd)) {
         return;
       }
-      const CONTAINER = this.elRef.nativeElement.querySelector('.main-content') || window;
+      const container = this.elRef.nativeElement.querySelector('.main-content') || window;
 
       setTimeout(() => {
-        CONTAINER.scrollTo(0, 0);
+        container.scrollTo(0, 0);
       });
     });
   }

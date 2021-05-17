@@ -6,6 +6,8 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  scrollbarOptions: any;
+
   @HostBinding('class.navbar') true;
   @HostBinding('class.boxed') @Input() boxed: boolean;
   @HostBinding('class.opened') @Input() opened: boolean;
@@ -27,6 +29,7 @@ export class NavbarComponent implements OnInit {
   constructor() {
     this.boxed = false;
     this.orientation = 'horizontal';
+    this.scrollbarOptions = { axis: 'y', theme: 'dark-thin' }
   }
 
   ngOnInit() { }

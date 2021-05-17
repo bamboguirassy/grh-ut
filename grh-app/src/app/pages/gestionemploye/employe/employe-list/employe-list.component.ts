@@ -23,14 +23,14 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
     super(store, employeSrv);
 
     this.pageData = {
-      title: 'Liste des Employes',
+      title: 'Liste des employés',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des employes'
+          title: 'Liste des employés'
         }
       ]
     };
@@ -57,11 +57,11 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
       .subscribe((data: any) => {
         this.typeEmployes = data;
         this.setLoaded();
-        this.findByTypeEmploye(this.typeEmployes[0]);
       }, err => this.typeEmployeSrv.httpSrv.catchError(err));
   }
 
   findByTypeEmploye(typeEmploye: TypeEmploye) {
+    this.items = [];
     this.employeSrv.findByTypeEmploye(typeEmploye)
       .subscribe((data: any) => {
         this.items = data;

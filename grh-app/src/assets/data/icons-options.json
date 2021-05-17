@@ -19,67 +19,67 @@
   "color": [
     {
       "class": "icofont-articulated-truck",
-      "color": "#F44336"
+      "color": "#336CFB"
     },
     {
       "class": "icofont-auto-mobile",
-      "color": "#E91E63"
+      "color": "#DA58DB"
     },
     {
       "class": "icofont-bicycle-alt-2",
-      "color": "#9C27B0"
+      "color": "#FF5DA5"
     },
     {
       "class": "icofont-bus-alt-1",
-      "color": "#673AB7"
+      "color": "#FF8C73"
     },
     {
       "class": "icofont-car-alt-3",
-      "color": "#ff8018"
+      "color": "#FFC559"
     },
     {
       "class": "icofont-helicopter",
-      "color": "#2196F3"
+      "color": "#F9F871"
     },
     {
       "class": "icofont-sail-boat",
-      "color": "#03A9F4"
+      "color": "#A6A6DD"
     },
     {
       "class": "icofont-train-steam",
-      "color": "#00BCD4"
+      "color": "#EFEDFF"
     },
     {
       "class": "icofont-apple-watch",
-      "color": "#e8b7dd"
+      "color": "#BFA975"
     },
     {
       "class": "icofont-headphone-alt-3",
-      "color": "#4CAF50"
+      "color": "#464555"
     },
     {
       "class": "icofont-radio-mic",
-      "color": "#8BC34A"
+      "color": "#AAA9BC"
     },
     {
       "class": "icofont-pen-alt-1",
-      "color": "#CDDC39"
+      "color": "#EC0745"
     },
     {
       "class": "icofont-delete-alt",
-      "color": "#ffc61d"
+      "color": "#FF5F75"
     },
     {
       "class": "icofont-crown-king",
-      "color": "#0913ff"
+      "color": "#D5E9E8"
     },
     {
       "class": "icofont-bell-alt",
-      "color": "#aea238"
+      "color": "#2E8684"
     },
     {
       "class": "icofont-instrument",
-      "color": "#607D8B"
+      "color": "#1EC198"
     }
   ],
   "hoverColor": [
@@ -151,133 +151,133 @@
   "bgColor": [
     {
       "class": "icofont-laboratory",
-      "color": "#86251e"
+      "color": "#A6A6DD"
     },
     {
       "class": "icofont-bull-dozer",
-      "color": "#7e1036"
+      "color": "#E6F4F1"
     },
     {
       "class": "icofont-fix-tools",
-      "color": "#671a74"
+      "color": "#BFA975"
     },
     {
       "class": "icofont-recycling-man",
-      "color": "#442678"
+      "color": "#554516"
     },
     {
       "class": "icofont-vehicle-trucktor",
-      "color": "#733a0b"
+      "color": "#809FFF"
     },
     {
       "class": "icofont-wrench",
-      "color": "#104a78"
+      "color": "#A942ED"
     },
     {
       "class": "icofont-snow-temp",
-      "color": "#025e88"
+      "color": "#FF5F75"
     },
     {
       "class": "icofont-umbrella-alt",
-      "color": "#006673"
+      "color": "#AAA9BC"
     },
     {
       "class": "icofont-basketball-hoop",
-      "color": "#7e6378"
+      "color": "#464555"
     },
     {
       "class": "icofont-volleyball",
-      "color": "#347736"
+      "color": "#EEE8A9"
     },
     {
       "class": "icofont-ui-clip",
-      "color": "#53752c"
+      "color": "#B0CCCA"
     },
     {
       "class": "icofont-bell-pepper-capsicum",
-      "color": "#727a20"
+      "color": "#3B9F9C"
     },
     {
       "class": "icofont-cheese",
-      "color": "#7a5f0e"
+      "color": "#2D6765"
     },
     {
       "class": "icofont-cola",
-      "color": "#04097e"
+      "color": "#E6F4F1"
     },
     {
       "class": "icofont-honey",
-      "color": "#6a6322"
+      "color": "#6BFBCE"
     },
     {
       "class": "icofont-tomato",
-      "color": "#3e515a"
+      "color": "#00D8F4"
     }
   ],
   "hoverBgColor": [
     {
       "class": "icofont-clouds",
-      "color": ["", "#F44336"]
+      "color": ["#AAA9BC", "#F44336"]
     },
     {
       "class": "icofont-compass-alt",
-      "color": ["", "#E91E63"]
+      "color": ["#AAA9BC", "#E91E63"]
     },
     {
       "class": "icofont-dust",
-      "color": ["", "#9C27B0"]
+      "color": ["#AAA9BC", "#9C27B0"]
     },
     {
       "class": "icofont-eclipse",
-      "color": ["", "#673AB7"]
+      "color": ["#AAA9BC", "#673AB7"]
     },
     {
       "class": "icofont-full-sunny",
-      "color": ["#3F51B5", ""]
+      "color": ["#336CFB", "#F9F8FF"]
     },
     {
       "class": "icofont-hail-thunder",
-      "color": ["#2196F3", ""]
+      "color": ["#DA58DB", "#F9F8FF"]
     },
     {
       "class": "icofont-hill-night",
-      "color": ["#03A9F4", ""]
+      "color": ["#FF5DA5", "#F9F8FF"]
     },
     {
       "class": "icofont-island",
-      "color": ["#00BCD4", ""]
+      "color": ["#FF8C73", "#F9F8FF"]
     },
     {
       "class": "icofont-rainy",
-      "color": ["#009688", "#FFEB3B"]
+      "color": ["#FFC559", "#FFEB3B"]
     },
     {
       "class": "icofont-snow",
-      "color": ["#4CAF50", "#FFC107"]
+      "color": ["#F9F871", "#FFC107"]
     },
     {
       "class": "icofont-snowy-windy",
-      "color": ["#8BC34A", "#FF9800"]
+      "color": ["#7561EB", "#FF9800"]
     },
     {
       "class": "icofont-sun-alt",
-      "color": ["#CDDC39", "#607D8B"]
+      "color": ["#CA3D9E", "#607D8B"]
     },
     {
       "class": "icofont-snow-flake",
-      "color": ["#FFEB3B", "#009688"]
+      "color": ["#A6A6DD", "#009688"]
     },
     {
       "class": "icofont-umbrella-alt",
-      "color": ["#FFC107", "#4CAF50"]
+      "color": ["#BFA975", "#4CAF50"]
     },
     {
       "class": "icofont-tornado",
-      "color": ["#FF9800", "#8BC34A"]
+      "color": ["#FFEFCA", "#8BC34A"]
     },
     {
       "class": "icofont-thermometer",
-      "color": ["#607D8B", "#CDDC39"]
+      "color": ["#AAA9BC", "#CDDC39"]
     }
   ],
   "borderColor": [
@@ -508,67 +508,67 @@
   "gradient": [
     {
       "class": "icofont-apple",
-      "color": ["#BF3030", "#a65e5c"]
+      "color": ["#7561EB", "#9856D9"]
     },
     {
       "class": "icofont-artichoke",
-      "color": ["#a65e5c", "#9e5a75"]
+      "color": ["#B04CC6", "#C043B2"]
     },
     {
       "class": "icofont-avocado",
-      "color": ["#9e5a75", "#603477"]
+      "color": ["#A6A6DD", "#EFEDFF"]
     },
     {
       "class": "icofont-banana",
-      "color": ["#603477", "#4c4867"]
+      "color": ["#BFA975", "#FFEFCA"]
     },
     {
       "class": "icofont-beans",
-      "color": ["#4C4867", "#3f21cf"]
+      "color": ["#BFA975", "#847655"]
     },
     {
       "class": "icofont-beer",
-      "color": ["#3F21CF", "#5088cf"]
+      "color": ["#464555", "#AAA9BC"]
     },
     {
       "class": "icofont-birthday-cake",
-      "color": ["#5088CF", "#24CCCF"]
+      "color": ["#EC0745", "#FF5F75"]
     },
     {
       "class": "icofont-bread",
-      "color": ["#24CCCF", "#5BCFB1"]
+      "color": ["#47817E", "#E6F4F1"]
     },
     {
       "class": "icofont-burger",
-      "color": ["#5BCFB1", "#8ACF8C"]
+      "color": ["#336CFB", "#B9CEFF"]
     },
     {
       "class": "icofont-carrot",
-      "color": ["#8ACF8C", "#086E09"]
+      "color": ["#6BFBCE", "#1EC198"]
     },
     {
       "class": "icofont-cheese",
-      "color": ["#086E09", "#7CA416"]
+      "color": ["#8D8DB9", "#464555"]
     },
     {
       "class": "icofont-cherry",
-      "color": ["#7CA416", "#98A452"]
+      "color": ["#947300", "#D0A700"]
     },
     {
       "class": "icofont-chicken",
-      "color": ["#98A452", "#A4A435"]
+      "color": ["#BC5D00", "#0098C7"]
     },
     {
       "class": "icofont-cola",
-      "color": ["#A4A435", "#A49466"]
+      "color": ["#AAA9BC", "#BFA5A4"]
     },
     {
       "class": "icofont-grapes",
-      "color": ["#A49466", "#A47C33"]
+      "color": ["#00188A", "#DDEFFF"]
     },
     {
       "class": "icofont-ice-cream-alt",
-      "color": ["#A47C33", "#A44C14"]
+      "color": ["#C1D5FF", "#5D85FF"]
     }
   ],
   "shape": [

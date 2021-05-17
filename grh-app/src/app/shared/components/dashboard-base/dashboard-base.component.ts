@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import { ChartDataset, ChartOptions, ChartType, Color } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { finalize } from 'rxjs/operators';
-import { EmployeService } from 'src/app/pages/gestionemploye/employe/employe.service';
+import { SETTINGS } from 'src/environments/settings';
 import { BamboAbstractChartModel } from '../../classes/bambo-abstract-chart-model';
 import { BamboAbstractService } from '../../services/bambo-abstract.service';
 
@@ -18,13 +18,15 @@ export class DashboardBaseComponent<T extends BamboAbstractChartModel> implement
   chartLegend = true;
   chartPlugins = [];
   typeDiagrams: Array<{ value: string, title: string }>;
-  chartData: ChartDataSets[] = [];
+  chartData: ChartDataset[] = [];
   methodName: string;
   loading = false;
   chartOptions: ChartOptions = {
     responsive: true,
   };
   selectedTypeDiagram: ChartType = 'bar';
+  tableData: any;
+  // colors: Color[] = [SETTINGS.sidebarBg, 'red', 'green','orange'];
 
   constructor(
     public httpSrv: BamboAbstractService,

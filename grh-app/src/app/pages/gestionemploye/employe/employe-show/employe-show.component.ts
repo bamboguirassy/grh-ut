@@ -1,4 +1,4 @@
-import { split} from 'ts-node';
+import { split } from 'ts-node';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BasePageComponent } from 'src/app/pages/base-page';
 import { EmployeService } from '../employe.service';
@@ -25,7 +25,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   latestFonction: FonctionEmploye;
   photo: any;
   filename: any;
-  image:any;
+  image: any;
   currentAvatar: any;
   defaultAvatar: string;
   changes: boolean;
@@ -36,6 +36,9 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   isFonctionsLoaded = false;
   isGradeLoaded = false;
   isDiplomeLoaded = false;
+  isContratLoaded = false;
+  titre: string;
+  topbarBg = SETTINGS.topbarBg;
 
   constructor(store: Store<IAppState>,
     public employeSrv: EmployeService, public fonctionEmployeSrv: FonctionEmployeService,
@@ -44,25 +47,25 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     public location: Location) {
     super(store, employeSrv);
     this.pageData = {
-      title: 'Dossier - Employé',
+      title: '',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Employés',
-          route: '/'+this.orientation+'/employe'
+          title: 'Liste des employés',
+          route: '/' + this.orientation + '/employe'
         },
         {
           title: 'Affichage'
         }
       ]
     };
-    
-  
-   
-    
+
+
+
+
   }
 
   ngOnInit(): void {
@@ -75,24 +78,37 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   }
 
   handlePostLoad() {
-    this.title = this.entity?.prenoms+' '+this.entity?.nom+' ('+this.entity?.matricule+')';
+    this.title = this.entity?.prenoms + ' ' + this.entity?.nom + ' (' + this.entity?.matricule + ')';
     this.findLatestFonction();
+    this.setTitre();
   }
 
   handlePostDelete() {
     this.location.back();
   }
 
+  setTitre() {
+    if (this.entity.genre == 'Féminin') {
+      if (this.entity.situtationMatrimoniale == 'Célibataire') {
+        this.titre = "Mlle";
+      } else {
+        this.titre = "Mme";
+      }
+    } else {
+      this.titre = "M.";
+    }
+  }
+
   findLatestFonction() {
     this
-    .fonctionEmployeSrv
-    .findLatest(this.entity)
-    .pipe(first())
-    .subscribe((fonctionEmploye: any) => {
-      this.latestFonction = fonctionEmploye;
-    }, err => {
-      this.fonctionEmployeSrv.httpSrv.handleError(err);
-    })
+      .fonctionEmployeSrv
+      .findLatest(this.entity)
+      .pipe(first())
+      .subscribe((fonctionEmploye: any) => {
+        this.latestFonction = fonctionEmploye;
+      }, err => {
+        this.fonctionEmployeSrv.httpSrv.handleError(err);
+      })
   }
   updateProfile(form: FormGroup) {
     if (form.valid) {
@@ -113,38 +129,35 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     };
     reader.readAsDataURL(file);
   }
-  loadAdressesTab(){
+  loadAdressesTab() {
     this.isAdresseLoaded = true;
   }
 
-  loadFamillesTab(){
+  loadFamillesTab() {
     this.isFamilleLoaded = true;
   }
 
-  loadSyndicatsTab(){
+  loadSyndicatsTab() {
     this.isSyndicatsLoaded = true;
   }
-  
-  loaderDocumentsTab(){
-    this.isDocumentsLoaded = true; 
+
+  loaderDocumentsTab() {
+    this.isDocumentsLoaded = true;
   }
-  
-  loadFonctionsTab(){
+
+  loadFonctionsTab() {
     this.isFonctionsLoaded = true;
   }
-  
-  loadGradesTab(){ 
+
+  loadGradesTab() {
     this.isGradeLoaded = true;
   }
 
-  loadDiplomesTab(){
+  loadDiplomesTab() {
     this.isDiplomeLoaded = true;
   }
-
-
-
-  
-
-
+  loadContratsTab() {
+    this.isContratLoaded = true;
+  }
 
 }
