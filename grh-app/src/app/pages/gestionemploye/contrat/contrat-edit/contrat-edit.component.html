@@ -1,20 +1,41 @@
-<tc-card *ngIf="entity && contratSrv.resourceName|editable" [tcGradient]="lightGradient">
-    <form #form="ngForm" novalidate>
-        <tc-card [view]="secondViewBorder" [outline]="true">
-            <div class="actions justify-content-between">
-                <button [outline]="true" type="button" (click)="location.back()" tc-button
-                    beforeIcon="icofont-reply">Retour</button>
-                <button (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button type="button"
-                    view="accent" class="float-right">Rafraichir</button>
-            </div>
-        </tc-card>
-        <tc-card title="Détails" [outline]="true" [view]="secondViewBorder" [tcGradient]="secondGradient">
+<nz-modal nzWidth="70%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Modification'"
+    [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+    <ng-template #modalBody>
+        <app-access-denied *ngIf="!(contratSrv.resourceName|editable)"></app-access-denied>
+        <form #form="ngForm" novalidate>
             <div class="row">
                 <div class="col-12 col-md-6">
                     <tc-form-group>
+                        <tc-form-label>Type contrat</tc-form-label>
+                        <nz-select [required]="true" name="typeContrat" id="typeContrat" #typeContrat="ngModel"
+                            nzPlaceHolder="Selectionner le type de contrat" nzAllowClear nzShowSearch
+                            [(ngModel)]="selectedTypeContrat">
+                            <ng-container *ngFor="let typeContratItem of typeContrats">
+                                <nz-option [nzValue]="typeContratItem.id" [nzLabel]="typeContratItem.nom"></nz-option>
+                            </ng-container>
+                        </nz-select>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="typeContrat">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Date de début</tc-form-label>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateDebut" name="dateDebut"
+                            id="dateDebut" #dateDebut="ngModel"></nz-date-picker>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="dateDebut">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6" *ngIf="selectedTypeContrat.code !='CDI'">
+                    <tc-form-group>
                         <tc-form-label>Duré en mois</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.dureeEnMois" name="dureeEnMois"
-                            id="dureeEnMois" #dureeEnMois="ngModel">
+                        <tc-input [(ngModel)]="entity.dureeEnMois" name="dureeEnMois" id="dureeEnMois"
+                            #dureeEnMois="ngModel">
                         </tc-input>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="dureeEnMois">
@@ -22,23 +43,68 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6" *ngIf="selectedTypeContrat?.code !='CDI'">
                     <tc-form-group>
-                        <tc-form-label>Date rupture</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.dateRupture" name="dateRupture"
-                            id="dateRupture" #dateRupture="ngModel">
-                        </tc-input>
+                        <tc-form-label>Date fin</tc-form-label>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateFin" name="dateFin"
+                            id="dateFin" #dateFin="ngModel"></nz-date-picker>
                         <tc-form-description>
-                            <app-form-field-validation-message [formField]="dateRupture">
+                            <app-form-field-validation-message [formField]="dateFin">
                             </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>
                 </div>
                 <div class="col-12 col-md-6">
                     <tc-form-group>
+                        <tc-form-label>Date de signature</tc-form-label>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateSignature"
+                            name="dateSignature" id="dateSignature" #dateSignature="ngModel" desabled></nz-date-picker>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="dateSignature">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6" *ngIf="!entity.rompu">
+                    <tc-form-group>
+                        <tc-form-label>Expiration</tc-form-label>
+                        <tc-switcher [(ngModel)]="entity.expire" name="expire" id="expire" #expire="ngModel"
+                            [bgColor]="['transparent', 'transparent', '#ed5564']"
+                            [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']">
+                        </tc-switcher>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="expire"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6" *ngIf="!entity.expire">
+                    <tc-form-group>
+                        <tc-form-label>Rompu</tc-form-label>
+                        <tc-switcher [(ngModel)]="entity.rompu" name="rompu" id="rompu" #rompu="ngModel"
+                            [bgColor]="['transparent', 'transparent', '#ed5564']"
+                            [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']">
+                        </tc-switcher>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="rompu"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6" *ngIf="entity.rompu">
+                    <tc-form-group>
+                        <tc-form-label>Date rupture</tc-form-label>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateRupture" name="dateRupture"
+                            id="dateRupture" #dateRupture="ngModel"></nz-date-picker>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="dateRupture">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6" *ngIf="entity.rompu">
+                    <tc-form-group>
                         <tc-form-label>Motif rupture</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.motifRupture" name="motifRupture"
-                            id="motifRupture" #motifRupture="ngModel">
+                        <tc-input [(ngModel)]="entity.motifRupture" name="motifRupture" id="motifRupture"
+                            #motifRupture="ngModel">
                         </tc-input>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="motifRupture">
@@ -46,42 +112,18 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6">
-                    <tc-form-group>
-                        <tc-form-label>Expire</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.expire" name="expire" id="expire"
-                            #expire="ngModel">
-                        </tc-input>
-                        <tc-form-description>
-                            <app-form-field-validation-message [formField]="expire"></app-form-field-validation-message>
-                        </tc-form-description>
-                    </tc-form-group>
-                </div>
-                <div class="col-12 col-md-6">
-                    <tc-form-group>
-                        <tc-form-label>Rompu</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.rompu" name="rompu" id="rompu"
-                            #rompu="ngModel">
-                        </tc-input>
-                        <tc-form-description>
-                            <app-form-field-validation-message [formField]="rompu"></app-form-field-validation-message>
-                        </tc-form-description>
-                    </tc-form-group>
-                </div>
             </div>
-        </tc-card>
-        <tc-card [view]="secondViewBorder" [outline]="true">
-            <div class="actions">
-                <button [outline]="true" type="button" (click)="location.back()" tc-button view="error"
-                    beforeIcon="icofont-close">Annuler</button>
-                <button type="button" [disabled]="form.invalid" class="float-right" (click)="update()"
-                    beforeIcon="icofont-save" tc-button view="warning">
-                    Mettre à jour
-                </button>
-                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button
-                    type="button" view="success">Rafraichir</button>
-            </div>
-        </tc-card>
-    </form>
-</tc-card>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="actions justify-content-between">
+            <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'"
+                (click)="closeModal()">Fermer</button>
+            <button type="button" class="float-right" (click)="update()" beforeIcon="icofont-save" tc-button
+                view="warning">
+                Mettre à jour
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
 <app-access-denied *ngIf="!(contratSrv.resourceName|editable)"></app-access-denied>

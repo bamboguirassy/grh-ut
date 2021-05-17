@@ -35,7 +35,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6" *ngIf="selectedTypeContrat?.code !='CDI' ">
+                <div class="col-12 col-md-6" *ngIf="selectedTypeContrat?.code !='CDI'">
                     <tc-form-group>
                         <tc-form-label>Durée en mois</tc-form-label>
                         <tc-input type="number" [(ngModel)]="entity.dureeEnMois" name="dureeEnMois" id="dureeEnMois"
@@ -46,7 +46,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6"  *ngIf="selectedTypeContrat?.code !='CDI' ">
+                <div class="col-12 col-md-6" *ngIf="selectedTypeContrat?.code !='CDI'">
                     <tc-form-group>
                         <tc-form-label>Date Fin</tc-form-label>
                         <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateFin"
@@ -106,8 +106,8 @@
                 <div class="col-12 col-md-6" *ngIf="entity.rompu">
                     <tc-form-group>
                         <tc-form-label>Motif de rupture</tc-form-label>
-                        <tc-input [(ngModel)]="entity.motifRupture" name="motifRupture" id="motifRupture"
-                            #motifRupture="ngModel"> </tc-input>
+                        <tc-textarea [(ngModel)]="entity.motifRupture" name="motifRupture" id="motifRupture"
+                            #motifRupture="ngModel"> </tc-textarea>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="motifRupture">
                             </app-form-field-validation-message>
