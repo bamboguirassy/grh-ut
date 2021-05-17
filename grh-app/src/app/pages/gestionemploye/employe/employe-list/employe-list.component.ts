@@ -23,14 +23,14 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
     super(store, employeSrv);
 
     this.pageData = {
-      title: 'Liste des Employes',
+      title: 'Liste des employés',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des employes'
+          title: 'Liste des employés'
         }
       ]
     };
