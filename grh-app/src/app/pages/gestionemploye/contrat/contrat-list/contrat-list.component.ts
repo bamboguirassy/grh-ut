@@ -14,16 +14,19 @@ import { SETTINGS } from 'src/environments/settings';
   styleUrls: ['./contrat-list.component.scss']
 })
 export class ContratListComponent implements OnInit, OnDestroy {
-
   @Input() employe: Employe;
   items:Contrat[]=[];
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];
+  selectedContrat: Contrat;
+
 
   constructor(store: Store<IAppState>,
     public contratSrv: ContratService) {
 
   }
+
+  
 
   ngOnInit(): void {
     this.findByEmploye();
@@ -33,6 +36,7 @@ export class ContratListComponent implements OnInit, OnDestroy {
   }
 
   handlePostDelete() {
+    this.findByEmploye();
   }
 
   handlePostLoad() { }
@@ -66,6 +70,9 @@ export class ContratListComponent implements OnInit, OnDestroy {
     this.items = [item, ...this.items];
   }
 
+  onClose(){
+    this.selectedContrat = null;
+  }
 
   findByEmploye() {
     this.contratSrv.findByEmploye(this.employe)
@@ -73,6 +80,10 @@ export class ContratListComponent implements OnInit, OnDestroy {
       this.items = data;
             
     },err=>this.contratSrv.httpSrv.catchError(err));
+  }
+
+  setSelectedContrat(element: Contrat){
+    this.selectedContrat = element;
   }
 
 }

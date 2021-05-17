@@ -23,7 +23,7 @@ export class ContratNewComponent implements OnInit {
 
   @Input() employe: Employe;
   typeContrats: TypeContrat[] = [];
-  selectedTypeContrat: TypeContrat;
+  selectedTypeContrat: any;
 
   constructor(public contratSrv: ContratService,
     public typeContratSrv: TypeContratService, public datePipe: DatePipe,

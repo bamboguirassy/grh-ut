@@ -10,37 +10,40 @@
         </tc-card>
         <tc-card title="Détails" [outline]="true" [view]="secondViewBorder" [tcGradient]="secondGradient">
             <div class="row">
-                                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>Ville</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.ville" name="ville" id="ville" #ville="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="ville"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>Quartier</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.quartier" name="quartier" id="quartier" #quartier="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="quartier"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>Etat</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Ville</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.ville" name="ville" id="ville"
+                            #ville="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="ville"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Quartier</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.quartier" name="quartier" id="quartier"
+                            #quartier="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="quartier">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Etat</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+            </div>
         </tc-card>
         <tc-card [view]="secondViewBorder" [outline]="true">
             <div class="actions">
@@ -50,8 +53,8 @@
                     beforeIcon="icofont-save" tc-button view="warning">
                     Mettre à jour
                 </button>
-                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh"
-                    tc-button type="button" view="success">Rafraichir</button>
+                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button
+                    type="button" view="success">Rafraichir</button>
             </div>
         </tc-card>
     </form>
