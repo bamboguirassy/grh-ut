@@ -12,7 +12,6 @@ import { EmployeService } from '../employe/employe.service';
 })
 export class DiplomeemployeTimelineComponent implements OnInit {
   @Input() employe: Employe
-  @Input() diplomeEmploye :DiplomeEmploye ;
   items:  Document[] = [];
   lightGradient = ['#fff', SETTINGS.topbarBg];
   tab = [];
