@@ -35,6 +35,10 @@
     </tc-table-col>
   </tc-table>
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
+</tc-card>
+
+<tc-card *ngIf="structureFonctionSrv.resourceName|creable" [tcGradient]="lightGradient" >
   <app-structurefonction-new [structure]="structure" (creation)="onCreated($event)"></app-structurefonction-new>
 </tc-card>
+
 <app-access-denied *ngIf="!(structureFonctionSrv.resourceName|listable)"></app-access-denied>

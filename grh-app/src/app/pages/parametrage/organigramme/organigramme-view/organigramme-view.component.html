@@ -16,19 +16,20 @@
     </tc-card>
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-            <tc-card>
+            <tc-card [view]="secondViewBorder" [outline]="true">
                 <ngx-org-chart [nodes]="nodes" [direction]="selectedOrientationType" (itemClick)="openFonctionAdderModal($event)">
                 </ngx-org-chart>
-            </tc-card>
+            </tc-card>            
         </div>
     </div>
 </tc-card>
+
 
 <nz-modal [nzMaskClosable]="false" [(nzVisible)]="isFonctionModalVisible" [nzClosable]="true" [nzWidth]="'70%'"
     [nzTitle]="fonctionModalTitle" [nzContent]="fonctionModalContent" [nzFooter]="null"
     (nzOnCancel)="isFonctionModalVisible = false">
     <ng-template #fonctionModalTitle>
-        <span class="font-weight-bold"> {{ selectedStructure?.nom }} - Ajouter des fonction</span>
+        <span class="font-weight-bold"> {{ selectedStructure?.nom }} - Gérer les fonctions</span>
     </ng-template>
 
     <ng-template #fonctionModalContent>

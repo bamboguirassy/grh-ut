@@ -41,6 +41,8 @@ export class StructureFonctionNewComponent implements OnInit {
         this.closeModal();
         this.creation.emit(data);
         this.entity = new StructureFonction();
+        this.selectedFonctions = [];
+        this.structureFonctions = [];
       }, error => this.structureFonctionSrv.httpSrv.catchError(error));
   }
 
@@ -55,7 +57,7 @@ export class StructureFonctionNewComponent implements OnInit {
   }
 
   onFonctionSelected(fonction: Array<any>) {
-    this.structureFonctions = fonction.map(f =>({ etat: false, fonction: f , structure: this.structure } as any))
+    this.structureFonctions = fonction.map(f =>({ etat: true, fonction: f , structure: this.structure } as any))
   }
 
   fetchNotBindedFonctions() {
