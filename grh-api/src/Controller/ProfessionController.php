@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Utils\Utils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Entity\Employe;
 
 /**
  * @Route("/api/profession")
@@ -93,6 +94,12 @@ class ProfessionController extends AbstractController
      */
     public function delete(Profession $profession): Profession    {
         $entityManager = $this->getDoctrine()->getManager();
+        $employes = $entityManager->getRepository(Employe::class)
+                ->findByProfession($profession);
+        if (count($employes) > 0) {
+            return $employes;
+            //throw $this->createNotFoundException("Suppression Profession!!!.");
+        }
         $entityManager->remove($profession);
         $entityManager->flush();
 
