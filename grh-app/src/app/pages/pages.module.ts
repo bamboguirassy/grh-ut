@@ -163,6 +163,7 @@ import { UserShowComponent } from './parametrage/user/user-show/user-show.compon
 import { NgPipesModule } from 'ng-pipes';
 import { GradeManagerComponent } from './gestiongrade/grade/grade-manager/grade-manager.component';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { DiplomeemployeTimelineComponent } from './gestionemploye/diplomeemploye-timeline/diplomeemploye-timeline.component';
 
 
 
@@ -378,7 +379,8 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     //structure fonction
     StructureFonctionListComponent,
     StructureFonctionNewComponent,
-    GradeManagerComponent
+    GradeManagerComponent,
+    DiplomeemployeTimelineComponent
   ],
   exports: [],
   entryComponents: []
