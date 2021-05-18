@@ -148,7 +148,7 @@ class ContratController extends AbstractController
     {
         $contrats = $this->getDoctrine()
             ->getRepository(Contrat::class)
-            ->findByEmploye($employe);
+            ->findByEmploye($employe ,['dateDebut' =>'DESC']);
             
         return $contrats;
     }

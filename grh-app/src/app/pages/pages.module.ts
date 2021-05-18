@@ -163,11 +163,11 @@ import { UserShowComponent } from './parametrage/user/user-show/user-show.compon
 import { NgPipesModule } from 'ng-pipes';
 import { GradeManagerComponent } from './gestiongrade/grade/grade-manager/grade-manager.component';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { DiplomeemployeTimelineComponent } from './gestionemploye/diplomeemploye-timeline/diplomeemploye-timeline.component';
+import { DiplomeEmployeTimelineComponent } from './gestionemploye/diplomeemploye/diplomeemploye-timeline/diplomeemploye-timeline.component';
 import { AffectationListComponent } from './gestionemploye/affectation/affectation-list/affectation-list.component';
 import { AffectationEditComponent } from './gestionemploye/affectation/affectation-edit/affectation-edit.component';
 import { AffectationNewComponent } from './gestionemploye/affectation/affectation-new/affectation-new.component';
-
+import { ContratTimelineComponent } from './gestionemploye/contrat/contrat-timeline/contrat-timeline.component';
 
 
 @NgModule({
@@ -254,6 +254,7 @@ import { AffectationNewComponent } from './gestionemploye/affectation/affectatio
     TypeContratEditComponent,
     TypeContratShowComponent,
     TypeContratNewComponent,
+    ContratTimelineComponent,
     // typedocument components
     TypeDocumentListComponent,
     TypeDocumentEditComponent,
@@ -383,12 +384,13 @@ import { AffectationNewComponent } from './gestionemploye/affectation/affectatio
     StructureFonctionListComponent,
     StructureFonctionNewComponent,
     GradeManagerComponent,
-    DiplomeemployeTimelineComponent,
+    DiplomeEmployeTimelineComponent,
     
     // affectation components
     AffectationListComponent,
     AffectationEditComponent,
-    AffectationNewComponent
+    AffectationNewComponent,
+ 
   ],
   exports: [],
   entryComponents: []
