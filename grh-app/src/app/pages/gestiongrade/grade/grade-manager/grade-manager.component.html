@@ -59,9 +59,9 @@
                     <br>
                     <div class="echelon-item mb-1" *ngFor="let grade of tabCategorieItem.grades">
                         {{grade.echelon.nom}}
-                        <span *ngIf="!grade.editable && selectedClasse?.typeEmploye?.code=='PER'" class="badge"
+                        <span class="badge"
                             [ngStyle]="{'background-color': sidebarBg}">
-                            ({{grade.classification}}) <i class="icofont-edit-alt" (click)="grade.editable=true"></i>
+                            ({{grade.classification}}) <i *ngIf="!grade.editable && selectedClasse?.typeEmploye?.code=='PER'" class="icofont-edit-alt" (click)="grade.editable=true"></i>
                         </span>
                         <input style="width: 100px;" type="text" *ngIf="grade.editable" [(ngModel)]="grade.classification" (keyup.enter)="updateGrade(grade)">
                     </div>
