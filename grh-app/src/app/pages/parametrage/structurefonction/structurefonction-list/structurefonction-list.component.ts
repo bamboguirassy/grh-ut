@@ -20,7 +20,7 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
   constructor(store: Store<IAppState>,
     public structureFonctionSrv: StructureFonctionService) {
     super(store, structureFonctionSrv);
-
+/*
     this.pageData = {
       title: 'Liste des StructureFonctions',
       breadcrumbs: [
@@ -32,7 +32,7 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
           title: 'Liste des structurefonctions'
         }
       ]
-    };
+    };*/
   }
 
   ngOnInit(): void {

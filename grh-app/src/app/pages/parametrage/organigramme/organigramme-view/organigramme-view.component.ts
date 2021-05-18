@@ -28,14 +28,14 @@ export class OrganigrammeViewComponent implements OnInit {
 
   constructor(public store: Store<IAppState>, public structureSrv: StructureService) {
     this.pageData = {
-      title: 'Organigramme',
+      title: 'Organigramme des fonctions',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Organigramme'
+          title: 'Organigramme des fonctions'
         }
       ]
     };
@@ -84,7 +84,7 @@ export class OrganigrammeViewComponent implements OnInit {
 
   buildOrgChart() {
     const orgchartTreeItems: OrgchartTreeItem<Structure>[] = [];
-    const rootEntity = this.structures.find(s => s.code = "IES");
+    const rootEntity = this.structures.find(s => s.structureParente === null);
       orgchartTreeItems.push({
         name: rootEntity.nom,
         cssClass: 'ngx-org-ceo',
