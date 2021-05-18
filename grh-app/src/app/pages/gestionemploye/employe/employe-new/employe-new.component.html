@@ -342,6 +342,18 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
+                <div class="col-12 col-md-6 col-lg-4" [hidden]="entity.etat">
+                    <tc-form-group>
+                        <tc-form-label>Commentaire sur motif sortie</tc-form-label>
+                        <tc-textarea [(ngModel)]="entity.commentaireSortie"
+                            name="commentaireSortie" id="commentaireSortie" #commentaireSortie="ngModel">
+                        </tc-textarea>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="commentaireSortie">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
                         <tc-form-label>Photo</tc-form-label>
