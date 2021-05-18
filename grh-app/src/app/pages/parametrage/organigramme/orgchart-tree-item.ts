@@ -4,5 +4,6 @@ export class OrgchartTreeItem<T> {
     image: string;
     title: string;
     data: T;
+    nodeType?: string;
     childs: OrgchartTreeItem<T>[]
 }
