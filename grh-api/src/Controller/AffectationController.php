@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Utils\Utils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Entity\Employe;
 
 /**
  * @Route("/api/affectation")
@@ -38,11 +39,19 @@ class AffectationController extends AbstractController
         $form = $this->createForm(AffectationType::class, $affectation);
         $form->submit(Utils::serializeRequestContent($request));
         $reqData = Utils::getObjectFromRequest($request);
+        $entityManager = $this->getDoctrine()->getManager();
+        
+        if ($affectation->getEmploye()->getStructure() == $affectation->getStructure()) {
+            throw $this->createNotFoundException("L'Employe est déjà affecté à cette structure.");
+        }
         if (isset($reqData->date)) {
             $affectation->setDate(new \DateTime($reqData->date));
         }
-       
-        $entityManager = $this->getDoctrine()->getManager();
+        $employe = $entityManager->getRepository(Employe::class)
+                ->find($affectation->getEmploye());
+        if ($employe) {
+            $employe->setStructure($affectation->getStructure());
+        }
         $entityManager->persist($affectation);
         $entityManager->flush();
 
@@ -93,6 +102,7 @@ class AffectationController extends AbstractController
     /**
     * @Rest\Get(path="/{id}/employe", name="affectation_employe")
     * @Rest\View(StatusCode = 200)  
+    * @IsGranted("ROLE_AFFECTATION_INDEX")
     */
     public function findByEmploye(\App\Entity\Employe $employe): array
     {

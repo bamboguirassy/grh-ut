@@ -195,13 +195,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>Retraité</th>
-                        <td>
-                            <tc-badge view="error" *ngIf="!entity?.retraite">Non</tc-badge>
-                            <tc-badge view="success" *ngIf="entity?.retraite">En retraite</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
                         <th>Genre</th>
                         <td>
                             <span *ngIf="entity?.genre">{{ entity?.genre }}</span>

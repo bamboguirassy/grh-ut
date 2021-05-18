@@ -17,7 +17,6 @@ export class Employe extends BamboAbstractObject {
     matriculeCaisseSociale: string;
     dateRecrutement: string;
     situtationMatrimoniale: string;
-    retraite: boolean;
     genre: string;
     etat: boolean;
     emailUniv: string;
@@ -38,4 +37,5 @@ export class Employe extends BamboAbstractObject {
     numeroMainOeuvre: string;
     numeroAffiliationIpres: string;
     profession: Profession;
+    commentaireSortie: string;
 }

@@ -1,4 +1,4 @@
-<tc-card [tcGradient]="lightGradient" *ngIf="structureSrv.resourceName | listable">
+<tc-card [tcGradient]="['#fff','#fff']" *ngIf="structureSrv.resourceName | listable">
     <tc-card [view]="secondViewBorder" [outline]="true">
         <div class="row">
             <div class="col-12">
@@ -16,7 +16,7 @@
     </tc-card>
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-            <tc-card [view]="secondViewBorder" [outline]="true">
+            <tc-card style="overflow: scroll;" [view]="secondViewBorder" [outline]="true">
                 <ngx-org-chart [nodes]="nodes" [direction]="selectedOrientationType" (itemClick)="openFonctionAdderModal($event)">
                 </ngx-org-chart>
             </tc-card>            
@@ -25,7 +25,7 @@
 </tc-card>
 
 
-<nz-modal [nzMaskClosable]="false" [(nzVisible)]="isFonctionModalVisible" [nzClosable]="true" [nzWidth]="'70%'"
+<nz-modal [nzMaskClosable]="false" [(nzVisible)]="isFonctionModalVisible" [nzClosable]="true" (nzAfterClose)="findStructures()" [nzWidth]="'70%'"
     [nzTitle]="fonctionModalTitle" [nzContent]="fonctionModalContent" [nzFooter]="null"
     (nzOnCancel)="isFonctionModalVisible = false">
     <ng-template #fonctionModalTitle>

@@ -12,7 +12,7 @@
                 <div class="col-12 col-md-6">
                   <tc-form-group>
                       <tc-form-label>Structure</tc-form-label>
-                      <nz-select style="width: 100%" nzPlaceHolder="Sélectionner type contrat" nzAllowClear
+                      <nz-select [required]="true" style="width: 100%" nzPlaceHolder="Sélectionner type contrat" nzAllowClear
                           nzShowSearch [(ngModel)]="selectedStructure" name="typeContrat" id="typeContrat"
                           #typeContrat="ngModel">
                           <ng-container *ngFor="let structureItem of structures">
@@ -28,7 +28,7 @@
                  <div class="col-12 col-md-6">
                         <tc-form-group>
                             <tc-form-label>Date</tc-form-label>
-                           <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.date" name="date"
+                           <nz-date-picker [required]="true" [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.date" name="date"
                                     id="date" #date="ngModel"></nz-date-picker>
                             <tc-form-description>
                                 <app-form-field-validation-message [formField]="date"></app-form-field-validation-message>
@@ -48,7 +48,7 @@
                                                                 <div class="col-12 col-md-6">
                         <tc-form-group>
                             <tc-form-label>Poste</tc-form-label>
-                            <tc-input required="required" [(ngModel)]="entity.poste" name="poste" id="poste" #poste="ngModel">
+                            <tc-input [required]="true" [(ngModel)]="entity.poste" name="poste" id="poste" #poste="ngModel">
                             </tc-input>
                             <tc-form-description>
                                 <app-form-field-validation-message [formField]="poste"></app-form-field-validation-message>
