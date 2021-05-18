@@ -163,6 +163,10 @@ import { UserShowComponent } from './parametrage/user/user-show/user-show.compon
 import { NgPipesModule } from 'ng-pipes';
 import { GradeManagerComponent } from './gestiongrade/grade/grade-manager/grade-manager.component';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { DiplomeemployeTimelineComponent } from './gestionemploye/diplomeemploye-timeline/diplomeemploye-timeline.component';
+import { AffectationListComponent } from './gestionemploye/affectation/affectation-list/affectation-list.component';
+import { AffectationEditComponent } from './gestionemploye/affectation/affectation-edit/affectation-edit.component';
+import { AffectationNewComponent } from './gestionemploye/affectation/affectation-new/affectation-new.component';
 
 
 
@@ -378,7 +382,13 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     //structure fonction
     StructureFonctionListComponent,
     StructureFonctionNewComponent,
-    GradeManagerComponent
+    GradeManagerComponent,
+    DiplomeemployeTimelineComponent,
+    
+    // affectation components
+    AffectationListComponent,
+    AffectationEditComponent,
+    AffectationNewComponent
   ],
   exports: [],
   entryComponents: []

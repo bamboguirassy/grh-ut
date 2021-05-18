@@ -37,7 +37,11 @@ class AffectationController extends AbstractController
         $affectation = new Affectation();
         $form = $this->createForm(AffectationType::class, $affectation);
         $form->submit(Utils::serializeRequestContent($request));
-
+        $reqData = Utils::getObjectFromRequest($request);
+        if (isset($reqData->date)) {
+            $affectation->setDate(new \DateTime($reqData->date));
+        }
+       
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($affectation);
         $entityManager->flush();
@@ -84,6 +88,19 @@ class AffectationController extends AbstractController
         $em->flush();
 
         return $affectationNew;
+    }
+    
+    /**
+    * @Rest\Get(path="/{id}/employe", name="affectation_employe")
+    * @Rest\View(StatusCode = 200)  
+    */
+    public function findByEmploye(\App\Entity\Employe $employe): array
+    {
+        $affectations = $this->getDoctrine()
+            ->getRepository(Affectation::class)
+            ->findByEmploye($employe);
+            
+        return $affectations;
     }
 
     /**

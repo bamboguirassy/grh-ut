@@ -94,7 +94,7 @@ class DiplomeEmployeController extends AbstractController
     public function findByEmploye(\App\Entity\Employe $employe): array {
         $diplomeEmployes = $this->getDoctrine()
                 ->getRepository(DiplomeEmploye::class)
-                ->findByEmploye($employe);
+                ->findByEmploye($employe,['anneeObtention' => 'DESC']);
         return count($diplomeEmployes) ? $diplomeEmployes : [];
     }
 

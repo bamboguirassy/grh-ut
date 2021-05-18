@@ -39,6 +39,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   isContratLoaded = false;
   titre: string;
   topbarBg = SETTINGS.topbarBg;
+  isAffectationLoaded = false;
 
   constructor(store: Store<IAppState>,
     public employeSrv: EmployeService, public fonctionEmployeSrv: FonctionEmployeService,
@@ -158,6 +159,10 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   }
   loadContratsTab() {
     this.isContratLoaded = true;
+  }
+
+  loadAffectationsTab(){
+    this.isAffectationLoaded = true;
   }
 
 }
