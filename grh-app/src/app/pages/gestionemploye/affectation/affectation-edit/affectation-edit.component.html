@@ -7,11 +7,11 @@
                     <div class="col-12 col-md-6">
                         <tc-form-group>
                             <tc-form-label>Structure</tc-form-label>
-                            <nz-select style="width: 100%" nzPlaceHolder="Sélectionner la structure" nzAllowClear
+                            <nz-select required="required" style="width: 100%" nzPlaceHolder="Sélectionner la structure" nzAllowClear
                                 nzShowSearch [(ngModel)]="selectedStructureId" name="structure" id="structure"
                                 #structure="ngModel">
                                 <ng-container *ngFor="let structureItem of structures">
-                                    <nz-option [nzValue]="structureItem" [nzLabel]="structureItem.nom"></nz-option>
+                                    <nz-option [nzValue]="structureItem.id" [nzLabel]="structureItem.nom"></nz-option>
                                 </ng-container>
                             </nz-select>
                             <tc-form-description>
@@ -23,7 +23,7 @@
                     <div class="col-12 col-md-6">
                                 <tc-form-group>
                                     <tc-form-label>Date</tc-form-label>
-                                    <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.date" name="date"
+                                    <nz-date-picker required="required" [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.date" name="date"
                                     id="date" #date="ngModel"></nz-date-picker>
                                     <tc-form-description>
                                         <app-form-field-validation-message [formField]="date"></app-form-field-validation-message>
