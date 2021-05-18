@@ -87,12 +87,6 @@
                             <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                    <tc-table-col [columnTitle]="'Retraité'" [columnName]="'retraite'" [enableSorting]="true">
-                        <ng-template #tableTDTemplate let-value>
-                            <tc-badge view="error" *ngIf="!value">Non</tc-badge>
-                            <tc-badge view="success" *ngIf="value">Oui</tc-badge>
-                        </ng-template>
-                    </tc-table-col>
                     <tc-table-col [columnTitle]="'Genre'" [columnName]="'genre'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value }}</span>
