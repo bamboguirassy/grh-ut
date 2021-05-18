@@ -8,6 +8,9 @@
       </div>
     </div>
   </tc-card>
+  <tc-card>
+    <nz-tabset>
+    <nz-tab nzTitle="Liste">
   <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
     <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
       <ng-template #tableTDTemplate let-row="row">
@@ -80,6 +83,16 @@
       </ng-template>
     </tc-table-col>
   </tc-table>
+  </nz-tab>
+
+  <nz-tab nzTitle="Chronologie(graphique)">
+     <app-contrat-timeline  *ngIf="employe && this.items.length" [employe]="employe">
+
+    </app-contrat-timeline> 
+
+  </nz-tab>
+  </nz-tabset>
+  </tc-card>
   <app-contrat-edit *ngIf="selectedContrat" [selectedContrat]="selectedContrat" (modification)="findByEmploye()"
     (onClose)="onClose()"></app-contrat-edit>
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
