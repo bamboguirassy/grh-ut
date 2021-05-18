@@ -13,7 +13,6 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./fonctionemploye-list.component.scss']
 })
 export class FonctionEmployeListComponent implements OnInit {
-
   @Input() employe: Employe;
   selectedFonction: FonctionEmploye;
   tab =  [];
@@ -29,7 +28,11 @@ export class FonctionEmployeListComponent implements OnInit {
   
   setTimeline() {
     const sectionData = this.items.map((i: any) => ({
-      date: `${this.datePipe.transform(`${i.datePriseFonction}` , 'dd/MM/yyyy')} - ${i.etat?'En Cours':`${this.datePipe.transform(`${i.dateFin}` , 'dd/MM/yyyy')}`}`,
+     date: `${i.datePriseFonction?`${this.datePipe.
+      transform(`${i.datePriseFonction}` , 'dd/MM/yyyy')}`
+      :'Indefini'} - ${i.etat?'En Cours'
+      :`${i.dateFin?`${this.datePipe.transform(`${i.dateFin}`
+       , 'dd/MM/yyyy')}`:'En Cours'}`}`,
       title: i.responsabilite.fonction.nom,
       content: i.responsabilite.structure.nom,
       icon: "icofont-business-man-alt-1",
