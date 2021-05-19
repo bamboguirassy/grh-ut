@@ -169,6 +169,7 @@ import { AffectationEditComponent } from './gestionemploye/affectation/affectati
 import { AffectationNewComponent } from './gestionemploye/affectation/affectation-new/affectation-new.component';
 import { ContratTimelineComponent } from './gestionemploye/contrat/contrat-timeline/contrat-timeline.component';
 import { GradeEmployeGlobalComponent } from './dashboards/grade/grade-employe-global/grade-employe-global.component';
+import { TestComponent } from './tests/test/test.component';
 
 
 @NgModule({
@@ -392,6 +393,7 @@ import { GradeEmployeGlobalComponent } from './dashboards/grade/grade-employe-gl
     AffectationEditComponent,
     AffectationNewComponent,
     GradeEmployeGlobalComponent,
+    TestComponent,
  
   ],
   exports: [],
