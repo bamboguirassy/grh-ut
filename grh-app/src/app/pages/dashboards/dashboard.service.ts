@@ -28,4 +28,8 @@ export class DashboardService {
   countByType() {
     return this.httpSrv.get(this.routePrefix + 'employe/count-by-type/');
   }
+
+  countByProfession() {
+    return this.httpSrv.get(this.routePrefix + 'employe/count-by-profession/');
+  }
 }

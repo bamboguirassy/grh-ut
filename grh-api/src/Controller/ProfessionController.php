@@ -100,7 +100,6 @@ class ProfessionController extends AbstractController
         if (count($employes) > 0) {
             $isTrue = true;
             return ["employes"=>$employes, "isTrue"=>$isTrue];
-            //throw $this->createNotFoundException("Suppression Profession!!!.");
         }
         $entityManager->remove($profession);
         $entityManager->flush();
