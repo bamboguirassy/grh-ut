@@ -172,6 +172,7 @@ import { GradeEmployeGlobalComponent } from './dashboards/grade/grade-employe-gl
 import { TestComponent } from './tests/test/test.component';
 
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -394,6 +395,7 @@ import { TestComponent } from './tests/test/test.component';
     AffectationNewComponent,
     GradeEmployeGlobalComponent,
     TestComponent,
+  
  
   ],
   exports: [],
