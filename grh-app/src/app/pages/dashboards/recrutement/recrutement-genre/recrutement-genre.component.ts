@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { EmployeService } from 'src/app/pages/gestionemploye/employe/employe.service';
 import { DashboardBaseComponent } from 'src/app/shared/components/dashboard-base/dashboard-base.component';
+import { DashboardService } from '../../dashboard.service';
 import { RecrutementGenreCM } from '../recrutement-genre-cm';
 
 @Component({
@@ -17,9 +18,9 @@ export class RecrutementGenreComponent extends DashboardBaseComponent<Recrutemen
     { value: 'line', title: 'Courbe' },
   ];
   constructor(
-    public employeSrv: EmployeService,
+    public dashboardSrv: DashboardService,
   ) {
-    super(employeSrv);
+    super(dashboardSrv);
     this.methodName = 'calculateRecrutementGroupedByGenres';
   }
 
@@ -30,6 +31,29 @@ export class RecrutementGenreComponent extends DashboardBaseComponent<Recrutemen
   setDataChart() {
     this.chartOptions = {
       responsive: true,
+        scales: { //you're missing this
+          yAxes: {
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Nombres'
+            }
+          },
+          xAxes: {
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Années'
+            }
+          }
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: 'Recrutements Homme / Femme pour les 5 dernières années'
+          }
+        }
+        
     };
     this.chartLabels = this.rawChartData.map(r => r.annee);
     this.chartType = 'bar';

@@ -195,13 +195,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>Retraité</th>
-                        <td>
-                            <tc-badge view="error" *ngIf="!entity?.retraite">Non</tc-badge>
-                            <tc-badge view="success" *ngIf="entity?.retraite">En retraite</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
                         <th>Genre</th>
                         <td>
                             <span *ngIf="entity?.genre">{{ entity?.genre }}</span>
@@ -351,6 +344,10 @@
                     <nz-collapse-panel nzHeader="Contrats" (click)="loadContratsTab()">
                         <app-contrat-list *ngIf="entity && isContratLoaded" [employe]="entity">
                         </app-contrat-list>
+                    </nz-collapse-panel>
+                    <nz-collapse-panel nzHeader="Affectations" (click)="loadAffectationsTab()">
+                        <app-affectation-list *ngIf="entity && isAffectationLoaded" [employe]="entity">
+                        </app-affectation-list>
                     </nz-collapse-panel>
                 </nz-collapse>
             </tc-card>

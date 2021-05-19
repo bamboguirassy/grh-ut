@@ -39,8 +39,11 @@ export class StructureFonctionNewComponent implements OnInit {
       .createMultiple(this.structureFonctions.map(sf => ({ etat: sf.etat, fonction: sf.fonction.id , structure: this.structure.id } as any) ))
       .subscribe((data: any) => {
         this.closeModal();
+        this.structure.structureFonctions.concat(data);
         this.creation.emit(data);
         this.entity = new StructureFonction();
+        this.selectedFonctions = [];
+        this.structureFonctions = [];
       }, error => this.structureFonctionSrv.httpSrv.catchError(error));
   }
 
@@ -55,7 +58,7 @@ export class StructureFonctionNewComponent implements OnInit {
   }
 
   onFonctionSelected(fonction: Array<any>) {
-    this.structureFonctions = fonction.map(f =>({ etat: false, fonction: f , structure: this.structure } as any))
+    this.structureFonctions = fonction.map(f =>({ etat: true, fonction: f , structure: this.structure } as any))
   }
 
   fetchNotBindedFonctions() {
@@ -71,6 +74,5 @@ export class StructureFonctionNewComponent implements OnInit {
         this.fonctionSrv.httpSrv.handleError(err);
       });
   }
-
 }
 

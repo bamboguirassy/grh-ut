@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Utils\Utils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Entity\Employe;
 
 /**
  * @Route("/api/profession")
@@ -91,8 +92,34 @@ class ProfessionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_PROFESSION_EDIT")
      */
-    public function delete(Profession $profession): Profession    {
+    public function delete(Profession $profession) {
         $entityManager = $this->getDoctrine()->getManager();
+        $isTrue = false;
+        $employes = $entityManager->getRepository(Employe::class)
+                ->findByProfession($profession);
+        if (count($employes) > 0) {
+            $isTrue = true;
+            return ["employes"=>$employes, "isTrue"=>$isTrue];
+            //throw $this->createNotFoundException("Suppression Profession!!!.");
+        }
+        $entityManager->remove($profession);
+        $entityManager->flush();
+
+        return $profession;
+    }
+    
+    /**
+     * @Rest\Delete("/{id}/forceDelete", name="profession_forceDelete",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_PROFESSION_EDIT")
+     */
+    public function forceDelete(Profession $profession): Profession {
+        $entityManager = $this->getDoctrine()->getManager();
+        $employes = $entityManager->getRepository(Employe::class)
+                ->findByProfession($profession);
+        foreach ($employes as $employe){
+            $employe->setProfession(NULL);
+        }
         $entityManager->remove($profession);
         $entityManager->flush();
 

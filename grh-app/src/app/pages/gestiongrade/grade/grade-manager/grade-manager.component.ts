@@ -131,7 +131,7 @@ export class GradeManagerComponent extends BasePageComponent<Grade> implements O
         this.isClasseModelChanged = false;
         this.cancelClasseEdit();
         this.loadGradeMap(this.selectedClasse);
-        this.findClassesByTypeEmploye(this.selectedClasse.typeEmploye);
+        //this.findClassesByTypeEmploye(this.selectedClasse.typeEmploye);
       }, err => this.gClasseSrv.httpSrv.catchError(err));
   }
 

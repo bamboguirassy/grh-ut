@@ -9,7 +9,7 @@
   </tc-card>
 <tc-card>
   <nz-tabset>
-    <nz-tab nzTitle="Fonction">
+    <nz-tab nzTitle="Liste">
     <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
     <tc-table-col [columnTitle]="'Fonction'" [columnName]="'responsabilite'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
@@ -53,7 +53,7 @@
     </tc-table-col>
   </tc-table>
 </nz-tab>
-<nz-tab nzTitle="Struture Fonction">
+<nz-tab nzTitle="Chronologie(graphique)">
   <tc-card  [tcGradient]="['#fff', '#fbfbfb']">
     <tc-v-timeline [data]= "tab" ></tc-v-timeline>
 </tc-card>

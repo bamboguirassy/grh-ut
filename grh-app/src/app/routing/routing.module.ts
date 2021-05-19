@@ -39,6 +39,7 @@ import { typeDocumentRoutes } from '../pages/parametrage/typedocument/typedocume
 import { typeEmployeRoutes } from '../pages/parametrage/typeemploye/typeemploye.routes';
 import { typeEntiteRoutes } from '../pages/parametrage/typeentite/typeentite.routes';
 import { userRoutes } from '../pages/parametrage/user/user.routes';
+import { TestComponent } from '../pages/tests/test/test.component';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -46,6 +47,7 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'user-profile', component: PageUserProfileComponent },
   { path: 'edit-account', component: PageEditAccountComponent },
   { path: 'settings', component: PageSettingsComponent },
+  { path: 'test', component: TestComponent },
   userRoutes,
   groupRoutes,
   typeEntiteRoutes,
