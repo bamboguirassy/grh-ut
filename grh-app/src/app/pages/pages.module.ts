@@ -396,7 +396,8 @@ import { ProfessionStatsComponent } from './dashboards/profession/profession-sta
     AffectationNewComponent,
     GradeEmployeGlobalComponent,
     TestComponent,
-    ProfessionStatsComponent, 
+    ProfessionStatsComponent,
+
   ],
   exports: [],
   entryComponents: []
