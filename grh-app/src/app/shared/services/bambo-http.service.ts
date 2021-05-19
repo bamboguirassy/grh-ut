@@ -51,6 +51,11 @@ export class BamboHttpService {
     return this.http.delete(this.baseUrl + url, this.createAuthorizationHeader())
     .pipe(first());
   }
+  
+  forceDelete(url: string) {
+    return this.http.delete(this.baseUrl + url, this.createAuthorizationHeader())
+    .pipe(first());
+  }
 
   handleError(error: any) {
     return observableThrowError(error || 'Server error');
