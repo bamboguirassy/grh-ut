@@ -110,6 +110,7 @@ export class EmployeNewComponent implements OnInit {
       }, error => this.employeSrv.httpSrv.catchError(error));
   }
 
+
   // open modal window
   openModal() {
     this.isModalVisible = true;
@@ -162,7 +163,7 @@ export class EmployeNewComponent implements OnInit {
   }
 
   findGrades() {
-    this.gradeSrv.findAll()
+    this.gradeSrv.findByTypeEmploye(this.typeEmploye)
       .subscribe((data: any) => {
         this.grades = data;
       }, err => this.gradeSrv.httpSrv.catchError(err));
@@ -182,6 +183,8 @@ export class EmployeNewComponent implements OnInit {
         this.professions = data;
       }, err => this.professionSrv.httpSrv.catchError(err));
   }
+
+  
 
 }
 

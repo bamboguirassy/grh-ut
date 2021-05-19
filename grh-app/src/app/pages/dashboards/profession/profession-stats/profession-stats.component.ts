@@ -47,7 +47,7 @@ export class ProfessionStatsComponent extends DashboardBaseComponent<ProfessionS
         plugins: {
           title: {
             display: true,
-            text: 'Recrutements Homme / Femme pour les 5 dernières années'
+            text: 'Nombre d\'employé par Profession'
           }
         }
         

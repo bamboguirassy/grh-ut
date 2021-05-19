@@ -168,6 +168,7 @@ import { AffectationListComponent } from './gestionemploye/affectation/affectati
 import { AffectationEditComponent } from './gestionemploye/affectation/affectation-edit/affectation-edit.component';
 import { AffectationNewComponent } from './gestionemploye/affectation/affectation-new/affectation-new.component';
 import { ContratTimelineComponent } from './gestionemploye/contrat/contrat-timeline/contrat-timeline.component';
+import { GradeEmployeGlobalComponent } from './dashboards/grade/grade-employe-global/grade-employe-global.component';
 import { TestComponent } from './tests/test/test.component';
 import { ProfessionStatsComponent } from './dashboards/profession/profession-stats/profession-stats.component';
 
@@ -392,6 +393,7 @@ import { ProfessionStatsComponent } from './dashboards/profession/profession-sta
     AffectationListComponent,
     AffectationEditComponent,
     AffectationNewComponent,
+    GradeEmployeGlobalComponent,
     TestComponent,
     ProfessionStatsComponent, 
   ],

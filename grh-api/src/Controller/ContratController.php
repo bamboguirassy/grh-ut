@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Utils\Utils;
+use DateTime;
 use PhpParser\Node\Expr\AssignOp\Concat;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -81,7 +82,19 @@ class ContratController extends AbstractController
     {
         $form = $this->createForm(ContratType::class, $contrat);
         $form->submit(Utils::serializeRequestContent($request));
-
+        $reqData = Utils::getObjectFromRequest($request);
+        if (isset($reqData->dateSignature)) {
+            $contrat->setDateSignature(new \DateTime($reqData->dateSignature));
+        }
+        if (isset($reqData->dateDebut)) {
+            $contrat->setDateDebut(new \DateTime($reqData->dateDebut));
+        }
+        if (isset($reqData->dateFin)) {
+           $contrat->setDateFin(new \DateTime($reqData->dateFin));
+        }
+         if (isset($reqData->dateRupture)) {
+           $contrat->setDateRupture(new \DateTime($reqData->dateRupture));
+        }
         $this->getDoctrine()->getManager()->flush();
 
         return $contrat;

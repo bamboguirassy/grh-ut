@@ -34,6 +34,8 @@ export class ContratNewComponent implements OnInit {
   ngOnInit(): void { }
 
   save() {
+    console.log(this.entity);
+
     this.entity.employe = this.employe.id;
     if (this.selectedTypeContrat) {
       this.entity.typeContrat = this.selectedTypeContrat.id;
@@ -50,8 +52,6 @@ export class ContratNewComponent implements OnInit {
     }
     if(this.entity.typeContrat.code=='CDI'){
       this.entity.dureeEnMois=null;
-    }
-    if(this.entity.typeContrat.code=='CDI'){
       this.entity.dateFin=null;
     }
     if (this.entity.dateRupture) {

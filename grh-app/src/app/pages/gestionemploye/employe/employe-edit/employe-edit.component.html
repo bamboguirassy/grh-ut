@@ -318,9 +318,12 @@
                 <div class="col-12 col-md-6 col-lg-4" [hidden]="entity.etat">
                     <tc-form-group>
                         <tc-form-label>Motif Sortie</tc-form-label>
-                        <tc-input [(ngModel)]="entity.motifSortie" name="motifSortie" id="motifSortie"
+                        <tc-select required="required" [(ngModel)]="entity.motifSortie" name="motifSortie" id="motifSortie"
+                            #motifSortie="ngModel" [placeholder]="'Selectionner le motif de sortie'" [options]="employeSrv.motifSorties">
+                        </tc-select>
+                        <!-- <tc-input [(ngModel)]="entity.motifSortie" name="motifSortie" id="motifSortie"
                             #motifSortie="ngModel">
-                        </tc-input>
+                        </tc-input> -->
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="motifSortie">
                             </app-form-field-validation-message>
