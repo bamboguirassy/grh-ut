@@ -31,6 +31,29 @@ export class RecrutementGenreComponent extends DashboardBaseComponent<Recrutemen
   setDataChart() {
     this.chartOptions = {
       responsive: true,
+        scales: { //you're missing this
+          yAxes: {
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Nombres'
+            }
+          },
+          xAxes: {
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Années'
+            }
+          }
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: 'Recrutements Homme / Femme pour les 5 dernières années'
+          }
+        }
+        
     };
     this.chartLabels = this.rawChartData.map(r => r.annee);
     this.chartType = 'bar';

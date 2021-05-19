@@ -41,7 +41,34 @@ export class RecrutementTypeComponent extends DashboardBaseComponent<Recrutement
         }
       }
       chartData.push({ data: arr, label: te.label });
-    }    
+    }
+
+    this.chartOptions = {
+      responsive: true,
+      scales: {
+        yAxes: {
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Nombres'
+          }
+        },
+        xAxes: {
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Années'
+          }
+        },
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Évolution des recrutements pour les 5 dernières années'
+        }
+      }
+
+    };
 
     this.chartLabels = this.rawChartData.map((data) => data.annee);
     this.chartType = 'bar';
