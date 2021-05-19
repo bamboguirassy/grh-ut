@@ -76,9 +76,15 @@ class Structure
      */
     private $children;
 
+    /**
+     * @ORM\OneToMany(targetEntity=StructureFonction::class, mappedBy="structure")
+     */
+    private $structureFonctions;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
+        $this->structureFonctions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -180,6 +186,37 @@ class Structure
     {
         if ($this->children->contains($child)) {
             $this->children->removeElement($child);
+            // set the owning side to null (unless already changed)
+            if ($child->getStructure() === $this) {
+                $child->setStructure(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getStructureFonctions(): Collection
+    {
+        return $this->structureFonctions;
+    }
+
+    public function addStructureFonctions(StructureFonction $child): self
+    {
+        if (!$this->structureFonctions->contains($child)) {
+            $this->structureFonctions[] = $child;
+            $child->setStructure($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStructureFonctions(StructureFonction $child): self
+    {
+        if ($this->structureFonctions->contains($child)) {
+            $this->structureFonctions->removeElement($child);
             // set the owning side to null (unless already changed)
             if ($child->getStructure() === $this) {
                 $child->setStructure(null);

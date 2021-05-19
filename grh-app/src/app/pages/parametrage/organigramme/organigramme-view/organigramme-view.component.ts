@@ -7,6 +7,7 @@ import { SETTINGS } from 'src/environments/settings';
 import * as PageActions from '../../../../store/actions/page.actions';
 import { Structure } from '../../structure/structure';
 import { StructureService } from '../../structure/structure.service';
+import { StructureFonction } from '../../structurefonction/structurefonction';
 import { OrgchartTreeItem } from '../orgchart-tree-item';
 
 
@@ -21,7 +22,7 @@ export class OrganigrammeViewComponent implements OnInit {
   lightGradient = ['#fff', SETTINGS.topbarBg];
   secondViewBorder = 'info';
   structures: Structure[] = [];
-  selectedOrientationType : string = 'horizontal';
+  selectedOrientationType: string = 'horizontal';
   selectedStructure: Structure;
 
   nodes: any;
@@ -49,8 +50,19 @@ export class OrganigrammeViewComponent implements OnInit {
   }
 
   openFonctionAdderModal(event: any) {
-    this.selectedStructure = event.data;
-    this.isFonctionModalVisible = true;
+    switch (event.nodeType) {
+      case 'struct':
+        this.selectedStructure = event.data;
+        this.isFonctionModalVisible = true;
+        break;
+
+      case 'fonction':
+        break;
+
+      case 'fonctionParent':
+        break;
+    }
+
   }
 
   setLoaded(during: number = 0) {
@@ -72,27 +84,63 @@ export class OrganigrammeViewComponent implements OnInit {
 
   getChartTreeItem(structure: Structure): OrgchartTreeItem<Structure>[] {
 
-    return structure.children.map(struct => ({
-      name: struct.nom,
+    return [{
+      name: 'Sous structure',
       cssClass: 'ngx-org-ceo',
       image: 'assets/img/university.svg',
-      title: struct.typeEntite.nom,
-      data: struct,
-      childs: this.getChartTreeItem(struct)
-    }));
+      title: 'Sous structure',
+      data: structure,
+      nodeType: 'subStructParent',
+      childs: structure.children.map(struct => ({
+        name: struct.nom,
+        cssClass: 'ngx-org-ceo',
+        image: 'assets/img/university.svg',
+        title: struct.typeEntite.nom,
+        data: struct,
+        nodeType: 'struct',
+        childs: this.getChartTreeItem(struct)
+      }))
+    }, {
+      name: 'Fonctions',
+      cssClass: 'ngx-org-ceo',
+      image: 'assets/img/university.svg',
+      title: 'Fonctions associées',
+      data: structure,
+      nodeType: 'fonctionParent',
+      childs: structure.structureFonctions.map(sf => ({
+        name: sf.fonction.nom,
+        cssClass: 'ngx-org-ceo',
+        image: 'assets/img/university.svg',
+        title: sf.fonction.etat ? 'Actif' : 'Inactif',
+        data: structure,
+        nodeType: 'fonction',
+      })) as any
+    }];
   }
 
   buildOrgChart() {
     const orgchartTreeItems: OrgchartTreeItem<Structure>[] = [];
     const rootEntity = this.structures.find(s => s.structureParente === null);
-      orgchartTreeItems.push({
-        name: rootEntity.nom,
-        cssClass: 'ngx-org-ceo',
-        image: 'assets/img/university.svg',
-        title: rootEntity.typeEntite.nom,
-        data: rootEntity,
-        childs: this.getChartTreeItem(rootEntity)
-      });
+    orgchartTreeItems.push({
+      name: rootEntity.nom,
+      cssClass: 'ngx-org-ceo',
+      image: 'assets/img/university.svg',
+      title: rootEntity.typeEntite.nom,
+      data: rootEntity,
+      nodeType: 'struct',
+      childs: this.getChartTreeItem(rootEntity)
+    });
     this.nodes = orgchartTreeItems;
+  }
+
+  onCreatedStructureFonction(structureFonctions: StructureFonction[]) {
+    console.log(structureFonctions);
+    this.structures.forEach(s => {
+      if (s.id === this.selectedStructure.id) {
+        s.structureFonctions.concat(structureFonctions);
+      }
+    });
+    this.buildOrgChart();
+    this.nodes = [...this.nodes];
   }
 }

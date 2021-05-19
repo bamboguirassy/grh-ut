@@ -1,16 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SETTINGS } from 'src/environments/settings';
-import { DiplomeEmploye } from '../diplomeemploye/diplomeemploye';
-import { DiplomeEmployeService } from '../diplomeemploye/diplomeemploye.service';
-import { Employe } from '../employe/employe';
-import { EmployeService } from '../employe/employe.service';
+import { DiplomeEmployeService } from '../diplomeemploye.service';
+import { Employe } from '../../employe/employe';
+import { EmployeService } from '../../employe/employe.service';
 
 @Component({
   selector: 'app-diplomeemploye-timeline',
   templateUrl: './diplomeemploye-timeline.component.html',
   styleUrls: ['./diplomeemploye-timeline.component.scss']
 })
-export class DiplomeemployeTimelineComponent implements OnInit {
+export class DiplomeEmployeTimelineComponent implements OnInit {
   @Input() employe: Employe
   items:  Document[] = [];
   lightGradient = ['#fff', SETTINGS.topbarBg];

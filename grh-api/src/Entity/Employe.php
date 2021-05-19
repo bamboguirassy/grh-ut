@@ -85,13 +85,6 @@ class Employe
     private $situtationMatrimoniale;
 
     /**
-     * @var bool|null
-     *
-     * @ORM\Column(name="retraite", type="boolean", nullable=true, options={"comment"="true ou false, false par defaut"})
-     */
-    private $retraite;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="genre", type="string", length=45, nullable=false, options={"comment"="Homme ou Femme"})
@@ -235,6 +228,11 @@ class Employe
      */
     private $structure;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $commentaireSortie;
+
     public function getId()
     {
         return $this->id;
@@ -344,18 +342,6 @@ class Employe
     public function setSitutationMatrimoniale($situtationMatrimoniale): self
     {
         $this->situtationMatrimoniale = $situtationMatrimoniale;
-
-        return $this;
-    }
-
-    public function getRetraite()
-    {
-        return $this->retraite;
-    }
-
-    public function setRetraite($retraite): self
-    {
-        $this->retraite = $retraite;
 
         return $this;
     }
@@ -597,6 +583,18 @@ class Employe
     public function setStructure(?Structure $structure): self
     {
         $this->structure = $structure;
+
+        return $this;
+    }
+
+    public function getCommentaireSortie(): ?string
+    {
+        return $this->commentaireSortie;
+    }
+
+    public function setCommentaireSortie(?string $commentaireSortie): self
+    {
+        $this->commentaireSortie = $commentaireSortie;
 
         return $this;
     }

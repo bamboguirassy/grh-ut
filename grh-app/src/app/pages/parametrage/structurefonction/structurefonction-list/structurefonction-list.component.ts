@@ -1,6 +1,6 @@
 import { BasePageComponent } from '../../../base-page/base-page.component';
 import { IAppState } from './../../../../interfaces/app-state';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { StructureFonctionService } from '../structurefonction.service';
 import { StructureFonction } from '../structurefonction';
