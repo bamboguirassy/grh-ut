@@ -110,6 +110,7 @@ export class ProfessionListComponent extends BasePageComponent<Profession> imple
         Swal.close();
         this.httpSv.toastr.warning("Suppression annulée !");
         this.loadDelete = false;
+        this.closeModal();
       }
     });
   }

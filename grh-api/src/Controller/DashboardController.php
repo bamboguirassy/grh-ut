@@ -311,4 +311,47 @@ class DashboardController extends AbstractController
         }
         return count($tabRecrutement) ? $tabRecrutement : [];
     }
+    
+    /**
+     * @Rest\Get(path="/employe/count-by-profession/", name="employe_count_statistic_by_profession")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function countEmployeByProfession(): array
+    {
+        $em = $this->getDoctrine()->getManager();
+//        $professions = $em->getRepository('App\Entity\Profession')
+//            ->findByEmploye();
+        $professions = $em->createQuery('
+            SELECT p
+            FROM App\Entity\Profession p
+            WHERE p IN (SELECT pe
+            FROM App\Entity\Employe e JOIN e.profession pe
+            )
+        ')
+          ->getResult();
+        $tab = [];
+        foreach ($professions as $profession) {
+            $nbrHomme = 0;
+            $nbrFemme = 0;
+            $employes = $em->getRepository(Employe::class)
+                ->findByProfession($profession);
+            foreach ($employes as $employe){
+                if (strtolower($employe->getGenre()) === 'masculin')
+                    $nbrHomme++;
+                else
+                    $nbrFemme++;
+            }
+            $tab [] = [
+                'profession' => $profession,
+                'nbreEmploye' => count($employes),
+                'nbrHomme' => $nbrHomme,
+                'nbrFemme' => $nbrFemme,
+            ];
+        }
+
+
+        return count($tab) ? $tab : [];
+    }
+    
 }

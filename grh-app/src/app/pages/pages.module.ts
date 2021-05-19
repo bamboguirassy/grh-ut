@@ -170,6 +170,7 @@ import { AffectationNewComponent } from './gestionemploye/affectation/affectatio
 import { ContratTimelineComponent } from './gestionemploye/contrat/contrat-timeline/contrat-timeline.component';
 import { GradeEmployeGlobalComponent } from './dashboards/grade/grade-employe-global/grade-employe-global.component';
 import { TestComponent } from './tests/test/test.component';
+import { ProfessionStatsComponent } from './dashboards/profession/profession-stats/profession-stats.component';
 
 
 
@@ -395,8 +396,7 @@ import { TestComponent } from './tests/test/test.component';
     AffectationNewComponent,
     GradeEmployeGlobalComponent,
     TestComponent,
-  
- 
+    ProfessionStatsComponent, 
   ],
   exports: [],
   entryComponents: []
