@@ -33,6 +33,22 @@ class GradeController extends AbstractController
 
         return count($grades)?$grades:[];
     }
+     /**
+     * @Rest\Get(path="/{id}/typeemploye", name="grade_by_type_employe")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_GRADE_INDEX")
+     */
+    public function findGradeByTypeEmploye(\App\Entity\TypeEmploye $typeEmploye): array
+    {
+       $em= $this->getDoctrine()->getManager();
+       $grades = $em->createQuery('select'
+               . ' g FROM App\Entity\Grade g '
+               . 'JOIN g.classe c WHERE c.typeEmploye=:typeEmploye ')
+               ->setParameter('typeEmploye',$typeEmploye)
+               ->getResult();
+               
+        return count($grades)?$grades:[];
+    }
 
     /**
      * @Rest\Get(path="/map/{id}/classe", name="grade_map_classe")
@@ -220,4 +236,6 @@ class GradeController extends AbstractController
         return $grade->getClasse()->getIndice().$grade->getCategorie()->getIndice()
         .$grade->getNiveau()->getIndice().$grade->getEchelon()->getIndice();
     }
+    
+    
 }

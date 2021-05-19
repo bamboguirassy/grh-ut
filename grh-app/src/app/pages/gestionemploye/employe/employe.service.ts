@@ -20,6 +20,12 @@ export class EmployeService extends BamboAbstractService {
     { label: 'Masculin', value: 'Masculin' },
     { label: 'Féminin', value: 'Féminin' },
   ];
+  public motifSorties: any[] = [
+    {label: 'Démission', value:'Démission'},
+    {label: 'Retraite', value:'Retraite'},
+    {label: 'Retraite Anticipé', value:'Retraite Anticipé'},
+    {label: 'Mis à pied', value:'Mis à pied'},
+  ]
 
   constructor(public httpSrv: BamboHttpService, public toastr: ToastrService) {
     super(httpSrv, toastr);

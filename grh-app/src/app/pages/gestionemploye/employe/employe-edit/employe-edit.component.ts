@@ -37,7 +37,6 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
   isModalVisible = false;
   currentAvatar: any;
   fileModel: UploadFileModel = new UploadFileModel();
-  @Input() typeEmploye: TypeEmploye;
   nationalites: Pays[] = [];
   selectedNationaliteId: any;
   caisseSociales: CaisseSociale[] = [];
@@ -130,7 +129,7 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
   }
 
   findGrades() {
-    this.gradeSrv.findAll()
+    this.gradeSrv.findByTypeEmploye(this.entity.typeEmploye)
       .subscribe((data: any) => {
         this.grades = data;
       }, err => this.gradeSrv.httpSrv.catchError(err));
@@ -172,6 +171,7 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
       this.entity.dateSortie = null;
       this.entity.motifSortie = null;
     }
+    this.entity.typeEmploye = this.entity.typeEmploye.id;
     this.entity.caisseSociale = this.selectedCaisseSocialeId;
     this.entity.grade = this.selectedGradeId;
     this.entity.nationalite = this.selectedNationaliteId;
