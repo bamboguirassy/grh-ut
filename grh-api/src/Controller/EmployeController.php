@@ -49,7 +49,7 @@ class EmployeController extends AbstractController
      * @Rest\View(StatusCode = 200, serializerEnableMaxDepthChecks=true)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
-    public function findByTypeEmployé(\App\Entity\TypeEmploye $typeEmploye): array
+    public function findByTypeEmploye(\App\Entity\TypeEmploye $typeEmploye): array
     {
 
         $employes = $this->getDoctrine()
