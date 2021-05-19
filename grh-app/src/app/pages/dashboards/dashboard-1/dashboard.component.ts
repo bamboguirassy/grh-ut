@@ -9,6 +9,7 @@ import { EmployeService } from '../../gestionemploye/employe/employe.service';
 import { TypeEmploye } from '../../parametrage/typeemploye/typeemploye';
 import { TypeEmployeService } from '../../parametrage/typeemploye/typeemploye.service';
 import { finalize } from 'rxjs/operators';
+import { DashboardService } from '../dashboard.service';
 
 @Component({
   selector: 'page-dashboard',
@@ -35,7 +36,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
   constructor(
     store: Store<IAppState>,
     httpSv: HttpService,
-    public employeSrv: EmployeService,
+    public dashboardSrv: DashboardService,
     public typeEmployeSrv: TypeEmployeService,
   ) {
     super(store, httpSv);
@@ -83,12 +84,12 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
 
 
   getEmployeCountStatistics() {
-    this.employeSrv.countByType()
+    this.dashboardSrv.countByType()
       .subscribe((data: any) => {
         this.tabCountEmploye = data;
         this.setLoaded();
       }, error => {
-        this.employeSrv.httpSrv.catchError(error);
+        this.dashboardSrv.httpSrv.catchError(error);
       });
   }
 

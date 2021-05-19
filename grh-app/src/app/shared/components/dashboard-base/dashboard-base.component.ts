@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChartDataset, ChartOptions, ChartType, Color } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { finalize } from 'rxjs/operators';
+import { DashboardService } from 'src/app/pages/dashboards/dashboard.service';
 import { SETTINGS } from 'src/environments/settings';
 import { BamboAbstractChartModel } from '../../classes/bambo-abstract-chart-model';
 import { BamboAbstractService } from '../../services/bambo-abstract.service';
@@ -29,7 +30,7 @@ export class DashboardBaseComponent<T extends BamboAbstractChartModel> implement
   // colors: Color[] = [SETTINGS.sidebarBg, 'red', 'green','orange'];
 
   constructor(
-    public httpSrv: BamboAbstractService,
+    public httpSrv: DashboardService,
   ) {
 
   }

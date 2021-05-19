@@ -5,5 +5,6 @@ export class OrgchartTreeItem<T> {
     title: string;
     data: T;
     nodeType?: string;
+    hasChild?: boolean;
     childs: OrgchartTreeItem<T>[]
 }

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ChartDataset } from 'chart.js';
 import { EmployeService } from 'src/app/pages/gestionemploye/employe/employe.service';
 import { DashboardBaseComponent } from 'src/app/shared/components/dashboard-base/dashboard-base.component';
+import { DashboardService } from '../../dashboard.service';
 import { RecrutementTypeCM } from '../recrutement-type-cm';
 
 @Component({
@@ -17,9 +18,9 @@ export class RecrutementTypeComponent extends DashboardBaseComponent<Recrutement
   ];
 
   constructor(
-    public employeSrv: EmployeService
+    public dashboardSrv: DashboardService
   ) {
-    super(employeSrv);
+    super(dashboardSrv);
     this.methodName = 'calculateStatsSuiviRecrutementGroupedByType';
   }
 
