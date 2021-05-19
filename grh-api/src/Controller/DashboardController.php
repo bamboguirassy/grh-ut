@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\CaisseSociale;
 use App\Entity\Employe;
+use App\Entity\Grade;
 use App\Entity\TypeEmploye;
 use App\Utils\Utils;
 use Doctrine\ORM\EntityManagerInterface;
@@ -233,6 +234,25 @@ class DashboardController extends AbstractController
 
         return count($tabRecrutement) ? $tabRecrutement : [];
 
+    }
+
+    /**
+     * @Rest\Get(path="/employe/count-by-grade", name="statistic_count_employe_by_grade")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function countEmployeByGrade(Request $request, EntityManagerInterface $entityManager) {
+        $grades = $entityManager->getRepository(Grade::class)->findAll();
+        $tab = [];
+        foreach ($grades as $grade) {
+            $employes = $entityManager->getRepository(Employe::class)
+                ->findByGrade($grade);
+            $tab [] = [
+                'grade' => $grade,
+                'nombreEmploye' => count($employes)
+            ];
+        }
+        return $tab;
     }
 
     /**
