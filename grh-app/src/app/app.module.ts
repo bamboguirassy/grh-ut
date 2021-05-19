@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe, HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 
 import { StoreModule } from '@ngrx/store';
-import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { NZ_I18N, fr_FR } from 'ng-zorro-antd/i18n';
 
 import { AppComponent } from './app.component';
 import { ROUTES, RoutingModule } from './routing/routing.module';
@@ -63,7 +63,7 @@ export function currentUserProviderFactory(authSrv: BamboAuthService) {
       useFactory: currentUserProviderFactory, deps: [BamboAuthService], multi: true
     },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: NZ_I18N, useValue: en_US }
+    { provide: NZ_I18N, useValue: fr_FR }
   ],
   bootstrap: [AppComponent]
 })
