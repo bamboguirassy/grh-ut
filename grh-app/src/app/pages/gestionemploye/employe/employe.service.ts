@@ -36,25 +36,11 @@ export class EmployeService extends BamboAbstractService {
   findByTypeEmploye(typeEmploye: TypeEmploye) {
     return this.httpSrv.get(this.routePrefix + typeEmploye.id + '/typeemploye')
   }
-
-  countByType() {
-    return this.httpSrv.get(this.routePrefix + 'statistics/count-by-type/');
-  }
-  uploadPhoto(photo: any, fileName: any) {
-    return this.httpSrv.put(this.routePrefix+ 'change_image_employe', {photo, fileName});
-}
   
-
-  findStatsByType(typeEmployes: TypeEmploye[]) {
-    return this.httpSrv.post(this.routePrefix + 'statistics/by-type', { 'typeEmployes': typeEmployes.map(te => te.id) });
+  uploadPhoto(photo: any, fileName: any) {
+    return this.httpSrv.put(this.routePrefix + 'change_image_employe', { photo, fileName });
   }
 
-  calculateStatsSuiviRecrutementGroupedByType() {
-    return this.httpSrv.get(this.routePrefix  + 'statistics/suivi-recrutement-type');
-  }
 
-  calculateRecrutementGroupedByGenres() {
-    return this.httpSrv.get(this.routePrefix  + 'statistics/suivi-recrutement-genre');
-  }
 
 }

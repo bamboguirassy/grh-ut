@@ -6,9 +6,10 @@ import { first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { BasePageComponent } from 'src/app/pages/base-page';
-import { Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { TypeContrat } from 'src/app/pages/parametrage/typecontrat/typecontrat';
 import { TypeContratService } from 'src/app/pages/parametrage/typecontrat/typecontrat.service';
+import { type } from 'jquery';
 
 @Component({
   selector: 'app-contrat-edit',
@@ -26,44 +27,67 @@ export class ContratEditComponent implements OnInit, OnDestroy {
   typeContrats: TypeContrat[] = [];
   @Input() set selectedContrat(value) {
     this.entity = value;
+    this.selectedTypeContrat = this.entity.typeContrat;
+    this.selectedTypeContratId = this.selectedTypeContrat.id;
     this.handlePostLoad();
     this.openModal();
   }
-  selectedTypeContrat: any;
-
+  selectedTypeContrat: TypeContrat;
+  selectedTypeContratId: any;
 
   constructor(store: Store<IAppState>,
-              public contratSrv: ContratService,
-              public typeContratSrv: TypeContratService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
+    public contratSrv: ContratService,
+    public typeContratSrv: TypeContratService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location, public datePipe: DatePipe) {
   }
 
   ngOnInit(): void {
-    
     this.findTypeContrats();
   }
 
   ngOnDestroy() {
   }
+
   // open modal window
   openModal() {
     this.isModalVisible = true;
   }
 
-   // close modal window
-   closeModal() {
+  // close modal window
+  closeModal() {
     this.onClose.emit();
     this.isModalVisible = false;
   }
 
   handlePostLoad() {
-    this.selectedTypeContrat = this.entity?.typeContrat.id;
-
   }
 
   prepareUpdate() {
+    this.entity.typeContrat = this.selectedTypeContratId;
+    this.entity.dateSignature = this.datePipe.transform(this.entity.dateSignature, 'yyyy-MM-dd');
+    this.entity.dateRupture = this.datePipe.transform(this.entity.dateRupture, 'yyyy-MM-dd');
+    this.entity.dateDebut = this.datePipe.transform(this.entity.dateDebut, 'yyyy-MM-dd');
+    if (!this.entity.rompu) {
+      this.entity.motifRupture = null;
+      this.entity.dateRupture = null;
+    }
+    if (this.entity.dateDebut && this.entity.dureeEnMois) {
+      const dateDeb = new Date(this.entity.dateDebut);
+      let dateFin = dateDeb.setMonth(dateDeb.getMonth() + this.entity.dureeEnMois);
+      this.entity.dateFin = dateFin;
+      this.entity.dateFin = this.datePipe.transform(this.entity.dateFin, 'yyyy-MM-dd');
+    }
+    if (this.selectedTypeContrat.code == 'CDI') {
+      this.entity.dureeEnMois = null;
+      this.entity.dateFin = null;
+    }
+  }
+
+  //stocker dans la valeur de l'id selectionner son objet
+  handleTypeContratChange(typeContratId): void {
+    this.selectedTypeContrat = this.typeContrats.find(typeContrat => typeContrat.id == typeContratId);
   }
 
   handlePostUpdate() {
@@ -71,7 +95,7 @@ export class ContratEditComponent implements OnInit, OnDestroy {
   }
 
   update() {
-    this.entity.typeContrat = this.selectedTypeContrat;
+    this.prepareUpdate();
     this.contratSrv.update(this.entity)
       .subscribe((resp: any) => {
         this.closeModal();

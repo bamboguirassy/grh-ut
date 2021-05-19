@@ -1,27 +1,26 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { finalize } from 'rxjs/operators';
-import { EmployeService } from 'src/app/pages/gestionemploye/employe/employe.service';
 import { DashboardBaseComponent } from 'src/app/shared/components/dashboard-base/dashboard-base.component';
 import { DashboardService } from '../../dashboard.service';
-import { RecrutementGenreCM } from '../recrutement-genre-cm';
+import { GradeEmployeCM } from '../grade-employe-cm';
 
 @Component({
-  selector: 'app-recrutement-genre',
-  templateUrl: './recrutement-genre.component.html',
-  styleUrls: ['./recrutement-genre.component.scss']
+  selector: 'app-grade-employe-global',
+  templateUrl: './grade-employe-global.component.html',
+  styleUrls: ['./grade-employe-global.component.scss']
 })
-export class RecrutementGenreComponent extends DashboardBaseComponent<RecrutementGenreCM> implements OnInit {
+export class GradeEmployeGlobalComponent extends DashboardBaseComponent<GradeEmployeCM> implements OnInit {
   @Input() canSwitchDiagramType: boolean = true;
+
   typeDiagrams: { value: string, title: string }[] = [
     { value: 'bar', title: 'Barre verticale' },
     // { value: 'pie', title: 'Pie' },
     { value: 'line', title: 'Courbe' },
   ];
   constructor(
-    public dashboardSrv: DashboardService,
-  ) {
+    public dashboardSrv: DashboardService
+  ) { 
     super(dashboardSrv);
-    this.methodName = 'calculateRecrutementGroupedByGenres';
+    this.methodName = "countEmployeByGrade";
   }
 
   ngOnInit(): void {
@@ -43,26 +42,25 @@ export class RecrutementGenreComponent extends DashboardBaseComponent<Recrutemen
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Années'
+              labelString: 'Grades'
             }
           }
         },
         plugins: {
           title: {
             display: true,
-            text: 'Recrutements Homme / Femme pour les 5 dernières années'
+            text: 'Nombres d\'employé par grade'
           }
         }
         
     };
-    this.chartLabels = this.rawChartData.map(r => r.annee);
+    this.chartLabels = this.rawChartData.map(r => r?.grade?.classification);
     this.chartType = 'bar';
     this.chartLegend = true;
     this.chartPlugins = [];
 
     this.chartData = [
-      { data: this.rawChartData.map(r => +r.nombreRecrutementFemme), label: 'Femme' },
-      { data: this.rawChartData.map(r => +r.nombreRecrutementHomme), label: 'Homme' }
+      { data: this.rawChartData.map(r => +r.nombreEmploye), label: 'Grade' },
     ];
   }
 

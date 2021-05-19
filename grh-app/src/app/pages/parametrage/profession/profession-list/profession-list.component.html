@@ -43,3 +43,36 @@
   <app-profession-new (creation)="onCreate($event)"></app-profession-new>
 </tc-card>
 <app-access-denied *ngIf="!(professionSrv.resourceName|listable)"></app-access-denied>
+
+<!-- Modal window -->
+<nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Attention les employés ci-dessus sont déjà rattachés à cette profession. Etes-vous sur de vouloir supprimer?'"
+  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+  <ng-template #modalBody>
+      <nz-table #basicTable>
+        <thead>
+          <tr>
+            <th>Matricule</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of itemDeletes.employes">
+            <td>{{ data?.matricule }}</td>
+            <td>{{ data?.prenoms }}</td>
+            <td>{{ data?.nom }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+  </ng-template>
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+        <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+            (click)="closeModal()">Fermer</button>
+        <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="forceRemove(selectedForceDelete)" [afterIcon]="'icofont-delete'"
+            tc-button [view]="'accent'">
+            Supprimer
+        </button>
+    </div>
+</ng-template>
+</nz-modal>

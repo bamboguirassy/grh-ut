@@ -42,7 +42,7 @@ class AffectationController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         
         if ($affectation->getEmploye()->getStructure() == $affectation->getStructure()) {
-            throw $this->createNotFoundException("L'Employe est déjà affecté à cette structure.");
+            throw $this->createNotFoundException("L'employé est déjà affecté à cette structure.");
         }
         if (isset($reqData->date)) {
             $affectation->setDate(new \DateTime($reqData->date));
