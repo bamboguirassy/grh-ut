@@ -100,6 +100,11 @@ export class EmployeNewComponent implements OnInit {
     if (this.entity.dateSortie) {
       this.entity.dateSortie = this.datePipe.transform(this.entity.dateSortie, 'yyyy-MM-dd');
     }
+    if (this.entity.etat) {
+      this.entity.dateSortie = null;
+      this.entity.motifSortie = null;
+      this.entity.commentaireSortie = null;
+    }
     this.entity.filename = this.fileModel.fileName;
     this.entity.filepath = this.fileModel.fileContent;
     this.employeSrv.create(this.entity)

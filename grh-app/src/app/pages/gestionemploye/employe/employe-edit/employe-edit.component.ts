@@ -48,7 +48,8 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
   grades: Grade[] = [];
   selectedGradeId: any;
   professions: Profession[] = [];
-  selectedProfession: Profession;
+  selectedProfessionId: Profession;
+  selectedTypeEmploye: TypeEmploye;
 
 
   constructor(store: Store<IAppState>,
@@ -150,15 +151,18 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
     this.selectedMutuelleSanteId = this.entity?.mutuelleSante?.id;
     this.selectedCaisseSocialeId = this.entity?.caisseSociale?.id;
     this.selectedGradeId = this.entity?.grade?.id;
+    this.selectedTypeEmploye = this.entity.typeEmploye;
     this.selectedStructureId = this.entity?.structure?.id;
     this.selectedNationaliteId = this.entity.nationalite?.id;
-    this.selectedProfession = this.entity?.profession?.id;
+    this.selectedProfessionId = this.entity?.profession?.id;
     this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
     this.entity.dateRecrutement = this.datePipe.transform(this.entity.dateRecrutement, 'yyyy-MM-dd');
     this.entity.datePriseService = this.datePipe.transform(this.entity.datePriseService, 'yyyy-MM-dd');
     this.entity.dateSortie = this.datePipe.transform(this.entity.dateSortie, 'yyyy-MM-dd');
     this.entity.filename = this.fileModel.fileName;
     this.entity.filepath = this.fileModel.fileContent;
+    this.entity.profession!=null && this.professions.push(this.entity.profession);
+    this.entity.grade!=null && this.grades.push(this.entity.grade);
     this.findCaisseSociales();
     this.findMutuelleSantes();
     this.findNationalites();
@@ -170,8 +174,9 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
     if (this.entity.etat) {
       this.entity.dateSortie = null;
       this.entity.motifSortie = null;
+      this.entity.commentaireSortie = null;
     }
-    this.entity.typeEmploye = this.entity.typeEmploye.id;
+    this.entity.typeEmploye = this.selectedTypeEmploye.id;
     this.entity.caisseSociale = this.selectedCaisseSocialeId;
     this.entity.grade = this.selectedGradeId;
     this.entity.nationalite = this.selectedNationaliteId;
@@ -179,7 +184,7 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
     if(this.selectedStructureId) {
       this.entity.structure = this.selectedStructureId;
     }
-    this.entity.profession = this.selectedProfession.id;
+    this.entity.profession = this.selectedProfessionId;
   }
 
   handlePostUpdate() {
