@@ -171,6 +171,7 @@ import { ContratTimelineComponent } from './gestionemploye/contrat/contrat-timel
 import { GradeEmployeGlobalComponent } from './dashboards/grade/grade-employe-global/grade-employe-global.component';
 import { TestComponent } from './tests/test/test.component';
 import { ProfessionStatsComponent } from './dashboards/profession/profession-stats/profession-stats.component';
+import { StructureStatsComponent } from './dashboards/structure/structure-stats/structure-stats.component';
 
 
 @NgModule({
@@ -395,7 +396,8 @@ import { ProfessionStatsComponent } from './dashboards/profession/profession-sta
     AffectationNewComponent,
     GradeEmployeGlobalComponent,
     TestComponent,
-    ProfessionStatsComponent, 
+    ProfessionStatsComponent,
+    StructureStatsComponent,
   ],
   exports: [],
   entryComponents: []

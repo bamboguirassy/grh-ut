@@ -36,4 +36,7 @@ export class DashboardService {
   countEmployeByGrade() {
     return this.httpSrv.get(this.routePrefix + 'employe/count-by-grade');
   }
+  countEmployeByStructure() {
+    return this.httpSrv.get(this.routePrefix + 'employe/count-by-structure');
+  }
 }
