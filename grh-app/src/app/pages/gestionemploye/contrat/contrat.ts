@@ -5,6 +5,7 @@ export class Contrat extends BamboAbstractObject {
     dureeEnMois: number;
     dateRupture: string;
     motifRupture: string;
+    commentaire: Text;
     expire: boolean;
     rompu: boolean;
     typeContrat: TypeContrat;

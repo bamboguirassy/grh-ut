@@ -23,8 +23,9 @@
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Date de début</tc-form-label>
-                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" type="Date" [(ngModel)]="entity.dateDebut" (ngModelChange)="handleDateDebutChange($event)" name="dateDebut"
-                            id="dateDebut" #dateDebut="ngModel"></nz-date-picker>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" type="Date" [(ngModel)]="entity.dateDebut"
+                            (ngModelChange)="handleDateDebutChange($event)" name="dateDebut" id="dateDebut"
+                            #dateDebut="ngModel"></nz-date-picker>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="dateDebut">
                             </app-form-field-validation-message>
@@ -34,8 +35,8 @@
                 <div class="col-12 col-md-6" *ngIf="selectedTypeContrat?.code !='CDI'">
                     <tc-form-group>
                         <tc-form-label>Durée en mois</tc-form-label>
-                        <tc-input [(ngModel)]="entity.dureeEnMois" (ngModelChange)="handleDureeChange($event)" name="dureeEnMois" id="dureeEnMois"
-                            #dureeEnMois="ngModel">
+                        <tc-input [(ngModel)]="entity.dureeEnMois" (ngModelChange)="handleDureeChange($event)"
+                            name="dureeEnMois" id="dureeEnMois" #dureeEnMois="ngModel">
                         </tc-input>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="dureeEnMois">
@@ -46,8 +47,8 @@
                 <div class="col-12 col-md-6" *ngIf="selectedTypeContrat?.code !='CDI'">
                     <tc-form-group>
                         <tc-form-label>Date fin</tc-form-label>
-                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" type="Date" [(ngModel)]="entity.dateFin" name="dateFin"
-                            id="dateFin" #dateFin="ngModel" nzDisabled></nz-date-picker>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" type="Date" [(ngModel)]="entity.dateFin"
+                            name="dateFin" id="dateFin" #dateFin="ngModel" nzDisabled></nz-date-picker>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="dateFin">
                             </app-form-field-validation-message>
@@ -92,8 +93,8 @@
                 <div class="col-12 col-md-6" *ngIf="entity.rompu">
                     <tc-form-group>
                         <tc-form-label>Date rupture</tc-form-label>
-                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" type="Date" [(ngModel)]="entity.dateRupture" name="dateRupture"
-                            id="dateRupture" #dateRupture="ngModel"></nz-date-picker>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" type="Date" [(ngModel)]="entity.dateRupture"
+                            name="dateRupture" id="dateRupture" #dateRupture="ngModel"></nz-date-picker>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="dateRupture">
                             </app-form-field-validation-message>
@@ -103,9 +104,10 @@
                 <div class="col-12 col-md-6" *ngIf="entity.rompu">
                     <tc-form-group>
                         <tc-form-label>Motif rupture</tc-form-label>
-                        <tc-textarea [(ngModel)]="entity.motifRupture" name="motifRupture" id="motifRupture"
-                            #motifRupture="ngModel">
-                        </tc-textarea>
+                        <tc-select required="required" [(ngModel)]="motifSortie" name="motifRupture"
+                            id="motifRupture" #motifRupture="ngModel" [placeholder]="'Selectionner le statut du contrat'"
+                            [options]="motifSorties">
+                        </tc-select>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="motifRupture">
                             </app-form-field-validation-message>

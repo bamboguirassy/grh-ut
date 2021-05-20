@@ -6,6 +6,7 @@ import { Employe } from '../../employe/employe';
 import { TypeContrat } from 'src/app/pages/parametrage/typecontrat/typecontrat';
 import { TypeContratService } from 'src/app/pages/parametrage/typecontrat/typecontrat.service';
 import { DatePipe } from '@angular/common';
+import { EmployeService } from '../../employe/employe.service';
 
 @Component({
   selector: 'app-contrat-new',
@@ -22,25 +23,44 @@ export class ContratNewComponent implements OnInit {
   isModalVisible = false;
 
   @Input() employe: Employe;
+
   typeContrats: TypeContrat[] = [];
   selectedTypeContrat: any;
+  motifSortie: string;
+  commentaireSortie: any;
+  dateSortie: any;
+  motifSorties: any = [];
+  selectedMotifEmploye: any;
 
   constructor(public contratSrv: ContratService,
-    public typeContratSrv: TypeContratService, public datePipe: DatePipe,
+    public typeContratSrv: TypeContratService,
+    public employeSrv: EmployeService, public datePipe: DatePipe,
     public router: Router) {
     this.entity = new Contrat();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.commentaireSortie = this.employe.commentaireSortie;
+    this.dateSortie = this.employe.dateSortie;
+    this.motifSorties = this.employeSrv.motifSorties;
+    this.motifSortie = this.entity.employe.motifSortie;
+    console.log(this.motifSortie);
+    
+  }
 
   save() {
     this.entity.employe = this.employe.id;
+    this.entity.commentaire = this.commentaireSortie
+    this.entity.dateRupture = this.dateSortie
     if (this.selectedTypeContrat) {
       this.entity.typeContrat = this.selectedTypeContrat.id;
     }
+    this.entity.motifRupture = this.motifSortie;
+
     if (!this.entity.rompu) {
       this.entity.motifRupture = null;
       this.entity.dateRupture = null;
+      this.entity.commentaire = null;
     }
     if (this.entity.typeContrat.code == 'CDI') {
       this.entity.dureeEnMois = null;
@@ -62,7 +82,6 @@ export class ContratNewComponent implements OnInit {
       .subscribe((data: any) => {
         this.closeModal();
         this.creation.emit(data);
-        this.selectedTypeContrat = null;
         this.entity = new Contrat();
       }, error => this.contratSrv.httpSrv.catchError(error));
 

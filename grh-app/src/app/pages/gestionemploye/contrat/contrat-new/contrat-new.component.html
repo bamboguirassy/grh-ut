@@ -95,7 +95,7 @@
                 <div class="col-12 col-md-6" *ngIf="entity.rompu">
                     <tc-form-group>
                         <tc-form-label>Date de rupture</tc-form-label>
-                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="entity.dateRupture"
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="dateSortie"
                             name="dateRupture" id="dateRupture" #dateRupture="ngModel"></nz-date-picker>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="dateRupture">
@@ -106,10 +106,23 @@
                 <div class="col-12 col-md-6" *ngIf="entity.rompu">
                     <tc-form-group>
                         <tc-form-label>Motif de rupture</tc-form-label>
-                        <tc-textarea [(ngModel)]="entity.motifRupture" name="motifRupture" id="motifRupture"
-                            #motifRupture="ngModel"> </tc-textarea>
+                        <tc-select required="required" [(ngModel)]="motifSortie" name="motifRupture"
+                            id="motifRupture" #motifRupture="ngModel" [placeholder]="'Selectionner le statut du contrat'"
+                            [options]="motifSorties">
+                        </tc-select>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="motifRupture">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6" *ngIf="entity.rompu">
+                    <tc-form-group>
+                        <tc-form-label>Commentaire</tc-form-label>
+                        <tc-textarea [(ngModel)]="commentaireSortie" name="commentaire" id="commentaire"
+                            #commentaire="ngModel"> </tc-textarea>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="commentaire">
                             </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>

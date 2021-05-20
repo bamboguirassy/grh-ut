@@ -90,8 +90,6 @@ export class ContratEditComponent implements OnInit, OnDestroy {
 
   update() {
     this.prepareUpdate();
-    console.log(this.entity);
-    
     this.contratSrv.update(this.entity)
       .subscribe((resp: any) => {
         this.closeModal();

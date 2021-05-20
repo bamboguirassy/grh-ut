@@ -18,11 +18,12 @@ class ContratType extends AbstractType
             ->add('dateDebut')
             ->add('dateFin')
             ->add('motifRupture')
+            ->add('commentaire')
             ->add('expire')
             ->add('rompu')
             ->add('typeContrat')
             ->add('employe')
-        ;
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -74,6 +74,11 @@ class Contrat
      */
     private $dateFin;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $commentaire;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -219,6 +224,18 @@ class Contrat
     public function setDateFin($dateFin): self
     {
         $this->dateFin = $dateFin;
+
+        return $this;
+    }
+
+    public function getCommentaire(): ?string
+    {
+        return $this->commentaire;
+    }
+
+    public function setCommentaire(?string $commentaire): self
+    {
+        $this->commentaire = $commentaire;
 
         return $this;
     }
