@@ -42,12 +42,6 @@ export class ContratNewComponent implements OnInit {
       this.entity.motifRupture = null;
       this.entity.dateRupture = null;
     }
-    /*if (this.entity.dateDebut && this.entity.dureeEnMois) {
-      const dateDeb = new Date(this.entity.dateDebut);
-      let dateFin = dateDeb.setMonth(dateDeb.getMonth() + this.entity.dureeEnMois);
-      this.entity.dateFin = dateFin;
-
-    }*/
     if (this.entity.typeContrat.code == 'CDI') {
       this.entity.dureeEnMois = null;
       this.entity.dateFin = null;

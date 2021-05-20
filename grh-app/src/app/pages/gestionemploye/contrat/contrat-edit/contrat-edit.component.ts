@@ -73,12 +73,6 @@ export class ContratEditComponent implements OnInit, OnDestroy {
       this.entity.motifRupture = null;
       this.entity.dateRupture = null;
     }
-    if (this.entity.dateDebut && this.entity.dureeEnMois) {
-      const dateDeb = new Date(this.entity.dateDebut);
-      let dateFin = dateDeb.setMonth(dateDeb.getMonth() + this.entity.dureeEnMois);
-      this.entity.dateFin = dateFin;
-      this.entity.dateFin = this.datePipe.transform(this.entity.dateFin, 'yyyy-MM-dd');
-    }
     if (this.selectedTypeContrat.code == 'CDI') {
       this.entity.dureeEnMois = null;
       this.entity.dateFin = null;
@@ -96,6 +90,8 @@ export class ContratEditComponent implements OnInit, OnDestroy {
 
   update() {
     this.prepareUpdate();
+    console.log(this.entity);
+    
     this.contratSrv.update(this.entity)
       .subscribe((resp: any) => {
         this.closeModal();
@@ -112,4 +108,29 @@ export class ContratEditComponent implements OnInit, OnDestroy {
       }, err => this.typeContratSrv.httpSrv.catchError(err));
   }
 
+  handleDureeChange(dureeValue) {
+    if (dureeValue && this.selectedTypeContrat?.code != 'CDI' && this.entity.dateDebut) {
+      let dateDeb = new Date(this.entity.dateDebut);
+      const duree = +dureeValue;
+      let dateFin = dateDeb.setMonth(dateDeb.getMonth() + duree);
+      this.entity.dateFin = dateFin;
+    } else {
+      this.entity.dateFin = null;
+    }
+    this.entity.dateFin = this.datePipe.transform(this.entity.dateFin, 'yyyy-MM-dd');
+
+  }
+
+  handleDateDebutChange(newDate) {
+    if (newDate && this.selectedTypeContrat?.code != 'CDI' && this.entity.dureeEnMois) {
+      let dateDeb = new Date(newDate);
+      let duree = +this.entity.dureeEnMois;
+      let dateFin = dateDeb.setMonth(dateDeb.getMonth() + duree);
+      this.entity.dateFin = dateFin;
+    } else {
+      this.entity.dateFin = null;
+    }
+    this.entity.dateFin = this.datePipe.transform(this.entity.dateFin, 'yyyy-MM-dd');
+
+  }
 }
