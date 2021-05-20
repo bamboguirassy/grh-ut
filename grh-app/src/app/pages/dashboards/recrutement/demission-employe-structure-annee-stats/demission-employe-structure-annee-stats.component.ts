@@ -4,11 +4,11 @@ import { DashboardBaseComponent } from 'src/app/shared/components/dashboard-base
 import { DashboardService } from '../../dashboard.service';
 
 @Component({
-  selector: 'app-entree-sortie-stats',
-  templateUrl: './entree-sortie-stats.component.html',
-  styleUrls: ['./entree-sortie-stats.component.scss']
+  selector: 'app-demission-employe-structure-annee-stats',
+  templateUrl: './demission-employe-structure-annee-stats.component.html',
+  styleUrls: ['./demission-employe-structure-annee-stats.component.scss']
 })
-export class EntreeSortieStatsComponent extends DashboardBaseComponent<any> implements OnInit {
+export class DemissionEmployeStructureAnneeStatsComponent extends DashboardBaseComponent<any> implements OnInit {
 
   @Input() canSwitchDiagramType: boolean = true;
   typeDiagrams: { value: string, title: string }[] = [
@@ -20,7 +20,7 @@ export class EntreeSortieStatsComponent extends DashboardBaseComponent<any> impl
     public dashboardSrv: DashboardService
   ) {
     super(dashboardSrv);
-    this.methodName = 'countEmployeByEntreeSortie';
+    this.methodName = 'countDemissionEmployeByStructureAnnee';
   }
 
   ngOnInit(): void {
@@ -29,20 +29,10 @@ export class EntreeSortieStatsComponent extends DashboardBaseComponent<any> impl
 
   setDataChart() {
     const chartData: ChartDataset[] = [];
-    let annees = this.rawChartData.map((data) => data.annee);
-    let groups = [
-      { code: 'nombreRecrutement', label: 'Recrutement' },
-      { code: 'nombreDemission', label: 'Démission' },
-      { code: 'nombreDepartRetraite', label: 'Retraite' },
-      { code: 'nombreMisAPied', label: 'Mis à pied' },
-      { code: 'nombreExpirationContrat', label: 'Contrat expiré' },
-    ]
-    groups.forEach(group => {
-      const arr: number[] = [];
-      for (const chartData of this.rawChartData) {
-        arr.push(+chartData[group.code]);
-      }
-      chartData.push({ data: arr, label: group.label });
+    let structures = this.rawChartData.structures.map((data) => data.nom);
+    this.rawChartData.anneeData.forEach((chartDataItem) => {
+      const arr: number[] = chartDataItem.data;
+      chartData.push({ data: arr, label: chartDataItem.annee });
     });
 
     this.chartOptions = {
@@ -59,20 +49,18 @@ export class EntreeSortieStatsComponent extends DashboardBaseComponent<any> impl
           display: true,
           scaleLabel: {
             display: true,
-            labelString: 'Années'
+            labelString: 'Structures'
           }
         },
       },
       plugins: {
         title: {
           display: true,
-          text: 'Évolution des entrées-sorties pour les 7 dernières années'
+          text: 'Évolution des démissions par structure / année'
         }
       }
-
     };
-
-    this.chartLabels = annees;
+    this.chartLabels = structures;
     this.chartType = 'bar';
     this.chartLegend = true;
     this.chartPlugins = [];

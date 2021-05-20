@@ -12,7 +12,9 @@ import { BasePageComponent } from '../../base-page';
 })
 
 export class TestComponent extends BasePageComponent<any> implements OnInit {
-
+  size: 'large';
+  dateFin="11/05/2021";
+  dateDebut="11/05/2021";
   constructor(store: Store<IAppState>,
     public httpSrv: HttpService, public dashboardServ: DashboardService) {
     super(store, httpSrv);
