@@ -173,6 +173,7 @@ import { TestComponent } from './tests/test/test.component';
 import { ProfessionStatsComponent } from './dashboards/profession/profession-stats/profession-stats.component';
 import { StructureStatsComponent } from './dashboards/structure/structure-stats/structure-stats.component';
 import { TypeEmployeStatsComponent } from './dashboards/typeemploye/type-employe-stats/type-employe-stats.component';
+import { RecrutementRangeStatsComponent } from './dashboards/recrutement-range/recrutement-range-stats/recrutement-range-stats.component';
 
 
 
@@ -401,6 +402,7 @@ import { TypeEmployeStatsComponent } from './dashboards/typeemploye/type-employe
     ProfessionStatsComponent,
     StructureStatsComponent,
     TypeEmployeStatsComponent,
+    RecrutementRangeStatsComponent,
 
   ],
   exports: [],

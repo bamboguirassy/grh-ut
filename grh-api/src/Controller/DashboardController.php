@@ -458,5 +458,59 @@ class DashboardController extends AbstractController
         return count($tab) ? $tab : [];
     }
     
+    /**
+     * @Rest\Post(path="/employe/count-by-daterange/", name="employe_count_statistic_by_dattrange")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function countEmployeByDateRange(Request $request): array
+    {
+        $em = $this->getDoctrine()->getManager();
+        //$dates = AppManager::getSerializedDataFromRequest($request);
+        $dates = Utils::serializeRequestContent($request);
+        $dateDebut = str_replace('/', '-', $dates['dateDebut']);
+        $dateDebut = date('Y-m-d', strtotime($dateDebut));
+        
+        $dateFin = str_replace('/', '-', $dates['dateFin']);
+        $dateFin = date('Y-m-d', strtotime($dateFin));
+        //throw $this->createNotFoundException("Date fin ".$dateDebut);
+        $typeEmployes = $em->createQuery('
+            SELECT t
+            FROM App\Entity\TypeEmploye t
+            WHERE t IN (SELECT te
+            FROM App\Entity\Employe e JOIN e.typeEmploye te
+            )
+        ')
+          ->getResult();
+        $tab = [];
+        foreach ($typeEmployes as $typeEmploye) {
+            $nombreEmployeHomme = $em->createQuery('select count(e) from 
+            App\Entity\Employe e where e.typeEmploye=?1 and e.genre=?2 and e.dateRecrutement>=?3 
+            and e.dateRecrutement<=?4')
+            ->setParameter(1,$typeEmploye)
+            ->setParameter(2,'Masculin')
+            ->setParameter(3,$dateDebut)
+            ->setParameter(4,$dateFin)
+            ->getSingleScalarResult();
+            
+            $nombreEmployeFemme = $em->createQuery('select count(e) from 
+            App\Entity\Employe e where e.typeEmploye=?1 and e.genre=?2 and e.dateRecrutement>=?3 
+            and e.dateRecrutement<=?4')
+            ->setParameter(1,$typeEmploye)
+            ->setParameter(2,'Féminin')
+            ->setParameter(3,$dateDebut)
+            ->setParameter(4,$dateFin)
+            ->getSingleScalarResult();
+            $tab [] = [
+                'typeEmploye' => $typeEmploye,
+                'nbreEmploye' => $nombreEmployeHomme+$nombreEmployeFemme,
+                'nbrHomme' => $nombreEmployeHomme,
+                'nbrFemme' => $nombreEmployeFemme
+            ];
+        }
+
+        return count($tab) ? $tab : [];
+    }
+    
     
 }
