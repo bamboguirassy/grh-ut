@@ -345,8 +345,6 @@ class DashboardController extends AbstractController
     public function countEmployeByProfession(): array
     {
         $em = $this->getDoctrine()->getManager();
-//        $professions = $em->getRepository('App\Entity\Profession')
-//            ->findByEmploye();
         $professions = $em->createQuery('
             SELECT p
             FROM App\Entity\Profession p
@@ -357,21 +355,21 @@ class DashboardController extends AbstractController
           ->getResult();
         $tab = [];
         foreach ($professions as $profession) {
-            $nbrHomme = 0;
-            $nbrFemme = 0;
-            $employes = $em->getRepository(Employe::class)
-                ->findByProfession($profession);
-            foreach ($employes as $employe){
-                if (strtolower($employe->getGenre()) === 'masculin')
-                    $nbrHomme++;
-                else
-                    $nbrFemme++;
-            }
+            $nombreEmployeHomme = $em->createQuery('select count(e) from 
+            App\Entity\Employe e where e.profession=?1 and e.genre=?2')
+            ->setParameter(1,$profession)
+            ->setParameter(2,'Masculin')
+            ->getSingleScalarResult();
+            $nombreEmployeFemme = $em->createQuery('select count(e) from 
+            App\Entity\Employe e where e.profession=?1 and e.genre=?2')
+            ->setParameter(1,$profession)
+            ->setParameter(2,'Féminin')
+            ->getSingleScalarResult();
             $tab [] = [
                 'profession' => $profession,
-                'nbreEmploye' => count($employes),
-                'nbrHomme' => $nbrHomme,
-                'nbrFemme' => $nbrFemme,
+                'nbreEmploye' => $nombreEmployeHomme+$nombreEmployeFemme,
+                'nbrHomme' => $nombreEmployeHomme,
+                'nbrFemme' => $nombreEmployeFemme,
             ];
         }
 
