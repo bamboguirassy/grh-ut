@@ -174,6 +174,8 @@ import { ProfessionStatsComponent } from './dashboards/profession/profession-sta
 import { StructureStatsComponent } from './dashboards/structure/structure-stats/structure-stats.component';
 import { TypeEmployeStatsComponent } from './dashboards/typeemploye/type-employe-stats/type-employe-stats.component';
 import { EntreeSortieStatsComponent } from './dashboards/recrutement/entree-sortie-stats/entree-sortie-stats.component';
+import { DemissionEmployeProfessionAnneeStatsComponent } from './dashboards/recrutement/demission-employe-profession-annee-stats/demission-employe-profession-annee-stats.component';
+import { DemissionEmployeStructureAnneeStatsComponent } from './dashboards/recrutement/demission-employe-structure-annee-stats/demission-employe-structure-annee-stats.component';
 
 
 
@@ -403,6 +405,8 @@ import { EntreeSortieStatsComponent } from './dashboards/recrutement/entree-sort
     StructureStatsComponent,
     TypeEmployeStatsComponent,
     EntreeSortieStatsComponent,
+    DemissionEmployeProfessionAnneeStatsComponent,
+    DemissionEmployeStructureAnneeStatsComponent,
 
   ],
   exports: [],

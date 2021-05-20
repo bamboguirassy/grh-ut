@@ -29,6 +29,14 @@ export class DashboardService {
     return this.httpSrv.get(this.routePrefix  + 'employe/count-by-entree-sortie');
   }
 
+  countDemissionEmployeByProfessionAnnee() {
+    return this.httpSrv.get(this.routePrefix  + 'employe/count-demission-profession-annee');
+  }
+
+  countDemissionEmployeByStructureAnnee() {
+    return this.httpSrv.get(this.routePrefix  + 'employe/count-demission-structure-annee');
+  }
+
   countByType() {
     return this.httpSrv.get(this.routePrefix + 'employe/count-by-type/');
   }

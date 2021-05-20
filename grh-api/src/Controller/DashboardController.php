@@ -506,6 +506,76 @@ class DashboardController extends AbstractController
         }
 		return $tab;
     }
+
+    /**
+     * @Rest\Get(path="/employe/count-demission-structure-annee", name="statistic_count_demission_employe_by_annee_structure")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function countDemissionEmployeByStructureAnnee(Request $request, EntityManagerInterface $entityManager) {
+        $anneeCourante = date("Y");
+        $annees = [$anneeCourante];
+        foreach (range(1,4) as $i) {
+			$annees[] = date("Y", strtotime("-{$i} year"));
+        }
+		$em = $this->getDoctrine()->getManager();
+		$structures = $em->createQuery('select s from 
+		App\Entity\Structure s where (select count(e)
+		 from App\Entity\Employe e where e.structure=s and e.motifSortie=?1)>0')
+		 ->setParameter(1, 'Démission')
+		 ->getResult();
+		
+		 foreach($annees as $annee) {
+			$tabDemission = [];
+			foreach($structures as $structure) {
+				$nombreDemission = $em->createQuery('select count(e) 
+				from App\Entity\Employe e where e.dateSortie like ?1 and e.structure=?2
+				and e.motifSortie=?3')
+				->setParameter(1,$annee.'%')
+				->setParameter(2,$structure)
+				->setParameter(3,'Démission')
+				->getSingleScalarResult();
+				$tabDemission[] = $nombreDemission;
+			}
+			$tabAnnee[] = ['annee'=>$annee,'data'=>$tabDemission];
+		 }
+		 return ['structures'=>$structures,'anneeData'=>$tabAnnee];
+    }
+
+	/**
+     * @Rest\Get(path="/employe/count-demission-profession-annee", name="statistic_count_demission_employe_by_annee_profession")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function countDemissionEmployeByProfessionAnnee(Request $request, EntityManagerInterface $entityManager) {
+        $anneeCourante = date("Y");
+        $annees = [$anneeCourante];
+        foreach (range(1,4) as $i) {
+			$annees[] = date("Y", strtotime("-{$i} year"));
+        }
+		$em = $this->getDoctrine()->getManager();
+		 $professions = $em->createQuery('select p from 
+		App\Entity\Profession p where (select count(e)
+		 from App\Entity\Employe e where e.profession=p and e.motifSortie=?1)>0')
+		 ->setParameter(1, 'Démission')
+		 ->getResult();
+		
+		 foreach($annees as $annee) {
+			$tabDemission = [];
+			foreach($professions as $profession) {
+				$nombreDemission = $em->createQuery('select count(e) 
+				from App\Entity\Employe e where e.dateSortie like ?1 and e.profession=?2
+				and e.motifSortie=?3')
+				->setParameter(1,$annee.'%')
+				->setParameter(2,$profession)
+				->setParameter(3,'Démission')
+				->getSingleScalarResult();
+				$tabDemission[] = $nombreDemission;
+			}
+			$tabAnnee[] = ['annee'=>$annee,'data'=>$tabDemission];
+		 }
+		 return ['professions'=>$professions,'anneeData'=>$tabAnnee];
+    }
     
     
 }

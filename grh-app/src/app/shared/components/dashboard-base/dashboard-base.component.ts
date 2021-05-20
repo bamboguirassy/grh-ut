@@ -13,7 +13,7 @@ import { BamboAbstractService } from '../../services/bambo-abstract.service';
   styleUrls: ['./dashboard-base.component.scss']
 })
 export class DashboardBaseComponent<T extends BamboAbstractChartModel> implements OnInit {
-  rawChartData: T[];
+  rawChartData: T[]|any;
   chartLabels: Label[] = [];
   chartType: ChartType = 'bar';
   chartLegend = true;
