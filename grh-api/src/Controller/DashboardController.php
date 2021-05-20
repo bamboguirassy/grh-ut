@@ -466,7 +466,7 @@ class DashboardController extends AbstractController
     public function countEmployeByEntreeSortie(Request $request, EntityManagerInterface $entityManager) {
         $anneeCourante = date("Y");
         $annees = [$anneeCourante];
-        foreach (range(1,9) as $i) {
+        foreach (range(1,6) as $i) {
 			$annees[] = date("Y", strtotime("-{$i} year"));
         }
 		$tab = [];
