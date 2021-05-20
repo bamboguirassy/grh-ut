@@ -174,6 +174,7 @@ import { ProfessionStatsComponent } from './dashboards/profession/profession-sta
 import { StructureStatsComponent } from './dashboards/structure/structure-stats/structure-stats.component';
 import { TypeEmployeStatsComponent } from './dashboards/typeemploye/type-employe-stats/type-employe-stats.component';
 import { RecrutementRangeStatsComponent } from './dashboards/recrutement-range/recrutement-range-stats/recrutement-range-stats.component';
+import { EntreeSortieStatsComponent } from './dashboards/recrutement/entree-sortie-stats/entree-sortie-stats.component';
 
 
 
@@ -403,6 +404,7 @@ import { RecrutementRangeStatsComponent } from './dashboards/recrutement-range/r
     StructureStatsComponent,
     TypeEmployeStatsComponent,
     RecrutementRangeStatsComponent,
+    EntreeSortieStatsComponent,
 
   ],
   exports: [],
