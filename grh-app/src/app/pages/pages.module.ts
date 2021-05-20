@@ -171,6 +171,8 @@ import { ContratTimelineComponent } from './gestionemploye/contrat/contrat-timel
 import { GradeEmployeGlobalComponent } from './dashboards/grade/grade-employe-global/grade-employe-global.component';
 import { TestComponent } from './tests/test/test.component';
 import { ProfessionStatsComponent } from './dashboards/profession/profession-stats/profession-stats.component';
+import { StructureStatsComponent } from './dashboards/structure/structure-stats/structure-stats.component';
+import { TypeEmployeStatsComponent } from './dashboards/typeemploye/type-employe-stats/type-employe-stats.component';
 
 
 
@@ -397,6 +399,8 @@ import { ProfessionStatsComponent } from './dashboards/profession/profession-sta
     GradeEmployeGlobalComponent,
     TestComponent,
     ProfessionStatsComponent,
+    StructureStatsComponent,
+    TypeEmployeStatsComponent,
 
   ],
   exports: [],

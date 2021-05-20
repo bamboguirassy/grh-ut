@@ -10,10 +10,11 @@ import { BasePageComponent } from '../../base-page';
   templateUrl: './test.component.html',
   styleUrls: ['./test.component.scss']
 })
+
 export class TestComponent extends BasePageComponent<any> implements OnInit {
 
   constructor(store: Store<IAppState>,
-    public httpSrv: HttpService,) {
+    public httpSrv: HttpService, public dashboardServ: DashboardService) {
     super(store, httpSrv);
 
     this.pageData = {
@@ -26,5 +27,6 @@ export class TestComponent extends BasePageComponent<any> implements OnInit {
   ngOnInit(): void {
   }
 
+ 
 
 }

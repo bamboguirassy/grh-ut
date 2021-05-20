@@ -379,4 +379,87 @@ class DashboardController extends AbstractController
         return count($tab) ? $tab : [];
     }
     
+    /**
+     * @Rest\Get(path="/employe/count-by-typeemploye/", name="employe_count_statistic_by_type_employe")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function countEmployeByTypeEmploye(): array
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $typeEmployes = $em->createQuery('
+            SELECT te
+            FROM App\Entity\TypeEmploye te
+            WHERE te IN (SELECT t
+            FROM App\Entity\Employe e JOIN e.typeEmploye t
+            )
+        ')
+          ->getResult();
+        $tab = [];
+        foreach ( $typeEmployes as $typeEmploye) {
+            $nbrHomme = 0;
+            $nbrFemme = 0;
+            $employes = $em->getRepository(Employe::class)
+                ->findByTypeEmploye($typeEmploye);
+            foreach ($employes as $employe){
+                if (strtolower($employe->getGenre()) === 'masculin')
+                    $nbrHomme++;
+                else
+                    $nbrFemme++;
+            }
+            $tab [] = [
+                'typeEmploye' => $typeEmploye,
+                'nbreEmploye' => count($employes),
+                'nbrHomme' => $nbrHomme,
+                'nbrFemme' => $nbrFemme
+            ];
+        }
+
+
+        return count($tab) ? $tab : [];
+    }
+    
+     /**
+     * @Rest\Get(path="/employe/count-by-structure/", name="employe_count_statistic_by_structure")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function countEmployeByStructure(): array
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $structures = $em->createQuery('
+            SELECT s
+            FROM App\Entity\Structure s
+            WHERE s IN (SELECT se
+            FROM App\Entity\Employe e JOIN e.structure se
+            )
+        ')
+          ->getResult();
+        $tab = [];
+        foreach ($structures as $structure) {
+            $nbrHomme = 0;
+            $nbrFemme = 0;
+            $employes = $em->getRepository(Employe::class)
+                ->findByStructure($structure);
+            foreach ($employes as $employe){
+                if (strtolower($employe->getGenre()) === 'masculin')
+                    $nbrHomme++;
+                else
+                    $nbrFemme++;
+            }
+            $tab [] = [
+                'structure' => $structure,
+                'nbreEmploye' => count($employes),
+                'nbrHomme' => $nbrHomme,
+                'nbrFemme' => $nbrFemme
+            ];
+        }
+
+
+        return count($tab) ? $tab : [];
+    }
+    
+    
 }
