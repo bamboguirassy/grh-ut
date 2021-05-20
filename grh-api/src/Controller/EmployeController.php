@@ -7,20 +7,14 @@ use App\Entity\Employe;
 use App\Entity\Grade;
 use App\Entity\MutuelleSante;
 use App\Entity\Pays;
+use App\Entity\Structure;
 use App\Entity\TypeEmploye;
 use App\Form\EmployeType;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
-use Metadata\Tests\Driver\Fixture\C\SubDir\C;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Utils\Utils;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -55,6 +49,15 @@ class EmployeController extends AbstractController
         $employes = $this->getDoctrine()
             ->getRepository(Employe::class)
             ->findByTypeEmploye($typeEmploye);
+          /*  $structures = $this->getDoctrine()
+            ->getRepository(Structure::class)
+            ->findAll();
+            $faker = \Faker\Factory::create('fr_FR');
+            foreach($employes as $employe) {
+                if($employe->getStructure()==null) {
+$employe->setStructure($faker->randomElement($structures));
+                }
+            }*/
 
         return count($employes) ? $employes : [];
     }
