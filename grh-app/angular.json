@@ -131,6 +131,8 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              "src/assets/fonts/icofont/icofont.woff",
+              "src/assets/fonts/icofont/icofont.woff2",
               {
                 "glob": "**/*",
                 "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
