@@ -29,15 +29,15 @@
               <i class="icofont-data icofont-2x"></i>
             </ng-template>
           </tc-table-col>
-          <tc-table-col [columnTitle]="'Date début'" [columnName]="'dateDebut'" [enableSorting]="true">
-            <ng-template #tableTDTemplate let-value>
-              <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
-              <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-            </ng-template>
-          </tc-table-col>
           <tc-table-col [columnTitle]="'Type contrat'" [columnName]="'typeContrat'" [enableSorting]="true">
             <ng-template #tableTDTemplate let-value>
               <span class="nowrap" *ngIf="value" title="{{ value?.nom }}">{{ value?.code }}</span>
+              <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+          </tc-table-col>
+          <tc-table-col [columnTitle]="'Date début'" [columnName]="'dateDebut'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
               <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
             </ng-template>
           </tc-table-col>
@@ -47,38 +47,38 @@
               <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
             </ng-template>
           </tc-table-col>
-          <tc-table-col [columnTitle]="'Date Fin'" [columnName]="'dateFin'" [enableSorting]="true">
-            <ng-template #tableTDTemplate let-value>
-              <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
-              <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-            </ng-template>
-          </tc-table-col>
-          <tc-table-col [columnTitle]="'Date création'" [columnName]="'dateCreation'" [enableSorting]="true">
-            <ng-template #tableTDTemplate let-value>
-              <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
-              <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-            </ng-template>
-          </tc-table-col>
           <tc-table-col [columnTitle]="'Date signature'" [columnName]="'dateSignature'" [enableSorting]="true">
             <ng-template #tableTDTemplate let-value>
               <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
               <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
             </ng-template>
           </tc-table-col>
-          <tc-table-col [columnTitle]="'Statut'" [enableSorting]="true">
-            <ng-template #tableTDTemplate let-row="row">
-              <span class="badge badge-warning" *ngIf="row.expire">Expiré</span>
-              <span class="badge badge-danger" *ngIf="row.rompu">Rompu</span>
-              <span class="badge badge-success" *ngIf="!row.rompu && !row.expire">En cours</span>
-            </ng-template>
-          </tc-table-col>
-          <tc-table-col [columnTitle]="'Date rupture'" [columnName]="'dateRupture'" [enableSorting]="true">
+          <tc-table-col [columnTitle]="'Date fin prévu '" [columnName]="'dateFinPrevue'" [enableSorting]="true">
             <ng-template #tableTDTemplate let-value>
               <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
               <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
             </ng-template>
           </tc-table-col>
-          <tc-table-col [columnTitle]="'Motif rupture'" [columnName]="'motifRupture'" [enableSorting]="true">
+          <tc-table-col [columnTitle]="'Etat'" [columnName]="'etat'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <span class="badge badge-warning" *ngIf="value">Invalide</span>
+              <span class="badge badge-success" *ngIf="!value">En cours</span>
+            </ng-template>
+          </tc-table-col>
+          <tc-table-col [columnTitle]="'Motif fin contrat'" [columnName]="'motifFin'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <span class="nowrap" *ngIf="value">{{ value }}</span>
+              <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+          </tc-table-col>
+          <tc-table-col [columnTitle]="'Date fin effective'" [columnName]="'dateFinEffective'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
+              <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+          </tc-table-col>
+          <tc-table-col [columnTitle]="'Commentaire sur fin contrat'" [columnName]="'commentaireSurFinContrat'"
+            [enableSorting]="true">
             <ng-template #tableTDTemplate let-value>
               <span class="nowrap" *ngIf="value">{{ value }}</span>
               <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
