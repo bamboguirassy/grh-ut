@@ -7,6 +7,7 @@ use App\Entity\Employe;
 use App\Entity\Grade;
 use App\Entity\MutuelleSante;
 use App\Entity\Pays;
+use App\Entity\Profession;
 use App\Entity\Structure;
 use App\Entity\TypeEmploye;
 use App\Form\EmployeType;
@@ -49,15 +50,17 @@ class EmployeController extends AbstractController
         $employes = $this->getDoctrine()
             ->getRepository(Employe::class)
             ->findByTypeEmploye($typeEmploye);
-          /*  $structures = $this->getDoctrine()
-            ->getRepository(Structure::class)
+          /*  $professions = $this->getDoctrine()
+            ->getRepository(Profession::class)
             ->findAll();
             $faker = \Faker\Factory::create('fr_FR');
             foreach($employes as $employe) {
-                if($employe->getStructure()==null) {
-$employe->setStructure($faker->randomElement($structures));
+                if($employe->getProfession()==null) {
+$employe->setProfession($faker->randomElement($professions));
                 }
-            }*/
+            }
+            $this->getDoctrine()->getManager()->flush();*/
+
 
         return count($employes) ? $employes : [];
     }
