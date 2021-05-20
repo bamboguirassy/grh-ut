@@ -54,5 +54,13 @@ export class DashboardService {
     return this.httpSrv.get(this.routePrefix + 'employe/count-by-typeemploye');
   }
 
+  countEmployeByDateRange(dateDebut: any, dateFin: any) {
+      return this.httpSrv.post(this.routePrefix + 'employe/count-by-daterange/', {'dateDebut':dateDebut, 'dateFin':dateFin});
+  }
+
+  countEmployeByPeriod(date: any) {
+      return this.httpSrv.post(this.routePrefix + 'employe/count-by-period', {'date':date});
+  }
+
 
 }
