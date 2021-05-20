@@ -312,6 +312,31 @@ class DashboardController extends AbstractController
         return count($tabRecrutement) ? $tabRecrutement : [];
     }
     
+    
+     /**
+     * @Rest\Get(path="/employe/count-by-typecontrat/", name="employe_count_statistic_by_typecontrat")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+      * 
+     */
+    public function countEmployeBy(): array{
+        $em = $this->getDoctrine()->getManager();
+        $typeContrats = $em->createQuery('SELECT tc FROM App\Entity\TypeContrat tc'
+                . ' WHERE tc in(select c FROM App\Entity\Contrat c JOIN c.typeContrat)' )
+              ->getResult();
+         $tab = [];
+      foreach($typeContrats as $typeContrat){
+          $employes = $em->getRepository(Contrat::class)
+                  ->findByEmploye($typeContrat);
+                  $tab [] = [
+                'typeContrat' =>$typeContrat,
+                'nombreEmploye' => count($employes)
+            ];            
+      }
+        
+    }
+    
+    
     /**
      * @Rest\Get(path="/employe/count-by-profession/", name="employe_count_statistic_by_profession")
      * @Rest\View(StatusCode = 200)
@@ -355,6 +380,47 @@ class DashboardController extends AbstractController
     }
     
     /**
+     * @Rest\Get(path="/employe/count-by-typeemploye/", name="employe_count_statistic_by_type_employe")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function countEmployeByTypeEmploye(): array
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $typeEmployes = $em->createQuery('
+            SELECT te
+            FROM App\Entity\TypeEmploye te
+            WHERE te IN (SELECT t
+            FROM App\Entity\Employe e JOIN e.typeEmploye t
+            )
+        ')
+          ->getResult();
+        $tab = [];
+        foreach ( $typeEmployes as $typeEmploye) {
+            $nbrHomme = 0;
+            $nbrFemme = 0;
+            $employes = $em->getRepository(Employe::class)
+                ->findByTypeEmploye($typeEmploye);
+            foreach ($employes as $employe){
+                if (strtolower($employe->getGenre()) === 'masculin')
+                    $nbrHomme++;
+                else
+                    $nbrFemme++;
+            }
+            $tab [] = [
+                'typeEmploye' => $typeEmploye,
+                'nbreEmploye' => count($employes),
+                'nbrHomme' => $nbrHomme,
+                'nbrFemme' => $nbrFemme
+            ];
+        }
+
+
+        return count($tab) ? $tab : [];
+    }
+    
+     /**
      * @Rest\Get(path="/employe/count-by-structure/", name="employe_count_statistic_by_structure")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_EMPLOYE_INDEX")

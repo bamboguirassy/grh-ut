@@ -28,15 +28,19 @@ export class DashboardService {
   countByType() {
     return this.httpSrv.get(this.routePrefix + 'employe/count-by-type/');
   }
-
   countByProfession() {
     return this.httpSrv.get(this.routePrefix + 'employe/count-by-profession/');
   }
-  
+
   countEmployeByGrade() {
     return this.httpSrv.get(this.routePrefix + 'employe/count-by-grade');
   }
   countEmployeByStructure() {
     return this.httpSrv.get(this.routePrefix + 'employe/count-by-structure');
   }
+  countEmployeByTypeEmploye() {
+    return this.httpSrv.get(this.routePrefix + 'employe/count-by-typeemploye');
+  }
+
+
 }
