@@ -439,24 +439,23 @@ class DashboardController extends AbstractController
           ->getResult();
         $tab = [];
         foreach ($structures as $structure) {
-            $nbrHomme = 0;
-            $nbrFemme = 0;
-            $employes = $em->getRepository(Employe::class)
-                ->findByStructure($structure);
-            foreach ($employes as $employe){
-                if (strtolower($employe->getGenre()) === 'masculin')
-                    $nbrHomme++;
-                else
-                    $nbrFemme++;
-            }
+            $nombreEmployeHomme = $em->createQuery('select count(e) from 
+            App\Entity\Employe e where e.structure=?1 and e.genre=?2')
+            ->setParameter(1,$structure)
+            ->setParameter(2,'Masculin')
+            ->getSingleScalarResult();
+            $nombreEmployeFemme = $em->createQuery('select count(e) from 
+            App\Entity\Employe e where e.structure=?1 and e.genre=?2')
+            ->setParameter(1,$structure)
+            ->setParameter(2,'Féminin')
+            ->getSingleScalarResult();
             $tab [] = [
                 'structure' => $structure,
-                'nbreEmploye' => count($employes),
-                'nbrHomme' => $nbrHomme,
-                'nbrFemme' => $nbrFemme
+                'nbreEmploye' => $nombreEmployeHomme+$nombreEmployeFemme,
+                'nbrHomme' => $nombreEmployeHomme,
+                'nbrFemme' => $nombreEmployeFemme
             ];
         }
-
 
         return count($tab) ? $tab : [];
     }
