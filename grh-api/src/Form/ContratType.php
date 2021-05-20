@@ -13,14 +13,13 @@ class ContratType extends AbstractType
     {
         $builder
             ->add('dureeEnMois')
-            ->add('dateRupture')
             ->add('dateSignature')
             ->add('dateDebut')
-            ->add('dateFin')
-            ->add('motifRupture')
-            ->add('commentaire')
-            ->add('expire')
-            ->add('rompu')
+            ->add('dateFinEffective')
+            ->add('dateFinPrevue')
+            ->add('motifFin')
+            ->add('commentaireSurFinContrat')
+            ->add('etat')
             ->add('typeContrat')
             ->add('employe')
             ;

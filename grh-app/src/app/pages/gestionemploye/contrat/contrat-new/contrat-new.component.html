@@ -48,11 +48,11 @@
                 </div>
                 <div class="col-12 col-md-6" *ngIf="selectedTypeContrat?.code !='CDI'">
                     <tc-form-group>
-                        <tc-form-label>Date Fin</tc-form-label>
-                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateFin"
-                            name="dateFin" id="dateFin" #dateFin="ngModel" disabled></nz-date-picker>
+                        <tc-form-label>Date Fin prévue</tc-form-label>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateFinPrevue"
+                            name="dateFinPrevue" id="dateFinPrevue" #dateFinPrevue="ngModel" disabled></nz-date-picker>
                         <tc-form-description>
-                            <app-form-field-validation-message [formField]="dateFin">
+                            <app-form-field-validation-message [formField]="dateFinPrevue">
                             </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>
@@ -68,61 +68,49 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6" *ngIf="!entity.rompu">
-                    <tc-form-group>
-                        <tc-form-label>Expiration</tc-form-label>
-                        <tc-switcher [(ngModel)]="entity.expire" name="expire" id="expire" #expire="ngModel"
-                            [bgColor]="['transparent', 'transparent', '#ed5564']"
-                            [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']">
-                        </tc-switcher>
-                        <tc-form-description>
-                            <app-form-field-validation-message [formField]="expire"></app-form-field-validation-message>
-                        </tc-form-description>
-                    </tc-form-group>
-                </div>
                 <div class="col-12 col-md-6" *ngIf="!entity.expire">
                     <tc-form-group>
-                        <tc-form-label>Rompu</tc-form-label>
-                        <tc-switcher [(ngModel)]="entity.rompu" name="rompu" id="rompu" #rompu="ngModel"
+                        <tc-form-label>Etat</tc-form-label>
+                        <tc-switcher [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel"
                             [bgColor]="['transparent', 'transparent', '#ed5564']"
                             [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']">
                         </tc-switcher>
                         <tc-form-description>
-                            <app-form-field-validation-message [formField]="rompu"></app-form-field-validation-message>
+                            <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6" *ngIf="entity.rompu">
+                <div class="col-12 col-md-6" *ngIf="entity.etat">
                     <tc-form-group>
-                        <tc-form-label>Date de rupture</tc-form-label>
-                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="dateSortie"
-                            name="dateRupture" id="dateRupture" #dateRupture="ngModel"></nz-date-picker>
-                        <tc-form-description>
-                            <app-form-field-validation-message [formField]="dateRupture">
-                            </app-form-field-validation-message>
-                        </tc-form-description>
-                    </tc-form-group>
-                </div>
-                <div class="col-12 col-md-6" *ngIf="entity.rompu">
-                    <tc-form-group>
-                        <tc-form-label>Motif de rupture</tc-form-label>
-                        <tc-select required="required" [(ngModel)]="motifSortie" name="motifRupture"
-                            id="motifRupture" #motifRupture="ngModel" [placeholder]="'Selectionner le statut du contrat'"
-                            [options]="motifSorties">
+                        <tc-form-label>Motif de fin du contrat</tc-form-label>
+                        <tc-select required="required" [(ngModel)]="motifFinContrat" name="motifFinContrat"
+                            id="motifFin" #motifFin="ngModel" [placeholder]="'Selectionner le motif du fin de contrat'"
+                            [options]="motifFinContrats">
                         </tc-select>
                         <tc-form-description>
-                            <app-form-field-validation-message [formField]="motifRupture">
+                            <app-form-field-validation-message [formField]="motifFin">
                             </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6" *ngIf="entity.rompu">
+                <div class="col-12 col-md-6" *ngIf="entity.etat">
                     <tc-form-group>
-                        <tc-form-label>Commentaire</tc-form-label>
-                        <tc-textarea [(ngModel)]="commentaireSortie" name="commentaire" id="commentaire"
-                            #commentaire="ngModel"> </tc-textarea>
+                        <tc-form-label>Date de fin effective</tc-form-label>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="dateFinEff"
+                            name="dateFinEffective" id="dateFinEffective" #dateFinEffective="ngModel"></nz-date-picker>
                         <tc-form-description>
-                            <app-form-field-validation-message [formField]="commentaire">
+                            <app-form-field-validation-message [formField]="dateFinEffective">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6" *ngIf="entity.etat">
+                    <tc-form-group>
+                        <tc-form-label>Commentaire sur le fin du contrat</tc-form-label>
+                        <tc-textarea [(ngModel)]="commentaireFinContrat" name="commentaireSurFinContrat" id="commentaireSurFinContrat"
+                            #commentaireSurFinContrat="ngModel"> </tc-textarea>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="commentaireSurFinContrat">
                             </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>

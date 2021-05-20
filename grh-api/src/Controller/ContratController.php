@@ -48,11 +48,11 @@ class ContratController extends AbstractController
         if (isset($reqData->dateDebut)) {
             $contrat->setDateDebut(new \DateTime($reqData->dateDebut));
         }
-        if (isset($reqData->dateFin)) {
-            $contrat->setDateFin(new \DateTime($reqData->dateFin));
+        if (isset($reqData->dateFinPrevue)) {
+            $contrat->setDateFinPrevue(new \DateTime($reqData->dateFinPrevue));
         }
-        if (isset($reqData->dateRupture)) {
-            $contrat->setDateRupture(new \DateTime($reqData->dateRupture));
+        if (isset($reqData->dateFinEffective)) {
+            $contrat->setDateFinEffective(new \DateTime($reqData->dateFinEffective));
         }
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -89,11 +89,11 @@ class ContratController extends AbstractController
         if (isset($reqData->dateDebut)) {
             $contrat->setDateDebut(new \DateTime($reqData->dateDebut));
         }
-        if (isset($reqData->dateFin)) {
-           $contrat->setDateFin(new \DateTime($reqData->dateFin));
+        if (isset($reqData->dateFinPrevue)) {
+           $contrat->setDateFinPrevue(new \DateTime($reqData->dateFinPrevue));
         }
-         if (isset($reqData->dateRupture)) {
-           $contrat->setDateRupture(new \DateTime($reqData->dateRupture));
+         if (isset($reqData->dateFinEffective)) {
+           $contrat->setDateFinEffective(new \DateTime($reqData->dateFinEffective));
         }
         $this->getDoctrine()->getManager()->flush();
 
@@ -161,7 +161,7 @@ class ContratController extends AbstractController
     {
         $contrats = $this->getDoctrine()
             ->getRepository(Contrat::class)
-            ->findByEmploye($employe ,['dateDebut' =>'DESC']);
+            ->findByEmploye($employe);
             
         return $contrats;
     }
