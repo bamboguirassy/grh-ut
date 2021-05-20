@@ -25,6 +25,10 @@ export class DashboardService {
     return this.httpSrv.get(this.routePrefix  + 'employe/suivi-recrutement-genre');
   }
 
+  countEmployeByEntreeSortie() {
+    return this.httpSrv.get(this.routePrefix  + 'employe/count-by-entree-sortie');
+  }
+
   countByType() {
     return this.httpSrv.get(this.routePrefix + 'employe/count-by-type/');
   }
