@@ -34,25 +34,23 @@ export class ContratNewComponent implements OnInit {
   ngOnInit(): void { }
 
   save() {
-    console.log(this.entity);
-
     this.entity.employe = this.employe.id;
     if (this.selectedTypeContrat) {
       this.entity.typeContrat = this.selectedTypeContrat.id;
     }
-    if (!this.entity.rompu){
-      this.entity.motifRupture=null;
-      this.entity.dateRupture=null;
+    if (!this.entity.rompu) {
+      this.entity.motifRupture = null;
+      this.entity.dateRupture = null;
     }
-    if (this.entity.dateDebut && this.entity.dureeEnMois){
-      const dateDeb= new Date(this.entity.dateDebut);
-      let dateFin =  dateDeb.setMonth(dateDeb.getMonth() + this.entity.dureeEnMois);
-      this.entity.dateFin =dateFin;
-      
-    }
-    if(this.entity.typeContrat.code=='CDI'){
-      this.entity.dureeEnMois=null;
-      this.entity.dateFin=null;
+    /*if (this.entity.dateDebut && this.entity.dureeEnMois) {
+      const dateDeb = new Date(this.entity.dateDebut);
+      let dateFin = dateDeb.setMonth(dateDeb.getMonth() + this.entity.dureeEnMois);
+      this.entity.dateFin = dateFin;
+
+    }*/
+    if (this.entity.typeContrat.code == 'CDI') {
+      this.entity.dureeEnMois = null;
+      this.entity.dateFin = null;
     }
     if (this.entity.dateRupture) {
       this.entity.dateRupture = this.datePipe.transform(this.entity.dateRupture, 'yyyy-MM-dd');
@@ -70,10 +68,10 @@ export class ContratNewComponent implements OnInit {
       .subscribe((data: any) => {
         this.closeModal();
         this.creation.emit(data);
-        this.selectedTypeContrat=null;
+        this.selectedTypeContrat = null;
         this.entity = new Contrat();
       }, error => this.contratSrv.httpSrv.catchError(error));
-    
+
   }
 
   initNewContrat() {
@@ -90,11 +88,34 @@ export class ContratNewComponent implements OnInit {
   closeModal() {
     this.isModalVisible = false;
   }
+
   findTypeContrats() {
     this.typeContratSrv.findAll()
       .subscribe((data: any) => {
         this.typeContrats = data;
       }, err => this.typeContratSrv.httpSrv.catchError(err));
+  }
+
+  handleDureeChange(dureeValue) {
+    if (dureeValue && this.selectedTypeContrat?.code != 'CDI' && this.entity.dateDebut) {
+      let dateDeb = new Date(this.entity.dateDebut);
+      const duree = +dureeValue;
+      let dateFin = dateDeb.setMonth(dateDeb.getMonth() + duree);
+      this.entity.dateFin = dateFin;
+    } else {
+      this.entity.dateFin = null;
+    }
+  }
+
+  handleDateDebutChange(newDate) {
+    if (newDate && this.selectedTypeContrat?.code != 'CDI' && this.entity.dureeEnMois) {
+      let dateDeb = new Date(newDate);
+      let duree = +this.entity.dureeEnMois;
+      let dateFin = dateDeb.setMonth(dateDeb.getMonth() + duree);
+      this.entity.dateFin = dateFin;
+    } else {
+      this.entity.dateFin = null;
+    }
   }
 
 
