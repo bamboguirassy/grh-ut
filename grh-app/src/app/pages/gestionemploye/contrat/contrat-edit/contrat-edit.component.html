@@ -23,7 +23,7 @@
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Date de début</tc-form-label>
-                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" type="Date" [(ngModel)]="entity.dateDebut" name="dateDebut"
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" type="Date" [(ngModel)]="entity.dateDebut" (ngModelChange)="handleDateDebutChange($event)" name="dateDebut"
                             id="dateDebut" #dateDebut="ngModel"></nz-date-picker>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="dateDebut">
@@ -34,7 +34,7 @@
                 <div class="col-12 col-md-6" *ngIf="selectedTypeContrat?.code !='CDI'">
                     <tc-form-group>
                         <tc-form-label>Durée en mois</tc-form-label>
-                        <tc-input [(ngModel)]="entity.dureeEnMois" name="dureeEnMois" id="dureeEnMois"
+                        <tc-input [(ngModel)]="entity.dureeEnMois" (ngModelChange)="handleDureeChange($event)" name="dureeEnMois" id="dureeEnMois"
                             #dureeEnMois="ngModel">
                         </tc-input>
                         <tc-form-description>
