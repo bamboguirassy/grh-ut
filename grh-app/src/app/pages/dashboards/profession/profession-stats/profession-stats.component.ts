@@ -1,7 +1,5 @@
-import { ChartDataset } from 'chart.js';
 import { DashboardService } from 'src/app/pages/dashboards/dashboard.service';
 import { DashboardBaseComponent } from 'src/app/shared/components/dashboard-base/dashboard-base.component';
-import { BamboAbstractObject } from 'src/app/shared/classes/bambo-abstract-object';
 import { Component, OnInit, Input } from '@angular/core';
 import { ProfessionStats } from '../profession-stats';
 
@@ -47,7 +45,7 @@ export class ProfessionStatsComponent extends DashboardBaseComponent<ProfessionS
         plugins: {
           title: {
             display: true,
-            text: 'Nombre d\'employé par Profession'
+            text: 'Nombres employé par Profession'
           }
         }
         

@@ -345,8 +345,6 @@ class DashboardController extends AbstractController
     public function countEmployeByProfession(): array
     {
         $em = $this->getDoctrine()->getManager();
-//        $professions = $em->getRepository('App\Entity\Profession')
-//            ->findByEmploye();
         $professions = $em->createQuery('
             SELECT p
             FROM App\Entity\Profession p
@@ -357,21 +355,21 @@ class DashboardController extends AbstractController
           ->getResult();
         $tab = [];
         foreach ($professions as $profession) {
-            $nbrHomme = 0;
-            $nbrFemme = 0;
-            $employes = $em->getRepository(Employe::class)
-                ->findByProfession($profession);
-            foreach ($employes as $employe){
-                if (strtolower($employe->getGenre()) === 'masculin')
-                    $nbrHomme++;
-                else
-                    $nbrFemme++;
-            }
+            $nombreEmployeHomme = $em->createQuery('select count(e) from 
+            App\Entity\Employe e where e.profession=?1 and e.genre=?2')
+            ->setParameter(1,$profession)
+            ->setParameter(2,'Masculin')
+            ->getSingleScalarResult();
+            $nombreEmployeFemme = $em->createQuery('select count(e) from 
+            App\Entity\Employe e where e.profession=?1 and e.genre=?2')
+            ->setParameter(1,$profession)
+            ->setParameter(2,'Féminin')
+            ->getSingleScalarResult();
             $tab [] = [
                 'profession' => $profession,
-                'nbreEmploye' => count($employes),
-                'nbrHomme' => $nbrHomme,
-                'nbrFemme' => $nbrFemme,
+                'nbreEmploye' => $nombreEmployeHomme+$nombreEmployeFemme,
+                'nbrHomme' => $nombreEmployeHomme,
+                'nbrFemme' => $nombreEmployeFemme,
             ];
         }
 
@@ -439,26 +437,74 @@ class DashboardController extends AbstractController
           ->getResult();
         $tab = [];
         foreach ($structures as $structure) {
-            $nbrHomme = 0;
-            $nbrFemme = 0;
-            $employes = $em->getRepository(Employe::class)
-                ->findByStructure($structure);
-            foreach ($employes as $employe){
-                if (strtolower($employe->getGenre()) === 'masculin')
-                    $nbrHomme++;
-                else
-                    $nbrFemme++;
-            }
+            $nombreEmployeHomme = $em->createQuery('select count(e) from 
+            App\Entity\Employe e where e.structure=?1 and e.genre=?2')
+            ->setParameter(1,$structure)
+            ->setParameter(2,'Masculin')
+            ->getSingleScalarResult();
+            $nombreEmployeFemme = $em->createQuery('select count(e) from 
+            App\Entity\Employe e where e.structure=?1 and e.genre=?2')
+            ->setParameter(1,$structure)
+            ->setParameter(2,'Féminin')
+            ->getSingleScalarResult();
             $tab [] = [
                 'structure' => $structure,
-                'nbreEmploye' => count($employes),
-                'nbrHomme' => $nbrHomme,
-                'nbrFemme' => $nbrFemme
+                'nbreEmploye' => $nombreEmployeHomme+$nombreEmployeFemme,
+                'nbrHomme' => $nombreEmployeHomme,
+                'nbrFemme' => $nombreEmployeFemme
             ];
         }
 
-
         return count($tab) ? $tab : [];
+    }
+
+    /**
+     * @Rest\Get(path="/employe/count-by-entree-sortie", name="statistic_count_employe_by_entree_sortie")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function countEmployeByEntreeSortie(Request $request, EntityManagerInterface $entityManager) {
+        $anneeCourante = date("Y");
+        $annees = [$anneeCourante];
+        foreach (range(1,9) as $i) {
+			$annees[] = date("Y", strtotime("-{$i} year"));
+        }
+		$tab = [];
+        $em = $this->getDoctrine()->getManager();
+        foreach($annees as $annee) {
+            $nombreRecrutement = $em->createQuery('select count(e) 
+            from App\Entity\Employe e where e.dateRecrutement like ?1')
+            ->setParameter(1,$annee.'%')
+            ->getSingleScalarResult();
+            $nombreDemission = $em->createQuery('select count(e) 
+            from App\Entity\Employe e where e.dateSortie like ?1 
+            and e.motifSortie=?2')
+            ->setParameter(1,$annee.'%')
+            ->setParameter(2,'Démission')
+            ->getSingleScalarResult();
+            $nombreDepartRetraite = $em->createQuery('select count(e) 
+            from App\Entity\Employe e where e.dateSortie like ?1 
+            and e.motifSortie in (?2)')
+            ->setParameter(1,$annee.'%')
+            ->setParameter(2,['Retraite','Retraite Anticipé'])
+            ->getSingleScalarResult();
+            $nombreMisAPied = $em->createQuery('select count(e) 
+            from App\Entity\Employe e where e.dateSortie like ?1 
+            and e.motifSortie=?2')
+            ->setParameter(1,$annee.'%')
+            ->setParameter(2,'Mis à pied')
+            ->getSingleScalarResult();
+			$nombreExpirationContrat = $em->createQuery('select count(e) 
+            from App\Entity\Employe e where e.dateSortie like ?1 
+            and e.motifSortie=?2')
+            ->setParameter(1,$annee.'%')
+            ->setParameter(2,'Expiration Contrat')
+            ->getSingleScalarResult();
+			$tab[] = ['annee'=>$annee,'nombreRecrutement'=>$nombreRecrutement,
+		'nombreDemission'=>$nombreDemission,'nombreDepartRetraite'=>$nombreDepartRetraite,
+	'nombreMisAPied'=>$nombreMisAPied,'nombreExpirationContrat'=>$nombreExpirationContrat];
+        }
+		return $tab;
     }
     
     

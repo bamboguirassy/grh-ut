@@ -25,6 +25,7 @@ export class EmployeService extends BamboAbstractService {
     {label: 'Retraite', value:'Retraite'},
     {label: 'Retraite Anticipé', value:'Retraite Anticipé'},
     {label: 'Mis à pied', value:'Mis à pied'},
+    {label: 'Expiration Contrat', value:'Expiration Contrat'},
   ]
 
   constructor(public httpSrv: BamboHttpService, public toastr: ToastrService) {
