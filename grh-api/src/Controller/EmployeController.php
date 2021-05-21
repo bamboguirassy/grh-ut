@@ -284,4 +284,5 @@ $employe->setProfession($faker->randomElement($professions));
 
         return $employe;
     }
+    
 }

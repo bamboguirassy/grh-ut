@@ -1,3 +1,4 @@
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -173,11 +174,13 @@ import { TestComponent } from './tests/test/test.component';
 import { ProfessionStatsComponent } from './dashboards/profession/profession-stats/profession-stats.component';
 import { StructureStatsComponent } from './dashboards/structure/structure-stats/structure-stats.component';
 import { TypeEmployeStatsComponent } from './dashboards/typeemploye/type-employe-stats/type-employe-stats.component';
-import { RecrutementRangeStatsComponent } from './dashboards/recrutement-range/recrutement-range-stats/recrutement-range-stats.component';
+import { RecrutementRangeStatsComponent } from './dashboards/recrutement/recrutement-range/recrutement-range-stats/recrutement-range-stats.component';
 import { EntreeSortieStatsComponent } from './dashboards/recrutement/entree-sortie-stats/entree-sortie-stats.component';
 import { DemissionEmployeProfessionAnneeStatsComponent } from './dashboards/recrutement/demission-employe-profession-annee-stats/demission-employe-profession-annee-stats.component';
 import { DemissionEmployeStructureAnneeStatsComponent } from './dashboards/recrutement/demission-employe-structure-annee-stats/demission-employe-structure-annee-stats.component';
-import { RecrutementPeriodStatsComponent } from './dashboards/recrutement-period/recrutement-period-stats/recrutement-period-stats.component';
+import { RecrutementPeriodStatsComponent } from './dashboards/recrutement/recrutement-period/recrutement-period-stats/recrutement-period-stats.component';
+import { EmployeSearchComponent } from './gestionemploye/employe/employe-search/employe-search.component';
+import { AncienneteEmployeComponent } from './dashboards/anciennete/anciennete-employe/anciennete-employe.component';
 
 
 
@@ -187,7 +190,8 @@ import { RecrutementPeriodStatsComponent } from './dashboards/recrutement-period
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-
+    AutocompleteLibModule,
+    
     ChartsModule,
     NgxChartsModule,
     NgxEchartsModule.forRoot({
@@ -411,6 +415,8 @@ import { RecrutementPeriodStatsComponent } from './dashboards/recrutement-period
     DemissionEmployeProfessionAnneeStatsComponent,
     DemissionEmployeStructureAnneeStatsComponent,
     RecrutementPeriodStatsComponent,
+    EmployeSearchComponent,
+    AncienneteEmployeComponent,
 
   ],
   exports: [],
