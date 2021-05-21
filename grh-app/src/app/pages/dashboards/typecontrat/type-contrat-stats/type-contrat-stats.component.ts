@@ -39,14 +39,14 @@ export class TypeContratStatsComponent extends DashboardBaseComponent<TypeContra
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Type Contrats Actif'
+              labelString: 'Type Contrats'
             }
           }
         },
         plugins: {
           title: {
             display: true,
-            text: 'Nombres employé  par Type Contrat Actif'
+            text: 'Nombres employé  par Type Contrat'
           }
         }
         
