@@ -9,6 +9,17 @@
       <div class="row">
         <div class="col-12">
           <tc-form-group>
+            <tc-form-label>Type</tc-form-label>
+            <nz-select name="type" id="type" #type="ngModel" nzPlaceHolder="Selectionner le type"
+              nzAllowClear nzShowSearch [(ngModel)]="selectedType">
+            </nz-select>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="type"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12">
+          <tc-form-group>
             <tc-form-label>Syndicat</tc-form-label>
             <nz-select name="syndicat" id="syndicat" #syndicat="ngModel" nzPlaceHolder="Selectionner le syndicat"
               nzAllowClear nzShowSearch [(ngModel)]="selectedSyndicat">

@@ -7,7 +7,6 @@ import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { BasePageComponent } from 'src/app/pages/base-page';
 import { Location } from '@angular/common';
-import { type } from 'os';
 
 @Component({
   selector: 'app-syndicat-edit',

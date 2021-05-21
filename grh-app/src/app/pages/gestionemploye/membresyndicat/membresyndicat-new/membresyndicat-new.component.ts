@@ -23,16 +23,18 @@ export class MembreSyndicatNewComponent implements OnInit {
   @Input() employe: Employe;
   syndicats: Syndicat[] = [];
   selectedSyndicat: Syndicat;
+  selectedType: any=[];
 
   constructor(public membreSyndicatSrv: MembreSyndicatService,
     public router: Router, public datePipe: DatePipe,
     public syndicatSrv: SyndicatService) {
     this.entity = new MembreSyndicat();
+    this.selectedType=this.syndicatSrv.types;
   }
 
   ngOnInit(): void {
     this.findSyndicats();
-  }
+    }
 
   save() {
     this.entity.employe = this.employe.id;
