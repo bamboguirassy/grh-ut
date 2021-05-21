@@ -1,8 +1,33 @@
-<tc-card *ngIf="adresseSrv.resourceName|listable" [tcGradient]="lightGradient">
+<table class="table" *ngIf="adresseSrv.resourceName|listable">
+  <tbody>
+    <tr *ngFor="let item of items">
+      <td scope="row">
+        <span [ngStyle]="{'text-decoration': item?.etat?'':'line-through'}">{{item?.quartier}}, {{item?.ville}}</span>
+      </td>
+      <td>
+        <div class="actions">
+          <tc-icon icon="edit"></tc-icon>
+          <button *ngIf="adresseSrv.resourceName|editable" [routerLink]="['/'+adresseSrv.getRoutePrefixWithoutSlash(),item.id,'edit']" nz-button nzType="primary" nzSize="small" nzShape="circle">
+            <i class="icofont-ui-edit"></i>
+          </button>
+          <button *ngIf="adresseSrv.resourceName|deletable" (click)="remove(item)" class="ml-1" nz-button nzType="primary" nzSize="small" nzShape="circle" nzDanger>
+            <i class="icofont-trash"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
+        <app-adresse-new [employe]="employe" (creation)="onCreate($event)"></app-adresse-new>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- <tc-card *ngIf="adresseSrv.resourceName|listable" [tcGradient]="lightGradient">
   <tc-card [view]="secondViewBorder" [outline]="true">
     <div class="row">
       <div class="col-12">
-        <app-adresse-new [employe]="employe" (creation)="onCreate($event)"></app-adresse-new>
         <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findByEmploye()">Rafraichir</button>
       </div>
     </div>
@@ -36,16 +61,12 @@
         <div class="actions">
           <button *ngIf="adresseSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'"
             [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-          <!-- <button *ngIf="adresseSrv.resourceName|clonable" [outline]="true" tc-button [afterIcon]="'icofont-copy'"
-            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'clone']"></button> -->
-          <button *ngIf="adresseSrv.resourceName|deletable" (click)="remove(row)" tc-button
+         <button *ngIf="adresseSrv.resourceName|deletable" (click)="remove(row)" tc-button
             [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-          <!-- <button *ngIf="adresseSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'" [view]="'accent'"
-            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id]"></button> -->
-        </div>
+         </div>
       </ng-template>
     </tc-table-col>
   </tc-table>
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
-</tc-card>
-<app-access-denied *ngIf="!(adresseSrv.resourceName|listable)"></app-access-denied>
+</tc-card> 
+<app-access-denied *ngIf="!(adresseSrv.resourceName|listable)"></app-access-denied> -->

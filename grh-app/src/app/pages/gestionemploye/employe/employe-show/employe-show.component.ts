@@ -82,6 +82,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     this.title = this.entity?.prenoms + ' ' + this.entity?.nom + ' (' + this.entity?.matricule + ')';
     this.findLatestFonction();
     this.setTitre();
+    this.loadFamillesTab();
   }
 
   handlePostDelete() {
@@ -142,7 +143,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     this.isSyndicatsLoaded = true;
   }
 
-  loaderDocumentsTab() {
+  loadDocumentsTab() {
     this.isDocumentsLoaded = true;
   }
 
