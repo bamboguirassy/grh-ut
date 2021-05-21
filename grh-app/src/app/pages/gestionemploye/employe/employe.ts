@@ -38,4 +38,8 @@ export class Employe extends BamboAbstractObject {
     numeroAffiliationIpres: string;
     profession: Profession;
     commentaireSortie: string;
+
+
+    // Champ temporaire
+    globalFilter: string;
 }

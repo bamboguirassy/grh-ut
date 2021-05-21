@@ -178,13 +178,15 @@ import { RecrutementRangeStatsComponent } from './dashboards/recrutement/recrute
 import { EntreeSortieStatsComponent } from './dashboards/recrutement/entree-sortie-stats/entree-sortie-stats.component';
 import { DemissionEmployeProfessionAnneeStatsComponent } from './dashboards/recrutement/demission-employe-profession-annee-stats/demission-employe-profession-annee-stats.component';
 import { DemissionEmployeStructureAnneeStatsComponent } from './dashboards/recrutement/demission-employe-structure-annee-stats/demission-employe-structure-annee-stats.component';
+import { TypeContratStatsComponent } from './dashboards/typecontrat/type-contrat-stats/type-contrat-stats.component';
+import { TypeContratActifStatsComponent } from './dashboards/typecontrat/type-contrat-actif-stats/type-contrat-actif-stats.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { RecrutementPeriodStatsComponent } from './dashboards/recrutement/recrutement-period/recrutement-period-stats/recrutement-period-stats.component';
-import { EmployeSearchComponent } from './gestionemploye/employe/employe-search/employe-search.component';
 import { AncienneteEmployeComponent } from './dashboards/anciennete/anciennete-employe/anciennete-employe.component';
 import { RecrutementStatsViewMainComponent } from './dashboards/recrutement/recrutement-stats-view-main/recrutement-stats-view-main.component';
 import { GradeStatsViewMainComponent } from './dashboards/grade/grade-stats-view-main/grade-stats-view-main.component';
 import { EmployeStatsViewMainComponent } from './dashboards/typeemploye/employe-stats-view-main/employe-stats-view-main.component';
+import { AffectationTimelineComponent } from './gestionemploye/affectation/affectation-timeline/affectation-timeline.component';
 
 
 
@@ -420,11 +422,13 @@ import { EmployeStatsViewMainComponent } from './dashboards/typeemploye/employe-
     DemissionEmployeProfessionAnneeStatsComponent,
     DemissionEmployeStructureAnneeStatsComponent,
     RecrutementPeriodStatsComponent,
-    EmployeSearchComponent,
+    TypeContratStatsComponent,
+    TypeContratActifStatsComponent,
     AncienneteEmployeComponent,
     RecrutementStatsViewMainComponent,
     GradeStatsViewMainComponent,
     EmployeStatsViewMainComponent,
+    AffectationTimelineComponent,
 
   ],
   exports: [],
