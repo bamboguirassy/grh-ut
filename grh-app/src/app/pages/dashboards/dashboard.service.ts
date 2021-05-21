@@ -62,5 +62,9 @@ export class DashboardService {
       return this.httpSrv.post(this.routePrefix + 'employe/count-by-period', {'date':date});
   }
 
+  getSeniorityStats() {
+    return this.httpSrv.get(this.routePrefix + 'employe/count-employe-by-seniority');
+  }
+
 
 }
