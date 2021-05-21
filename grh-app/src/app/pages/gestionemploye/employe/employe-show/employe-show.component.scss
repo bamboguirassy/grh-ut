@@ -1,10 +1,19 @@
 @import "~src/assets/scss/variables";
 .personal-info {
     list-style-type: none;
-    .title {
-        font-weight: bold;
+    .info-line {
+        margin: 2px;
+        padding: 2px;
+        .title {
+            font-weight: bold;
+        }
+        .content {
+            align-items: left;
+        }
     }
-    .content {
-        align-items: left;
-    }
+}
+
+.employe-status-card {
+    margin-top: 3px;
+    justify-content: center;
 }
