@@ -34,11 +34,9 @@ export class EmployeSearchComponent implements OnInit {
   }
 
   findTypeEmployes() {
-    this.employeSrv.findAll()
+    this.employeSrv.employesProvider
       .subscribe((data: any) => {
-        this.items = data;
-        console.log("tes=> "+this.items);
-        
+        this.items = data;        
       }, err => this.employeSrv.httpSrv.catchError(err));
   }
 

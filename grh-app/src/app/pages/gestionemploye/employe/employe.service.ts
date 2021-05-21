@@ -3,11 +3,16 @@ import { BamboAbstractService } from '../../../shared/services/bambo-abstract.se
 import { BamboHttpService } from './../../../shared/services/bambo-http.service';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject } from 'rxjs';
+import { Employe } from './employe';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeService extends BamboAbstractService {
+
+  private employesManager: BehaviorSubject<Employe[]> = new BehaviorSubject([]);
+  public employesProvider = this.employesManager.asObservable();
 
   public situationMatrimoniales: any[] = [
     { label: 'Célibataire', value: 'Célibataire' },
@@ -21,11 +26,11 @@ export class EmployeService extends BamboAbstractService {
     { label: 'Féminin', value: 'Féminin' },
   ];  
   public motifSorties: any[] = [
-    {label: 'Démission', value:'Démission'},
-    {label: 'Retraite', value:'Retraite'},
-    {label: 'Retraite Anticipé', value:'Retraite Anticipé'},
-    {label: 'Mis à pied', value:'Mis à pied'},
-    {label: 'Expiration Contrat', value:'Expiration Contrat'},
+    { label: 'Démission', value: 'Démission' },
+    { label: 'Retraite', value: 'Retraite' },
+    { label: 'Retraite Anticipé', value: 'Retraite Anticipé' },
+    { label: 'Mis à pied', value: 'Mis à pied' },
+    { label: 'Expiration Contrat', value: 'Expiration Contrat' },
   ]
 
   constructor(public httpSrv: BamboHttpService, public toastr: ToastrService) {
@@ -37,14 +42,23 @@ export class EmployeService extends BamboAbstractService {
   findByTypeEmploye(typeEmploye: TypeEmploye) {
     return this.httpSrv.get(this.routePrefix + typeEmploye.id + '/typeemploye')
   }
-  
+
   uploadPhoto(photo: any, fileName: any) {
     return this.httpSrv.put(this.routePrefix + 'change_image_employe', { photo, fileName });
   }
 
-  findAllEmploye() {
-    return this.httpSrv.get(this.routePrefix);
+  
+  findAll(): any {
+    this
+      .httpSrv
+      .get(this.routePrefix)
+      .subscribe((employes: any) => {
+        this.employesManager.next(employes);
+      }, err => {
+        this.httpSrv.handleError(err);
+      });
   }
+
 
 
 }

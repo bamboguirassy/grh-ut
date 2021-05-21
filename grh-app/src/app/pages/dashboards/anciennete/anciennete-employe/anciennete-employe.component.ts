@@ -1,27 +1,28 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DashboardBaseComponent } from 'src/app/shared/components/dashboard-base/dashboard-base.component';
 import { DashboardService } from '../../dashboard.service';
-import { GradeEmployeCM } from '../grade-employe-cm';
+import { AncienneteEmployeCM } from '../anciennete-employe-cm';
 
 @Component({
-  selector: 'app-grade-employe-global',
-  templateUrl: './grade-employe-global.component.html',
-  styleUrls: ['./grade-employe-global.component.scss']
+  selector: 'app-anciennete-employe',
+  templateUrl: './anciennete-employe.component.html',
+  styleUrls: ['./anciennete-employe.component.scss']
 })
-export class GradeEmployeGlobalComponent extends DashboardBaseComponent<GradeEmployeCM> implements OnInit {
-  @Input() canSwitchDiagramType: boolean = true;
+export class AncienneteEmployeComponent extends DashboardBaseComponent<AncienneteEmployeCM> implements OnInit {
 
+  @Input() canSwitchDiagramType: boolean = true;
   typeDiagrams: { value: string, title: string }[] = [
     { value: 'bar', title: 'Barre verticale' },
     // { value: 'pie', title: 'Pie' },
     { value: 'line', title: 'Courbe' },
   ];
+
   constructor(
     public dashboardSrv: DashboardService
-  ) { 
+  ) {
     super(dashboardSrv);
-    this.methodName = "countEmployeByGrade";
-  }
+    this.methodName = 'getSeniorityStats';
+   }
 
   ngOnInit(): void {
     this.buildDiagram();
@@ -35,26 +36,26 @@ export class GradeEmployeGlobalComponent extends DashboardBaseComponent<GradeEmp
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Nombres'
+              labelString: 'Nombre'
             }
           },
           xAxes: {
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Grades'
+              labelString: 'Intervalles d\'années'
             }
           }
         },
         plugins: {
           title: {
             display: true,
-            text: 'Nombres d\'employé par grade'
+            text: "Suivi de l'ancienneté des employés"
           }
         }
         
     };
-    this.chartLabels = this.rawChartData.map(r => r?.grade?.classification);
+    this.chartLabels = this.rawChartData.map(r => r?.anciennete);
     this.chartType = 'bar';
     this.chartLegend = true;
     this.chartPlugins = [];

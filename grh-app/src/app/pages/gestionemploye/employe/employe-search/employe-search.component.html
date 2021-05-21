@@ -5,14 +5,22 @@
     </ng-autocomplete>
     <ng-template #itemTemplate let-item>
         <a href="javascript:void(0)">
-            <span [innerHTML]="item.prenoms"></span>, 
-            <span [innerHTML]="item.nom"></span>
+            <div class="row">
+                <div class="col-2">
+                    <img [src]="item.filepath" class="rounded-circle float-right" style="width:50px" />
+                </div>
+                <div class="col-10">
+                    <span [innerHTML]="item?.prenoms" class="thick">{{item?.prenoms}}</span>,
+                    <span [innerHTML]="item?.nom" class="thick">{{item?.nom}}</span>
+                    <br>
+                    <span [innerHTML]="item?.matricule" style="color: blue;">{{item?.matricule}}</span>
+                    <br>
+                    <span [innerHTML]="item?.profession.nom">{{item?.profession.nom}}</span> 
+                </div>
+            </div>
         </a>
     </ng-template>
     <ng-template #notFoundTemplate let-notFound>
         <div [innerHTML]="notFound"></div>
     </ng-template>
 </div>
-
-<hr>
-{{items | json}}
