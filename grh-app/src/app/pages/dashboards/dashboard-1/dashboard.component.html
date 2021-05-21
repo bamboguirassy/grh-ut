@@ -31,7 +31,7 @@
   </div>
 </div>
 
-<tc-card [title]="'Suivi Recrutement'" *ngIf="selectedStatType?.code === 'SR'">
+<tc-card [title]="selectedStatType?.title" *ngIf="selectedStatType?.code === 'SR'">
   <div class="row">
     <div class="col-6 col-sm-12 col-lg-6 col-xl-6">
       <app-recrutement-type></app-recrutement-type>

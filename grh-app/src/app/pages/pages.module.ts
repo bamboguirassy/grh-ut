@@ -179,6 +179,7 @@ import { DemissionEmployeProfessionAnneeStatsComponent } from './dashboards/recr
 import { DemissionEmployeStructureAnneeStatsComponent } from './dashboards/recrutement/demission-employe-structure-annee-stats/demission-employe-structure-annee-stats.component';
 import { RecrutementPeriodStatsComponent } from './dashboards/recrutement-period/recrutement-period-stats/recrutement-period-stats.component';
 import { AncienneteEmployeComponent } from './dashboards/anciennete/anciennete-employe/anciennete-employe.component';
+import { ProfessionStatsViewMainComponent } from './dashboards/profession/profession-stats-view-main/profession-stats-view-main.component';
 
 
 
@@ -413,6 +414,7 @@ import { AncienneteEmployeComponent } from './dashboards/anciennete/anciennete-e
     DemissionEmployeStructureAnneeStatsComponent,
     RecrutementPeriodStatsComponent,
     AncienneteEmployeComponent,
+    ProfessionStatsViewMainComponent,
 
   ],
   exports: [],
