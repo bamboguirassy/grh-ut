@@ -1,9 +1,11 @@
 import { IMenuItem } from './../../interfaces/main-menu';
-import { Injectable } from '@angular/core';
+import { Injectable, Injector, Type } from '@angular/core';
 import { BamboHttpService } from './bambo-http.service';
 import { first } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../../pages/parametrage/user/user';
+import { EmployeService } from 'src/app/pages/gestionemploye/employe/employe.service';
+import { ListablePipe } from '../pipes/listable.pipe';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,15 @@ export class BamboAuthService {
 
   public localStorage = window.localStorage;
 
-  constructor(public httpSrv: BamboHttpService) { }
+  constructor(public httpSrv: BamboHttpService, private injector: Injector) { }
+
+  public get employeSrv(): EmployeService {
+    return this.injector.get<EmployeService>(EmployeService as Type<EmployeService>);
+  }
+
+  public get listablePipe(): ListablePipe {
+    return this.injector.get<ListablePipe>(ListablePipe as Type<ListablePipe>);
+  }
 
   login(loginData: { username: string, password: string }) {
     this.httpSrv.post('login_check', loginData)
@@ -38,6 +48,9 @@ export class BamboAuthService {
         pipe(first()).subscribe((data: any) => {
           this.currentUser = data;
           this.currentUserManager.next(data);
+          if (this.listablePipe.transform(this.employeSrv.resourceName)) {
+            this.employeSrv.findAll();
+          }
           resolve(this.currentUser);
         }, error => {
           console.log(error);

@@ -1,29 +1,29 @@
-import { DashboardBaseComponent } from './../../../../shared/components/dashboard-base/dashboard-base.component';
-import { RecrutementPeriodStats } from './../recrutement-period-stats';
+import {DashboardBaseComponent} from '../../../../../shared/components/dashboard-base/dashboard-base.component';
 import { finalize } from 'rxjs/operators';
 import { DashboardService } from 'src/app/pages/dashboards/dashboard.service';
+import { RecrutementRangeStats } from './../recrutement-range-stats';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-recrutement-period-stats',
-  templateUrl: './recrutement-period-stats.component.html',
-  styleUrls: ['./recrutement-period-stats.component.scss']
+  selector: 'app-recrutement-range-stats',
+  templateUrl: './recrutement-range-stats.component.html',
+  styleUrls: ['./recrutement-range-stats.component.scss']
 })
-export class RecrutementPeriodStatsComponent extends DashboardBaseComponent<RecrutementPeriodStats> implements OnInit {
-  isLoad = false;
+export class RecrutementRangeStatsComponent extends DashboardBaseComponent<RecrutementRangeStats> implements OnInit {
   @Input() canSwitchDiagramType: boolean = true;
   typeDiagrams: { value: string, title: string }[] = [
     { value: 'bar', title: 'Barre verticale' },
     { value: 'line', title: 'Courbe' },
   ];
-  date: Date;
-  rawChartData: RecrutementPeriodStats[];
-  constructor(public dashboardSrv: DashboardService) {
+  dateDebut: Date;
+  dateFin: Date;
+  isLoad = false;
+  rawChartData: RecrutementRangeStats[];
+  constructor(public dashboardSrv: DashboardService) { 
     super(dashboardSrv);
   }
 
   ngOnInit(): void {
-    
   }
 
   setDataChart() {
@@ -48,7 +48,7 @@ export class RecrutementPeriodStatsComponent extends DashboardBaseComponent<Recr
         plugins: {
           title: {
             display: true,
-            text: 'Nombres employés recrutés Homme / Femme par Type Employé'
+            text: 'Nombres employés recrutés Homme / Femme par Type Employé du '+this.dateDebut+' à '+this.dateFin
           }
         }
         
@@ -67,14 +67,15 @@ export class RecrutementPeriodStatsComponent extends DashboardBaseComponent<Recr
 
   buildDiagram() {
     this.loading = true;
-    this.dashboardSrv.countEmployeByPeriod(this.date)
+    this.dashboardSrv.countEmployeByDateRange(this.dateDebut,this.dateFin)
       .pipe(finalize(() => this.loading = false))
       .subscribe((data: any) => {
         this.isLoad = true;
-        this.handlePostFetch(data as RecrutementPeriodStats[]);
+        this.handlePostFetch(data as RecrutementRangeStats[]);
       }, err => {
         this.httpSrv.httpSrv.handleError(err);
       });
   }
-  
+
+
 }

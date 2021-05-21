@@ -1,29 +1,29 @@
+import { RecrutementPeriodStats } from './../recrutement-period-stats';
 import { finalize } from 'rxjs/operators';
 import { DashboardService } from 'src/app/pages/dashboards/dashboard.service';
-import { RecrutementRangeStats } from './../recrutement-range-stats';
-import { DashboardBaseComponent } from './../../../../shared/components/dashboard-base/dashboard-base.component';
 import { Component, OnInit, Input } from '@angular/core';
+import { DashboardBaseComponent } from 'src/app/shared/components/dashboard-base/dashboard-base.component';
 
 @Component({
-  selector: 'app-recrutement-range-stats',
-  templateUrl: './recrutement-range-stats.component.html',
-  styleUrls: ['./recrutement-range-stats.component.scss']
+  selector: 'app-recrutement-period-stats',
+  templateUrl: './recrutement-period-stats.component.html',
+  styleUrls: ['./recrutement-period-stats.component.scss']
 })
-export class RecrutementRangeStatsComponent extends DashboardBaseComponent<RecrutementRangeStats> implements OnInit {
+export class RecrutementPeriodStatsComponent extends DashboardBaseComponent<RecrutementPeriodStats> implements OnInit {
+  isLoad = false;
   @Input() canSwitchDiagramType: boolean = true;
   typeDiagrams: { value: string, title: string }[] = [
     { value: 'bar', title: 'Barre verticale' },
     { value: 'line', title: 'Courbe' },
   ];
-  dateDebut: Date;
-  dateFin: Date;
-  isLoad = false;
-  rawChartData: RecrutementRangeStats[];
-  constructor(public dashboardSrv: DashboardService) { 
+  date: Date;
+  rawChartData: RecrutementPeriodStats[];
+  constructor(public dashboardSrv: DashboardService) {
     super(dashboardSrv);
   }
 
   ngOnInit(): void {
+    
   }
 
   setDataChart() {
@@ -48,7 +48,7 @@ export class RecrutementRangeStatsComponent extends DashboardBaseComponent<Recru
         plugins: {
           title: {
             display: true,
-            text: 'Nombres employés recrutés Homme / Femme par Type Employé du '+this.dateDebut+' à '+this.dateFin
+            text: 'Nombres employés recrutés Homme / Femme par Type Employé'
           }
         }
         
@@ -67,15 +67,14 @@ export class RecrutementRangeStatsComponent extends DashboardBaseComponent<Recru
 
   buildDiagram() {
     this.loading = true;
-    this.dashboardSrv.countEmployeByDateRange(this.dateDebut,this.dateFin)
+    this.dashboardSrv.countEmployeByPeriod(this.date)
       .pipe(finalize(() => this.loading = false))
       .subscribe((data: any) => {
         this.isLoad = true;
-        this.handlePostFetch(data as RecrutementRangeStats[]);
+        this.handlePostFetch(data as RecrutementPeriodStats[]);
       }, err => {
         this.httpSrv.httpSrv.handleError(err);
       });
   }
-
-
+  
 }

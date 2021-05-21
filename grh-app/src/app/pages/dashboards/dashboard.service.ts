@@ -70,6 +70,9 @@ export class DashboardService {
     return this.httpSrv.get(this.routePrefix + 'employe/count-by-typecontrat-actif');
 
   }
+  getSeniorityStats() {
+    return this.httpSrv.get(this.routePrefix + 'employe/count-employe-by-seniority');
+  }
 
 
 }

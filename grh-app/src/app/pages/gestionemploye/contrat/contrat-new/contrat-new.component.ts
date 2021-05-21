@@ -7,6 +7,7 @@ import { TypeContrat } from 'src/app/pages/parametrage/typecontrat/typecontrat';
 import { TypeContratService } from 'src/app/pages/parametrage/typecontrat/typecontrat.service';
 import { DatePipe } from '@angular/common';
 import { EmployeService } from '../../employe/employe.service';
+import { IAppState } from 'src/app/interfaces/app-state';
 
 @Component({
   selector: 'app-contrat-new',
@@ -25,11 +26,10 @@ export class ContratNewComponent implements OnInit {
   @Input() employe: Employe;
 
   typeContrats: TypeContrat[] = [];
+  contrats: Contrat[] = [];
   selectedTypeContrat: any;
-  motifFinContrat: any;
-  commentaireFinContrat: any;
-  dateFinEff: any;
   motifFinContrats: any = [];
+  contratActif: Contrat;
 
   constructor(public contratSrv: ContratService,
     public typeContratSrv: TypeContratService,
@@ -39,21 +39,15 @@ export class ContratNewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.commentaireFinContrat = this.employe.commentaireSortie;
-    this.dateFinEff = this.employe.dateSortie;
     this.motifFinContrats = this.employeSrv.motifSorties;
-    this.motifFinContrat = this.employe.motifSortie;    
+    this.findByEmploye();
   }
 
   save() {
     this.entity.employe = this.employe.id;
-    this.entity.commentaireSurFinContrat = this.commentaireFinContrat
-    this.entity.dateFinEffective = this.dateFinEff
     if (this.selectedTypeContrat) {
       this.entity.typeContrat = this.selectedTypeContrat.id;
     }
-    this.entity.motifFin = this.motifFinContrat;
-
     if (!this.entity.etat) {
       this.entity.motifFin = null;
       this.entity.dateFinEffective = null;
@@ -81,7 +75,6 @@ export class ContratNewComponent implements OnInit {
         this.creation.emit(data);
         this.entity = new Contrat();
       }, error => this.contratSrv.httpSrv.catchError(error));
-
   }
 
   initNewContrat() {
@@ -98,7 +91,6 @@ export class ContratNewComponent implements OnInit {
   closeModal() {
     this.isModalVisible = false;
   }
-
   findTypeContrats() {
     this.typeContratSrv.findAll()
       .subscribe((data: any) => {
@@ -107,8 +99,6 @@ export class ContratNewComponent implements OnInit {
   }
 
   handleDureeChange(dureeValue) {
-    console.log(this.entity.employe.motifSortie);
-    
     if (dureeValue && this.selectedTypeContrat?.code != 'CDI' && this.entity.dateDebut) {
       let dateDeb = new Date(this.entity.dateDebut);
       const duree = +dureeValue;
@@ -129,6 +119,15 @@ export class ContratNewComponent implements OnInit {
       this.entity.dateFinPrevue = null;
     }
   }
+  
+  findByEmploye() {
+    this.contratSrv.findByEmploye(this.employe)
+    .subscribe((data: any)=>{
+      this.contrats = data;
+      this.contratActif = this.contrats.find(contrat => contrat.etat);
+    },err=>this.contratSrv.httpSrv.catchError(err));
+  }
+  
 
 
 }
