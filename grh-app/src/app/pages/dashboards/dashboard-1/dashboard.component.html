@@ -34,6 +34,5 @@
 <tc-card [title]="selectedStatType?.title" >
   <app-recrutement-stats-view-main *ngIf="selectedStatType?.code === 'SR'" ></app-recrutement-stats-view-main>
   <app-grade-stats-view-main *ngIf="selectedStatType?.code === 'GR'" ></app-grade-stats-view-main>
-  <app-profession-stats-view-main *ngIf="selectedStatType?.code === 'PR'" ></app-profession-stats-view-main>
   <app-employe-stats-view-main *ngIf="selectedStatType?.code === 'EM'" ></app-employe-stats-view-main>
 </tc-card>

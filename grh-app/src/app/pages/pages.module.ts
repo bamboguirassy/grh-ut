@@ -182,7 +182,6 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { RecrutementPeriodStatsComponent } from './dashboards/recrutement/recrutement-period/recrutement-period-stats/recrutement-period-stats.component';
 import { EmployeSearchComponent } from './gestionemploye/employe/employe-search/employe-search.component';
 import { AncienneteEmployeComponent } from './dashboards/anciennete/anciennete-employe/anciennete-employe.component';
-import { ProfessionStatsViewMainComponent } from './dashboards/profession/profession-stats-view-main/profession-stats-view-main.component';
 import { RecrutementStatsViewMainComponent } from './dashboards/recrutement/recrutement-stats-view-main/recrutement-stats-view-main.component';
 import { GradeStatsViewMainComponent } from './dashboards/grade/grade-stats-view-main/grade-stats-view-main.component';
 import { EmployeStatsViewMainComponent } from './dashboards/typeemploye/employe-stats-view-main/employe-stats-view-main.component';
@@ -423,7 +422,6 @@ import { EmployeStatsViewMainComponent } from './dashboards/typeemploye/employe-
     RecrutementPeriodStatsComponent,
     EmployeSearchComponent,
     AncienneteEmployeComponent,
-    ProfessionStatsViewMainComponent,
     RecrutementStatsViewMainComponent,
     GradeStatsViewMainComponent,
     EmployeStatsViewMainComponent,
