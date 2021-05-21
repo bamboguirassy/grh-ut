@@ -67,7 +67,7 @@ class DashboardController extends AbstractController
         $tranche60Plus = 0;
         $anneeCourante = date("Y");
         $annees = [$anneeCourante];
-        foreach (range(1,4) as $i) {
+        foreach (range(1, 4) as $i) {
             $annees[] = date("Y", strtotime("-{$i} year"));
         }
         $typeEmployes = $em->createQuery('
@@ -198,7 +198,7 @@ class DashboardController extends AbstractController
         $typeEmployes = $em->getRepository(TypeEmploye::class)->findAll();
         $annees = [$anneeCourante];
         $tabRecrutement = [];
-        foreach (range(1,4) as $i) {
+        foreach (range(1, 4) as $i) {
             $annees[] = date("Y", strtotime("-{$i} year"));
         }
         foreach ($annees as $annee) {
@@ -241,8 +241,17 @@ class DashboardController extends AbstractController
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
-    public function countEmployeByGrade(Request $request, EntityManagerInterface $entityManager) {
-        $grades = $entityManager->getRepository(Grade::class)->findAll();
+    public function countEmployeByGrade(Request $request, EntityManagerInterface $entityManager)
+    {
+        $grades = $entityManager->createQuery('
+            SELECT g
+            FROM App\Entity\Grade g
+            WHERE g IN (
+                    SELECT eg
+                    FROM App\Entity\Employe e
+                    JOIN e.grade eg
+            )           
+        ')->getResult();
         $tab = [];
         foreach ($grades as $grade) {
             $employes = $entityManager->getRepository(Employe::class)
@@ -256,17 +265,54 @@ class DashboardController extends AbstractController
     }
 
     /**
+     * @Rest\Get(path="/employe/count-employe-by-seniority", name="statistic_count_employe_by_seniority")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     * @throws \Exception
+     */
+    public function getSeniorityStats(Request $request, EntityManagerInterface $entityManager)
+    {
+        $oldestRecruitementDate = $entityManager->createQuery("SELECT MIN(e.dateRecrutement) FROM App\Entity\Employe e")->getSingleScalarResult();
+        $age = (int)date('Y') - (int)(new \DateTime($oldestRecruitementDate))->format('Y');
+        $tab = [];
+        $employeNombreAnneeMaps = $entityManager->createQuery('
+                SELECT e.id, ((DATE_DIFF(CURRENT_DATE(), e.dateRecrutement)) / 365) AS nombreAnnee
+                FROM App\Entity\Employe e
+                GROUP BY e.id
+           ')->getResult();
+        for ($anciennete = 0; $anciennete <= $age; $anciennete += 5) {
+            $nombreEmploye = 0;
+            $label = '';
+            foreach ($employeNombreAnneeMaps as $employe) {
+                if( (int) floor($employe['nombreAnnee']) >= $anciennete && ((int) floor($employe['nombreAnnee']) < ($anciennete + 5)) ) {
+                    $nombreEmploye ++;
+                    $var = $anciennete + 5;
+                    $label = "{$anciennete} - {$var}";
+                }
+            }
+            $tab[] = [
+                'anciennete' => $label,
+                'nombreEmploye' => $nombreEmploye
+            ];
+        }
+
+        return $tab;
+
+    }
+
+    /**
      * @Rest\Get(path="/employe/suivi-recrutement-genre", name="statistic_by_genre")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
-    public function calculateRecrutementGroupedByGenres(Request $request){
+    public function calculateRecrutementGroupedByGenres(Request $request)
+    {
         /** @var EntityManagerInterface $em */
         $em = $this->getDoctrine()->getManager();
         $anneeCourante = date("Y");
         $annees = [$anneeCourante];
         $tabRecrutement = [];
-        foreach (range(1,4) as $i) {
+        foreach (range(1, 4) as $i) {
             $annees[] = date("Y", strtotime("-{$i} year"));
         }
 
