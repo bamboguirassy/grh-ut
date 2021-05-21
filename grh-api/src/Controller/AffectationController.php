@@ -108,7 +108,7 @@ class AffectationController extends AbstractController
     {
         $affectations = $this->getDoctrine()
             ->getRepository(Affectation::class)
-            ->findByEmploye($employe);
+            ->findByEmploye($employe,['date' => 'DESC']);
             
         return $affectations;
     }

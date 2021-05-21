@@ -21,6 +21,7 @@ import { RegisterFormComponent } from './components/register-form';
 import { NavbarSkeletonComponent } from './components/navbar-skeleton';
 import { SettingsComponent } from './components/settings';
 import { EmployeSearchComponent } from './components/employe-search/employe-search.component';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { EmployeSearchComponent } from './components/employe-search/employe-sear
     FormsModule,
     ReactiveFormsModule,
     MalihuScrollbarModule.forRoot(),
-    UIModule
+    UIModule,
+    AutocompleteLibModule
   ],
   declarations: [
     BaseLayoutComponent,
@@ -52,7 +54,8 @@ import { EmployeSearchComponent } from './components/employe-search/employe-sear
   exports: [
     LoginFormComponent,
     RegisterFormComponent,
-    SettingsComponent
+    SettingsComponent,
+    EmployeSearchComponent
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

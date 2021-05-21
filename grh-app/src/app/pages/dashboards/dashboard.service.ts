@@ -62,6 +62,14 @@ export class DashboardService {
       return this.httpSrv.post(this.routePrefix + 'employe/count-by-period', {'date':date});
   }
 
+  countEmployeByTypeContrat(){
+    return this.httpSrv.get(this.routePrefix + 'employe/count-by-typecontrat');
+
+  }
+  countEmployeByTypeContratActif(){
+    return this.httpSrv.get(this.routePrefix + 'employe/count-by-typecontrat-actif');
+
+  }
   getSeniorityStats() {
     return this.httpSrv.get(this.routePrefix + 'employe/count-employe-by-seniority');
   }
