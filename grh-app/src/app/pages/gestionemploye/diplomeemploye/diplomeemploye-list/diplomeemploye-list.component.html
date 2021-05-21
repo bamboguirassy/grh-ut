@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="diplomeEmployeSrv.resourceName|listable">
   <div class="col-12 col-md-4">
     <app-diplomeemploye-timeline *ngIf="employe" [employe]="employe">
     </app-diplomeemploye-timeline>
@@ -68,17 +68,8 @@
       </tc-table-col>
     </tc-table>
   </div>
-</div>
-
-<tc-card *ngIf="diplomeEmployeSrv.resourceName|listable" [tcGradient]="lightGradient">
-  <div class="row">
-    <div class="col-12">
-
-    </div>
-  </div>
-
   <app-diplomeemploye-edit *ngIf="selectedDiplome" [selectedDiplome]="selectedDiplome" (modification)="findByEmploye()"
     (onClose)="onClose()"></app-diplomeemploye-edit>
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
-</tc-card>
+</div>
 <app-access-denied *ngIf="!(diplomeEmployeSrv.resourceName|listable)"></app-access-denied>
