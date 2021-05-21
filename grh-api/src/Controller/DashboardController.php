@@ -10,11 +10,9 @@ use App\Utils\Utils;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use FOS\RestBundle\Controller\Annotations as Rest;
 
 /**
  * @Route("/api/statistics")
@@ -313,28 +311,7 @@ class DashboardController extends AbstractController
     }
     
     
-     /**
-     * @Rest\Get(path="/employe/count-by-typecontrat/", name="employe_count_statistic_by_typecontrat")
-     * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_EMPLOYE_INDEX")
-      * 
-     */
-    public function countEmployeBy(): array{
-        $em = $this->getDoctrine()->getManager();
-        $typeContrats = $em->createQuery('SELECT tc FROM App\Entity\TypeContrat tc'
-                . ' WHERE tc in(select c FROM App\Entity\Contrat c JOIN c.typeContrat)' )
-              ->getResult();
-         $tab = [];
-      foreach($typeContrats as $typeContrat){
-          $employes = $em->getRepository(Contrat::class)
-                  ->findByEmploye($typeContrat);
-                  $tab [] = [
-                'typeContrat' =>$typeContrat,
-                'nombreEmploye' => count($employes)
-            ];            
-      }
-        
-    }
+     
     
     
     /**
@@ -677,5 +654,36 @@ class DashboardController extends AbstractController
         return count($tab) ? $tab : [];
     }
     
+    
+     /**
+     * @Rest\Get(path="/employe/count-by-typecontrat", name="employe_count_statistic_by_type_contrat")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    
+      public function countEmployeByContratGroupByTypeContrat(EntityManagerInterface $entityManager){
+              $em = $this->getDoctrine()->getManager();
+              $typeContrats= $em->createQuery('SELECT typeContrat,count(c) App\Entity\Contrat c '
+                      . 'where c.typeContrat GROUP BY typeContrat')
+                     ->getResult();
+              return $typeContrats;
+              /*  $tab = [];
+             foreach ($typeContrats as $typeContrat){
+                 $employes = $entityManager->getRepository(Contrat::class)
+                         ->findByEmploye($typeContrat);
+                 $tab [] = [
+                'typeContrat' => $typeContrat,
+                'nombreEmploye' => count($employes)
+            ];
+                 
+                 
+             }
+              return count($tab) ? $tab : [];*/
+              
+          }
+          
+        
+        
+      
     
 }

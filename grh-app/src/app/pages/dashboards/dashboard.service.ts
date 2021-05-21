@@ -62,5 +62,10 @@ export class DashboardService {
       return this.httpSrv.post(this.routePrefix + 'employe/count-by-period', {'date':date});
   }
 
+  countEmployeByContratByType(){
+    return this.httpSrv.get(this.routePrefix + 'employe/count-by-typecontrat');
+
+  }
+
 
 }
