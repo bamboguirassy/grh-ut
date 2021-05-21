@@ -275,8 +275,8 @@ class DashboardController extends AbstractController
         $borneSup = 25;
         $tab = [];
         for ($anciennete = 0; $anciennete < $borneSup; $anciennete += 5) {
-            $var = $anciennete + 5;
-            $label = "{$anciennete} à {$var} ans";
+            $ancienneteSuivant = $anciennete + 5;
+            $label = "{$anciennete} à {$ancienneteSuivant} ans";
             $nombreEmploye = $entityManager->createQuery('
                 SELECT COUNT(e)
                 FROM App\Entity\Employe e
@@ -290,13 +290,11 @@ class DashboardController extends AbstractController
             ];
         }
         $label = "25 ans et +";
-
         $nombreEmploye = $entityManager->createQuery('
                 SELECT COUNT(e)
                 FROM App\Entity\Employe e
                 WHERE ((DATE_DIFF(CURRENT_DATE(), e.dateRecrutement)) / 365) >= 25
            ')->getSingleScalarResult();
-
         $tab[] = [
             'anciennete' => $label,
             'nombreEmploye' => $nombreEmploye
