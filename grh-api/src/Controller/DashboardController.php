@@ -272,11 +272,13 @@ class DashboardController extends AbstractController
      */
     public function getSeniorityStats(Request $request, EntityManagerInterface $entityManager)
     {
+        $typeEmployes = $entityManager->getRepository(TypeEmploye::class)->findAll();
         $borneSup = 25;
         $tab = [];
         for ($anciennete = 0; $anciennete < $borneSup; $anciennete += 5) {
             $ancienneteSuivant = $anciennete + 5;
             $label = "{$anciennete} à {$ancienneteSuivant} ans";
+            $categories = [];
             $nombreEmploye = $entityManager->createQuery('
                 SELECT COUNT(e)
                 FROM App\Entity\Employe e
@@ -284,20 +286,53 @@ class DashboardController extends AbstractController
                     AND ((DATE_DIFF(CURRENT_DATE(), e.dateRecrutement)) / 365) < :ancienneteSuivant
            ')->setParameters(['anciennete' => $anciennete, 'ancienneteSuivant' => ($anciennete + 5)])
                 ->getSingleScalarResult();
+            foreach ($typeEmployes as $typeEmploye) {
+                $count = $entityManager->createQuery('
+                    SELECT COUNT(e)
+                    FROM App\Entity\Employe e
+                    JOIN e.typeEmploye te
+                    WHERE ((DATE_DIFF(CURRENT_DATE(), e.dateRecrutement)) / 365) >= :anciennete 
+                        AND ((DATE_DIFF(CURRENT_DATE(), e.dateRecrutement)) / 365) < :ancienneteSuivant
+                        AND te = :typeEmploye
+                ')->setParameters(['anciennete' => $anciennete, 'ancienneteSuivant' => ($anciennete + 5), 'typeEmploye' => $typeEmploye])
+                    ->getSingleScalarResult();
+                $categories[] = [
+                    "typeEmploye" => $typeEmploye,
+                    "nombreEmploye" => $count
+                ];
+            }
             $tab[] = [
                 'anciennete' => $label,
-                'nombreEmploye' => $nombreEmploye
+                'nombreEmploye' => $nombreEmploye,
+                'categories' => $categories
             ];
         }
         $label = "25 ans et +";
+        $categories = [];
         $nombreEmploye = $entityManager->createQuery('
                 SELECT COUNT(e)
                 FROM App\Entity\Employe e
                 WHERE ((DATE_DIFF(CURRENT_DATE(), e.dateRecrutement)) / 365) >= 25
            ')->getSingleScalarResult();
+        foreach ($typeEmployes as $typeEmploye) {
+            $count = $entityManager->createQuery('
+                    SELECT COUNT(e)
+                    FROM App\Entity\Employe e
+                    JOIN e.typeEmploye te
+                    WHERE ((DATE_DIFF(CURRENT_DATE(), e.dateRecrutement)) / 365) >= 25
+                        AND te = :typeEmploye
+                ')->setParameters(['typeEmploye' => $typeEmploye])
+                ->getSingleScalarResult();
+            $categories[] = [
+                "typeEmploye" => $typeEmploye,
+                "nombreEmploye" => $count
+            ];
+        }
+
         $tab[] = [
             'anciennete' => $label,
-            'nombreEmploye' => $nombreEmploye
+            'nombreEmploye' => $nombreEmploye,
+            'categories' => $categories
         ];
 
         return $tab;

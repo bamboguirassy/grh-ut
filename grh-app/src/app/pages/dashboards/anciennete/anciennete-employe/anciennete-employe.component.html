@@ -12,4 +12,22 @@
     <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions" [plugins]="chartPlugins"
         [legend]="chartLegend" [chartType]="selectedTypeDiagram">
     </canvas>
+    <hr class="m-2">
+    <tc-card view="accent" [outline]="true">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Plages
+                    </th>
+                    <th *ngFor="let label of chartLabels">{{label}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of chartData">
+                    <td scope="row">{{item.label}}</td>
+                    <td *ngFor="let val of item.data">{{val}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </tc-card>
 </div>
