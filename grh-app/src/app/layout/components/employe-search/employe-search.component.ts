@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./employe-search.component.scss']
 })
 export class EmployeSearchComponent implements OnInit {
-  keyword = 'prenoms';
+  keyword = 'globalFilter';
   items: Employe [] = [];
   constructor(public employeSrv: EmployeService, public router: Router) {
      }
@@ -38,7 +38,10 @@ export class EmployeSearchComponent implements OnInit {
   findTypeEmployes() {
     this.employeSrv.employesProvider
       .subscribe((data: any) => {
-        this.items = data;        
+        this.items = data; 
+        this.items.forEach(element => {
+          element.globalFilter = `${element.prenoms}`+' '+`${element.nom}`+' '+`${element.matricule}`+' '+`${element.cni}`+' '+`${element.email}`;
+        });       
       }, err => this.employeSrv.httpSrv.catchError(err));
   }
 

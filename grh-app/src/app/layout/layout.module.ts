@@ -20,6 +20,7 @@ import { LoginFormComponent } from './components/login-form';
 import { RegisterFormComponent } from './components/register-form';
 import { NavbarSkeletonComponent } from './components/navbar-skeleton';
 import { SettingsComponent } from './components/settings';
+import { EmployeSearchComponent } from './components/employe-search/employe-search.component';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import { SettingsComponent } from './components/settings';
     LoginFormComponent,
     RegisterFormComponent,
     NavbarSkeletonComponent,
-    SettingsComponent
+    SettingsComponent,
+    EmployeSearchComponent
   ],
   exports: [
     LoginFormComponent,

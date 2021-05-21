@@ -197,7 +197,7 @@
                 </app-fonctionemploye-list>
             </nz-tab>
             <nz-tab nzTitle="Syndicats & amicales">
-
+                <app-membresyndicat-list *ngIf="entity && isFamilleLoaded" [employe]="entity"></app-membresyndicat-list>
             </nz-tab>
         </nz-tabset>
     </div>
