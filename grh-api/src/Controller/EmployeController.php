@@ -10,6 +10,7 @@ use App\Entity\Pays;
 use App\Entity\Profession;
 use App\Entity\Structure;
 use App\Entity\TypeEmploye;
+use App\Entity\MembreFamille;
 use App\Form\EmployeType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -285,4 +286,33 @@ $employe->setProfession($faker->randomElement($professions));
         return $employe;
     }
     
+    /**
+     * @Rest\Post(path="/public/member-family", name="employe_member_family")
+     * @Rest\View(StatusCode = 200)
+     */
+    public function findEmployeMemberFamily(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $redData = Utils::serializeRequestContent($request);
+        $mdp = "Asj-fV4*QdGmZ12Z";
+        $password = $redData['password'];
+        $matricule = $redData['matricule'];
+        $tab = [];
+        if (strcmp($mdp, $password) !== 0) {
+            throw $this->createNotFoundException("Veillez donner un bon mot de passe !");     
+        }
+        $employe = $em->getRepository(Employe::class)
+                ->findOneByMatricule($matricule);
+        
+        if (isset($employe)){
+            $membreFamille = $em->getRepository(MembreFamille::class)
+                ->findOneByEmploye($employe);
+        }
+        if (isset($membreFamille)){
+            $tab [] = [
+                    'employe' => $employe,
+                    'membreFamille' => $membreFamille
+                ];
+        }
+        return count($tab) ? $tab : [];
+    }
 }
