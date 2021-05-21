@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { EmployeService } from 'src/app/pages/gestionemploye/employe/employe.service';
 import { Store } from '@ngrx/store';
 import { IAppState } from './../../../../interfaces/app-state';
@@ -13,7 +14,7 @@ import { Component, OnInit } from '@angular/core';
 export class EmployeSearchComponent implements OnInit {
   keyword = 'prenoms';
   items: Employe [] = [];
-  constructor(public employeSrv: EmployeService) {
+  constructor(public employeSrv: EmployeService, public router: Router) {
      }
 
   ngOnInit(): void {
@@ -22,8 +23,9 @@ export class EmployeSearchComponent implements OnInit {
 
   selectEvent(item) {
     // do something with selected item
+    this.router.navigate(['/horizontal/employe/'+item.id]); 
   }
- 
+  
   onChangeSearch(val: string) {
     // fetch remote data from here
     // And reassign the 'data' which is binded to 'data' property.
