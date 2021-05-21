@@ -6,17 +6,26 @@
                     <img [src]="entity?.filepath ? entity?.filepath:'assets/img/default-profile-picture1.jpg'"
                         alt="photo employé" style="width: 100%;">
                 </div>
-                <div class="col-12 col-md-8 col-lg-9">
-                    <h2 [ngStyle]="{'color': sidebarBg}" class="m-0">{{titre+' '+entity?.prenoms+' '+entity?.nom}} -
-                        {{entity?.matricule}}</h2>
+                <div class="col-12 col-md-4 col-lg-5" style="border-right: 2px dashed blue;">
+                    <div [ngStyle]="{'color': sidebarBg}" style="font-size: large; font-weight: bolder;" class="mb-1">
+                        {{titre+' '+entity?.prenoms+' '+entity?.nom}}</div>
+                    <div [ngStyle]="{'color': sidebarBg}" style="font-size: large;">{{entity?.structure?.nom}}</div>
+                    <div [ngStyle]="{'color': sidebarBg}" style="font-size: large;" class="mb-2">Poste Actuellement
+                        occupée</div>
+                    <div [ngStyle]="{'color': sidebarBg}" style="font-size: large; font-weight: normal;" class="mb-1">
+                        Matricule: {{entity?.matricule}}</div>
+                    <div [ngStyle]="{'color': sidebarBg}" style="font-size: large;" class="mb-1"> Récruté le
+                        {{entity?.dateRecrutement|date:'MM, yyyy'}}</div>
+
+                    <!-- <h5 [ngStyle]="{'color': sidebarBg}" class="m-0"></h5>
                     <hr [ngStyle]="{'background-color': sidebarBg}" class="m-1">
-                    <h5 [ngStyle]="{'color': sidebarBg}" class="m-0" *ngIf="entity?.datePriseService">
+                    <h6 [ngStyle]="{'color': sidebarBg}" class="m-0" *ngIf="entity?.datePriseService">
                         <span *ngIf="entity?.profession">{{entity?.profession?.nom}}</span>
                         <ng-container *ngIf="entity?.structure">
                             -
                             <span> {{entity?.structure?.nom}}</span>
                         </ng-container>
-                    </h5>
+                    </h6>
                     <h5 [ngStyle]="{'color': '#2294D2'}" class="m-0" *ngIf="entity?.datePriseService">
                         <span *ngIf="entity?.dateRecrutement">Récruté le
                             {{entity?.dateRecrutement|date:'dd/MM/yyyy'}}</span>
@@ -27,9 +36,9 @@
                                 {{entity?.datePriseService|date:'dd/MM/yyyy'}}
                             </span>
                         </ng-container>
-                    </h5>
+                    </h5> -->
                     <hr [ngStyle]="{'background-color': sidebarBg}" class="m-1">
-                    <div class="col-12">
+                    <div class="col-12 justify-content-center">
                         <button *ngIf="employeSrv.resourceName|editable"
                             [routerLink]="['/'+orientation,employeSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
                             class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
@@ -102,6 +111,49 @@
                             </nz-descriptions>
                         </div>
                     </div> -->
+                </div>
+                <div class="col-12 col-md-4">
+                    <ul class="personal-info">
+                        <li>
+                            <div class="row">
+                                <div class="col-6 col-md-5 title">Téléphone Primaire:</div>
+                                <div class="col-6 col-md-7 content"><a
+                                        href="tel:{{entity?.telephonePrimaire}}">{{entity?.telephonePrimaire}}</a></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-6 col-md-5 title">Téléphone Secondaire:</div>
+                                <div class="col-6 col-md-7 content"><a
+                                        href="tel:{{entity?.telephoneSecondaire}}">{{entity?.telephonePrimaire}}</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-6 col-md-5 title">Email Perso:</div>
+                                <div class="col-6 col-md-7 content"><a
+                                        href="mailto:{{entity?.email}}">{{entity?.email}}</a></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-6 col-md-5 title">Email Universitaire:</div>
+                                <div class="col-6 col-md-7 content"><a
+                                        href="mailto:{{entity?.emailUniv}}">{{entity?.emailUniv}}</a></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row mt-2">
+                                <div class="col-12 title">
+                                    Adresses
+                                </div>
+                                <div class="col-12">
+                                    <app-adresse-list [employe]="entity" *ngIf="entity"></app-adresse-list>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </tc-card>
@@ -194,13 +246,13 @@
                             <tc-badge view="error" *ngIf="!entity?.cni">Indéfinie</tc-badge>
                         </td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th>Genre</th>
                         <td>
                             <span *ngIf="entity?.genre">{{ entity?.genre }}</span>
                             <tc-badge view="error" *ngIf="!entity?.genre">Indéfinie</tc-badge>
                         </td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th>Nationalité</th>
                         <td>
@@ -215,13 +267,13 @@
                             <tc-badge view="success" *ngIf="entity?.etat">Actif</tc-badge>
                         </td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th>Structure</th>
                         <td>
                             <span *ngIf="entity?.structure">{{ entity?.structure.nom}}</span>
                             <tc-badge view="error" *ngIf="!entity?.structure">Indéfinie</tc-badge>
                         </td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th>Date Prise Fonction</th>
                         <td>
@@ -243,7 +295,7 @@
         <div class="col-12 col-md-8">
             <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
                 <nz-collapse nzAccordion>
-                    <nz-collapse-panel nzHeader="Contacts" [nzActive]="false">
+                    <!-- <nz-collapse-panel nzHeader="Contacts" [nzActive]="false">
                         <table class="table">
                             <tr>
                                 <th>Email Institutionnel</th>
@@ -279,7 +331,7 @@
                                 </td>
                             </tr>
                         </table>
-                    </nz-collapse-panel>
+                    </nz-collapse-panel> -->
                     <nz-collapse-panel nzHeader="Sociales">
                         <table class="table">
                             <tr>
@@ -323,9 +375,9 @@
                             </tr>
                         </table>
                     </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Adresses" (click)="loadAdressesTab()">
+                    <!-- <nz-collapse-panel nzHeader="Adresses" (click)="loadAdressesTab()">
                         <app-adresse-list *ngIf="entity && isAdresseLoaded" [employe]="entity"></app-adresse-list>
-                    </nz-collapse-panel>
+                    </nz-collapse-panel> -->
                     <nz-collapse-panel nzHeader="Famille" (click)="loadFamillesTab()">
                         <app-membrefamille-list *ngIf="entity && isFamilleLoaded" [employe]="entity">
                         </app-membrefamille-list>

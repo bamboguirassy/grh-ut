@@ -178,7 +178,7 @@ import { EntreeSortieStatsComponent } from './dashboards/recrutement/entree-sort
 import { DemissionEmployeProfessionAnneeStatsComponent } from './dashboards/recrutement/demission-employe-profession-annee-stats/demission-employe-profession-annee-stats.component';
 import { DemissionEmployeStructureAnneeStatsComponent } from './dashboards/recrutement/demission-employe-structure-annee-stats/demission-employe-structure-annee-stats.component';
 import { RecrutementPeriodStatsComponent } from './dashboards/recrutement-period/recrutement-period-stats/recrutement-period-stats.component';
-
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 
 @NgModule({
@@ -232,7 +232,8 @@ import { RecrutementPeriodStatsComponent } from './dashboards/recrutement-period
     NgxOrgChartModule,
     // imports all pipes module
     NgPipesModule,
-    NzRadioModule
+    NzRadioModule,
+    NzIconModule
 
   ],
   declarations: [
