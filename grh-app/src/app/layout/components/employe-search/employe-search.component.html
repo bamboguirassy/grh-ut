@@ -1,6 +1,6 @@
 <div class="ng-autocomplete">
-    <ng-autocomplete [data]="items" [searchKeyword]="keyword" (selected)='selectEvent($event)'
-        (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
+    <ng-autocomplete [minQueryLength]="3" placeHolder="Taper pour rechercher un employé" style="width: 100px;" [data]="items" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+         [itemTemplate]="itemTemplate"
         [notFoundTemplate]="notFoundTemplate">
     </ng-autocomplete>
     <ng-template #itemTemplate let-item>

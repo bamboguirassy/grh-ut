@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { EmployeService } from 'src/app/pages/gestionemploye/employe/employe.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Employe } from 'src/app/pages/gestionemploye/employe/employe';
 
 @Component({
@@ -10,35 +10,27 @@ import { Employe } from 'src/app/pages/gestionemploye/employe/employe';
 })
 export class EmployeSearchComponent implements OnInit {
   keyword = 'globalFilter';
-  items: Employe [] = [];
+  items: Employe[] = [];
+  @Input() layout = 'horizontal';
   constructor(public employeSrv: EmployeService, public router: Router) {
-     }
+  }
 
   ngOnInit(): void {
-    this.findTypeEmployes();
+    this.getEmployes();
   }
 
   selectEvent(item) {
     // do something with selected item
-    this.router.navigate(['/horizontal/employe/'+item.id]); 
-  }
-  
-  onChangeSearch(val: string) {
-    // fetch remote data from here
-    // And reassign the 'data' which is binded to 'data' property.
-  }
-  
-  onFocused(e){
-    // do something when input is focused
+    this.router.navigate(['/'+this.layout+'/' + this.employeSrv.getRoutePrefix() + item.id]);
   }
 
-  findTypeEmployes() {
+  getEmployes() {
     this.employeSrv.employesProvider
       .subscribe((data: any) => {
-        this.items = data; 
+        this.items = data;
         this.items.forEach(element => {
-          element.globalFilter = `${element.prenoms}`+' '+`${element.nom}`+' '+`${element.matricule}`+' '+`${element.cni}`+' '+`${element.email}`;
-        });       
+          element.globalFilter = `${element.prenoms}` + ' ' + `${element.nom}` + ' ' + `${element.matricule}` + ' ' + `${element.cni}` + ' ' + `${element.email}`;
+        });
       }, err => this.employeSrv.httpSrv.catchError(err));
   }
 
