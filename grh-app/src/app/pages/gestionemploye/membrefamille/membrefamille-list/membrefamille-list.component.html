@@ -2,9 +2,15 @@
   <div class="col-12 title">
     <h4>Liste des membres de la famille</h4>
   </div>
-  <div class="col-12">
-    <button size="sm" class="ml-2 mr-2" tc-button afterIcon="icofont-refresh" (click)="findByEmploye()"></button>
-    <app-membrefamille-new [employe]="employe" (creation)="onCreate($event)"></app-membrefamille-new>
+  <div class="col-12 col-md-4 col-lg-3">
+    <div class="famille-card m-1">
+      <div class="info-box">
+        <div class="social">
+          <button size="sm" class="ml-2 mr-2" tc-button afterIcon="icofont-refresh" (click)="findByEmploye()"></button>
+          <app-membrefamille-new [employe]="employe" (creation)="onCreate($event)"></app-membrefamille-new>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="col-12 col-md-4 col-lg-3" *ngFor="let item of items">
     <div class="famille-card m-1">
@@ -28,9 +34,6 @@
     </div>
   </div>
 </div>
-
-
-
 
 <!-- <tc-card *ngIf="membreFamilleSrv.resourceName|listable" [tcGradient]="lightGradient">
   <tc-card [view]="secondViewBorder" [outline]="true">

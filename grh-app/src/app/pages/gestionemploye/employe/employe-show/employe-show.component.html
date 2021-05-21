@@ -169,6 +169,9 @@
 </div>
 <div class="row">
     <div class="col-12">
+        <hr>
+    </div>
+    <div class="col-12">
         <nz-tabset nzSize="small" style="width: 100%;">
             <nz-tab (nzSelect)="loadFamillesTab()" nzTitle="Familles">
                 <app-membrefamille-list *ngIf="entity && isFamilleLoaded" [employe]="entity">

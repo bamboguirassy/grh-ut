@@ -30,11 +30,9 @@ export class ContratEditComponent implements OnInit, OnDestroy {
     this.entity = value;
     this.selectedTypeContrat = this.entity.typeContrat;
     this.selectedTypeContratId = this.selectedTypeContrat.id;
-    this.motifFinContrat=this.entity.motifFin;
     this.handlePostLoad();
     this.openModal();
   }
-  motifFinContrat: any;
   motifFinContrats: any = [];
   selectedTypeContrat: TypeContrat;
   selectedTypeContratId: any;
@@ -71,7 +69,6 @@ export class ContratEditComponent implements OnInit, OnDestroy {
   }
 
   prepareUpdate() {
-    this.entity.motifFin = this.motifFinContrat;
     this.entity.typeContrat = this.selectedTypeContratId;
     this.entity.dateSignature = this.datePipe.transform(this.entity.dateSignature, 'yyyy-MM-dd');
     this.entity.dateFinEffective = this.datePipe.transform(this.entity.dateFinEffective, 'yyyy-MM-dd');
