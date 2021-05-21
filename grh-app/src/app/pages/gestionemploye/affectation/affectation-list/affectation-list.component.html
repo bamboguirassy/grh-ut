@@ -1,6 +1,8 @@
 <div class="row" *ngIf="affectationSrv.resourceName|listable">
   <div class="col-12 col-md-4">
-    <!-- placer le timeline ici -->
+    
+  <app-affectation-timeline *ngIf="employe && this.items?.length" [employe]="employe"></app-affectation-timeline>
+    
   </div>
   <div class="col-12 col-md-8">
     <div class="row">

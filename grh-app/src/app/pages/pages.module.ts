@@ -188,6 +188,7 @@ import { ProfessionStatsViewMainComponent } from './dashboards/profession/profes
 import { RecrutementStatsViewMainComponent } from './dashboards/recrutement/recrutement-stats-view-main/recrutement-stats-view-main.component';
 import { GradeStatsViewMainComponent } from './dashboards/grade/grade-stats-view-main/grade-stats-view-main.component';
 import { EmployeStatsViewMainComponent } from './dashboards/typeemploye/employe-stats-view-main/employe-stats-view-main.component';
+import { AffectationTimelineComponent } from './gestionemploye/affectation/affectation-timeline/affectation-timeline.component';
 
 
 
@@ -431,6 +432,7 @@ import { EmployeStatsViewMainComponent } from './dashboards/typeemploye/employe-
     RecrutementStatsViewMainComponent,
     GradeStatsViewMainComponent,
     EmployeStatsViewMainComponent,
+    AffectationTimelineComponent,
 
   ],
   exports: [],
