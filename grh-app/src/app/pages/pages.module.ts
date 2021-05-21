@@ -1,3 +1,4 @@
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -178,6 +179,7 @@ import { EntreeSortieStatsComponent } from './dashboards/recrutement/entree-sort
 import { DemissionEmployeProfessionAnneeStatsComponent } from './dashboards/recrutement/demission-employe-profession-annee-stats/demission-employe-profession-annee-stats.component';
 import { DemissionEmployeStructureAnneeStatsComponent } from './dashboards/recrutement/demission-employe-structure-annee-stats/demission-employe-structure-annee-stats.component';
 import { RecrutementPeriodStatsComponent } from './dashboards/recrutement-period/recrutement-period-stats/recrutement-period-stats.component';
+import { EmployeSearchComponent } from './gestionemploye/employe/employe-search/employe-search.component';
 
 
 
@@ -187,7 +189,8 @@ import { RecrutementPeriodStatsComponent } from './dashboards/recrutement-period
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-
+    AutocompleteLibModule,
+    
     ChartsModule,
     NgxChartsModule,
     NgxEchartsModule.forRoot({
@@ -411,6 +414,7 @@ import { RecrutementPeriodStatsComponent } from './dashboards/recrutement-period
     DemissionEmployeProfessionAnneeStatsComponent,
     DemissionEmployeStructureAnneeStatsComponent,
     RecrutementPeriodStatsComponent,
+    EmployeSearchComponent,
 
   ],
   exports: [],

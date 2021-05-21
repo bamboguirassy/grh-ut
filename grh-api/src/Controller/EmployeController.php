@@ -284,4 +284,20 @@ $employe->setProfession($faker->randomElement($professions));
 
         return $employe;
     }
+    
+    /**
+     * @Rest\Get(path="/search-all", name="employe_search_all")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function findAllEmployeCompleted() {
+        $em = $this->getDoctrine()->getManager();
+        $employes = $em->createQuery('select e.id, e.prenoms, e.nom,  e.dateNiassance,
+            e.lieuNaissance, e.email, e.amailUniv, e.filepath, e.typeEmploye.code,
+            e.matricule, e.cni from 
+            App\Entity\Employe e')
+            ->getResult();
+        
+        return count($employes) ? $employes : [];
+    }
 }
