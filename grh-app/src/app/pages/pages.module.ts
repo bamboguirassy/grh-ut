@@ -170,6 +170,15 @@ import { AffectationNewComponent } from './gestionemploye/affectation/affectatio
 import { ContratTimelineComponent } from './gestionemploye/contrat/contrat-timeline/contrat-timeline.component';
 import { GradeEmployeGlobalComponent } from './dashboards/grade/grade-employe-global/grade-employe-global.component';
 import { TestComponent } from './tests/test/test.component';
+import { ProfessionStatsComponent } from './dashboards/profession/profession-stats/profession-stats.component';
+import { StructureStatsComponent } from './dashboards/structure/structure-stats/structure-stats.component';
+import { TypeEmployeStatsComponent } from './dashboards/typeemploye/type-employe-stats/type-employe-stats.component';
+import { RecrutementRangeStatsComponent } from './dashboards/recrutement-range/recrutement-range-stats/recrutement-range-stats.component';
+import { EntreeSortieStatsComponent } from './dashboards/recrutement/entree-sortie-stats/entree-sortie-stats.component';
+import { DemissionEmployeProfessionAnneeStatsComponent } from './dashboards/recrutement/demission-employe-profession-annee-stats/demission-employe-profession-annee-stats.component';
+import { DemissionEmployeStructureAnneeStatsComponent } from './dashboards/recrutement/demission-employe-structure-annee-stats/demission-employe-structure-annee-stats.component';
+import { RecrutementPeriodStatsComponent } from './dashboards/recrutement-period/recrutement-period-stats/recrutement-period-stats.component';
+
 
 
 @NgModule({
@@ -394,7 +403,15 @@ import { TestComponent } from './tests/test/test.component';
     AffectationNewComponent,
     GradeEmployeGlobalComponent,
     TestComponent,
- 
+    ProfessionStatsComponent,
+    StructureStatsComponent,
+    TypeEmployeStatsComponent,
+    RecrutementRangeStatsComponent,
+    EntreeSortieStatsComponent,
+    DemissionEmployeProfessionAnneeStatsComponent,
+    DemissionEmployeStructureAnneeStatsComponent,
+    RecrutementPeriodStatsComponent,
+
   ],
   exports: [],
   entryComponents: []

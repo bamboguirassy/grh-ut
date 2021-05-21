@@ -34,25 +34,6 @@ class Contrat
      */
     private $employe;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $dateRupture;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $motifRupture;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $expire;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $rompu;
 
     /**
      * @ORM\Column(type="date", nullable=false)
@@ -70,9 +51,30 @@ class Contrat
     private $dateDebut;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $etat;
+
+    /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private $dateFin;
+    private $dateFinPrevue;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateFinEffective;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $motifFin;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $commentaireSurFinContrat;
+
 
     public function getId(): ?int
     {
@@ -115,66 +117,6 @@ class Contrat
         return $this;
     }
 
-    public function getEtat(): ?bool
-    {
-        return $this->etat;
-    }
-
-    public function setEtat(bool $etat): self
-    {
-        $this->etat = $etat;
-
-        return $this;
-    }
-
-    public function getDateRupture()
-    {
-        return $this->dateRupture;
-    }
-
-    public function setDateRupture($dateRupture): self
-    {
-        $this->dateRupture = $dateRupture;
-
-        return $this;
-    }
-
-    public function getMotifRupture(): ?string
-    {
-        return $this->motifRupture;
-    }
-
-    public function setMotifRupture(?string $motifRupture): self
-    {
-        $this->motifRupture = $motifRupture;
-
-        return $this;
-    }
-
-    public function getExpire(): ?bool
-    {
-        return $this->expire;
-    }
-
-    public function setExpire(?bool $expire): self
-    {
-        $this->expire = $expire;
-
-        return $this;
-    }
-
-    public function getRompu(): ?bool
-    {
-        return $this->rompu;
-    }
-
-    public function setRompu(?bool $rompu): self
-    {
-        $this->rompu = $rompu;
-
-        return $this;
-    }
-
     public function getDateCreation()
     {
         return $this->dateCreation;
@@ -211,15 +153,64 @@ class Contrat
         return $this;
     }
 
-    public function getDateFin()
+    public function getEtat(): ?bool
     {
-        return $this->dateFin;
+        return $this->etat;
     }
 
-    public function setDateFin($dateFin): self
+    public function setEtat(?bool $etat): self
     {
-        $this->dateFin = $dateFin;
+        $this->etat = $etat;
 
         return $this;
     }
+
+    public function getDateFinPrevue(): ?\DateTimeInterface
+    {
+        return $this->dateFinPrevue;
+    }
+
+    public function setDateFinPrevue(?\DateTimeInterface $dateFinPrevue): self
+    {
+        $this->dateFinPrevue = $dateFinPrevue;
+
+        return $this;
+    }
+
+    public function getDateFinEffective(): ?\DateTimeInterface
+    {
+        return $this->dateFinEffective;
+    }
+
+    public function setDateFinEffective(?\DateTimeInterface $dateFinEffective): self
+    {
+        $this->dateFinEffective = $dateFinEffective;
+
+        return $this;
+    }
+
+    public function getMotifFin(): ?string
+    {
+        return $this->motifFin;
+    }
+
+    public function setMotifFin(?string $motifFin): self
+    {
+        $this->motifFin = $motifFin;
+
+        return $this;
+    }
+
+    public function getCommentaireSurFinContrat(): ?string
+    {
+        return $this->commentaireSurFinContrat;
+    }
+
+    public function setCommentaireSurFinContrat(?string $commentaireSurFinContrat): self
+    {
+        $this->commentaireSurFinContrat = $commentaireSurFinContrat;
+
+        return $this;
+    }
+
 }

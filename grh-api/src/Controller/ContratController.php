@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Utils\Utils;
+use DateTime;
 use PhpParser\Node\Expr\AssignOp\Concat;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -47,11 +48,11 @@ class ContratController extends AbstractController
         if (isset($reqData->dateDebut)) {
             $contrat->setDateDebut(new \DateTime($reqData->dateDebut));
         }
-        if (isset($reqData->dateFin)) {
-            $contrat->setDateFin(new \DateTime($reqData->dateFin));
+        if (isset($reqData->dateFinPrevue)) {
+            $contrat->setDateFinPrevue(new \DateTime($reqData->dateFinPrevue));
         }
-        if (isset($reqData->dateRupture)) {
-            $contrat->setDateRupture(new \DateTime($reqData->dateRupture));
+        if (isset($reqData->dateFinEffective)) {
+            $contrat->setDateFinEffective(new \DateTime($reqData->dateFinEffective));
         }
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -81,7 +82,19 @@ class ContratController extends AbstractController
     {
         $form = $this->createForm(ContratType::class, $contrat);
         $form->submit(Utils::serializeRequestContent($request));
-
+        $reqData = Utils::getObjectFromRequest($request);
+        if (isset($reqData->dateSignature)) {
+            $contrat->setDateSignature(new \DateTime($reqData->dateSignature));
+        }
+        if (isset($reqData->dateDebut)) {
+            $contrat->setDateDebut(new \DateTime($reqData->dateDebut));
+        }
+        if (isset($reqData->dateFinPrevue)) {
+           $contrat->setDateFinPrevue(new \DateTime($reqData->dateFinPrevue));
+        }
+         if (isset($reqData->dateFinEffective)) {
+           $contrat->setDateFinEffective(new \DateTime($reqData->dateFinEffective));
+        }
         $this->getDoctrine()->getManager()->flush();
 
         return $contrat;
@@ -148,7 +161,7 @@ class ContratController extends AbstractController
     {
         $contrats = $this->getDoctrine()
             ->getRepository(Contrat::class)
-            ->findByEmploye($employe ,['dateDebut' =>'DESC']);
+            ->findByEmploye($employe);
             
         return $contrats;
     }

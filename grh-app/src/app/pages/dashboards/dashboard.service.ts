@@ -25,11 +25,42 @@ export class DashboardService {
     return this.httpSrv.get(this.routePrefix  + 'employe/suivi-recrutement-genre');
   }
 
+  countEmployeByEntreeSortie() {
+    return this.httpSrv.get(this.routePrefix  + 'employe/count-by-entree-sortie');
+  }
+
+  countDemissionEmployeByProfessionAnnee() {
+    return this.httpSrv.get(this.routePrefix  + 'employe/count-demission-profession-annee');
+  }
+
+  countDemissionEmployeByStructureAnnee() {
+    return this.httpSrv.get(this.routePrefix  + 'employe/count-demission-structure-annee');
+  }
+
   countByType() {
     return this.httpSrv.get(this.routePrefix + 'employe/count-by-type/');
+  }
+  countByProfession() {
+    return this.httpSrv.get(this.routePrefix + 'employe/count-by-profession/');
   }
 
   countEmployeByGrade() {
     return this.httpSrv.get(this.routePrefix + 'employe/count-by-grade');
   }
+  countEmployeByStructure() {
+    return this.httpSrv.get(this.routePrefix + 'employe/count-by-structure');
+  }
+  countEmployeByTypeEmploye() {
+    return this.httpSrv.get(this.routePrefix + 'employe/count-by-typeemploye');
+  }
+
+  countEmployeByDateRange(dateDebut: any, dateFin: any) {
+      return this.httpSrv.post(this.routePrefix + 'employe/count-by-daterange/', {'dateDebut':dateDebut, 'dateFin':dateFin});
+  }
+
+  countEmployeByPeriod(date: any) {
+      return this.httpSrv.post(this.routePrefix + 'employe/count-by-period', {'date':date});
+  }
+
+
 }

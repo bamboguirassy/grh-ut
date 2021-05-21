@@ -1,17 +1,22 @@
 @import "~src/assets/scss/variables";
 
-.det-item {
-    margin: 15px;
+.main {
+   background-color: #F7F7F7; 
+}
+
+.profile-view {
+    position: relative;
+}
+
+.profile-info-left {
+    border-right: none;
+    border-bottom: 2px dashed #ccc;
     margin-bottom: 20px;
-   // padding: 15px;
-    font-size: 17px;
-    display: inline;
-    //border-right: 2px solid #dadce3;
-    .det-label {
-        font-weight: bold;
-        margin-right: 2px;
-        // text-decoration: underline;
-    }
-    .det-content {
-    }
+    padding-bottom: 20px;
+}
+
+.personal-info {
+    list-style: none;
+    margin-bottom: 0;
+    padding: 0;
 }

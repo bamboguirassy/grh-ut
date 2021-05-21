@@ -1,14 +1,10 @@
 <div class="row">
-  <div class="col col-12">
-    Nombre d'employés par catégorie
-    <hr>
-  </div>
   <div class="col col-12 col-md-6 col-xl-3" *ngFor="let employeCountItem of tabCountEmploye">
     <tc-card [tcBgColor]="'#fbfbfb'" class="animated fadeInUp delay-01s">
       <div class="row align-items-center">
         <div class="col col-5">
-          <tc-icon [tcColor]="sidebarBg" [tcFontSize]="48" [iconClass]="'icofont-ui-user-group'"
-            [padding]="0"></tc-icon>
+          <tc-icon [tcColor]="sidebarBg" [tcFontSize]="48" [iconClass]="'icofont-ui-user-group'" [padding]="0">
+          </tc-icon>
         </div>
 
         <div class="col col-7">
@@ -24,8 +20,8 @@
   <div class="col-12">
     <tc-form-group>
       <tc-form-label>Visualisation</tc-form-label>
-      <nz-select nzAllowClear nzShowSearch style="width: 100%" name="typeStat"
-        id="typeStat" nzPlaceHolder="Selectionner les informations à visualiser" [(ngModel)]="selectedStatType">
+      <nz-select nzAllowClear nzShowSearch style="width: 100%" name="typeStat" id="typeStat"
+        nzPlaceHolder="Selectionner les informations à visualiser" [(ngModel)]="selectedStatType">
         <ng-container *ngFor="let statType of statTypes">
           <nz-option [nzLabel]="statType.title" [nzValue]="statType">
           </nz-option>
@@ -43,7 +39,17 @@
     <div class="col-6 col-sm-12 col-lg-6 col-xl-6">
       <app-recrutement-genre></app-recrutement-genre>
     </div>
+    <div class="col-12">
+      <hr class="mb-2">
+    </div>
+    <div class="col-12 col-sm-12 col-lg-6">
+      <app-entree-sortie-stats></app-entree-sortie-stats>
+    </div>
+    <div class="col-12 col-sm-12 col-lg-6">
+      <app-demission-employe-structure-annee-stats></app-demission-employe-structure-annee-stats>
+    </div>
+    <div class="col-12 col-sm-12 col-lg-6">
+      <app-demission-employe-profession-annee-stats></app-demission-employe-profession-annee-stats>
+    </div>
   </div>
-
 </tc-card>
-
