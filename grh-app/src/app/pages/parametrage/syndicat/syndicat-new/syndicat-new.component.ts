@@ -25,9 +25,11 @@ export class SyndicatNewComponent implements OnInit {
   constructor(public syndicatSrv: SyndicatService,
     public router: Router) {
     this.entity = new Syndicat();
+    
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {    
+  }
 
   save() {
     this.entity.typeEmploye = this.typeEmploye.id;

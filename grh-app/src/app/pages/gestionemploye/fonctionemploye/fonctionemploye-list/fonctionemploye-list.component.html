@@ -1,68 +1,66 @@
-<tc-card *ngIf="fonctionEmployeSrv.resourceName|listable" [tcGradient]="lightGradient">
-  <tc-card [view]="secondViewBorder" [outline]="true">
+<div class="row" *ngIf="fonctionEmployeSrv.resourceName|listable">
+  <div class="col-12 col-md-4">
+    <tc-v-timeline [data]="tab"></tc-v-timeline>
+  </div>
+  <div class="col-12 col-md-8">
     <div class="row">
       <div class="col-12">
-        <app-fonctionemploye-new [employe]="employe" (creation)="onCreate($event)"></app-fonctionemploye-new>
-        <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findByEmploye()">Rafraichir</button>
+        <tc-card>
+          <app-fonctionemploye-new [employe]="employe" (creation)="onCreate($event)"></app-fonctionemploye-new>
+          <button class="float-right" tc-button afterIcon="icofont-refresh"
+            (click)="findByEmploye()">Rafraichir</button>
+        </tc-card>
+      </div>
+      <div class="col-12">
+        <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true">
+          <tc-table-col [columnTitle]="'Fonction'" [columnName]="'responsabilite'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <span class="nowrap" *ngIf="value">{{ value?.fonction?.nom }}</span>
+              <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+          </tc-table-col>
+          <tc-table-col [columnTitle]="'Structure'" [columnName]="'responsabilite'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <span class="nowrap" *ngIf="value" [title]="value?.structure?.nom">{{value?.structure?.code}}</span>
+              <tc-badge view="error" *ngIf="!value">Aucune</tc-badge>
+            </ng-template>
+          </tc-table-col>
+          <tc-table-col [columnTitle]="'Date Prise Fonction'" [columnName]="'datePriseFonction'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
+              <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+          </tc-table-col>
+          <tc-table-col [columnTitle]="'Etat'" [columnName]="'etat'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <tc-badge view="error" *ngIf="!value">Expirée</tc-badge>
+              <tc-badge view="success" *ngIf="value"><span class="nowrap">En cours</span></tc-badge>
+            </ng-template>
+          </tc-table-col>
+          <tc-table-col [columnTitle]="'Date Fin Fonction'" [columnName]="'dateFin'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
+              <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+          </tc-table-col>
+          <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+            <ng-template #tableTDTemplate let-row="row">
+              <div class="actions">
+                <button *ngIf="fonctionEmployeSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+                  [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"
+                  (click)="setSelectedFonction(row)"></button>
+                <button *ngIf="fonctionEmployeSrv.resourceName|deletable" (click)="remove(row)" tc-button
+                  [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
+                  [size]="'sm'"></button>
+              </div>
+            </ng-template>
+          </tc-table-col>
+        </tc-table>
       </div>
     </div>
-  </tc-card>
-<tc-card>
-  <nz-tabset>
-    <nz-tab nzTitle="Liste">
-    <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-    <tc-table-col [columnTitle]="'Fonction'" [columnName]="'responsabilite'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value?.fonction?.nom }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Structure'" [columnName]="'responsabilite'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value" [title]="value?.structure?.nom">{{value?.structure?.code}}</span>
-        <tc-badge view="error" *ngIf="!value">Aucune</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Date Prise Fonction'" [columnName]="'datePriseFonction'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Etat'" [columnName]="'etat'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <tc-badge view="error" *ngIf="!value">Expirée</tc-badge>
-        <tc-badge view="success" *ngIf="value"><span class="nowrap">En cours</span></tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Date Fin Fonction'" [columnName]="'dateFin'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-      <ng-template #tableTDTemplate let-row="row">
-        <div class="actions">
-          <button *ngIf="fonctionEmployeSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" (click)="setSelectedFonction(row)"></button>
-          <button *ngIf="fonctionEmployeSrv.resourceName|deletable" (click)="remove(row)" tc-button
-            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-        </div>
-      </ng-template>
-    </tc-table-col>
-  </tc-table>
-</nz-tab>
-<nz-tab nzTitle="Chronologie(graphique)">
-  <tc-card  [tcGradient]="['#fff', '#fbfbfb']">
-    <tc-v-timeline [data]= "tab" ></tc-v-timeline>
-</tc-card>
-
-</nz-tab>
-</nz-tabset>
-
-</tc-card>
-  <app-fonctionemploye-edit *ngIf="selectedFonction" [selectedFonction]="selectedFonction" (modification)="findByEmploye()" (onClose)="onClose()"></app-fonctionemploye-edit>
+  </div>
+  <app-fonctionemploye-edit *ngIf="selectedFonction" [selectedFonction]="selectedFonction"
+    (modification)="findByEmploye()" (onClose)="onClose()"></app-fonctionemploye-edit>
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
-</tc-card>
-<app-access-denied *ngIf="!(fonctionEmployeSrv.resourceName|listable)"></app-access-denied>
+  <app-access-denied *ngIf="!(fonctionEmployeSrv.resourceName|listable)"></app-access-denied>
+</div>

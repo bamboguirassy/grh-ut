@@ -182,7 +182,6 @@ import { TypeContratStatsComponent } from './dashboards/typecontrat/type-contrat
 import { TypeContratActifStatsComponent } from './dashboards/typecontrat/type-contrat-actif-stats/type-contrat-actif-stats.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { RecrutementPeriodStatsComponent } from './dashboards/recrutement/recrutement-period/recrutement-period-stats/recrutement-period-stats.component';
-import { EmployeSearchComponent } from './gestionemploye/employe/employe-search/employe-search.component';
 import { AncienneteEmployeComponent } from './dashboards/anciennete/anciennete-employe/anciennete-employe.component';
 import { ProfessionStatsViewMainComponent } from './dashboards/profession/profession-stats-view-main/profession-stats-view-main.component';
 import { RecrutementStatsViewMainComponent } from './dashboards/recrutement/recrutement-stats-view-main/recrutement-stats-view-main.component';
@@ -426,7 +425,6 @@ import { AffectationTimelineComponent } from './gestionemploye/affectation/affec
     RecrutementPeriodStatsComponent,
     TypeContratStatsComponent,
     TypeContratActifStatsComponent,
-    EmployeSearchComponent,
     AncienneteEmployeComponent,
     ProfessionStatsViewMainComponent,
     RecrutementStatsViewMainComponent,

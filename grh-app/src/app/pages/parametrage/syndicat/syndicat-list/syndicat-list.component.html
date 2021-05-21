@@ -23,6 +23,12 @@
               <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
             </ng-template>
           </tc-table-col>
+          <tc-table-col [columnTitle]="'Type'" [columnName]="'type'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <span class="nowrap" *ngIf="value">{{ value }}</span>
+              <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+          </tc-table-col>
           <tc-table-col [columnTitle]="'Code'" [columnName]="'code'" [enableSorting]="true">
             <ng-template #tableTDTemplate let-value>
               <span class="nowrap" *ngIf="value">{{ value }}</span>

@@ -14,6 +14,7 @@ class SyndicatType extends AbstractType
         $builder
             ->add('nom')
             ->add('code')
+            ->add('type')
             ->add('filename')
             ->add('filepath')
             ->add('montantCotisationMensuelle')
