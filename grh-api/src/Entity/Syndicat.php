@@ -66,6 +66,11 @@ class Syndicat
      */
     private $typeEmploye;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $type;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -139,6 +144,18 @@ class Syndicat
     public function setTypeEmploye(?TypeEmploye $typeEmploye): self
     {
         $this->typeEmploye = $typeEmploye;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

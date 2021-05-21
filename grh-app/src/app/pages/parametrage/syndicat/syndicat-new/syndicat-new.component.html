@@ -5,11 +5,25 @@
 <app-access-denied *ngIf="!(syndicatSrv.resourceName|creable)"></app-access-denied>
 
 <!-- Modal window -->
-<nz-modal nzWidth="80%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau Syndicat - '+typeEmploye?.code"
-  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+<nz-modal nzWidth="80%" [(nzVisible)]="isModalVisible" [nzClosable]="false"
+  [nzTitle]="'Formulaire - Nouveau Syndicat - '+typeEmploye?.code" [nzContent]="modalBody" [nzFooter]="modalFooter"
+  (nzOnCancel)="closeModal()">
   <ng-template #modalBody>
     <form #form="ngForm" ngNativeValidate>
       <div class="row">
+        <div class="col-12 col-md-6">
+          <tc-form-group>
+            <tc-form-label>Type</tc-form-label>
+            <tc-select required="required" [(ngModel)]="entity.type" name="type" id="type"
+              #type="ngModel" [placeholder]="'Selectionner le type'"
+              [options]="syndicatSrv.types">
+            </tc-select>
+            {{entity.type|json}}
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="type"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
         <div class="col-12 col-md-6">
           <tc-form-group>
             <tc-form-label>Nom</tc-form-label>
