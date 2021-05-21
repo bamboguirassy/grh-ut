@@ -1,3 +1,4 @@
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -173,12 +174,18 @@ import { TestComponent } from './tests/test/test.component';
 import { ProfessionStatsComponent } from './dashboards/profession/profession-stats/profession-stats.component';
 import { StructureStatsComponent } from './dashboards/structure/structure-stats/structure-stats.component';
 import { TypeEmployeStatsComponent } from './dashboards/typeemploye/type-employe-stats/type-employe-stats.component';
-import { RecrutementRangeStatsComponent } from './dashboards/recrutement-range/recrutement-range-stats/recrutement-range-stats.component';
+import { RecrutementRangeStatsComponent } from './dashboards/recrutement/recrutement-range/recrutement-range-stats/recrutement-range-stats.component';
 import { EntreeSortieStatsComponent } from './dashboards/recrutement/entree-sortie-stats/entree-sortie-stats.component';
 import { DemissionEmployeProfessionAnneeStatsComponent } from './dashboards/recrutement/demission-employe-profession-annee-stats/demission-employe-profession-annee-stats.component';
 import { DemissionEmployeStructureAnneeStatsComponent } from './dashboards/recrutement/demission-employe-structure-annee-stats/demission-employe-structure-annee-stats.component';
-import { RecrutementPeriodStatsComponent } from './dashboards/recrutement-period/recrutement-period-stats/recrutement-period-stats.component';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { RecrutementPeriodStatsComponent } from './dashboards/recrutement/recrutement-period/recrutement-period-stats/recrutement-period-stats.component';
+import { EmployeSearchComponent } from './gestionemploye/employe/employe-search/employe-search.component';
 import { AncienneteEmployeComponent } from './dashboards/anciennete/anciennete-employe/anciennete-employe.component';
+import { ProfessionStatsViewMainComponent } from './dashboards/profession/profession-stats-view-main/profession-stats-view-main.component';
+import { RecrutementStatsViewMainComponent } from './dashboards/recrutement/recrutement-stats-view-main/recrutement-stats-view-main.component';
+import { GradeStatsViewMainComponent } from './dashboards/grade/grade-stats-view-main/grade-stats-view-main.component';
+import { EmployeStatsViewMainComponent } from './dashboards/typeemploye/employe-stats-view-main/employe-stats-view-main.component';
 
 
 
@@ -188,7 +195,8 @@ import { AncienneteEmployeComponent } from './dashboards/anciennete/anciennete-e
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-
+    AutocompleteLibModule,
+    
     ChartsModule,
     NgxChartsModule,
     NgxEchartsModule.forRoot({
@@ -233,7 +241,8 @@ import { AncienneteEmployeComponent } from './dashboards/anciennete/anciennete-e
     NgxOrgChartModule,
     // imports all pipes module
     NgPipesModule,
-    NzRadioModule
+    NzRadioModule,
+    NzIconModule
 
   ],
   declarations: [
@@ -412,7 +421,12 @@ import { AncienneteEmployeComponent } from './dashboards/anciennete/anciennete-e
     DemissionEmployeProfessionAnneeStatsComponent,
     DemissionEmployeStructureAnneeStatsComponent,
     RecrutementPeriodStatsComponent,
+    EmployeSearchComponent,
     AncienneteEmployeComponent,
+    ProfessionStatsViewMainComponent,
+    RecrutementStatsViewMainComponent,
+    GradeStatsViewMainComponent,
+    EmployeStatsViewMainComponent,
 
   ],
   exports: [],

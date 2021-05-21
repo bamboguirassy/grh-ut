@@ -1,56 +1,61 @@
-<tc-card *ngIf="affectationSrv.resourceName|listable" [tcGradient]="lightGradient">
-  <tc-card [view]="secondViewBorder" [outline]="true">
+<div class="row" *ngIf="affectationSrv.resourceName|listable">
+  <div class="col-12 col-md-4">
+    <!-- placer le timeline ici -->
+  </div>
+  <div class="col-12 col-md-8">
     <div class="row">
       <div class="col-12">
-        <app-affectation-new [employe]="employe" *ngIf="employe" (creation)="onCreate($event)">
-        </app-affectation-new>
-        <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findByEmploye()">Rafraichir</button>
+        <tc-card>
+          <app-affectation-new [employe]="employe" *ngIf="employe" (creation)="onCreate($event)">
+          </app-affectation-new>
+          <button class="float-right" tc-button afterIcon="icofont-refresh"
+            (click)="findByEmploye()">Rafraichir</button>
+        </tc-card>
+      </div>
+      <div class="col-12">
+        <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true">
+          <tc-table-col [columnTitle]="'Structure'" [columnName]="'structure'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <span class="nowrap" *ngIf="value" title="{{ value?.nom }}">{{ value?.nom }}</span>
+              <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+          </tc-table-col>
+          <tc-table-col [columnTitle]="'Date'" [columnName]="'date'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
+              <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+          </tc-table-col>
+          <tc-table-col [columnTitle]="'Motif'" [columnName]="'motif'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <span class="nowrap" *ngIf="value">{{ value }}</span>
+              <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+          </tc-table-col>
+          <tc-table-col [columnTitle]="'Poste'" [columnName]="'poste'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <span class="nowrap" *ngIf="value">{{ value }}</span>
+              <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+          </tc-table-col>
+          <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+            <ng-template #tableTDTemplate let-row="row">
+              <div class="actions">
+                <button *ngIf="affectationSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+                  [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"
+                  (click)="setSelectedAffectation(row)"></button>
+                <button *ngIf="affectationSrv.resourceName|deletable" (click)="remove(row)" tc-button
+                  [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
+                  [size]="'sm'"></button>
+              </div>
+            </ng-template>
+          </tc-table-col>
+        </tc-table>
       </div>
     </div>
-  </tc-card>
-  <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-    <tc-table-col [columnTitle]="'#'" [columnName]="'#'">
-      <ng-template #tableTDTemplate let-row="row">
-        <i class="icofont-data icofont-2x"></i>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Structure'" [columnName]="'structure'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value" title="{{ value?.nom }}">{{ value?.nom }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-          <tc-table-col [columnTitle]="'Date'" [columnName]="'date'" [enableSorting]="true">
-                <ng-template #tableTDTemplate let-value>
-                    <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
-                    <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-                </ng-template>
-            </tc-table-col>
-           <tc-table-col [columnTitle]="'Motif'" [columnName]="'motif'" [enableSorting]="true">
-                <ng-template #tableTDTemplate let-value>
-                    <span class="nowrap" *ngIf="value">{{ value }}</span>
-                    <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-                </ng-template>
-            </tc-table-col>
-           <tc-table-col [columnTitle]="'Poste'" [columnName]="'poste'" [enableSorting]="true">
-                <ng-template #tableTDTemplate let-value>
-                    <span class="nowrap" *ngIf="value">{{ value }}</span>
-                    <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-                </ng-template>
-            </tc-table-col>
-    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-      <ng-template #tableTDTemplate let-row="row">
-        <div class="actions">
-          <button *ngIf="affectationSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'" [square]="true" [tcShape]="500"
-            [size]="'sm'" (click)="setSelectedAffectation(row)"></button>
-         <button *ngIf="affectationSrv.resourceName|deletable" (click)="remove(row)" tc-button [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
-            [size]="'sm'"></button>
-        </div>
-      </ng-template>
-    </tc-table-col>
-  </tc-table>
-  <app-affectation-edit *ngIf="selectedAffectation" [selectedAffectation]="selectedAffectation" (modification)="findByEmploye()"
-    (onClose)="onClose()"></app-affectation-edit>
-  <app-empty-table-message *ngIf="!items.length" ></app-empty-table-message>
-</tc-card>
-<app-access-denied *ngIf="!(affectationSrv.resourceName|listable)"></app-access-denied>
+  </div>
+  <app-affectation-edit *ngIf="selectedAffectation" [selectedAffectation]="selectedAffectation"
+    (modification)="findByEmploye()" (onClose)="onClose()"></app-affectation-edit>
+  <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
+  <app-access-denied *ngIf="!(affectationSrv.resourceName|listable)"></app-access-denied>
+</div>

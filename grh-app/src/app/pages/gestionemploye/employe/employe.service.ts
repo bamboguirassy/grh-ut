@@ -24,7 +24,7 @@ export class EmployeService extends BamboAbstractService {
   public genres: any[] = [
     { label: 'Masculin', value: 'Masculin' },
     { label: 'Féminin', value: 'Féminin' },
-  ];
+  ];  
   public motifSorties: any[] = [
     { label: 'Démission', value: 'Démission' },
     { label: 'Retraite', value: 'Retraite' },
@@ -47,6 +47,7 @@ export class EmployeService extends BamboAbstractService {
     return this.httpSrv.put(this.routePrefix + 'change_image_employe', { photo, fileName });
   }
 
+  
   findAll(): any {
     this
       .httpSrv

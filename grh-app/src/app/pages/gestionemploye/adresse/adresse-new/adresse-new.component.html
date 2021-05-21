@@ -1,6 +1,6 @@
-<button tc-button [afterIcon]="'icofont-plus'" [view]="'accent'" [square]="true" (click)="openModal()"></button>
-<app-access-denied *ngIf="!(adresseSrv.resourceName|creable)"></app-access-denied>
-
+<button *ngIf="adresseSrv.resourceName|creable"  (click)="openModal()" class="ml-1" nz-button nzType="primary" nzSize="small" nzShape="circle">
+  <i class="icofont-plus"></i>
+</button>
 <!-- Modal window -->
 <nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
   [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">

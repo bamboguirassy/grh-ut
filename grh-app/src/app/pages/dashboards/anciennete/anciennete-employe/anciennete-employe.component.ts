@@ -29,6 +29,19 @@ export class AncienneteEmployeComponent extends DashboardBaseComponent<Anciennet
   }
 
   setDataChart() {
+    const chartData = [{ data: this.rawChartData.map(r => +r.nombreEmploye), label: 'Effectif' }];
+    const typeEmployes = this.rawChartData[0].categories.map((r) => ({ code: r?.typeEmploye?.code, label: r?.typeEmploye?.nom }));
+    for (const te of typeEmployes) {
+      const arr: number[] = [];
+      for (const chartData of this.rawChartData) {
+        for (const dataItem of chartData.categories) {
+          if (te.code === dataItem.typeEmploye.code) {
+            arr.push(+dataItem.nombreEmploye);
+          }
+        }
+      }
+      chartData.push({ data: arr, label: te.code });
+    }
     this.chartOptions = {
       responsive: true,
         scales: { 
@@ -60,9 +73,8 @@ export class AncienneteEmployeComponent extends DashboardBaseComponent<Anciennet
     this.chartLegend = true;
     this.chartPlugins = [];
 
-    this.chartData = [
-      { data: this.rawChartData.map(r => +r.nombreEmploye), label: 'Effectif' },
-    ];
+    this.chartData = chartData;
+
   }
 
 }

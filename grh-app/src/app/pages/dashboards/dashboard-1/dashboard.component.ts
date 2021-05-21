@@ -21,7 +21,9 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
   selectedTypeEmploye: TypeEmploye[] = [];
   fetching = false;
   statTypes: { code: string, title: string }[] = [
-    { code: 'SR', title: 'Suivi des recrutements' }
+    { code: 'SR', title: 'Suivi des entrée-sortie ' },
+    { code: 'GR', title: 'Répartition des employés selon les grades' },
+    { code: 'EM', title: 'Suivi de la répartition des employés' },
   ];
   selectedStatType: { code: string, title: string };
 
