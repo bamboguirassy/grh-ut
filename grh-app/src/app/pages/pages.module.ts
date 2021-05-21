@@ -178,6 +178,8 @@ import { EntreeSortieStatsComponent } from './dashboards/recrutement/entree-sort
 import { DemissionEmployeProfessionAnneeStatsComponent } from './dashboards/recrutement/demission-employe-profession-annee-stats/demission-employe-profession-annee-stats.component';
 import { DemissionEmployeStructureAnneeStatsComponent } from './dashboards/recrutement/demission-employe-structure-annee-stats/demission-employe-structure-annee-stats.component';
 import { RecrutementPeriodStatsComponent } from './dashboards/recrutement-period/recrutement-period-stats/recrutement-period-stats.component';
+import { TypeContratStatsComponent } from './dashboards/typecontrat/type-contrat-stats/type-contrat-stats.component';
+import { TypeContratActifStatsComponent } from './dashboards/typecontrat/type-contrat-actif-stats/type-contrat-actif-stats.component';
 
 
 
@@ -411,6 +413,8 @@ import { RecrutementPeriodStatsComponent } from './dashboards/recrutement-period
     DemissionEmployeProfessionAnneeStatsComponent,
     DemissionEmployeStructureAnneeStatsComponent,
     RecrutementPeriodStatsComponent,
+    TypeContratStatsComponent,
+    TypeContratActifStatsComponent,
 
   ],
   exports: [],
