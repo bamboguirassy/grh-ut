@@ -1,22 +1,19 @@
 @import "~src/assets/scss/variables";
-
-.main {
-   background-color: #F7F7F7; 
-}
-
-.profile-view {
-    position: relative;
-}
-
-.profile-info-left {
-    border-right: none;
-    border-bottom: 2px dashed #ccc;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-}
-
 .personal-info {
-    list-style: none;
-    margin-bottom: 0;
-    padding: 0;
+    list-style-type: none;
+    .info-line {
+        margin: 2px;
+        padding: 2px;
+        .title {
+            font-weight: bold;
+        }
+        .content {
+            align-items: left;
+        }
+    }
+}
+
+.employe-status-card {
+    margin-top: 3px;
+    justify-content: center;
 }

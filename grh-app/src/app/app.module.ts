@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe, HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
-
 import { StoreModule } from '@ngrx/store';
 import { NZ_I18N, fr_FR } from 'ng-zorro-antd/i18n';
 
@@ -40,6 +39,7 @@ export function currentUserProviderFactory(authSrv: BamboAuthService) {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    
     HttpClientModule,
     RouterModule.forRoot(ROUTES, { relativeLinkResolution: 'legacy' }),
     StoreModule.forRoot({

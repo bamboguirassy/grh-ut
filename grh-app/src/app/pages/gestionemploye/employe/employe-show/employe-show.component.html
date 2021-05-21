@@ -1,113 +1,206 @@
 <div class="row">
     <div class="col-12">
-        <tc-card>
+        <tc-card class="mb-1">
             <div class="row">
                 <div class="col-12 col-md-3 col-lg-2">
                     <img [src]="entity?.filepath ? entity?.filepath:'assets/img/default-profile-picture1.jpg'"
                         alt="photo employé" style="width: 100%;">
-                </div>
-                <div class="col-12 col-md-8 col-lg-9">
-                    <h2 [ngStyle]="{'color': sidebarBg}" class="m-0">{{titre+' '+entity?.prenoms+' '+entity?.nom}} -
-                        {{entity?.matricule}}</h2>
-                    <hr [ngStyle]="{'background-color': sidebarBg}" class="m-1">
-                    <h5 [ngStyle]="{'color': sidebarBg}" class="m-0" *ngIf="entity?.datePriseService">
-                        <span *ngIf="entity?.profession">{{entity?.profession?.nom}}</span>
-                        <ng-container *ngIf="entity?.structure">
-                            -
-                            <span> {{entity?.structure?.nom}}</span>
-                        </ng-container>
-                    </h5>
-                    <h5 [ngStyle]="{'color': '#2294D2'}" class="m-0" *ngIf="entity?.datePriseService">
-                        <span *ngIf="entity?.dateRecrutement">Récruté le
-                            {{entity?.dateRecrutement|date:'dd/MM/yyyy'}}</span>
-                        <ng-container *ngIf="entity?.datePriseService">
-                            -
-                            <span ngif>
-                                A pris service le
-                                {{entity?.datePriseService|date:'dd/MM/yyyy'}}
-                            </span>
-                        </ng-container>
-                    </h5>
-                    <hr [ngStyle]="{'background-color': sidebarBg}" class="m-1">
-                    <div class="col-12">
-                        <button *ngIf="employeSrv.resourceName|editable"
-                            [routerLink]="['/'+orientation,employeSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
-                            class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
-                        <button (click)="remove(entity)" *ngIf="employeSrv.resourceName|deletable" tc-button
-                            view="error" beforeIcon="icofont-trash" class=" float-right ml-1"></button>
-                        <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
-                            beforeIcon="icofont-refresh"></button>
-                        <button tc-button class="float-right" (click)="location.back()"
-                            beforeIcon="icofont-reply"></button>
+                    <div class="employe-status-card">
+                        <tc-badge view="error" *ngIf="!entity?.etat">Statut: Inactif - {{entity?.motifSortie}}
+                        </tc-badge>
+                        <tc-badge view="success" *ngIf="entity?.etat">Statut: En service</tc-badge>
                     </div>
-                    <!-- <div class="row">
+                </div>
+                <div class="col-12 col-md-4 col-lg-5" style="border-right: 2px dashed blue;">
+                    <div [ngStyle]="{'color': sidebarBg}" style="font-size: large; font-weight: bolder;" class="mb-1">
+                        {{titre+' '+entity?.prenoms+' '+entity?.nom}} - {{entity?.matricule}}</div>
+                    <div [ngStyle]="{'color': sidebarBg}">{{entity?.structure?.nom}}</div>
+                    <div style="font-weight: bold;">{{ entity?.profession?.nom}}</div>
+                    <div [ngStyle]="{'color': sidebarBg}" style="font-size: large;" class="m-1">
+                        {{latestFonction?.responsabilite?.fonction?.nom}}
+                    </div>
+                    <hr [ngStyle]="{'background-color': sidebarBg}" class="m-1">
+                    <ul class="personal-info">
+                        <li class="info-line">
+                            <div class="row">
+                                <div class="col-6 col-md-5 title">Date Naissance:</div>
+                                <div class="col-6 col-md-7 content">{{entity?.dateNaissance|date:'dd/MM/yyyy'}}</div>
+                            </div>
+                        </li>
+                        <li class="info-line">
+                            <div class="row">
+                                <div class="col-6 col-md-5 title">Lieu Naissance:</div>
+                                <div class="col-6 col-md-7 content">{{entity?.lieuNaissance}}</div>
+                            </div>
+                        </li>
+                        <li class="info-line">
+                            <div class="row">
+                                <div class="col-6 col-md-5 title">Situation Matrimoniale:</div>
+                                <div class="col-6 col-md-7 content">{{entity?.situtationMatrimoniale}}</div>
+                            </div>
+                        </li>
+                        <li class="info-line">
+                            <div class="row">
+                                <div class="col-6 col-md-5 title">Numéro Pièce:</div>
+                                <div class="col-6 col-md-7 content">{{entity?.cni}}</div>
+                            </div>
+                        </li>
+                        <li class="info-line">
+                            <div class="row">
+                                <div class="col-6 col-md-5 title">Nationalité:</div>
+                                <div class="col-6 col-md-7 content">{{entity?.nationalite?.nationalite}}</div>
+                            </div>
+                        </li>
+                        <li class="info-line">
+                            <div class="row">
+                                <div class="col-6 col-md-5 title">Date Recrutement:</div>
+                                <div class="col-6 col-md-7 content">{{entity?.dateRecrutement|date:'dd/MM/yyyy'}}</div>
+                            </div>
+                        </li>
+                        <li class="info-line">
+                            <div class="row">
+                                <div class="col-6 col-md-5 title">Date Prise Fonction:</div>
+                                <div class="col-6 col-md-7 content">{{entity?.datePriseService|date:'dd/MM/yyyy'}}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="row">
                         <div class="col-12">
-                            <nz-descriptions>
-                                <nz-descriptions-item nzTitle="Numero Carte d'identité"><span
-                                        class="nowrap">{{entity?.cni}}</span>
-                                </nz-descriptions-item>
-                                <nz-descriptions-item nzTitle="Email Personnel">
-                                    <a href="mailto:{{entity?.email}}"><span class="nowrap">{{entity?.email}}</span></a>
-                                </nz-descriptions-item>
-                                <nz-descriptions-item nzTitle="Email Institutionnel"><a
-                                        href="mailto:{{entity?.emailUniv}}"><span class="nowrap">
-                                            {{entity?.emailUniv}}></span></a>
-                                </nz-descriptions-item>
-                                <nz-descriptions-item nzTitle="Téléphone Primaire"><a
-                                        href="tel:{{entity?.telephonePrimaire}}"><span
-                                            class="nowrap">{{entity?.telephonePrimaire}}</span></a>
-                                </nz-descriptions-item>
-                                <nz-descriptions-item nzTitle="Téléphone Secondaire"><a
-                                        href="tel:{{entity?.telephoneSecondaire}}"><span
-                                            class="nowrap">{{entity?.telephoneSecondaire}}</span></a>
-                                </nz-descriptions-item>
-                                <nz-descriptions-item nzTitle="Profession"><span
-                                        class="nowrap">{{entity?.profession?.nom}}</span>
-                                </nz-descriptions-item>
-                                <nz-descriptions-item *ngIf="entity?.grade" nzTitle="Grade">
-                                    <span class="nowrap">{{entity?.grade?.classification}}</span>
-                                </nz-descriptions-item>
-                                <nz-descriptions-item nzTitle="Structure"><span [title]="entity?.structure?.nom"
-                                        class="nowrap">{{entity?.structure?.code}}</span>
-                                </nz-descriptions-item>
-                                <nz-descriptions-item nzTitle="Type employé"><span class="nowrap"
-                                        [title]="entity?.typeEmploye?.nom">{{entity?.typeEmploye?.code}}</span>
-                                </nz-descriptions-item>
-                                <nz-descriptions-item nzTitle="Date Recrutement">
-                                    <span class="nowrap">{{entity?.dateRecrutement|date:'dd/MM/yyyy'}}</span>
-                                </nz-descriptions-item>
-                                <nz-descriptions-item nzTitle="Date Prise Service">
-                                    <span class="nowrap">{{entity?.datePriseService|date:'dd/MM/yyyy'}}</span>
-                                </nz-descriptions-item>
-                            </nz-descriptions>
-                            <nz-descriptions nzTitle="Etat Civil">
-                                <nz-descriptions-item nzTitle="Date Naiss.">
-                                    <span class="nowrap">{{entity?.dateNaissance|date:'dd/MM/yyyy'}}</span>
-                                </nz-descriptions-item>
-                                <nz-descriptions-item nzTitle="Lieu de naiss.">
-                                    <span class="nowrap">{{entity?.lieuNaissance}}</span>
-                                </nz-descriptions-item>
-                                <nz-descriptions-item nzTitle="Nationalité">
-                                    <span class="nowrap">{{entity?.nationalite?.nationalite}}</span>
-                                </nz-descriptions-item>
-                                <nz-descriptions-item nzTitle="Genre">
-                                    <span class="nowrap">{{entity?.genre}}</span>
-                                </nz-descriptions-item>
-                                <nz-descriptions-item nzTitle="Caisse Sociale"><span class="nowrap"
-                                        [title]="entity?.caisseSociale?.nom">{{entity?.caisseSociale?.code}}</span>
-                                </nz-descriptions-item>
-                                <nz-descriptions-item nzTitle="Mutuelle de Santé"><span class="nowrap"
-                                        [title]="entity?.mutuelleSante?.nom">{{entity?.mutuelleSante?.code}}</span>
-                                </nz-descriptions-item>
-                            </nz-descriptions>
+                            <div class="col-12 justify-content-center">
+                                <button size="sm" *ngIf="employeSrv.resourceName|editable"
+                                    [routerLink]="['/'+orientation,employeSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+                                    class="float-right ml-1" tc-button view="warning"
+                                    beforeIcon="icofont-edit"></button>
+                                <button size="sm" (click)="remove(entity)" *ngIf="employeSrv.resourceName|deletable"
+                                    tc-button view="error" beforeIcon="icofont-trash"
+                                    class=" float-right ml-1"></button>
+                                <button size="sm" (click)="findEntity(entity.id)" class="float-right ml-1" tc-button
+                                    view="accent" beforeIcon="icofont-refresh"></button>
+                                <button size="sm" tc-button class="float-right" (click)="location.back()"
+                                    beforeIcon="icofont-reply"></button>
+                            </div>
                         </div>
-                    </div> -->
+                        <div class="col-12">
+                            <hr [ngStyle]="{'background-color': sidebarBg}" class="m-1">
+                        </div>
+                        <div class="col-12">
+                            <ul class="personal-info">
+                                <li class="info-line">
+                                    <div class="row">
+                                        <div class="col-6 col-md-5 title">Téléphone Primaire:</div>
+                                        <div class="col-6 col-md-7 content"><a
+                                                href="tel:{{entity?.telephonePrimaire}}">{{entity?.telephonePrimaire}}</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="info-line">
+                                    <div class="row">
+                                        <div class="col-6 col-md-5 title">Téléphone Secondaire:</div>
+                                        <div class="col-6 col-md-7 content"><a
+                                                href="tel:{{entity?.telephoneSecondaire}}">{{entity?.telephonePrimaire}}</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="info-line">
+                                    <div class="row">
+                                        <div class="col-6 col-md-5 title">Email Perso:</div>
+                                        <div class="col-6 col-md-7 content"><a
+                                                href="mailto:{{entity?.email}}">{{entity?.email}}</a></div>
+                                    </div>
+                                </li>
+                                <li class="info-line">
+                                    <div class="row">
+                                        <div class="col-6 col-md-5 title">Email Universitaire:</div>
+                                        <div class="col-6 col-md-7 content"><a
+                                                href="mailto:{{entity?.emailUniv}}">{{entity?.emailUniv}}</a></div>
+                                    </div>
+                                </li>
+                                <li class="info-line">
+                                    <div class="row mt-2">
+                                        <div class="col-12 title">
+                                            Adresses
+                                        </div>
+                                        <div class="col-12">
+                                            <app-adresse-list [employe]="entity" *ngIf="entity"></app-adresse-list>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </tc-card>
+        <table class="table table-bordered mt-1">
+            <tr>
+                <th>Caisse Sociale</th>
+                <td>
+                    <span *ngIf="entity?.caisseSociale" [title]="entity?.caisseSociale?.nom">{{
+                        entity?.caisseSociale?.code }}</span>
+                    <tc-badge size="sm" view="error" *ngIf="!entity?.caisseSociale">Indéfinie</tc-badge>
+                </td>
+                <th>Matricule Caisse Sociale</th>
+                <td>
+                    <span *ngIf="entity?.matriculeCaisseSociale">{{ entity?.matriculeCaisseSociale}}</span>
+                    <tc-badge size="sm" view="error" *ngIf="!entity?.matriculeCaisseSociale">Indéfinie</tc-badge>
+                </td>
+                <th>Mutuelle de Santé</th>
+                <td>
+                    <span *ngIf="entity?.mutuelleSante" [title]="entity?.mutuelleSante?.nom">{{
+                        entity?.mutuelleSante?.code }}</span>
+                    <tc-badge size="sm" view="error" *ngIf="!entity?.mutuelleSante">Indéfinie</tc-badge>
+                </td>
+                <th>N° Main d'Oeuvre</th>
+                <td>
+                    <span *ngIf="entity?.numeroMainOeuvre">{{ entity?.numeroMainOeuvre }}</span>
+                    <tc-badge size="sm" view="error" *ngIf="!entity?.numeroMainOeuvre">Indéfinie</tc-badge>
+                </td>
+                <th>N° Aff. Iprès</th>
+                <td>
+                    <span *ngIf="entity?.numeroAffiliationIpres">{{ entity?.numeroAffiliationIpres
+                        }}</span>
+                    <tc-badge size="sm" view="error" *ngIf="!entity?.numeroAffiliationIpres">Indéfinie</tc-badge>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
         <hr>
     </div>
-    <div class="col-12"></div>
+    <div class="col-12">
+        <nz-tabset nzSize="small" style="width: 100%;">
+            <nz-tab (nzSelect)="loadFamillesTab()" nzTitle="Familles">
+                <app-membrefamille-list *ngIf="entity && isFamilleLoaded" [employe]="entity">
+                </app-membrefamille-list>
+            </nz-tab>
+            <nz-tab (nzSelect)="loadDocumentsTab()" nzTitle="Documents">
+                <app-document-list *ngIf="entity && isDocumentsLoaded" [employe]="entity"></app-document-list>
+            </nz-tab>
+            <nz-tab (nzSelect)="loadDiplomesTab()" nzTitle="Diplomes/Formation">
+                <app-diplomeemploye-list *ngIf="entity && isDiplomeLoaded" [employe]="entity">
+                </app-diplomeemploye-list>
+            </nz-tab>
+            <nz-tab (nzSelect)="loadContratsTab()" nzTitle="Contrats">
+                <app-contrat-list *ngIf="entity && isContratLoaded" [employe]="entity">
+                </app-contrat-list>
+            </nz-tab>
+            <nz-tab (nzSelect)="loadAffectationsTab()" nzTitle="Affectations">
+                <app-affectation-list *ngIf="entity && isAffectationLoaded" [employe]="entity">
+                </app-affectation-list>
+            </nz-tab>
+            <nz-tab (nzSelect)="loadFonctionsTab()" nzTitle="Fonctions & Responsabilités">
+                <app-fonctionemploye-list *ngIf="entity && isFonctionsLoaded" [employe]="entity">
+                </app-fonctionemploye-list>
+            </nz-tab>
+            <nz-tab nzTitle="Syndicats & amicales">
+                <app-membresyndicat-list *ngIf="entity && isFamilleLoaded" [employe]="entity"></app-membresyndicat-list>
+            </nz-tab>
+        </nz-tabset>
+    </div>
 </div>
 
 <tc-card *ngIf="employeSrv.resourceName|showable" [tcGradient]="lightGradient">
@@ -139,238 +232,9 @@
               </form>
 
 
-            <div class="col-12 col-md-7">
-                <blockquote class="blockquote">
-                    <p class="mb-1">{{title}}</p>
-                    <footer class="blockquote-footer">
-                        <cite title="Poste actuelle">
-                            <span *ngIf="latestFonction else fallback" [ngStyle]="{'background-color': sidebarBg}"
-                                class="fonction">&nbsp;
-                                {{latestFonction?.responsabilite?.fonction?.nom}} depuis le
-                                {{latestFonction?.datePriseFonction | date :'dd/MM/yyyy'}} &nbsp;</span>
-                            <ng-template #fallback>
-                                <span class="fonction">&nbsp;Aucun poste occupé&nbsp;</span>
-                            </ng-template>
-                        </cite> <br>
-                        <cite title="Date Recrutement">- Récruté(e) le
-                            {{entity?.dateRecrutement|date:'dd/MM/yyyy'}}</cite>
-                    </footer>
-                </blockquote>
-            </div>
-            <div class="col-12 col-md-4">
-                <button *ngIf="employeSrv.resourceName|editable"
-                    [routerLink]="['/'+orientation,employeSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
-                    class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
-                <button (click)="remove(entity)" *ngIf="employeSrv.resourceName|deletable" tc-button view="error"
-                    beforeIcon="icofont-trash" class=" float-right ml-1"></button>
-                <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
-                    beforeIcon="icofont-refresh"></button>
-                <button tc-button class="float-right" (click)="location.back()" beforeIcon="icofont-reply"></button>
-            </div>
+            
+            
         </div>
     </tc-card> -->
-    <div class="row">
-        <div class="col-12 col-md-4">
-            <tc-card [outline]="true" [view]="secondViewBorder" title="Informations" [tcGradient]="secondGradient">
-                <table class="table">
-                    <tr>
-                        <th>Date Naissance</th>
-                        <td>
-                            <span *ngIf="entity?.dateNaissance">{{ entity?.dateNaissance|date:'dd/MM/yyyy' }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.dateNaissance">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Lieu Naissance</th>
-                        <td>
-                            <span *ngIf="entity?.lieuNaissance">{{ entity?.lieuNaissance }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.lieuNaissance">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>CNI/Passeport</th>
-                        <td>
-                            <span *ngIf="entity?.cni">{{ entity?.cni }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.cni">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Genre</th>
-                        <td>
-                            <span *ngIf="entity?.genre">{{ entity?.genre }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.genre">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Nationalité</th>
-                        <td>
-                            <span *ngIf="entity?.nationalite">{{ entity?.nationalite?.nationalite }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.nationalite">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Etat</th>
-                        <td>
-                            <tc-badge view="error" *ngIf="!entity?.etat">Gélé(e)</tc-badge>
-                            <tc-badge view="success" *ngIf="entity?.etat">Actif</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Structure</th>
-                        <td>
-                            <span *ngIf="entity?.structure">{{ entity?.structure.nom}}</span>
-                            <tc-badge view="error" *ngIf="!entity?.structure">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Date Prise Fonction</th>
-                        <td>
-                            <span *ngIf="entity?.datePriseService">{{
-                                entity?.datePriseService|date:'dd/MM/yyyy'}}</span>
-                            <tc-badge view="error" *ngIf="!entity?.datePriseService">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Profession</th>
-                        <td>
-                            <span *ngIf="entity?.profession">{{ entity?.profession?.nom}}</span>
-                            <tc-badge view="error" *ngIf="!entity?.profession">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                </table>
-            </tc-card>
-        </div>
-        <div class="col-12 col-md-8">
-            <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
-                <nz-collapse nzAccordion>
-                    <nz-collapse-panel nzHeader="Contacts" [nzActive]="false">
-                        <table class="table">
-                            <tr>
-                                <th>Email Institutionnel</th>
-                                <td>
-                                    <span *ngIf="entity?.emailUniv">
-                                        <a href="mailto:{{entity?.emailUniv}}">{{entity?.emailUniv}}</a></span>
-                                    <tc-badge view="error" *ngIf="!entity?.emailUniv">Indéfinie</tc-badge>
-                                </td>
-                                <th>Email Personnel</th>
-                                <td>
-                                    <span *ngIf="entity?.email">
-                                        <a href="mailto:{{ entity?.email }}">{{ entity?.email }}</a>
-                                    </span>
-                                    <tc-badge view="error" *ngIf="!entity?.email">Indéfinie</tc-badge>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Téléphone Primaire</th>
-                                <td>
-                                    <span *ngIf="entity?.telephonePrimaire">
-                                        <a href="tel:{{ entity?.telephonePrimaire }}">{{ entity?.telephonePrimaire
-                                            }}</a>
-                                    </span>
-                                    <tc-badge view="error" *ngIf="!entity?.telephonePrimaire">Indéfinie</tc-badge>
-                                </td>
-                                <th>Téléphone Secondaire</th>
-                                <td>
-                                    <span *ngIf="entity?.telephoneSecondaire">
-                                        <a href="tel:{{ entity?.telephoneSecondaire }}">{{ entity?.telephoneSecondaire
-                                            }}</a>
-                                    </span>
-                                    <tc-badge view="error" *ngIf="!entity?.telephoneSecondaire">Indéfinie</tc-badge>
-                                </td>
-                            </tr>
-                        </table>
-                    </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Sociales">
-                        <table class="table">
-                            <tr>
-                                <th>Situtation Matrimoniale</th>
-                                <td>
-                                    <span *ngIf="entity?.situtationMatrimoniale">{{ entity?.situtationMatrimoniale
-                                        }}</span>
-                                    <tc-badge view="error" *ngIf="!entity?.situtationMatrimoniale">Indéfinie</tc-badge>
-                                </td>
-                                <th>Matricule Caisse Sociale</th>
-                                <td>
-                                    <span *ngIf="entity?.matriculeCaisseSociale">{{ entity?.matriculeCaisseSociale
-                                        }}</span>
-                                    <tc-badge view="error" *ngIf="!entity?.matriculeCaisseSociale">Indéfinie</tc-badge>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Caisse Sociale</th>
-                                <td>
-                                    <span *ngIf="entity?.caisseSociale">{{ entity?.caisseSociale?.nom }}</span>
-                                    <tc-badge view="error" *ngIf="!entity?.caisseSociale">Indéfinie</tc-badge>
-                                </td>
-                                <th>Mutuelle de Santé</th>
-                                <td>
-                                    <span *ngIf="entity?.mutuelleSante">{{ entity?.mutuelleSante?.nom }}</span>
-                                    <tc-badge view="error" *ngIf="!entity?.mutuelleSante">Indéfinie</tc-badge>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Numéro Main d'Oeuvre</th>
-                                <td>
-                                    <span *ngIf="entity?.numeroMainOeuvre">{{ entity?.numeroMainOeuvre }}</span>
-                                    <tc-badge view="error" *ngIf="!entity?.numeroMainOeuvre">Indéfinie</tc-badge>
-                                </td>
-                                <th>Numéro Affiliation Iprès</th>
-                                <td>
-                                    <span *ngIf="entity?.numeroAffiliationIpres">{{ entity?.numeroAffiliationIpres
-                                        }}</span>
-                                    <tc-badge view="error" *ngIf="!entity?.numeroAffiliationIpres">Indéfinie</tc-badge>
-                                </td>
-                            </tr>
-                        </table>
-                    </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Adresses" (click)="loadAdressesTab()">
-                        <app-adresse-list *ngIf="entity && isAdresseLoaded" [employe]="entity"></app-adresse-list>
-                    </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Famille" (click)="loadFamillesTab()">
-                        <app-membrefamille-list *ngIf="entity && isFamilleLoaded" [employe]="entity">
-                        </app-membrefamille-list>
-                    </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Syndicats" (click)="loadSyndicatsTab()">
-                        <app-membresyndicat-list *ngIf="entity && isSyndicatsLoaded" [employe]="entity">
-                        </app-membresyndicat-list>
-                    </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Documents" (click)="loaderDocumentsTab()">
-                        <app-document-list *ngIf="entity && isDocumentsLoaded" [employe]="entity"></app-document-list>
-                    </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Diplomes/Formations" (click)="loadDiplomesTab()">
-                        <app-diplomeemploye-list *ngIf="entity && isDiplomeLoaded" [employe]="entity">
-                        </app-diplomeemploye-list>
-                    </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Contrats" (click)="loadContratsTab()">
-                        <app-contrat-list *ngIf="entity && isContratLoaded" [employe]="entity">
-                        </app-contrat-list>
-                    </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Affectations" (click)="loadAffectationsTab()">
-                        <app-affectation-list *ngIf="entity && isAffectationLoaded" [employe]="entity">
-                        </app-affectation-list>
-                    </nz-collapse-panel>
-                </nz-collapse>
-            </tc-card>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
-                <nz-collapse nzAccordion>
-                    <nz-collapse-panel nzHeader="Fonctions & Responsabilités" [nzActive]="false"
-                        (click)="loadFonctionsTab()">
-                        <div class="row">
-                            <div class="col-12">
-                                <app-fonctionemploye-list *ngIf="entity && isFonctionsLoaded" [employe]="entity">
-                                </app-fonctionemploye-list>
-                            </div>
-                        </div>
-                    </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Grade & Avancements" [nzActive]="false" (click)="loadGradesTab()">
-                    </nz-collapse-panel>
-                </nz-collapse>
-            </tc-card>
-        </div>
-    </div>
 </tc-card>
 <app-access-denied *ngIf="!(employeSrv.resourceName|showable)"></app-access-denied>

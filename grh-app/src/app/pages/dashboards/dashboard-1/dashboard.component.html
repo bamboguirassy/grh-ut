@@ -31,25 +31,9 @@
   </div>
 </div>
 
-<tc-card [title]="'Suivi Recrutement'" *ngIf="selectedStatType?.code === 'SR'">
-  <div class="row">
-    <div class="col-6 col-sm-12 col-lg-6 col-xl-6">
-      <app-recrutement-type></app-recrutement-type>
-    </div>
-    <div class="col-6 col-sm-12 col-lg-6 col-xl-6">
-      <app-recrutement-genre></app-recrutement-genre>
-    </div>
-    <div class="col-12">
-      <hr class="mb-2">
-    </div>
-    <div class="col-12 col-sm-12 col-lg-6">
-      <app-entree-sortie-stats></app-entree-sortie-stats>
-    </div>
-    <div class="col-12 col-sm-12 col-lg-6">
-      <app-demission-employe-structure-annee-stats></app-demission-employe-structure-annee-stats>
-    </div>
-    <div class="col-12 col-sm-12 col-lg-6">
-      <app-demission-employe-profession-annee-stats></app-demission-employe-profession-annee-stats>
-    </div>
-  </div>
+<tc-card [title]="selectedStatType?.title" >
+  <app-recrutement-stats-view-main *ngIf="selectedStatType?.code === 'SR'" ></app-recrutement-stats-view-main>
+  <app-grade-stats-view-main *ngIf="selectedStatType?.code === 'GR'" ></app-grade-stats-view-main>
+  <app-profession-stats-view-main *ngIf="selectedStatType?.code === 'PR'" ></app-profession-stats-view-main>
+  <app-employe-stats-view-main *ngIf="selectedStatType?.code === 'EM'" ></app-employe-stats-view-main>
 </tc-card>

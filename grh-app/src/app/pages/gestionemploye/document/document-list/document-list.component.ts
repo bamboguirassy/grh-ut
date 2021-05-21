@@ -22,6 +22,7 @@ export class DocumentListComponent implements OnInit {
 
   ngOnInit(): void {
     this.findByEmploye();
+    console.log(this.items);
   }
 
   handlePostDelete() {

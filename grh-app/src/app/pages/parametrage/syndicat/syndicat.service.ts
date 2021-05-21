@@ -9,6 +9,11 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SyndicatService extends BamboAbstractService {
 
+  types: any[] = [
+    { label: 'syndicat', value: 'syndicat' },
+    { label: 'amicale', value: 'amicale' },
+  ];
+
   constructor(public httpSrv: BamboHttpService, public toastr: ToastrService) {
     super(httpSrv, toastr);
     this.routePrefix = 'syndicat/';
