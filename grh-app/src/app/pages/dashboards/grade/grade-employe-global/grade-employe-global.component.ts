@@ -30,7 +30,7 @@ export class GradeEmployeGlobalComponent extends DashboardBaseComponent<GradeEmp
   setDataChart() {
     this.chartOptions = {
       responsive: true,
-        scales: { //you're missing this
+        scales: { 
           yAxes: {
             display: true,
             scaleLabel: {
