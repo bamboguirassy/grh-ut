@@ -60,7 +60,7 @@ export class GradeEmployeGlobalComponent extends DashboardBaseComponent<GradeEmp
     this.chartPlugins = [];
 
     this.chartData = [
-      { data: this.rawChartData.map(r => +r.nombreEmploye), label: 'Grade' },
+      { data: this.rawChartData.map(r => +r.nombreEmploye), label: 'Effectif' },
     ];
   }
 
