@@ -6,15 +6,18 @@ use App\Entity\CaisseSociale;
 use App\Entity\Employe;
 use App\Entity\Grade;
 use App\Entity\TypeEmploye;
+use App\Entity\Contrat;
 use App\Utils\Utils;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+
 
 /**
  * @Route("/api/statistics")
@@ -396,6 +399,11 @@ class DashboardController extends AbstractController
         }
         return count($tabRecrutement) ? $tabRecrutement : [];
     }
+    
+    
+     
+    
+    
 
 
     /**
@@ -765,6 +773,85 @@ class DashboardController extends AbstractController
 
         return count($tab) ? $tab : [];
     }
-
-
+    
+    
+     /**
+     * @Rest\Get(path="/employe/count-by-typecontrat", name="employe_count_statistic_by_type_contrat")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    
+      public function countEmployeByContratGroupByTypeContrat(EntityManagerInterface $entityManager){
+              $em = $this->getDoctrine()->getManager();
+             
+              $typeContrats = $em->createQuery('Select tc FROM App\Entity\TypeContrat tc '
+                      . 'WHERE tc IN (SELECT tyc FROM App\Entity\Contrat c JOIN c.typeContrat tyc ) ')
+                      ->getResult();
+                $tab = [];
+              
+                
+              foreach ($typeContrats as $typeContrat){
+                   $employes= $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '                           
+                      . 'WHERE e IN(select ec FROM App\Entity\Contrat c JOIN c.employe ec where c.typeContrat=:typeContrat) 
+                        ')
+                           ->setParameter('typeContrat', $typeContrat)
+                     ->getSingleScalarResult();
+                   
+                   $tab[]=[
+                      'typeContrat'=>$typeContrat,
+                       'nbreEmploye' =>$employes
+                       
+                   ];
+                  
+              }     
+             
+              return count($tab) ? $tab : [];
+                   
+          }
+           /**
+     * @Rest\Get(path="/employe/count-by-typecontrat-actif", name="employe_count_statistic_by_type_contrat_actif")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    
+      public function countEmployeByContratGroupByTypeContratActif(){
+              $em = $this->getDoctrine()->getManager();
+             
+              $typeContrats = $em->createQuery('Select tc FROM App\Entity\TypeContrat tc '
+                      . 'WHERE tc IN (SELECT tyc FROM App\Entity\Contrat c JOIN c.typeContrat tyc ) ')
+                      ->getResult();
+                $tab = [];
+              
+                
+              foreach ($typeContrats as $typeContrat){
+                  $nbreEmploye = 0;
+                   $employes= $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '                           
+                      . 'WHERE e IN(select ec FROM App\Entity\Contrat c JOIN 
+                          c.employe ec where c.typeContrat=?1 and c.etat=?2) 
+                        ')
+                           ->setParameter(1,$typeContrat)
+                           ->setParameter(2,true)
+                     ->getSingleScalarResult();
+                   
+                   $tab[]=[
+                      'typeContrat'=>$typeContrat,
+                       'nbreEmploye' =>$employes
+                       
+                   ];
+             
+                  
+                  
+              } 
+               
+              return count($tab) ? $tab : [];
+                   
+          }
+          
+        
+        
+      
+    
 }
+
+
+
