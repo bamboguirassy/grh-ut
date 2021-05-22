@@ -1,12 +1,12 @@
 <tc-card *ngIf="documentSrv.resourceName|listable" [tcGradient]="lightGradient">
-  <tc-card [view]="secondViewBorder" [outline]="true">
+  <!--tc-card [view]="secondViewBorder" [outline]="true">
     <div class="row">
       <div class="col-12">
         <app-document-new [employe]="employe" *ngIf="employe" (creation)="onCreate($event)"></app-document-new>
         <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findByEmploye()">Rafraichir</button>
       </div>
     </div>
-  </tc-card>
+  </tc-card-->
   <!--tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
     <tc-table-col [columnTitle]="'#'" [columnName]="'#'">
       <ng-template #tableTDTemplate let-row="row">
@@ -40,26 +40,38 @@
   </tc-table-->
   <div class="container">
   <div class="row" >
-    <div class="col col-lg-4" *ngFor="let item of items">
-      <div style="background: #ECECEC;padding:30px;" >
+   
+      <div class="col-12 col-md-4 col-lg-3">
+        <nz-card nzHoverable style="width:240px;height: 240px" >
+          <button size="sm" class="ml-2 mr-2" tc-button afterIcon="icofont-refresh" (click)="findByEmploye()"></button>
+            <app-membrefamille-new [employe]="employe" (creation)="onCreate($event)"></app-membrefamille-new>
+        </nz-card>
+        
+      </div>
+     
+
+    <div class="col-12 col-md-4 col-lg-3" *ngFor="let item of items" >
+      <a [href]="item.filepath">
+     
   
-        <nz-card nzHoverable style="width:240px"  [nzCover]="coverTemplate">
+        <nz-card nzHoverable style="width:240px;margin-left: 1px;margin-bottom: 15px;"  [nzCover]="coverTemplate" >
           <nz-card-meta [nzTitle]="item.typeDocument.nom" [nzDescription]="item.nom"></nz-card-meta>
         </nz-card>
         <ng-template #coverTemplate>
           
           <ng-container *ngIf="item.filename.split('?')[0].split('.').pop()=='docx' || item.filename.split('?')[0].split('.').pop()=='doc'|| item.filename.split('?')[0].split('.').pop()=='pdf' ; else elseTemplate">
             
-            <img *ngIf="item.filename.split('?')[0].split('.').pop()=='docx' || item.filename.split('?')[0].split('.').pop()=='doc'" alt="example" style="height: 150px;" src="./assets/img/wordimage.jpg" />
-            <img *ngIf="item.filename.split('?')[0].split('.').pop()=='pdf'" style="height: 150px;" src="./assets/img/pdfimage.png" />  
+           <a [href]="item.filepath"><img *ngIf="item.filename.split('?')[0].split('.').pop()=='docx' || item.filename.split('?')[0].split('.').pop()=='doc'" alt="example" style="height: 150px;width: max-content" src="./assets/img/wordimage.jpg" /></a> 
+           <a [href]="item.filepath"><img *ngIf="item.filename.split('?')[0].split('.').pop()=='pdf'" style="height: 150px;width: max-content; " src="./assets/img/pdfimage.png" /></a> 
           </ng-container>
           <ng-template #elseTemplate>
-            <img alt="example" style="height: 150px;" [src]="item.filepath" />
+            <a [href]="item.filepath"> <img alt="example" style="height: 150px;width: max-content" [src]="item.filepath" /></a>
           </ng-template>
           
           
         </ng-template>
-      </div>
+      
+    </a>
     </div>
   </div>
   </div>
