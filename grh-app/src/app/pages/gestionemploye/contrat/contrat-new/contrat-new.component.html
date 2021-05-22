@@ -82,7 +82,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6" *ngIf="entity.etat">
+                <div class="col-12 col-md-6" *ngIf="!entity.etat">
                     <tc-form-group>
                         <tc-form-label>Motif de fin du contrat</tc-form-label>
                         <tc-select required="required" [(ngModel)]="entity.motifFin" name="motifFin"
@@ -95,7 +95,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6" *ngIf="entity.etat">
+                <div class="col-12 col-md-6" *ngIf="!entity.etat">
                     <tc-form-group>
                         <tc-form-label>Date de fin effective</tc-form-label>
                         <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="entity.dateFinEffective"
@@ -106,7 +106,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6" *ngIf="entity.etat">
+                <div class="col-12 col-md-6" *ngIf="!entity.etat">
                     <tc-form-group>
                         <tc-form-label>Commentaire sur le fin du contrat</tc-form-label>
                         <tc-textarea [(ngModel)]="entity.commentaireSurFinContrat" name="commentaireSurFinContrat"
@@ -127,8 +127,8 @@
                     </tr>
                     <tr>
                         <td>{{contratActif.motifFin}}</td>
-                        <td>{{contratActif.dateFinEffective|json}}</td>
-                        <td>{{contratActif.commentaireSurFinContrat|json}}</td>
+                        <td>{{contratActif.dateFinEffective|date:'dd/MM/yyyy' }}</td>
+                        <td>{{contratActif.commentaireSurFinContrat}}</td>
                     </tr>
                 </table>
             </div>

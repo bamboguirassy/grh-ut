@@ -9,39 +9,52 @@
       <div class="row">
         <div class="col-12">
           <tc-form-group>
-            <tc-form-label>Syndicat</tc-form-label>
-            <nz-select name="syndicat" id="syndicat" #syndicat="ngModel" nzPlaceHolder="Selectionner le syndicat"
-              nzAllowClear nzShowSearch [(ngModel)]="selectedSyndicat">
-              <ng-container *ngFor="let syndicat of syndicats">
-                <nz-option [nzValue]="syndicat" [nzLabel]="syndicat.nom"></nz-option>
-              </ng-container>
-            </nz-select>
+            <tc-form-label>Type</tc-form-label>
+            <tc-select name="type" id="type" #type="ngModel" nzPlaceHolder="Selectionner le type" nzAllowClear
+              nzShowSearch [(ngModel)]="selectedType" [options]="syndicatSrv.types">
+            </tc-select>
             <tc-form-description>
-              <app-form-field-validation-message [formField]="syndicat"></app-form-field-validation-message>
+              <app-form-field-validation-message [formField]="type"></app-form-field-validation-message>
             </tc-form-description>
           </tc-form-group>
         </div>
-        <div class="col-12">
-          <tc-form-group>
-            <tc-form-label>Date Enregistrement</tc-form-label>
-            <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="entity.dateEnregistrement"
-              name="dateEnregistrement" id="dateEnregistrement" #dateEnregistrement="ngModel"></nz-date-picker>
-            <tc-form-description>
-              <app-form-field-validation-message [formField]="dateEnregistrement"></app-form-field-validation-message>
-            </tc-form-description>
-          </tc-form-group>
-        </div>
-        <div class="col-12">
-          <tc-form-group>
-            <tc-form-label>Etat</tc-form-label>
-            <tc-switcher [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel"
-              [bgColor]="['transparent', 'transparent', '#ed5564']" [borderColor]="['#ed5564', '#ed5564', '#ed5564']"
-              [color]="['#ed5564', '#ed5564', '#fff']" [labelColor]="['#000', '#000', '#ed5564']"></tc-switcher>
-            <tc-form-description>
-              <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
-            </tc-form-description>
-          </tc-form-group>
-        </div>
+        <ng-container *ngIf="selectedType">
+          <div class="col-12">
+            <tc-form-group>
+              <tc-form-label>{{selectedType|ucfirst}}</tc-form-label>
+              <nz-select name="syndicat" id="syndicat" #syndicat="ngModel" nzPlaceHolder="Selectionner le syndicat"
+                nzAllowClear nzShowSearch [(ngModel)]="selectedSyndicat">
+                <ng-container *ngFor="let syndicat of syndicats">
+                  <nz-option *ngIf="syndicat.type==selectedType" [nzValue]="syndicat" [nzLabel]="syndicat.nom"></nz-option>
+                </ng-container>
+              </nz-select>
+              <tc-form-description>
+                <app-form-field-validation-message [formField]="syndicat"></app-form-field-validation-message>
+              </tc-form-description>
+            </tc-form-group>
+          </div>
+          <div class="col-12">
+            <tc-form-group>
+              <tc-form-label>Date Enregistrement</tc-form-label>
+              <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="entity.dateEnregistrement"
+                name="dateEnregistrement" id="dateEnregistrement" #dateEnregistrement="ngModel"></nz-date-picker>
+              <tc-form-description>
+                <app-form-field-validation-message [formField]="dateEnregistrement"></app-form-field-validation-message>
+              </tc-form-description>
+            </tc-form-group>
+          </div>
+          <div class="col-12">
+            <tc-form-group>
+              <tc-form-label>Etat</tc-form-label>
+              <tc-switcher [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel"
+                [bgColor]="['transparent', 'transparent', '#ed5564']" [borderColor]="['#ed5564', '#ed5564', '#ed5564']"
+                [color]="['#ed5564', '#ed5564', '#fff']" [labelColor]="['#000', '#000', '#ed5564']"></tc-switcher>
+              <tc-form-description>
+                <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
+              </tc-form-description>
+            </tc-form-group>
+          </div>
+        </ng-container>
       </div>
     </form>
   </ng-template>

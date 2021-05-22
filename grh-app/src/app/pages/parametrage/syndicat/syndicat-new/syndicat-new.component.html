@@ -18,7 +18,6 @@
               #type="ngModel" [placeholder]="'Selectionner le type'"
               [options]="syndicatSrv.types">
             </tc-select>
-            {{entity.type|json}}
             <tc-form-description>
               <app-form-field-validation-message [formField]="type"></app-form-field-validation-message>
             </tc-form-description>
