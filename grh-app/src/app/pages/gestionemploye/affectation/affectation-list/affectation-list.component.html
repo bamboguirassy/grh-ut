@@ -16,7 +16,13 @@
         <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true">
           <tc-table-col [columnTitle]="'Structure'" [columnName]="'structure'" [enableSorting]="true">
             <ng-template #tableTDTemplate let-value>
-              <span class="nowrap" *ngIf="value" title="{{ value?.nom }}">{{ value?.nom }}</span>
+              <span class="nowrap" *ngIf="value" title="{{ value?.nom }}">{{ value?.code }}</span>
+              <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+          </tc-table-col>
+          <tc-table-col [columnTitle]="'Poste'" [columnName]="'poste'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <span class="nowrap" *ngIf="value">{{ value }}</span>
               <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
             </ng-template>
           </tc-table-col>
@@ -27,12 +33,6 @@
             </ng-template>
           </tc-table-col>
           <tc-table-col [columnTitle]="'Motif'" [columnName]="'motif'" [enableSorting]="true">
-            <ng-template #tableTDTemplate let-value>
-              <span class="nowrap" *ngIf="value">{{ value }}</span>
-              <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-            </ng-template>
-          </tc-table-col>
-          <tc-table-col [columnTitle]="'Poste'" [columnName]="'poste'" [enableSorting]="true">
             <ng-template #tableTDTemplate let-value>
               <span class="nowrap" *ngIf="value">{{ value }}</span>
               <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
