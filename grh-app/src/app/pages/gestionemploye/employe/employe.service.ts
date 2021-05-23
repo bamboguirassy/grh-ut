@@ -43,8 +43,8 @@ export class EmployeService extends BamboAbstractService {
     return this.httpSrv.get(this.routePrefix + typeEmploye.id + '/typeemploye')
   }
 
-  uploadPhoto(photo: any, fileName: any) {
-    return this.httpSrv.put(this.routePrefix + 'change_image_employe', { photo, fileName });
+  uploadPhoto(employe: Employe, photo: any, fileName: any) {
+    return this.httpSrv.put(this.routePrefix + 'upload-photo/'+employe.id, { photo, fileName });
   }
 
   

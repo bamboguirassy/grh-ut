@@ -3,8 +3,9 @@
         <tc-card class="mb-1">
             <div class="row">
                 <div class="col-12 col-md-3 col-lg-2">
-                    <img [src]="entity?.filepath ? entity?.filepath:'assets/img/default-profile-picture1.jpg'"
+                    <img (click)="fileInput.click()" [src]="entity?.filepath ? entity?.filepath:'assets/img/default-profile-picture1.jpg'"
                         alt="photo employé" style="width: 100%;">
+                        <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
                     <div class="employe-status-card">
                         <tc-badge view="error" *ngIf="!entity?.etat">Statut: Inactif - {{entity?.motifSortie}}
                         </tc-badge>
@@ -197,42 +198,9 @@
                 </app-fonctionemploye-list>
             </nz-tab>
             <nz-tab nzTitle="Syndicats & amicales">
-                <app-membresyndicat-list *ngIf="entity && isFamilleLoaded" [employe]="entity"></app-membresyndicat-list>
+                <app-membresyndicat-list *ngIf="entity && isSyndicatsLoaded" [employe]="entity"></app-membresyndicat-list>
             </nz-tab>
         </nz-tabset>
     </div>
 </div>
-
-<!-- <tc-card [outline]="true" [view]="secondViewBorder" [tcGradient]="secondGradient" [padding]="0.5">
-        <div class="row">
-             <form 
-            [formGroup]="employeForm" novalidate
-            class="mb-4"
-            (ngSubmit)="updateProfile(employeForm)"
-          >
-            <tc-form-group>
-                <tc-form-label>Photo</tc-form-label>
-                <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
-        
-                <div class="d-flex align-items-center">
-                  <tc-avatar [src]="entity?.filepath" [size]="100"></tc-avatar>
-                  <button
-                    tc-button
-                    [type]="'button'"
-                    [afterIcon]="'icofont-ui-user'"
-                    [view]="'accent'"
-                    [outline]="true"
-                    (click)="fileInput.click()"
-                  >
-                    Changer photo
-                  </button>
-                </div>
-              </tc-form-group>
-              </form>
-
-
-            
-            
-        </div>
-    </tc-card> -->
 <app-access-denied *ngIf="!(employeSrv.resourceName|showable)"></app-access-denied>
