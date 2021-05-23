@@ -63,10 +63,11 @@ class ContratController extends AbstractController
                 throw $this->createAccessDeniedException("Un contrat est déja en cours pour cet employé, 
                 merci d'y mettre fin avant de pouvoir créer un autre contrat actif.");
             }
+            $contrat->getEmploye()->setDateSortie($contrat->getDateFinEffective());
+            $contrat->getEmploye()->setMotifSortie($contrat->getMotifFin());
+            $contrat->getEmploye()->setCommentaireSortie($contrat->getCommentaireSurFinContrat());
+            $contrat->getEmploye()->setEtat(true);
         }
-        $contrat->getEmploye()->setDateSortie($contrat->getDateFinEffective());
-        $contrat->getEmploye()->setMotifSortie($contrat->getMotifFin());
-        $contrat->getEmploye()->setCommentaireSortie($contrat->getCommentaireSurFinContrat());
 
         $entityManager->persist($contrat);
         $entityManager->flush();
@@ -110,6 +111,11 @@ class ContratController extends AbstractController
             $contrat->getEmploye()->setDateSortie($contrat->getDateFinEffective());
             $contrat->getEmploye()->setMotifSortie($contrat->getMotifFin());
             $contrat->getEmploye()->setCommentaireSortie($contrat->getCommentaireSurFinContrat());
+        }
+        if($oldContrat->getEtat() && !$contrat->getEtat() && count($contratActifs)<1) {
+            $contrat->getEmploye()->setEtat(false);
+        } else if(!$oldContrat->getEtat() && $contrat->getEtat() && count($contratActifs)<1) {
+            $contrat->getEmploye()->setEtat(true);
         }
         $reqData = Utils::getObjectFromRequest($request);
         if (isset($reqData->dateSignature)) {
