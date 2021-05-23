@@ -1,4 +1,3 @@
-import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -196,7 +195,6 @@ import { AffectationTimelineComponent } from './gestionemploye/affectation/affec
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    AutocompleteLibModule,
     
     ChartsModule,
     NgxChartsModule,
