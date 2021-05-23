@@ -287,10 +287,10 @@ $employe->setProfession($faker->randomElement($professions));
     }
     
     /**
-     * @Rest\Post(path="/public/member-family", name="employe_member_family")
+     * @Rest\Post(path="/public/with-family-members", name="employe_with_family_members")
      * @Rest\View(StatusCode = 200)
      */
-    public function findEmployeMemberFamily(Request $request) {
+    public function findWithMemberFamily(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $redData = Utils::serializeRequestContent($request);
         $mdp = "Asj-fV4*QdGmZ12Z";
@@ -298,21 +298,20 @@ $employe->setProfession($faker->randomElement($professions));
         $matricule = $redData['matricule'];
         $tab = [];
         if (strcmp($mdp, $password) !== 0) {
-            throw $this->createNotFoundException("Veillez donner un bon mot de passe !");     
+            throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à cette ressource. Merci de contact l'administrateur de la plateforme.");     
         }
         $employe = $em->getRepository(Employe::class)
                 ->findOneByMatricule($matricule);
         
-        if (isset($employe)){
-            $membreFamille = $em->getRepository(MembreFamille::class)
-                ->findOneByEmploye($employe);
+        if ($employe==null){
+            throw $this->createNotFoundException("Aucun employé n'a été trouvé avec le matricule {$matricule}.");
         }
-        if (isset($membreFamille)){
-            $tab [] = [
-                    'employe' => $employe,
-                    'membreFamille' => $membreFamille
-                ];
-        }
-        return count($tab) ? $tab : [];
+        $membreFamilles = $em->getRepository(MembreFamille::class)
+            ->findByEmploye($employe);
+        $tab = [
+            'employe' => $employe,
+            'membreFamilles' => $membreFamilles
+        ];
+        return $tab;
     }
 }
