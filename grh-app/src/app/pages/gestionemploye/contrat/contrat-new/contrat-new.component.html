@@ -8,6 +8,12 @@
     <ng-template #modalBody>
         <form #form="ngForm" ngNativeValidate>
             <div class="row">
+                <div class="col-12">
+                    <p class="text-danger mb-2" style="font-weight: bold;">
+                        <i class="icofont-info-circle"></i> Un employé ne peut avoir plus de d'un contrat en cours, si l'employé a déja un contrat actif 
+                        il faut le désactiver avant de lui créer un autre compte actif !
+                    </p>
+                </div>
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Type contrat</tc-form-label>
@@ -73,9 +79,7 @@
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Etat</tc-form-label>
-                        <tc-switcher [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel"
-                            [bgColor]="['transparent', 'transparent', '#ed5564']"
-                            [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']">
+                        <tc-switcher [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel">
                         </tc-switcher>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
@@ -85,8 +89,8 @@
                 <div class="col-12 col-md-6" *ngIf="!entity.etat">
                     <tc-form-group>
                         <tc-form-label>Motif de fin du contrat</tc-form-label>
-                        <tc-select required="required" [(ngModel)]="entity.motifFin" name="motifFin"
-                            id="motifFin" #motifFin="ngModel" [placeholder]="'Selectionner le motif du fin de contrat'"
+                        <tc-select required="required" [(ngModel)]="entity.motifFin" name="motifFin" id="motifFin"
+                            #motifFin="ngModel" [placeholder]="'Selectionner le motif du fin de contrat'"
                             [options]="motifFinContrats">
                         </tc-select>
                         <tc-form-description>
@@ -98,8 +102,9 @@
                 <div class="col-12 col-md-6" *ngIf="!entity.etat">
                     <tc-form-group>
                         <tc-form-label>Date de fin effective</tc-form-label>
-                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="entity.dateFinEffective"
-                            name="dateFinEffective" id="dateFinEffective" #dateFinEffective="ngModel"></nz-date-picker>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required="required"
+                            [(ngModel)]="entity.dateFinEffective" name="dateFinEffective" id="dateFinEffective"
+                            #dateFinEffective="ngModel"></nz-date-picker>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="dateFinEffective">
                             </app-form-field-validation-message>
@@ -108,7 +113,7 @@
                 </div>
                 <div class="col-12 col-md-6" *ngIf="!entity.etat">
                     <tc-form-group>
-                        <tc-form-label>Commentaire sur le fin du contrat</tc-form-label>
+                        <tc-form-label>Commentaire sur la fin du contrat</tc-form-label>
                         <tc-textarea [(ngModel)]="entity.commentaireSurFinContrat" name="commentaireSurFinContrat"
                             id="commentaireSurFinContrat" #commentaireSurFinContrat="ngModel"> </tc-textarea>
                         <tc-form-description>
@@ -117,20 +122,6 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-            </div>
-            <div class="col-md-12" *ngIf="entity.etat">
-                <table>
-                    <tr>
-                        <th>Motif de fin contrat</th>
-                        <th>Date de fin effectif</th>
-                        <th>Commentaire sur le contrat</th>
-                    </tr>
-                    <tr>
-                        <td>{{contratActif.motifFin}}</td>
-                        <td>{{contratActif.dateFinEffective|date:'dd/MM/yyyy' }}</td>
-                        <td>{{contratActif.commentaireSurFinContrat}}</td>
-                    </tr>
-                </table>
             </div>
         </form>
     </ng-template>

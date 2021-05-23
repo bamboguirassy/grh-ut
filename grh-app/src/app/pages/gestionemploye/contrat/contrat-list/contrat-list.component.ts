@@ -26,8 +26,6 @@ export class ContratListComponent implements OnInit, OnDestroy {
 
   }
 
-  
-
   ngOnInit(): void {
     this.findByEmploye();
   }
@@ -67,7 +65,7 @@ export class ContratListComponent implements OnInit, OnDestroy {
   }
   
   onCreate(item: Contrat) {
-    this.items = [item, ...this.items];
+    this.findByEmploye();
   }
 
   onClose(){
