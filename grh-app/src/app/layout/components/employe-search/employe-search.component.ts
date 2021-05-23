@@ -11,7 +11,10 @@ import { Employe } from 'src/app/pages/gestionemploye/employe/employe';
 export class EmployeSearchComponent implements OnInit {
   keyword = 'globalFilter';
   items: Employe[] = [];
+  filteredOptions: Employe[] = [];
   @Input() layout = 'horizontal';
+  inputValue: string;
+
   constructor(public employeSrv: EmployeService, public router: Router) {
   }
 
@@ -22,6 +25,15 @@ export class EmployeSearchComponent implements OnInit {
   selectEvent(item) {
     // do something with selected item
     this.router.navigate(['/'+this.layout+'/' + this.employeSrv.getRoutePrefix() + item.id]);
+    item = null;
+  }
+
+  onChange(value: string): void {
+    if(value.length>3) {
+      this.filteredOptions = this.items.filter(item => item.globalFilter.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+    } else {
+      this.filteredOptions = [];
+    }
   }
 
   getEmployes() {

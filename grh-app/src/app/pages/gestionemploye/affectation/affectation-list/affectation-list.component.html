@@ -1,8 +1,6 @@
 <div class="row" *ngIf="affectationSrv.resourceName|listable">
   <div class="col-12 col-md-4">
-    
-  <app-affectation-timeline *ngIf="employe && this.items?.length" [employe]="employe"></app-affectation-timeline>
-    
+    <app-affectation-timeline *ngIf="employe && this.items?.length" [employe]="employe"></app-affectation-timeline>
   </div>
   <div class="col-12 col-md-8">
     <div class="row">
@@ -59,5 +57,5 @@
   <app-affectation-edit *ngIf="selectedAffectation" [selectedAffectation]="selectedAffectation"
     (modification)="findByEmploye()" (onClose)="onClose()"></app-affectation-edit>
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
-  <app-access-denied *ngIf="!(affectationSrv.resourceName|listable)"></app-access-denied>
 </div>
+<app-access-denied *ngIf="!(affectationSrv.resourceName|listable)"></app-access-denied>

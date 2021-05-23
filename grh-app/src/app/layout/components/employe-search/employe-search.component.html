@@ -1,13 +1,14 @@
-<div class="ng-autocomplete">
-    <ng-autocomplete [minQueryLength]="3" placeHolder="Taper pour rechercher un employé" style="width: 100px;" [data]="items" [searchKeyword]="keyword" (selected)='selectEvent($event)'
-         [itemTemplate]="itemTemplate"
+<!-- <div class="ng-autocomplete">
+    <ng-autocomplete [classes]="['form-control']" [minQueryLength]="3" [placeHolder]="'Taper pour rechercher un employé'"
+     style="width: 100px;" [data]="items" [searchKeyword]="keyword"
+      (selected)='selectEvent($event)' [itemTemplate]="itemTemplate"
         [notFoundTemplate]="notFoundTemplate">
     </ng-autocomplete>
     <ng-template #itemTemplate let-item>
-        <a href="javascript:void(0)">
+        <a href="javascript:void(0)" style="border-top: 1px solid #FFFFFF;">
             <div class="row">
                 <div class="col-2">
-                    <img [src]="item.filepath" class="rounded-circle float-right" style="width:50px" />
+                    <img [src]="item.filepath" class="rounded-circle float-right" />
                 </div>
                 <div class="col-10">
                     <span [innerHTML]="item?.prenoms" class="thick">{{item?.prenoms}}</span>,
@@ -23,4 +24,26 @@
     <ng-template #notFoundTemplate let-notFound>
         <div [innerHTML]="notFound"></div>
     </ng-template>
-</div>
+</div> -->
+
+<input [(ngModel)]="inputValue" class="form-control" (ngModelChange)="onChange($event)" style="width: 300px;" placeholder="Rechercher un employé" nz-input [nzAutocomplete]="auto" />
+<nz-autocomplete #auto>
+    <nz-auto-option *ngFor="let item of filteredOptions" [nzValue]="item.matricule">
+        <a (click)="selectEvent(item)" href="javascript:void(0)">
+            <div class="row">
+                <div class="col-3">
+                    <img *ngIf="item.filepath" [src]="item.filepath" class="rounded-circle float-right" />
+                    <i *ngIf="!item.filepath" class="icofont-user-suited float-right"></i>
+                </div>
+                <div class="col-9">
+                    <span [innerHTML]="item?.prenoms" class="thick">{{item?.prenoms}}</span>,
+                    <span [innerHTML]="item?.nom" class="thick">{{item?.nom}}</span>
+                    <br>
+                    <span [innerHTML]="item?.matricule" style="color: blue;">{{item?.matricule}}</span>
+                    <br>
+                    <span [innerHTML]="item?.profession.nom">{{item?.profession.nom}}</span> 
+                </div>
+            </div>
+        </a>
+    </nz-auto-option>
+</nz-autocomplete>

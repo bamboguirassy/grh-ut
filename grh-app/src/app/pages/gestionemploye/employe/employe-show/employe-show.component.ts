@@ -29,7 +29,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   currentAvatar: any;
   defaultAvatar: string;
   changes: boolean;
-  isAdresseLoaded = false;
+  isAdresseLoaded = true;
   isFamilleLoaded = false;
   isSyndicatsLoaded = false;
   isDocumentsLoaded = false;
@@ -63,15 +63,23 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
         }
       ]
     };
-
-
-
-
+    activatedRoute.params.subscribe(() => {
+      this.findEntity(this.activatedRoute.snapshot.params.id);
+      this.isAdresseLoaded = false;
+      this.isFamilleLoaded = false;
+      this.isSyndicatsLoaded = false;
+      this.isDocumentsLoaded = false;
+      this.isFonctionsLoaded = false;
+      this.isGradeLoaded = false;
+      this.isDiplomeLoaded = false;
+      this.isContratLoaded = false;
+      this.loadAdressesTab();
+      this.loadFamillesTab();
+    });
   }
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.findEntity(this.activatedRoute.snapshot.params.id);
   }
 
   ngOnDestroy() {
@@ -162,7 +170,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     this.isContratLoaded = true;
   }
 
-  loadAffectationsTab(){
+  loadAffectationsTab() {
     this.isAffectationLoaded = true;
   }
 

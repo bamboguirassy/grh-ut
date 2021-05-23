@@ -62,5 +62,5 @@
   <app-fonctionemploye-edit *ngIf="selectedFonction" [selectedFonction]="selectedFonction"
     (modification)="findByEmploye()" (onClose)="onClose()"></app-fonctionemploye-edit>
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
-  <app-access-denied *ngIf="!(fonctionEmployeSrv.resourceName|listable)"></app-access-denied>
 </div>
+<app-access-denied *ngIf="!(fonctionEmployeSrv.resourceName|listable)"></app-access-denied>
