@@ -24,6 +24,12 @@
               </div>
             </ng-template>
           </tc-table-col>
+          <tc-table-col [columnTitle]="'Numéro'" [columnName]="'numero'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <span class="nowrap" *ngIf="value">{{ value }}</span>
+              <tc-badge size="sm" view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+          </tc-table-col>
           <tc-table-col [columnTitle]="'Type contrat'" [columnName]="'typeContrat'" [enableSorting]="true">
             <ng-template #tableTDTemplate let-value>
               <span class="nowrap" *ngIf="value" title="{{ value?.nom }}">{{ value?.code }}</span>

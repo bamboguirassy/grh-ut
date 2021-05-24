@@ -13,4 +13,5 @@ export class Contrat extends BamboAbstractObject {
     dateSignature: string;
     dateDebut: any;
     dateFinPrevue: any;
+    numero: string;
 }
