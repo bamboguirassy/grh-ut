@@ -99,9 +99,10 @@ class ContratController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         // verifier s'il y'a un autre contrat actif
         $contratActifs = $em->createQuery('select c from App\Entity\Contrat c 
-        where c.etat=?1 and c!=?2')
+        where c.etat=?1 and c<>?2 and c.employe=?3')
         ->setParameter(1,true)
         ->setParameter(2,$contrat)
+        ->setParameter(3,$contrat->getEmploye())
         ->getResult();
         if((!$oldContrat->getEtat() && $contrat->getEtat()) || ($oldContrat->getEtat() && !$contrat->getEtat() && count($contratActifs)<1)) {
             if(count($contratActifs)) {
