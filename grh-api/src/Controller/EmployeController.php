@@ -293,24 +293,35 @@ $employe->setProfession($faker->randomElement($professions));
     public function findEmployeMemberFamily(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $redData = Utils::serializeRequestContent($request);
-        $mdp = "Asj-fV4*QdGmZ12Z";
-        $password = $redData['password'];
-        $matricule = $redData['matricule'];
+        $mdp = 'AsjfV4*QdGmZ12Z';
+        //$password = $redData['password'];
+        //$matricule = $redData['matricule'];
+        //throw $this->createNotFoundException("mot de passe ".$redData['password']); 
+        $matricule = '120254/B';
         $tab = [];
-        if (strcmp($mdp, $password) !== 0) {
-            throw $this->createNotFoundException("Veillez donner un bon mot de passe !");     
+        if (strcmp($mdp, $redData['password']) == 0) {
+            //throw $this->createNotFoundException("Veillez donner un bon mot de passe !");     
         }
-        $employe = $em->getRepository(Employe::class)
+        
+         $employe = $em->createQuery('
+            SELECT m, e
+            FROM App\Entity\MembreFamille m
+                JOIN m.employe e where e.matricule =?1
+        ')
+            ->setParameter(1,$matricule)
+            ->getResult();
+        /*$employe = $em->getRepository(Employe::class)
                 ->findOneByMatricule($matricule);
         
         if (isset($employe)){
+            //throw $this->createNotFoundException("Veillez donner un bon mot de passe !");   
             $membreFamille = $em->getRepository(MembreFamille::class)
-                ->findOneByEmploye($employe);
-        }
-        if (isset($membreFamille)){
+                ->findByEmploye($employe);
+        }*/
+        if (count($employe)){
             $tab [] = [
-                    'employe' => $employe,
-                    'membreFamille' => $membreFamille
+                    'employe' => $employe
+                    //'membreFamille' => $membreFamille
                 ];
         }
         return count($tab) ? $tab : [];
