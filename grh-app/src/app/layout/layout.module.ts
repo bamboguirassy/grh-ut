@@ -21,7 +21,7 @@ import { RegisterFormComponent } from './components/register-form';
 import { NavbarSkeletonComponent } from './components/navbar-skeleton';
 import { SettingsComponent } from './components/settings';
 import { EmployeSearchComponent } from './components/employe-search/employe-search.component';
-import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 
 @NgModule({
   imports: [
@@ -31,7 +31,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     ReactiveFormsModule,
     MalihuScrollbarModule.forRoot(),
     UIModule,
-    AutocompleteLibModule
+    NzAutocompleteModule
   ],
   declarations: [
     BaseLayoutComponent,

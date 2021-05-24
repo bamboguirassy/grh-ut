@@ -39,6 +39,7 @@ class ContratController extends AbstractController
     {
         $contrat = new Contrat();
         $contrat->setDateCreation(new \DateTime('now'));
+        $entityManager = $this->getDoctrine()->getManager();
         $form = $this->createForm(ContratType::class, $contrat);
         $form->submit(Utils::serializeRequestContent($request));
         $reqData = Utils::getObjectFromRequest($request);
@@ -54,8 +55,20 @@ class ContratController extends AbstractController
         if (isset($reqData->dateFinEffective)) {
             $contrat->setDateFinEffective(new \DateTime($reqData->dateFinEffective));
         }
+        if($contrat->getEtat()) {
+            // rechercher les autres contrats actifs
+            $contratActifs = $entityManager->getRepository(Contrat::class)
+            ->findBy(['etat'=>true,'employe'=>$contrat->getEmploye()]);
+            if(count($contratActifs)) {
+                throw $this->createAccessDeniedException("Un contrat est déja en cours pour cet employé, 
+                merci d'y mettre fin avant de pouvoir créer un autre contrat actif.");
+            }
+            $contrat->getEmploye()->setDateSortie($contrat->getDateFinEffective());
+            $contrat->getEmploye()->setMotifSortie($contrat->getMotifFin());
+            $contrat->getEmploye()->setCommentaireSortie($contrat->getCommentaireSurFinContrat());
+            $contrat->getEmploye()->setEtat(true);
+        }
 
-        $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($contrat);
         $entityManager->flush();
 
@@ -80,8 +93,31 @@ class ContratController extends AbstractController
      */
     public function edit(Request $request, Contrat $contrat): Contrat
     {
+        $oldContrat = clone $contrat;
         $form = $this->createForm(ContratType::class, $contrat);
         $form->submit(Utils::serializeRequestContent($request));
+        $em = $this->getDoctrine()->getManager();
+        // verifier s'il y'a un autre contrat actif
+        $contratActifs = $em->createQuery('select c from App\Entity\Contrat c 
+        where c.etat=?1 and c<>?2 and c.employe=?3')
+        ->setParameter(1,true)
+        ->setParameter(2,$contrat)
+        ->setParameter(3,$contrat->getEmploye())
+        ->getResult();
+        if((!$oldContrat->getEtat() && $contrat->getEtat()) || ($oldContrat->getEtat() && !$contrat->getEtat() && count($contratActifs)<1)) {
+            if(count($contratActifs)) {
+                throw $this->createAccessDeniedException("Impossible de procéder à l'activation de ce contrat.
+                 Un autre est déja en cours, merci d'y mettre fin en le modifiant.");
+            }
+            $contrat->getEmploye()->setDateSortie($contrat->getDateFinEffective());
+            $contrat->getEmploye()->setMotifSortie($contrat->getMotifFin());
+            $contrat->getEmploye()->setCommentaireSortie($contrat->getCommentaireSurFinContrat());
+        }
+        if($oldContrat->getEtat() && !$contrat->getEtat() && count($contratActifs)<1) {
+            $contrat->getEmploye()->setEtat(false);
+        } else if(!$oldContrat->getEtat() && $contrat->getEtat() && count($contratActifs)<1) {
+            $contrat->getEmploye()->setEtat(true);
+        }
         $reqData = Utils::getObjectFromRequest($request);
         if (isset($reqData->dateSignature)) {
             $contrat->setDateSignature(new \DateTime($reqData->dateSignature));
@@ -95,7 +131,7 @@ class ContratController extends AbstractController
          if (isset($reqData->dateFinEffective)) {
            $contrat->setDateFinEffective(new \DateTime($reqData->dateFinEffective));
         }
-        $this->getDoctrine()->getManager()->flush();
+        $em->flush();
 
         return $contrat;
     }

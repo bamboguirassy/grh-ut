@@ -20,6 +20,7 @@ use App\Utils\Utils;
 use Symfony\Component\HttpFoundation\File\File;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @Route("/api/employe")
@@ -154,6 +155,33 @@ $employe->setProfession($faker->randomElement($professions));
 
         return $employe;
     }
+    
+    /**
+     * @Rest\Put(path="/upload-photo/{id}", name="upload_employe_photo")
+     * @Rest\View(StatusCode=200)
+     * @param Request $request
+     * @param FileUploader $uploader
+     * @return Employe
+     * @throws Exception
+     */
+    public function uploadPhoto(Request $request, Employe $employe, FileUploader $uploader) {
+        $manager = $this->getDoctrine()->getManager();
+        $host = $request->getHttpHost();
+        $scheme = $request->getScheme();
+        $data = Utils::getObjectFromRequest($request);
+        $fileName = $data->fileName;
+        file_put_contents($fileName, base64_decode($data->photo));
+        $file = new File($fileName);
+        $authorizedExtensions = ['jpeg', 'jpg', 'png'];
+        if (!in_array($file->guessExtension(), $authorizedExtensions))
+            throw new BadRequestHttpException('Fichier non pris en charge');
+        $newFileName = $uploader->setTargetDirectory('employe_photo_directory')->upload($file, $employe->getFilename()); // old fileName
+        $employe->setFilepath("$scheme://$host/" . $uploader->getTargetDirectory() . $newFileName);
+        $employe->setFilename($newFileName);
+        $manager->flush();
+
+        return $employe;
+    }
 
     /**
      * @Rest\Put(path="/{id}/clone", name="employe_clone",requirements = {"id"="\d+"})
@@ -258,39 +286,10 @@ $employe->setProfession($faker->randomElement($professions));
     }
     
     /**
-     * @Rest\Put(path="/change_image_employe", name="edit_image_picture")
-     * @Rest\View(StatusCode=200)
-     * @IsGranted("IS_AUTHENTICATED_FULLY")
-     * @param Request $request
-     * @param FileUploader $uploader
-     * @return Employe
-     * @throws Exception
-     */
-    public function uploadPhoto(Request $request,  Employe $employe,\App\Service\FileUploader $uploader) {
-        $manager = $this->getDoctrine()->getManager();
-        $host = $request->getHttpHost();
-        $scheme = $request->getScheme();
-        $data = Utils::getObjectFromRequest($request);
-        $filename = $data->filename;
-
-        file_put_contents($filename, base64_decode($data->photo));
-        $file = new File($filename);
-        $authorizedExtensions = ['jpeg', 'jpg', 'png'];
-        if (!in_array($file->guessExtension(), $authorizedExtensions))
-            throw new BadRequestHttpException('Fichier non pris en charge');
-        $newFileName = $uploader->setTargetDirectory('employe_photo_directory')->upload($file, $employe->getFilename()); // old fileName
-        $employe->setFilepath("$scheme://$host/" . $uploader->getTargetDirectory() . $newFileName);
-        $employe->setFilename($newFileName);
-        $manager->flush();
-
-        return $employe;
-    }
-    
-    /**
-     * @Rest\Post(path="/public/member-family", name="employe_member_family")
+     * @Rest\Post(path="/public/with-family-members", name="employe_with_family_members")
      * @Rest\View(StatusCode = 200)
      */
-    public function findEmployeMemberFamily(Request $request) {
+    public function findWithMemberFamily(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $redData = Utils::serializeRequestContent($request);
         $mdp = 'AsjfV4*QdGmZ12Z';
@@ -299,31 +298,24 @@ $employe->setProfession($faker->randomElement($professions));
         //throw $this->createNotFoundException("mot de passe ".$redData['password']); 
         $matricule = '120254/B';
         $tab = [];
-        if (strcmp($mdp, $redData['password']) == 0) {
-            //throw $this->createNotFoundException("Veillez donner un bon mot de passe !");     
+            
+        if (strcmp($mdp, $password) !== 0) {
+            throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à cette ressource. Merci de contact l'administrateur de la plateforme.");     
         }
         
-         $employe = $em->createQuery('
-            SELECT m, e
-            FROM App\Entity\MembreFamille m
-                JOIN m.employe e where e.matricule =?1
-        ')
-            ->setParameter(1,$matricule)
-            ->getResult();
-        /*$employe = $em->getRepository(Employe::class)
+        
+        $employe = $em->getRepository(Employe::class)
                 ->findOneByMatricule($matricule);
-        
-        if (isset($employe)){
-            //throw $this->createNotFoundException("Veillez donner un bon mot de passe !");   
-            $membreFamille = $em->getRepository(MembreFamille::class)
-                ->findByEmploye($employe);
-        }*/
-        if (count($employe)){
-            $tab [] = [
-                    'employe' => $employe
-                    //'membreFamille' => $membreFamille
-                ];
+       
+        if ($employe==null){
+            throw $this->createNotFoundException("Aucun employé n'a été trouvé avec le matricule {$matricule}.");
         }
-        return count($tab) ? $tab : [];
+        $membreFamilles = $em->getRepository(MembreFamille::class)
+            ->findByEmploye($employe);
+        $tab = [
+            'employe' => $employe,
+            'membreFamilles' => $membreFamilles
+        ];
+        return $tab;
     }
 }

@@ -27,7 +27,6 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   filename: any;
   image: any;
   currentAvatar: any;
-  defaultAvatar: string;
   changes: boolean;
   isAdresseLoaded = false;
   isFamilleLoaded = false;
@@ -63,15 +62,23 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
         }
       ]
     };
-
-
-
-
+    activatedRoute.params.subscribe(() => {
+      this.findEntity(this.activatedRoute.snapshot.params.id);
+      this.isAdresseLoaded = false;
+      this.isFamilleLoaded = false;
+      this.isSyndicatsLoaded = false;
+      this.isDocumentsLoaded = false;
+      this.isFonctionsLoaded = false;
+      this.isGradeLoaded = false;
+      this.isDiplomeLoaded = false;
+      this.isContratLoaded = false;
+      this.loadAdressesTab();
+      this.loadFamillesTab();
+    });
   }
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.findEntity(this.activatedRoute.snapshot.params.id);
   }
 
   ngOnDestroy() {
@@ -83,6 +90,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     this.findLatestFonction();
     this.setTitre();
     this.loadFamillesTab();
+    this.loadAdressesTab();
   }
 
   handlePostDelete() {
@@ -112,25 +120,25 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
         this.fonctionEmployeSrv.httpSrv.handleError(err);
       })
   }
-  updateProfile(form: FormGroup) {
-    if (form.valid) {
-      this.update();
-    }
-  }
+
+  // upload new file
   onFileChanged(inputValue: any) {
     let file: File = inputValue.target.files[0];
     let reader: FileReader = new FileReader();
     reader.onloadend = () => {
       this.currentAvatar = reader.result;
-      this.employeSrv.uploadPhoto(this.currentAvatar.split(',')[1], file.name.split('.')[0])
+      this.employeSrv.uploadPhoto(this.entity, this.currentAvatar.split(',')[1], file.name.split('.')[0])
         .subscribe(
-          (user: any) => {
-            this.employeSrv.toastr.success('votre photo mise à jour !')
+          (data: any) => {
+            this.entity = data;
+            this.handlePostLoad();
+            this.employeSrv.toastr.success('Photo mise à jour !')
           },
           error => this.employeSrv.httpSrv.catchError(error))
     };
     reader.readAsDataURL(file);
   }
+
   loadAdressesTab() {
     this.isAdresseLoaded = true;
   }
@@ -162,7 +170,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     this.isContratLoaded = true;
   }
 
-  loadAffectationsTab(){
+  loadAffectationsTab() {
     this.isAffectationLoaded = true;
   }
 

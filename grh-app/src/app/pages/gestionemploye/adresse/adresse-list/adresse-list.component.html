@@ -7,10 +7,13 @@
       <td>
         <div class="actions">
           <tc-icon icon="edit"></tc-icon>
-          <button *ngIf="adresseSrv.resourceName|editable" [routerLink]="['/'+adresseSrv.getRoutePrefixWithoutSlash(),item.id,'edit']" nz-button nzType="primary" nzSize="small" nzShape="circle">
+          <button *ngIf="adresseSrv.resourceName|editable"
+            [routerLink]="['/'+adresseSrv.getRoutePrefixWithoutSlash(),item.id,'edit']" nz-button nzType="primary"
+            nzSize="small" nzShape="circle">
             <i class="icofont-ui-edit"></i>
           </button>
-          <button *ngIf="adresseSrv.resourceName|deletable" (click)="remove(item)" class="ml-1" nz-button nzType="primary" nzSize="small" nzShape="circle" nzDanger>
+          <button *ngIf="adresseSrv.resourceName|deletable" (click)="remove(item)" class="ml-1" nz-button
+            nzType="primary" nzSize="small" nzShape="circle" nzDanger>
             <i class="icofont-trash"></i>
           </button>
         </div>
@@ -24,49 +27,5 @@
     </tr>
   </tbody>
 </table>
-<!-- <tc-card *ngIf="adresseSrv.resourceName|listable" [tcGradient]="lightGradient">
-  <tc-card [view]="secondViewBorder" [outline]="true">
-    <div class="row">
-      <div class="col-12">
-        <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findByEmploye()">Rafraichir</button>
-      </div>
-    </div>
-  </tc-card>
-  <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true">
-    <tc-table-col [columnTitle]="'#'" [columnName]="'#'">
-      <ng-template #tableTDTemplate let-row="row">
-        <i class="icofont-data icofont-2x"></i>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Ville'" [columnName]="'ville'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Quartier'" [columnName]="'quartier'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Statut'" [columnName]="'etat'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <tc-badge view="error" *ngIf="!value">Obselète</tc-badge>
-        <tc-badge view="success" *ngIf="value">Active</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-      <ng-template #tableTDTemplate let-row="row">
-        <div class="actions">
-          <button *ngIf="adresseSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'"
-            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-         <button *ngIf="adresseSrv.resourceName|deletable" (click)="remove(row)" tc-button
-            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-         </div>
-      </ng-template>
-    </tc-table-col>
-  </tc-table>
-  <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
-</tc-card> 
-<app-access-denied *ngIf="!(adresseSrv.resourceName|listable)"></app-access-denied> -->
+<app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
+<app-access-denied *ngIf="!(adresseSrv.resourceName|listable)"></app-access-denied>

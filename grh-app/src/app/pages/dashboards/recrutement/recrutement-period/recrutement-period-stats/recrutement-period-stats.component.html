@@ -1,53 +1,55 @@
 <div class="row">
     <div class="col-12">
-       <form #form="ngForm" ngNativeValidate>
-           <div class="row">
-               <div class="col-12 col-md-6">
-                   <tc-form-group>
-                       <tc-form-label>Date</tc-form-label>
-                       <nz-date-picker name="dateDebut" [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="date"
-                           ></nz-date-picker>
-                   </tc-form-group>
-               </div>
-           </div>
-       </form>
-   </div>
-   <div class="col-12 col-md-6">
-       <button *ngIf="date"  class="float-right" tc-button afterIcon="icofont-eye"
-           (click)="buildDiagram()">Visualiser</button>
-   </div>
+        <form #form="ngForm" ngNativeValidate>
+            <div class="row">
+                <div class="col-12">
+                    <h6>Nombre d'employés recrutés par genre par Type Employé</h6>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Date</tc-form-label>
+                        <nz-date-picker name="dateDebut" [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="date"></nz-date-picker>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <button *ngIf="date" class="float-right" tc-button afterIcon="icofont-eye"
+                        (click)="buildDiagram()">Visualiser</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
 <div *ngIf="!loading && isLoad">
-   <tc-form-group *ngIf="canSwitchDiagramType">
-       <tc-form-label>Type de graphe</tc-form-label>
-       <nz-select nzAllowClear nzShowSearch style="width: 100%" name="typeDiagram" id="typeDiagram"
-           nzPlaceHolder="Selectionner type diagram" [(ngModel)]="selectedTypeDiagram">
-           <ng-container *ngFor="let diagramType of typeDiagrams">
-               <nz-option [nzLabel]="diagramType?.title" [nzValue]="diagramType?.value">
-               </nz-option>
-           </ng-container>
-       </nz-select>
-   </tc-form-group>
-   <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions" [plugins]="chartPlugins"
-       [legend]="chartLegend" [chartType]="selectedTypeDiagram">
-   </canvas>
-   <hr class="m-2">
-   <tc-card view="accent" [outline]="true">
-       <table class="table">
-           <thead>
-               <tr>
-                   <th>Type Employés
-                   </th>
-                   <th *ngFor="let label of chartLabels">{{label}}</th>
-               </tr>
-           </thead>
-           <tbody>
-               <tr *ngFor="let item of chartData">
-                   <td scope="row">{{item.label}}</td>
-                   <td *ngFor="let val of item.data">{{val}}</td>
-               </tr>
-           </tbody>
-       </table>
-   </tc-card>
+    <tc-form-group *ngIf="canSwitchDiagramType">
+        <tc-form-label>Type de graphe</tc-form-label>
+        <nz-select nzAllowClear nzShowSearch style="width: 100%" name="typeDiagram" id="typeDiagram"
+            nzPlaceHolder="Selectionner type diagram" [(ngModel)]="selectedTypeDiagram">
+            <ng-container *ngFor="let diagramType of typeDiagrams">
+                <nz-option [nzLabel]="diagramType?.title" [nzValue]="diagramType?.value">
+                </nz-option>
+            </ng-container>
+        </nz-select>
+    </tc-form-group>
+    <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions" [plugins]="chartPlugins"
+        [legend]="chartLegend" [chartType]="selectedTypeDiagram">
+    </canvas>
+    <hr class="m-2">
+    <tc-card view="accent" [outline]="true">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Type Employés
+                    </th>
+                    <th *ngFor="let label of chartLabels">{{label}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of chartData">
+                    <td scope="row">{{item.label}}</td>
+                    <td *ngFor="let val of item.data">{{val}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </tc-card>
 </div>

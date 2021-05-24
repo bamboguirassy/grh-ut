@@ -35,7 +35,7 @@ export class ContratNewComponent implements OnInit {
     public typeContratSrv: TypeContratService,
     public employeSrv: EmployeService, public datePipe: DatePipe,
     public router: Router) {
-    this.entity = new Contrat();
+    this.initNewContrat();
   }
 
   ngOnInit(): void {
@@ -48,7 +48,7 @@ export class ContratNewComponent implements OnInit {
     if (this.selectedTypeContrat) {
       this.entity.typeContrat = this.selectedTypeContrat.id;
     }
-    if (!this.entity.etat) {
+    if (this.entity.etat) {
       this.entity.motifFin = null;
       this.entity.dateFinEffective = null;
       this.entity.commentaireSurFinContrat = null;
@@ -73,12 +73,13 @@ export class ContratNewComponent implements OnInit {
       .subscribe((data: any) => {
         this.closeModal();
         this.creation.emit(data);
-        this.entity = new Contrat();
+        this.initNewContrat();
       }, error => this.contratSrv.httpSrv.catchError(error));
   }
 
   initNewContrat() {
     this.entity = new Contrat();
+    this.entity.etat = true;
   }
 
   // open modal window
@@ -119,15 +120,15 @@ export class ContratNewComponent implements OnInit {
       this.entity.dateFinPrevue = null;
     }
   }
-  
+
   findByEmploye() {
     this.contratSrv.findByEmploye(this.employe)
-    .subscribe((data: any)=>{
-      this.contrats = data;
-      this.contratActif = this.contrats.find(contrat => contrat.etat);
-    },err=>this.contratSrv.httpSrv.catchError(err));
+      .subscribe((data: any) => {
+        this.contrats = data;
+        this.contratActif = this.contrats.find(contrat => contrat.etat);
+      }, err => this.contratSrv.httpSrv.catchError(err));
   }
-  
+
 
 
 }

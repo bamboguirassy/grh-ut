@@ -1,10 +1,11 @@
-<div class="row">
+<div class="row" *ngIf="employeSrv.resourceName|showable">
     <div class="col-12">
         <tc-card class="mb-1">
             <div class="row">
                 <div class="col-12 col-md-3 col-lg-2">
-                    <img [src]="entity?.filepath ? entity?.filepath:'assets/img/default-profile-picture1.jpg'"
+                    <img (click)="fileInput.click()" [src]="entity?.filepath ? entity?.filepath:'assets/img/default-profile-picture1.jpg'"
                         alt="photo employé" style="width: 100%;">
+                        <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
                     <div class="employe-status-card">
                         <tc-badge view="error" *ngIf="!entity?.etat">Statut: Inactif - {{entity?.motifSortie}}
                         </tc-badge>
@@ -117,13 +118,13 @@
                                                 href="mailto:{{entity?.emailUniv}}">{{entity?.emailUniv}}</a></div>
                                     </div>
                                 </li>
-                                <li class="info-line">
+                                <li class="info-line" *ngIf="isAdresseLoaded && entity">
                                     <div class="row mt-2">
                                         <div class="col-12 title">
                                             Adresses
                                         </div>
                                         <div class="col-12">
-                                            <app-adresse-list [employe]="entity" *ngIf="entity"></app-adresse-list>
+                                            <app-adresse-list [employe]="entity"></app-adresse-list>
                                         </div>
                                     </div>
                                 </li>
@@ -197,44 +198,9 @@
                 </app-fonctionemploye-list>
             </nz-tab>
             <nz-tab nzTitle="Syndicats & amicales">
-                <app-membresyndicat-list *ngIf="entity && isFamilleLoaded" [employe]="entity"></app-membresyndicat-list>
+                <app-membresyndicat-list *ngIf="entity && isSyndicatsLoaded" [employe]="entity"></app-membresyndicat-list>
             </nz-tab>
         </nz-tabset>
     </div>
 </div>
-
-<tc-card *ngIf="employeSrv.resourceName|showable" [tcGradient]="lightGradient">
-    <!-- <tc-card [outline]="true" [view]="secondViewBorder" [tcGradient]="secondGradient" [padding]="0.5">
-        <div class="row">
-             <form 
-            [formGroup]="employeForm" novalidate
-            class="mb-4"
-            (ngSubmit)="updateProfile(employeForm)"
-          >
-            <tc-form-group>
-                <tc-form-label>Photo</tc-form-label>
-                <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
-        
-                <div class="d-flex align-items-center">
-                  <tc-avatar [src]="entity?.filepath" [size]="100"></tc-avatar>
-                  <button
-                    tc-button
-                    [type]="'button'"
-                    [afterIcon]="'icofont-ui-user'"
-                    [view]="'accent'"
-                    [outline]="true"
-                    (click)="fileInput.click()"
-                  >
-                    Changer photo
-                  </button>
-                </div>
-              </tc-form-group>
-              </form>
-
-
-            
-            
-        </div>
-    </tc-card> -->
-</tc-card>
 <app-access-denied *ngIf="!(employeSrv.resourceName|showable)"></app-access-denied>

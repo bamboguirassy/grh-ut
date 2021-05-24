@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ViewChildren, Outp
 import { GClasse } from '../gclasse';
 import { GClasseService } from '../gclasse.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { BasePageComponent } from 'src/app/pages/base-page';
@@ -30,8 +29,6 @@ export class GClasseEditComponent extends BasePageComponent<GClasse> implements 
 
   classes: GClasse[] = [];
   selectedClasseId: any;
-  typeEmployes: TypeEmploye[] = [];
-  selectedTypeEmployeId: any;
 
   constructor(store: Store<IAppState>,
     public gClasseSrv: GClasseService,
@@ -69,15 +66,11 @@ export class GClasseEditComponent extends BasePageComponent<GClasse> implements 
 
   handlePostLoad() {
     this.selectedClasseId = this.entity.suivant?.id;
-    this.selectedTypeEmployeId = this.entity.typeEmploye?.id;
     this.findClasses();
-    this.findTypeEmployes();
   }
 
   prepareUpdate() {
     this.entity.suivant = this.selectedClasseId;
-    this.entity.typeEmploye = this.selectedTypeEmployeId;
-
   }
 
   handlePostUpdate() {
@@ -85,20 +78,13 @@ export class GClasseEditComponent extends BasePageComponent<GClasse> implements 
   }
 
   findClasses() {
-    this.gClasseSrv.findNonSuivants()
+    this.gClasseSrv.findByTypeEmploye(this.entity.typeEmploye)
       .subscribe((data: any) => {
         this.classes = data;
         if(this.entity.suivant) {
           this.classes.unshift(this.entity.suivant);
         }
       }, err => this.gClasseSrv.httpSrv.catchError(err));
-  }
-  
-  findTypeEmployes() {
-    this.typeEmployeSrv.findAll()
-      .subscribe((data: any) => {
-        this.typeEmployes = data;
-      }, err => this.typeEmployeSrv.httpSrv.catchError(err));
   }
 
  

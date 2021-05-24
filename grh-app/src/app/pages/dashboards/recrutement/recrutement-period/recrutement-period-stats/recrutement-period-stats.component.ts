@@ -48,7 +48,7 @@ export class RecrutementPeriodStatsComponent extends DashboardBaseComponent<Recr
         plugins: {
           title: {
             display: true,
-            text: 'Nombres employés recrutés Homme / Femme par Type Employé'
+            text: 'Nombres employés recrutés par genre par Type Employé'
           }
         }
         
@@ -59,7 +59,7 @@ export class RecrutementPeriodStatsComponent extends DashboardBaseComponent<Recr
     this.chartPlugins = [];
 
     this.chartData = [
-      { data: this.rawChartData.map(r => +r.nbreEmploye), label: 'Nombres employé' },
+      { data: this.rawChartData.map(r => +r.nbreEmploye), label: "Nombre d'employés" },
       { data: this.rawChartData.map(r => +r.nbrHomme), label: 'Homme' },
       { data: this.rawChartData.map(r => +r.nbrFemme), label: 'Femme' }
     ];

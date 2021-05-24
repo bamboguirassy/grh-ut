@@ -1,6 +1,8 @@
 <div class="row" *ngIf="fonctionEmployeSrv.resourceName|listable">
   <div class="col-12 col-md-4">
-    <tc-v-timeline [data]="tab"></tc-v-timeline>
+    <tc-card view="accent" [outline]="true">
+      <tc-v-timeline [data]="tab"></tc-v-timeline>
+    </tc-card>
   </div>
   <div class="col-12 col-md-8">
     <div class="row">
@@ -62,5 +64,5 @@
   <app-fonctionemploye-edit *ngIf="selectedFonction" [selectedFonction]="selectedFonction"
     (modification)="findByEmploye()" (onClose)="onClose()"></app-fonctionemploye-edit>
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
-  <app-access-denied *ngIf="!(fonctionEmployeSrv.resourceName|listable)"></app-access-denied>
 </div>
+<app-access-denied *ngIf="!(fonctionEmployeSrv.resourceName|listable)"></app-access-denied>

@@ -72,8 +72,9 @@ export class ContratEditComponent implements OnInit, OnDestroy {
     this.entity.typeContrat = this.selectedTypeContratId;
     this.entity.dateSignature = this.datePipe.transform(this.entity.dateSignature, 'yyyy-MM-dd');
     this.entity.dateFinEffective = this.datePipe.transform(this.entity.dateFinEffective, 'yyyy-MM-dd');
+    this.entity.dateFinPrevue = this.datePipe.transform(this.entity.dateFinPrevue, 'yyyy-MM-dd');
     this.entity.dateDebut = this.datePipe.transform(this.entity.dateDebut, 'yyyy-MM-dd');
-    if (!this.entity.etat) {
+    if (this.entity.etat) {
       this.entity.motifFin = null;
       this.entity.dateFinEffective = null;
       this.entity.commentaireSurFinContrat = null;

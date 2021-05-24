@@ -79,7 +79,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6" *ngIf="entity.etat">
+                <div class="col-12 col-md-6" *ngIf="!entity.etat">
                     <tc-form-group>
                         <tc-form-label>Date fin effective</tc-form-label>
                         <nz-date-picker [nzFormat]="'dd/MM/yyyy'" type="Date" [(ngModel)]="entity.dateFinEffective"
@@ -90,7 +90,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6" *ngIf="entity.etat">
+                <div class="col-12 col-md-6" *ngIf="!entity.etat">
                     <tc-form-group>
                         <tc-form-label>Motif fin contrat</tc-form-label>
                         <tc-select required="required" [(ngModel)]="entity.motifFin" name="motifFin" id="motifFin"
@@ -103,7 +103,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6" *ngIf="entity.etat">
+                <div class="col-12 col-md-6" *ngIf="!entity.etat">
                     <tc-form-group>
                         <tc-form-label>Commentaire fin contrat</tc-form-label>
                         <tc-textarea [(ngModel)]="entity.commentaireSurFinContrat" type="text"

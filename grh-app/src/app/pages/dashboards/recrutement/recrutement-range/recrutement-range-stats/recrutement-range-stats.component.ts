@@ -34,21 +34,21 @@ export class RecrutementRangeStatsComponent extends DashboardBaseComponent<Recru
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Nombres'
+              labelString: "Nombre d'employés"
             }
           },
           xAxes: {
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Types Employés'
+              labelString: 'Types Employé'
             }
           }
         },
         plugins: {
           title: {
             display: true,
-            text: 'Nombres employés recrutés Homme / Femme par Type Employé du '+this.dateDebut+' à '+this.dateFin
+            text: 'Nombres employés recrutés par genre par Type Employé du '+this.dateDebut+' à '+this.dateFin
           }
         }
         
@@ -59,7 +59,7 @@ export class RecrutementRangeStatsComponent extends DashboardBaseComponent<Recru
     this.chartPlugins = [];
 
     this.chartData = [
-      { data: this.rawChartData.map(r => +r.nbreEmploye), label: 'Nombres employé' },
+      { data: this.rawChartData.map(r => +r.nbreEmploye), label: "Nombre d'employés" },
       { data: this.rawChartData.map(r => +r.nbrHomme), label: 'Homme' },
       { data: this.rawChartData.map(r => +r.nbrFemme), label: 'Femme' }
     ];
