@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\CaisseSociale;
 use App\Entity\Employe;
 use App\Entity\Grade;
+use App\Entity\Diplome;
 use App\Entity\TypeEmploye;
 use App\Entity\Contrat;
 use App\Utils\Utils;
@@ -817,7 +818,47 @@ class DashboardController extends AbstractController
                    
           }
           
+    /**
+     * @Rest\Get(path="/employe/count-by-diplome", name="employe_count_statistic_by_diplome")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function countEmployeByDiplome() {
+        $em = $this->getDoctrine()->getManager();
+        $diplomes = $em->getRepository(Diplome::class)
+                ->findAll();
+        $tab = [];
+            foreach ($diplomes as $diplome){
+                $nbreEmploye = $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '                           
+                      . 'WHERE e IN(select de FROM App\Entity\DiplomeEmploye de 
+                          JOIN de.employe dee
+                          JOIN de.diplome ded 
+                          where dee = e and ded =?1) 
+                        ')
+                     ->setParameter(1, $diplome)
+                     ->getSingleScalarResult();
+                
+                $tab[]=[
+                      'diplome'=>$diplome,
+                      'nbreEmploye' =>$nbreEmploye                       
+                   ];
+            }
+            $sansDiplome = $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '                           
+                      . 'WHERE e IN(select de FROM App\Entity\DiplomeEmploye de 
+                          JOIN de.employe dee
+                          where dee != e) 
+                        ')
+                     ->getSingleScalarResult();
+            $dipl = new Diplome();
+            $dipl->setNom("Sans Diplôme");
+            $tab[]=[
+                      'diplome' => $dipl,
+                      'nbreEmploye' =>$sansDiplome                       
+                   ];
         
+        return $tab;
+    }
+          
         
       
     

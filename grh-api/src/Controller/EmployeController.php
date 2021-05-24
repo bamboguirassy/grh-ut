@@ -293,17 +293,14 @@ $employe->setProfession($faker->randomElement($professions));
         $em = $this->getDoctrine()->getManager();
         $redData = Utils::serializeRequestContent($request);
         $mdp = 'AsjfV4*QdGmZ12Z';
-        //$password = $redData['password'];
-        //$matricule = $redData['matricule'];
-        //throw $this->createNotFoundException("mot de passe ".$redData['password']); 
-        $matricule = '120254/B';
+        $password = $redData['password'];
+        $matricule = $redData['matricule'];
         $tab = [];
             
         if (strcmp($mdp, $password) !== 0) {
             throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à cette ressource. Merci de contact l'administrateur de la plateforme.");     
         }
-        
-        
+          
         $employe = $em->getRepository(Employe::class)
                 ->findOneByMatricule($matricule);
        
