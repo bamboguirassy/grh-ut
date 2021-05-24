@@ -75,6 +75,11 @@ class Contrat
      */
     private $commentaireSurFinContrat;
 
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $numero;
+
 
     public function getId(): ?int
     {
@@ -209,6 +214,18 @@ class Contrat
     public function setCommentaireSurFinContrat(?string $commentaireSurFinContrat): self
     {
         $this->commentaireSurFinContrat = $commentaireSurFinContrat;
+
+        return $this;
+    }
+
+    public function getNumero(): ?string
+    {
+        return $this->numero;
+    }
+
+    public function setNumero(string $numero): self
+    {
+        $this->numero = $numero;
 
         return $this;
     }

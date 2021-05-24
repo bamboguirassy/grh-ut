@@ -3,13 +3,20 @@
         <tc-card class="mb-1">
             <div class="row">
                 <div class="col-12 col-md-3 col-lg-2">
-                    <img (click)="fileInput.click()" [src]="entity?.filepath ? entity?.filepath:'assets/img/default-profile-picture1.jpg'"
+                    <img (click)="fileInput.click()"
+                        [src]="entity?.filepath ? entity?.filepath:'assets/img/default-profile-picture1.jpg'"
                         alt="photo employé" style="width: 100%;">
-                        <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
+                    <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
                     <div class="employe-status-card">
-                        <tc-badge view="error" *ngIf="!entity?.etat">Statut: Inactif - {{entity?.motifSortie}}
-                        </tc-badge>
-                        <tc-badge view="success" *ngIf="entity?.etat">Statut: En service</tc-badge>
+                        <ng-container *ngIf="!entity?.etat">
+                            <tc-badge class="nowrap" size="sm" view="error">Statut: Inactif</tc-badge>
+                            <br>
+                            <span *ngIf="entity?.motifSortie"
+                                class="badge badge-info mt-1">{{entity?.motifSortie}}</span>
+                            <p *ngIf="entity?.commentaireSortie">{{entity?.commentaireSortie}}</p>
+                        </ng-container>
+
+                        <tc-badge view="success nowrap" *ngIf="entity?.etat">Statut: En service</tc-badge>
                     </div>
                 </div>
                 <div class="col-12 col-md-4 col-lg-5" style="border-right: 2px dashed blue;">
@@ -198,7 +205,8 @@
                 </app-fonctionemploye-list>
             </nz-tab>
             <nz-tab nzTitle="Syndicats & amicales">
-                <app-membresyndicat-list *ngIf="entity && isSyndicatsLoaded" [employe]="entity"></app-membresyndicat-list>
+                <app-membresyndicat-list *ngIf="entity && isSyndicatsLoaded" [employe]="entity">
+                </app-membresyndicat-list>
             </nz-tab>
         </nz-tabset>
     </div>
