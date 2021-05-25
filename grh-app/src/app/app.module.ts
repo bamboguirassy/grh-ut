@@ -55,7 +55,7 @@ export function currentUserProviderFactory(authSrv: BamboAuthService) {
 
     ToastrModule.forRoot(),
     NgHttpLoaderModule.forRoot()
-  ],
+    ],
   providers: [
     BamboAuthService,
     DatePipe,
