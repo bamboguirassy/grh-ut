@@ -315,4 +315,5 @@ $employe->setProfession($faker->randomElement($professions));
         ];
         return $tab;
     }
+    
 }
