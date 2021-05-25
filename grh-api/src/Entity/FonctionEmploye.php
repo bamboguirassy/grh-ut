@@ -64,12 +64,12 @@ class FonctionEmploye
         return $this->id;
     }
 
-    public function getDatePriseFonction(): ?\DateTimeInterface
+    public function getDatePriseFonction()
     {
         return $this->datePriseFonction;
     }
 
-    public function setDatePriseFonction(\DateTimeInterface $datePriseFonction): self
+    public function setDatePriseFonction($datePriseFonction): self
     {
         $this->datePriseFonction = $datePriseFonction;
 
