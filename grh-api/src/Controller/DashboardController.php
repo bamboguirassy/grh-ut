@@ -819,7 +819,7 @@ class DashboardController extends AbstractController
           }
           
     /**
-     * @Rest\Get(path="/public/count-by-diplome", name="employe_count_statistic_by_diplome")
+     * @Rest\Get(path="/employe/count-by-diplome", name="employe_count_statistic_by_diplome")
      * @Rest\View(StatusCode = 200)
      */
     public function countEmployeByDiplome() {
@@ -829,8 +829,9 @@ class DashboardController extends AbstractController
         $tab = [];
             foreach ($diplomes as $diplome){
                 $nbreEmploye = $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '                           
-                      . 'WHERE e IN(select de.employe FROM App\Entity\DiplomeEmploye de 
+                      . 'WHERE e IN(select emp FROM App\Entity\DiplomeEmploye de 
                           JOIN de.diplome dip 
+                          JOIN de.employe emp 
                           where dip =?1) 
                         ')
                      ->setParameter(1, $diplome)

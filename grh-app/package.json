@@ -44,7 +44,6 @@
     "ngx-echarts": "6.0.0",
     "ngx-malihu-scrollbar": "9.0.0",
     "ngx-org-chart": "^1.1.1",
-    "ngx-super-table": "0.0.2",
     "ngx-toastr": "^13.2.1",
     "node-sass": "^5.0.0",
     "rxjs": "6.6.6",

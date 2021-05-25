@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ISuperTableColumn } from 'ngx-super-table';
 import { Employe } from '../employe';
-import { employeColumns } from '../employe.columns';
 import { EmployeService } from '../employe.service';
 
 @Component({
@@ -13,9 +11,7 @@ export class EmployeGlobalComponent implements OnInit {
 
   constructor(public employeSrv: EmployeService) { }
   items: Employe[] = [];
-  rows = this.items;
-  columns: ISuperTableColumn[] = employeColumns;
-  options = {}
+  
   ngOnInit(): void {
     this.getEmployes();
   }

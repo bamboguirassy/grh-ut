@@ -188,8 +188,6 @@ import { EmployeStatsViewMainComponent } from './dashboards/typeemploye/employe-
 import { AffectationTimelineComponent } from './gestionemploye/affectation/affectation-timeline/affectation-timeline.component';
 import { DiplomeStatsComponent } from './dashboards/diplome/diplome-stats/diplome-stats.component';
 import { EmployeGlobalComponent } from './gestionemploye/employe/employe-global/employe-global.component';
-import { SuperTableModule } from 'ngx-super-table';
-
 
 
 @NgModule({
