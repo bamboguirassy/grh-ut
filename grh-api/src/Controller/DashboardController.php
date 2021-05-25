@@ -36,16 +36,22 @@ class DashboardController extends AbstractController
         $types = $em->getRepository('App\Entity\TypeEmploye')
             ->findAll();
         $tab = [];
+        $nombreEmployes=0;
         foreach ($types as $type) {
             $employes = $em->getRepository(Employe::class)
                 ->findByTypeEmploye($type);
             $tab [] = [
                 'type' => $type,
-                'nbreEmploye' => count($employes)
+                'nbreEmploye' => count($employes),
+
             ];
+            $nombreEmployes+=count($employes);
+            
         }
-
-
+        $tab [] = [
+            'type' => ['code'=>'Nombre total employés'],
+            'nbreEmploye' => $nombreEmployes
+        ];
         return count($tab) ? $tab : [];
     }
 

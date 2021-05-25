@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col col-12 col-md-6 col-xl-3" *ngFor="let employeCountItem of tabCountEmploye">
+  <div class="col col-12 col-md-6 col-xl-2" [ngClass]="{'col-xl-3': isFirst || isLast}" *ngFor="let employeCountItem of tabCountEmploye; let isFirst = first; let isLast= last;">
     <tc-card [tcBgColor]="'#fbfbfb'" class="animated fadeInUp delay-01s">
       <div class="row align-items-center">
         <div class="col col-5">
