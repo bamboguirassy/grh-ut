@@ -58,7 +58,7 @@ class ContratController extends AbstractController
         if ($contrat->getEtat()) {
             // rechercher les autres contrats actifs
             $contratActifs = $entityManager->getRepository(Contrat::class)
-            ->findBy(['etat'=>true,'employe'=>$contrat->getEmploye()]);
+                ->findBy(['etat' => true, 'employe' => $contrat->getEmploye()]);
             if (count($contratActifs)) {
                 throw $this->createAccessDeniedException("Un contrat est déja en cours pour cet employé, 
                 merci d'y mettre fin avant de pouvoir créer un autre contrat actif.");
@@ -86,7 +86,7 @@ class ContratController extends AbstractController
         return $contrat;
     }
 
-    
+
     /**
      * @Rest\Put(path="/{id}/edit", name="contrat_edit",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
@@ -101,11 +101,11 @@ class ContratController extends AbstractController
         // verifier s'il y'a un autre contrat actif
         $contratActifs = $em->createQuery('select c from App\Entity\Contrat c 
         where c.etat=?1 and c<>?2 and c.employe=?3')
-        ->setParameter(1, true)
-        ->setParameter(2, $contrat)
-        ->setParameter(3, $contrat->getEmploye())
-        ->getResult();
-        if ((!$oldContrat->getEtat() && $contrat->getEtat()) || ($oldContrat->getEtat() && !$contrat->getEtat() && count($contratActifs)<1)) {
+            ->setParameter(1, true)
+            ->setParameter(2, $contrat)
+            ->setParameter(3, $contrat->getEmploye())
+            ->getResult();
+        if ((!$oldContrat->getEtat() && $contrat->getEtat()) || ($oldContrat->getEtat() && !$contrat->getEtat() && count($contratActifs) < 1)) {
             if (count($contratActifs)) {
                 throw $this->createAccessDeniedException("Impossible de procéder à l'activation de ce contrat.
                  Un autre est déja en cours, merci d'y mettre fin en le modifiant.");
@@ -114,9 +114,9 @@ class ContratController extends AbstractController
             $contrat->getEmploye()->setMotifSortie($contrat->getMotifFin());
             $contrat->getEmploye()->setCommentaireSortie($contrat->getCommentaireSurFinContrat());
         }
-        if ($oldContrat->getEtat() && !$contrat->getEtat() && count($contratActifs)<1) {
+        if ($oldContrat->getEtat() && !$contrat->getEtat() && count($contratActifs) < 1) {
             $contrat->getEmploye()->setEtat(false);
-        } elseif (!$oldContrat->getEtat() && $contrat->getEtat() && count($contratActifs)<1) {
+        } elseif (!$oldContrat->getEtat() && $contrat->getEtat() && count($contratActifs) < 1) {
             $contrat->getEmploye()->setEtat(true);
         }
         $reqData = Utils::getObjectFromRequest($request);
@@ -136,16 +136,16 @@ class ContratController extends AbstractController
 
         return $contrat;
     }
-    
+
     /**
      * @Rest\Put(path="/{id}/clone", name="contrat_clone",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CONTRAT_CLONE")
      */
-    public function cloner(Request $request, Contrat $contrat):  Contrat
+    public function cloner(Request $request, Contrat $contrat): Contrat
     {
-        $em=$this->getDoctrine()->getManager();
-        $contratNew=new Contrat();
+        $em = $this->getDoctrine()->getManager();
+        $contratNew = new Contrat();
         $form = $this->createForm(ContratType::class, $contratNew);
         $form->submit(Utils::serializeRequestContent($request));
         $em->persist($contratNew);
@@ -168,7 +168,7 @@ class ContratController extends AbstractController
 
         return $contrat;
     }
-    
+
     /**
      * @Rest\Post("/delete-selection/", name="contrat_selection_delete")
      * @Rest\View(StatusCode=200)
@@ -190,16 +190,16 @@ class ContratController extends AbstractController
         return $contrats;
     }
     /**
-    * @Rest\Get(path="/{id}/employe", name="contrat_employe")
-    * @Rest\View(StatusCode = 200)
-    * @IsGranted("ROLE_CONTRAT_INDEX")
-    */
+     * @Rest\Get(path="/{id}/employe", name="contrat_employe")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_CONTRAT_INDEX")
+     */
     public function findByEmploye(\App\Entity\Employe $employe): array
     {
         $contrats = $this->getDoctrine()
             ->getRepository(Contrat::class)
             ->findByEmploye($employe);
-            
+
         return $contrats;
     }
     /**
@@ -207,20 +207,20 @@ class ContratController extends AbstractController
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_CONTRAT_INDEX")
      */
-    public function findEnExpiration():array
+    public function findEnExpiration(): array
     {
         $em = $this->getDoctrine()->getManager();
         $toDay = new \DateTime();
         $toDay = $toDay->format('Ymd');
-        $newDate = strtotime($toDay."+ 3 months");
-        $date= date("Y-m-d", $newDate);
+        $newDate = strtotime($toDay . "+ 3 months");
+        $date = date("Y-m-d", $newDate);
         $contratEnExpirations = $em->createQuery('select c from App\Entity\Contrat c 
-        where c.dateFinPrevu <= ?1')
-        ->setParameter(1, $date)
-        ->getResult();
+        where c.dateFinPrevue <= ?1')
+            ->setParameter(1, $date)
+            ->getResult();
         return $contratEnExpirations;
     }
-  
+
 
     public function generateNumeroContrat()
     {
@@ -230,12 +230,12 @@ class ContratController extends AbstractController
         $i = 1;
         // check contrats for unique numero
         $contrats = $em->getRepository(Contrat::class)
-        ->findByNumero($numero.$i);
-        while (count($contrats)>0) {
+            ->findByNumero($numero . $i);
+        while (count($contrats) > 0) {
             $i++;
             $contrats = $em->getRepository(Contrat::class)
-        ->findByNumero($numero.$i);
+                ->findByNumero($numero . $i);
         }
-        return $numero.$i;
+        return $numero . $i;
     }
 }
