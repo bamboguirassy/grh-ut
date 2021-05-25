@@ -6,6 +6,10 @@ import { StructureFonctionService } from '../structurefonction.service';
 import { StructureFonction } from '../structurefonction';
 import { Structure } from '../../structure/structure';
 import Swal from 'sweetalert2';
+import { Fonction } from '../../fonction/fonction';
+import { FonctionEmploye } from 'src/app/pages/gestionemploye/fonctionemploye/fonctionemploye';
+import { Employe } from 'src/app/pages/gestionemploye/employe/employe';
+import { EmployeService } from 'src/app/pages/gestionemploye/employe/employe.service';
 
 
 @Component({
@@ -14,30 +18,36 @@ import Swal from 'sweetalert2';
   styleUrls: ['./structurefonction-list.component.scss']
 })
 export class StructureFonctionListComponent extends BasePageComponent<StructureFonction> implements OnInit, OnDestroy {
-  
-  @Input() structure: Structure;
 
-  constructor(store: Store<IAppState>,
+  @Input() structure: Structure;
+  fonctionActive: Fonction;
+  fonctionEmploye: FonctionEmploye = new FonctionEmploye();
+  employes: Employe[] = [];
+  selectedEmploye: Employe = new Employe();
+  canChooseEmploye = false;
+
+  constructor(store: Store<IAppState>, public employeSrv: EmployeService,
     public structureFonctionSrv: StructureFonctionService) {
     super(store, structureFonctionSrv);
-/*
-    this.pageData = {
-      title: 'Liste des StructureFonctions',
-      breadcrumbs: [
-        {
-          title: 'Accueil',
-          route: ''
-        },
-        {
-          title: 'Liste des structurefonctions'
-        }
-      ]
-    };*/
+    /*
+        this.pageData = {
+          title: 'Liste des StructureFonctions',
+          breadcrumbs: [
+            {
+              title: 'Accueil',
+              route: ''
+            },
+            {
+              title: 'Liste des structurefonctions'
+            }
+          ]
+        };*/
   }
 
   ngOnInit(): void {
     super.ngOnInit();
     this.findAll();
+    this.fetchEmployes();
   }
 
   ngOnDestroy() {
@@ -55,9 +65,21 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
       .findByStructure(this.structure)
       .subscribe((items: any) => {
         this.items = items;
+        this.fonctionActive = this.items.find(i => i.etat === true)?.fonction;
       }, err => {
         this.structureFonctionSrv.httpSrv.handleError(err);
       });
+  }
+
+  fetchEmployes() {
+    this
+      .employeSrv
+      .employesProvider
+      .subscribe((employes: Employe[]) => {
+        this.employes = employes;
+      }, err => {
+        this.employeSrv.httpSrv.handleError(err);
+      })
   }
 
 
