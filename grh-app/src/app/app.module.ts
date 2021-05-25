@@ -19,7 +19,6 @@ import fr from '@angular/common/locales/fr';
 import { BamboAuthService } from './shared/services/bambo-auth.service';
 import { ToastrModule } from 'ngx-toastr';
 import { NgHttpLoaderModule } from 'ng-http-loader';
-import { ContratEnExpirationComponent } from './contrat-en-expiration/contrat-en-expiration.component';
 registerLocaleData(fr);
 
 declare module '@angular/core' {
@@ -36,7 +35,6 @@ export function currentUserProviderFactory(authSrv: BamboAuthService) {
 @NgModule({
   declarations: [
     AppComponent,
-    ContratEnExpirationComponent
   ],
   imports: [
     BrowserModule,
