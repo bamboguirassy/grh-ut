@@ -242,7 +242,13 @@ export class BamboAuthService {
             title: "Employés",
             routing: "employe",
             enabled: this.checkListAccess('employe')
-          }
+          },
+          
+            {
+              title: "Contrat en expiration",
+              routing: "contrat-en-expiration",
+              enabled: this.checkListAccess('contrat')
+            },
         ],
         enabled: false
       }
