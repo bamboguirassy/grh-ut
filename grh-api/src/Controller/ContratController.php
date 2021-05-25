@@ -203,11 +203,11 @@ class ContratController extends AbstractController
         return $contrats;
     }
     /**
-     * @Rest\Get(path="/contratEnExpirartion", name="contrat_en_expiration")
+     * @Rest\Get(path="/contrat-en-expirartion", name="contrat_en_expiration")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_CONTRAT_INDEX")
      */
-    public function contratEnExpiration():array
+    public function findEnExpiration():array
     {
         $em = $this->getDoctrine()->getManager();
         $toDay = new \DateTime();
