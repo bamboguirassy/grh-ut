@@ -188,6 +188,8 @@ import { EmployeStatsViewMainComponent } from './dashboards/typeemploye/employe-
 import { AffectationTimelineComponent } from './gestionemploye/affectation/affectation-timeline/affectation-timeline.component';
 import { DiplomeStatsComponent } from './dashboards/diplome/diplome-stats/diplome-stats.component';
 import { EmployeGlobalComponent } from './gestionemploye/employe/employe-global/employe-global.component';
+import { ContratEnExpirationComponent } from './gestionemploye/contrat/contrat-en-expiration/contrat-en-expiration.component';
+
 
 
 @NgModule({
@@ -430,6 +432,7 @@ import { EmployeGlobalComponent } from './gestionemploye/employe/employe-global/
     AffectationTimelineComponent,
     DiplomeStatsComponent,
     EmployeGlobalComponent,
+    ContratEnExpirationComponent,
 
   ],
   exports: [],
