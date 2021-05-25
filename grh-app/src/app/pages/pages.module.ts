@@ -187,8 +187,8 @@ import { GradeStatsViewMainComponent } from './dashboards/grade/grade-stats-view
 import { EmployeStatsViewMainComponent } from './dashboards/typeemploye/employe-stats-view-main/employe-stats-view-main.component';
 import { AffectationTimelineComponent } from './gestionemploye/affectation/affectation-timeline/affectation-timeline.component';
 import { DiplomeStatsComponent } from './dashboards/diplome/diplome-stats/diplome-stats.component';
+import { EmployeGlobalComponent } from './gestionemploye/employe/employe-global/employe-global.component';
 import { ContratEnExpirationComponent } from './gestionemploye/contrat/contrat-en-expiration/contrat-en-expiration.component';
-import { EmployeListAllComponent } from './gestionemploye/employe/employe-list-all/employe-list-all.component';
 
 
 
@@ -431,8 +431,8 @@ import { EmployeListAllComponent } from './gestionemploye/employe/employe-list-a
     EmployeStatsViewMainComponent,
     AffectationTimelineComponent,
     DiplomeStatsComponent,
+    EmployeGlobalComponent,
     ContratEnExpirationComponent,
-    EmployeListAllComponent,
 
   ],
   exports: [],
