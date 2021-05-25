@@ -59,7 +59,7 @@ export class ContratEnExpirationComponent extends BasePageComponent<Contrat>  im
   }
 
   findAll() {
-    this.contratSrv.findAll()
+    this.contratSrv.findEnExpiration()
     .subscribe((data: any)=>{
       this.items = data;          
     },err=>this.contratSrv.httpSrv.catchError(err));
