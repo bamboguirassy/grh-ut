@@ -5,7 +5,7 @@
 <app-access-denied *ngIf="!(employeSrv.resourceName|creable)"></app-access-denied>
 
 <!-- Modal window -->
-<nz-modal nzWidth="80%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau - '+typeEmploye?.code"
+<nz-modal [nzZIndex]="10000" nzWidth="80%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau - '+typeEmploye?.code"
     [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
     <ng-template #modalBody>
         <form #form="ngForm" ngNativeValidate>

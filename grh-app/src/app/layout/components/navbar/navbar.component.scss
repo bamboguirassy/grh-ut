@@ -122,7 +122,7 @@
       transition: transform .2s $animation;
       width: $vertical-navbar-width;
       will-change: transform, width;
-      z-index: 10001; //9997
+      z-index: 9997;
 
       .navbar-wrap {
         padding: 0;
@@ -163,7 +163,7 @@
     width: $vertical-navbar-width;
     will-change: transform, width;
     -webkit-overflow-scrolling: touch;
-    z-index: 10001; //9997;
+    z-index: 9997;
     @media #{$max991} {
       transform: translateX(-$vertical-navbar-width);
     }
