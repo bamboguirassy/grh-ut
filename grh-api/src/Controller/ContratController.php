@@ -203,7 +203,7 @@ class ContratController extends AbstractController
         return $contrats;
     }
     /**
-     * @Rest\Get(path="/contrat-en-expirartion", name="contrat_en_expiration")
+     * @Rest\Get(path="/contrat-en-expiration", name="contrat_en_expiration")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_CONTRAT_INDEX")
      */

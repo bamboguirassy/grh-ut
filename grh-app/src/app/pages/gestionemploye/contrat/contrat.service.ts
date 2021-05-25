@@ -20,7 +20,7 @@ export class ContratService extends BamboAbstractService {
   }
 
   findEnExpiration() {
-    return this.httpSrv.get(this.routePrefix + 'contrat-en-expirartion');
+    return this.httpSrv.get(this.routePrefix + 'contrat-en-expiration');
   }
 
 }
