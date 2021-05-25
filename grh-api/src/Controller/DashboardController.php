@@ -843,7 +843,7 @@ class DashboardController extends AbstractController
                    ];
             }
             $nbreSansDiplome = $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '                           
-                      . 'WHERE e NOT IN(select e FROM App\Entity\DiplomeEmploye de 
+                      . 'WHERE e NOT IN(select emp FROM App\Entity\DiplomeEmploye de 
                           JOIN de.employe emp where emp = e) 
                         ')
                     ->getSingleScalarResult();
