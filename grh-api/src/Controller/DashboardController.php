@@ -849,10 +849,10 @@ class DashboardController extends AbstractController
                           where dee != e) 
                         ')
                      ->getSingleScalarResult();
-            $dipl = new Diplome();
-            $dipl->setNom("Sans Diplôme");
+            $sansDpme = new Diplome();
+            $sansDpme->setNom("Sans Diplôme");
             $tab[]=[
-                      'diplome' => $dipl,
+                      'diplome' => $sansDpme,
                       'nbreEmploye' =>$sansDiplome                       
                    ];
         
