@@ -819,9 +819,8 @@ class DashboardController extends AbstractController
           }
           
     /**
-     * @Rest\Get(path="/employe/count-by-diplome", name="employe_count_statistic_by_diplome")
+     * @Rest\Get(path="/public/count-by-diplome", name="employe_count_statistic_by_diplome")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
     public function countEmployeByDiplome() {
         $em = $this->getDoctrine()->getManager();
@@ -830,10 +829,9 @@ class DashboardController extends AbstractController
         $tab = [];
             foreach ($diplomes as $diplome){
                 $nbreEmploye = $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '                           
-                      . 'WHERE e IN(select de FROM App\Entity\DiplomeEmploye de 
-                          JOIN de.employe dee
-                          JOIN de.diplome ded 
-                          where dee = e and ded =?1) 
+                      . 'WHERE e IN(select de.employe FROM App\Entity\DiplomeEmploye de 
+                          JOIN de.diplome dip 
+                          where dip =?1) 
                         ')
                      ->setParameter(1, $diplome)
                      ->getSingleScalarResult();
@@ -843,17 +841,16 @@ class DashboardController extends AbstractController
                       'nbreEmploye' =>$nbreEmploye                       
                    ];
             }
-            $sansDiplome = $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '                           
-                      . 'WHERE e IN(select de FROM App\Entity\DiplomeEmploye de 
-                          JOIN de.employe dee
-                          where dee != e) 
+            $nbreSansDiplome = $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '                           
+                      . 'WHERE e NOT IN(select de FROM App\Entity\DiplomeEmploye de 
+                          JOIN de.employe emp where emp = e) 
                         ')
-                     ->getSingleScalarResult();
-            $sansDpme = new Diplome();
-            $sansDpme->setNom("Sans Diplôme");
+                    ->getSingleScalarResult();
+            $sansDiplome = new Diplome();
+            $sansDiplome->setNom("Sans Diplôme");
             $tab[]=[
-                      'diplome' => $sansDpme,
-                      'nbreEmploye' =>$sansDiplome                       
+                      'diplome' => $sansDiplome,
+                      'nbreEmploye' =>$nbreSansDiplome                       
                    ];
         
         return $tab;

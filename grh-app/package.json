@@ -48,6 +48,7 @@
     "ngx-toastr": "^13.2.1",
     "node-sass": "^5.0.0",
     "rxjs": "6.6.6",
+    "rxjs-compat": "^6.6.7",
     "sass": "^1.32.13",
     "sweetalert2": "^10.16.7",
     "tslib": "2.1.0",

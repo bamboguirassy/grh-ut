@@ -187,7 +187,8 @@ import { GradeStatsViewMainComponent } from './dashboards/grade/grade-stats-view
 import { EmployeStatsViewMainComponent } from './dashboards/typeemploye/employe-stats-view-main/employe-stats-view-main.component';
 import { AffectationTimelineComponent } from './gestionemploye/affectation/affectation-timeline/affectation-timeline.component';
 import { DiplomeStatsComponent } from './dashboards/diplome/diplome-stats/diplome-stats.component';
-import { EmployeListAllComponent } from './gestionemploye/employe/employe-list-all/employe-list-all.component';
+import { EmployeGlobalComponent } from './gestionemploye/employe/employe-global/employe-global.component';
+import { SuperTableModule } from 'ngx-super-table';
 
 
 
@@ -430,7 +431,7 @@ import { EmployeListAllComponent } from './gestionemploye/employe/employe-list-a
     EmployeStatsViewMainComponent,
     AffectationTimelineComponent,
     DiplomeStatsComponent,
-    EmployeListAllComponent,
+    EmployeGlobalComponent,
 
   ],
   exports: [],

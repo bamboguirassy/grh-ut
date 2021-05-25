@@ -19,7 +19,6 @@ import fr from '@angular/common/locales/fr';
 import { BamboAuthService } from './shared/services/bambo-auth.service';
 import { ToastrModule } from 'ngx-toastr';
 import { NgHttpLoaderModule } from 'ng-http-loader';
-import { SuperTableModule } from 'ngx-super-table';
 registerLocaleData(fr);
 
 declare module '@angular/core' {
@@ -54,9 +53,8 @@ export function currentUserProviderFactory(authSrv: BamboAuthService) {
     PagesModule,
 
     ToastrModule.forRoot(),
-    NgHttpLoaderModule.forRoot(),
-    SuperTableModule
-  ],
+    NgHttpLoaderModule.forRoot()
+    ],
   providers: [
     BamboAuthService,
     DatePipe,
