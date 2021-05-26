@@ -215,8 +215,10 @@ class ContratController extends AbstractController
         $newDate = strtotime($toDay . "+ 3 months");
         $date = date("Y-m-d", $newDate);
         $contratEnExpirations = $em->createQuery('select c from App\Entity\Contrat c 
-        where c.dateFinPrevue <= ?1')
+        where c.dateFinPrevue <= ?1 and c.dateFinPrevue >=?2 and c.etat=?3')
             ->setParameter(1, $date)
+            ->setParameter(2, $toDay)
+            ->setParameter(3, true)
             ->getResult();
         return $contratEnExpirations;
     }
