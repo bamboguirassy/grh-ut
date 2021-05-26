@@ -14,7 +14,6 @@ import { UIModule } from './ui/ui.module';
 import { PagesModule } from './pages/pages.module';
 import { pageDataReducer } from './store/reducers/page-data.reducer';
 import { appSettingsReducer } from './store/reducers/app-settings.reducer';
-import { patientsReducer } from './store/reducers/patients.reducer';
 import fr from '@angular/common/locales/fr';
 import { BamboAuthService } from './shared/services/bambo-auth.service';
 import { ToastrModule } from 'ngx-toastr';
@@ -46,7 +45,6 @@ export function currentUserProviderFactory(authSrv: BamboAuthService) {
     StoreModule.forRoot({
       pageData: pageDataReducer,
       appSettings: appSettingsReducer,
-      patients: patientsReducer
     }),
     RoutingModule,
     LayoutModule,
