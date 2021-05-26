@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { ContratService } from '../contrat.service';
 import { Contrat } from '../contrat';
 import { BasePageComponent } from 'src/app/pages/base-page';
+import { EmployeService } from '../../employe/employe.service';
 
 @Component({
   selector: 'app-contrat-en-expiration',
@@ -21,7 +22,8 @@ export class ContratEnExpirationComponent extends BasePageComponent<Contrat>  im
 
 
   constructor(store: Store<IAppState>,
-    public contratSrv: ContratService) {
+    public contratSrv: ContratService,
+    public employeSrv: EmployeService) {
       super(store, contratSrv);
       this.setLoaded(); 
       this.pageData = {
