@@ -3,13 +3,13 @@
     <!--<ng-content select="selector"></ng-content><div class="col-12">
       <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
     </div>-->
-    <div class="col-sm-12 col-lg-6 col-md-6 pt-1 pb-2" *ngIf="fonctionActive">
+    <div class="col-sm-12 col-lg-6 col-md-6 pt-1 pb-2" *ngIf="structureFonctionActive">
       <div class="custom-card pb-2">
         <div class="info-box">
           <h4 class="name">
             <i class="icofont-stamp icofont-1x"></i>
             <span style="font-weight: bold; font-style: italic;">
-              {{ fonctionActive?.nom }}
+              {{ structureFonctionActive?.fonction?.nom }}
             </span>
 
           </h4>
@@ -19,7 +19,7 @@
             </span>
           </p>
           <!-- <p>lorem ipsum dolor</p>-->
-          <div class="social">
+          <div class="social" *ngIf="!currentFonctionEmploye">
             <button tc-button [afterIcon]="canChooseEmploye ? 'icofont-minus-circle' : 'icofont-plus'"
               (click)="canChooseEmploye = !canChooseEmploye"
               [nzTooltipTitle]="canChooseEmploye ? 'Annuler' : 'Assigner un responsable'" nzTooltipPlacement="top"
@@ -30,7 +30,37 @@
       </div>
     </div>
 
-    <div class="col-sm-12 col-lg-6 col-md-6 pt-1 pb-2" *ngIf="canChooseEmploye">
+    <div class="col-sm-12 col-lg-6 col-md-6 pt-1 pb-2" *ngIf="currentFonctionEmploye">
+      <div class="custom-card pb-2">
+        <div class="info-box">
+          <h4 class="name">
+            <i class="icofont-ebook icofont-1x"></i>
+            <span style="font-weight: bold; font-style: italic;">
+              Responsable
+            </span>
+
+          </h4>
+          <p style="font-weight: bold;">
+            {{ currentFonctionEmploye?.employe?.prenoms + ' ' + currentFonctionEmploye?.employe?.nom }}
+          </p>
+          <p>
+            <span class="badge badge-primary" style="font-style: italic; font-size: 15px;">
+              {{ currentFonctionEmploye?.employe?.matricule }}
+            </span>
+          </p>
+          <!-- <p>lorem ipsum dolor</p>-->
+          <!--<div class="social" *ngIf="!currentFonctionEmploye">
+            <button tc-button [afterIcon]="canChooseEmploye ? 'icofont-minus-circle' : 'icofont-plus'"
+              (click)="canChooseEmploye = !canChooseEmploye"
+              [nzTooltipTitle]="canChooseEmploye ? 'Annuler' : 'Assigner un responsable'" nzTooltipPlacement="top"
+              nz-tooltip [view]="canChooseEmploye ? 'error' : 'accent'" [square]="true" [tcShape]="500"
+              [size]="'sm'"></button>
+          </div>-->
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-lg-6 col-md-6 pt-1 pb-2" *ngIf="canChooseEmploye && !currentFonctionEmploye">
       <div class="custom-card pb-2 pl-3 pr-3">
         <form #form="ngForm" ngNativeValidate>
           <div class="row">
@@ -53,18 +83,31 @@
             <div class="col-12">
               <tc-form-group>
                 <tc-form-label>Date de début</tc-form-label>
-                <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="fonctionEmploye.datePriseFonction"
+                <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required [(ngModel)]="fonctionEmploye.datePriseFonction"
                   name="dateDebut" id="dateDebut" #dateDebut="ngModel">
                 </nz-date-picker>
               </tc-form-group>
             </div>
-            <div class="col-12">
-              <button tc-button [afterIcon]="'icofont-minus-circle'"
-                [view]="'accent'" [square]="true" [tcShape]="500" [size]="'sm'">
-              Assigner
-            </button>
+            <div class="col-12" *ngIf="isAffectation">
+              <tc-form-group>
+                <tc-form-label>Motif</tc-form-label>
+                <tc-textarea [(ngModel)]="affectation.motif" name="motif" id="motif">
+                </tc-textarea>
+              </tc-form-group>
             </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+              <button tc-button [afterIcon]="'icofont-minus-circle'" (click)="assignFunction()"
+                [disabled]="form?.invalid" [view]="'accent'" [square]="true" [tcShape]="300" [size]="'sm'">
+                Assigner
+              </button>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+              <tc-form-group>
+                <tc-checkbox name="isAffectation" [(ngModel)]="isAffectation"></tc-checkbox>
+                S'agit t-il d'une affectation ?
+              </tc-form-group>
 
+            </div>
           </div>
         </form>
       </div>

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Employe;
 use App\Entity\FonctionEmploye;
+use App\Entity\StructureFonction;
 use App\Form\FonctionEmployeType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
@@ -71,6 +72,23 @@ class FonctionEmployeController extends AbstractController
         } catch (NonUniqueResultException $e) {
             return null;
         }
+    }
+
+    /**
+     * @param StructureFonction $responsabilite
+     * @param EntityManagerInterface $entityManager
+     * @return object
+     * @Rest\Get(path="/responsabilite/{id}", name="find_by_responsabilite", requirements={"id"="\d+"})
+     * @Rest\View(statusCode=200)
+     * @IsGranted("ROLE_STRUCTUREFONCTION_SHOW")
+     */
+    public function findByResponsabilite(StructureFonction $responsabilite, EntityManagerInterface $entityManager) {
+        return $entityManager
+            ->getRepository(FonctionEmploye::class)
+            ->findOneBy([
+                "etat" => true,
+                "responsabilite" => $responsabilite
+            ]);
     }
 
     /**
