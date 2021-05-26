@@ -42,6 +42,7 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
@@ -233,6 +234,7 @@ import { ContratEnExpirationComponent } from './gestionemploye/contrat/contrat-e
     NzInputModule,
     NzListModule,
     NzModalModule,
+    NzStepsModule,
     NzPopconfirmModule,
     NzSelectModule,
     NzTableModule,
