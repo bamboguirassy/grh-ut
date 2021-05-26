@@ -17,7 +17,7 @@
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Type contrat</tc-form-label>
-                        <nz-select style="width: 100%" nzPlaceHolder="Sélectionner type contrat" nzAllowClear
+                        <nz-select required style="width: 100%" nzPlaceHolder="Sélectionner type contrat" nzAllowClear
                             nzShowSearch [(ngModel)]="selectedTypeContrat" name="typeContrat" id="typeContrat"
                             #typeContrat="ngModel">
                             <ng-container *ngFor="let typeContratItem of typeContrats">
@@ -102,7 +102,7 @@
                 <div class="col-12 col-md-6" *ngIf="!entity.etat">
                     <tc-form-group>
                         <tc-form-label>Date de fin effective</tc-form-label>
-                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required="required"
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required
                             [(ngModel)]="entity.dateFinEffective" name="dateFinEffective" id="dateFinEffective"
                             #dateFinEffective="ngModel"></nz-date-picker>
                         <tc-form-description>

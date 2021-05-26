@@ -81,17 +81,6 @@
                 </div>
                 <div class="col-12 col-md-6" *ngIf="!entity.etat">
                     <tc-form-group>
-                        <tc-form-label>Date fin effective</tc-form-label>
-                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" type="Date" [(ngModel)]="entity.dateFinEffective"
-                            name="dateFinEffective" id="dateFinEffective" #dateFinEffective="ngModel"></nz-date-picker>
-                        <tc-form-description>
-                            <app-form-field-validation-message [formField]="dateFinEffective">
-                            </app-form-field-validation-message>
-                        </tc-form-description>
-                    </tc-form-group>
-                </div>
-                <div class="col-12 col-md-6" *ngIf="!entity.etat">
-                    <tc-form-group>
                         <tc-form-label>Motif fin contrat</tc-form-label>
                         <tc-select required="required" [(ngModel)]="entity.motifFin" name="motifFin" id="motifFin"
                             #motifFin="ngModel" [placeholder]="'Selectionner le motif de fin du contrat'"
@@ -99,6 +88,17 @@
                         </tc-select>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="motifFin">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6" *ngIf="!entity.etat">
+                    <tc-form-group>
+                        <tc-form-label>Date fin effective</tc-form-label>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" type="Date" [(ngModel)]="entity.dateFinEffective"
+                            name="dateFinEffective" id="dateFinEffective" required="required" #dateFinEffective="ngModel"></nz-date-picker>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="dateFinEffective">
                             </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>
