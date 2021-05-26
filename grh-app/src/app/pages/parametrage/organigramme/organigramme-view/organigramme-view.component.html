@@ -1,17 +1,18 @@
 <tc-card [tcGradient]="['#fff','#fff']" *ngIf="structureSrv.resourceName | listable">
     <tc-card [view]="secondViewBorder" [outline]="true">
-        <div class="row">
-            <div class="col-12">
-                <nz-select class="float-left col-4" nzAllowClear nzShowSearch style="width: 100%" name="orientationType" id="orientationType"
+        <div class="row d-flex justify-content-between">
+            <div class="col-sm-4 col-lg-4 col-md-4">
+                <nz-select  nzAllowClear nzShowSearch style="width: 50%" name="orientationType" id="orientationType"
                     nzPlaceHolder="Selectionner l'orientation" [(ngModel)]="selectedOrientationType">
                     <ng-container *ngFor="let orientationType of ['horizontal', 'vertical']">
                         <nz-option [nzLabel]="orientationType" [nzValue]="orientationType">
                         </nz-option>
                     </ng-container>
                 </nz-select>
-                <button class="float-right" tc-button afterIcon="icofont-refresh"
-                    (click)="findStructures()">Rafraichir</button>
             </div>
+                <button class="col-sm-2 col-lg-2 col-md-2" tc-button afterIcon="icofont-refresh"
+                    (click)="findStructures()">Rafraichir</button>
+            <!--</div>-->
         </div>
     </tc-card>
     <div class="row">
@@ -25,7 +26,7 @@
 </tc-card>
 
 
-<nz-modal [nzMaskClosable]="false" [(nzVisible)]="isFonctionModalVisible" [nzClosable]="true" (nzAfterClose)="findStructures()" [nzWidth]="'70%'"
+<nz-modal [nzMaskClosable]="false" [(nzVisible)]="isFonctionModalVisible" [nzClosable]="true" [nzWidth]="'70%'"
     [nzTitle]="fonctionModalTitle" [nzContent]="fonctionModalContent" [nzFooter]="null"
     (nzOnCancel)="isFonctionModalVisible = false">
     <ng-template #fonctionModalTitle>

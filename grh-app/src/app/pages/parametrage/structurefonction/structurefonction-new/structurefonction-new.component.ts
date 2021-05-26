@@ -36,7 +36,7 @@ export class StructureFonctionNewComponent implements OnInit {
   save() {
     this
       .structureFonctionSrv
-      .createMultiple(this.structureFonctions.map(sf => ({ etat: sf.etat, fonction: sf.fonction.id , structure: this.structure.id } as any) ))
+      .createMultiple(this.structureFonctions.map(sf => ({ etat: sf.etat, fonction: sf.fonction.id, structure: this.structure.id } as any)), this.structure)
       .subscribe((data: any) => {
         this.closeModal();
         this.structure.structureFonctions.concat(data);
@@ -57,8 +57,13 @@ export class StructureFonctionNewComponent implements OnInit {
     this.isModalVisible = false;
   }
 
-  onFonctionSelected(fonction: Array<any>) {
-    this.structureFonctions = fonction.map(f =>({ etat: true, fonction: f , structure: this.structure } as any))
+  onFonctionSelected(fonctions: Array<any>) {
+    if (this.structure.structureFonctions.some(sf => sf.etat === true) || this.structureFonctions.some(sf => sf.etat === true)) {
+      this.structureFonctions = fonctions.map(f => ({ etat: false, fonction: f, structure: this.structure } as any));
+    } else {
+      this.structureFonctions = fonctions.map(f => ({ etat: true, fonction: f, structure: this.structure } as any));
+
+    }
   }
 
   fetchNotBindedFonctions() {

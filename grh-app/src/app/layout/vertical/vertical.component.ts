@@ -10,8 +10,6 @@ import { HttpService } from '../../services/http/http.service';
 import { IOption } from '../../ui/interfaces/option';
 import { Content } from '../../ui/interfaces/modal';
 import { TCModalService } from '../../ui/services/modal/modal.service';
-import { IPatient } from '../../interfaces/patient';
-import * as PatientsActions from '../../store/actions/patients.actions';
 import * as SettingsActions from '../../store/actions/app-settings.actions';
 import { Subscription } from 'rxjs';
 import { IMenuItem } from 'src/app/interfaces/main-menu';
@@ -117,22 +115,6 @@ export class VerticalLayoutComponent extends BaseLayoutComponent implements OnIn
       gender: ['', Validators.required],
       address: ['', Validators.required]
     });
-  }
-
-  // add new patient
-  addPatient(form: FormGroup) {
-    if (form.valid) {
-      let newPatient: IPatient = form.value;
-
-      newPatient.img = this.currentAvatar;
-      newPatient.id = '23';
-      newPatient.status = 'Pending';
-      newPatient.lastVisit = '';
-
-      this.store.dispatch(new PatientsActions.Add(newPatient));
-      this.closeModal();
-      this.patientForm.reset();
-    }
   }
 
   ngOnDestroy(): void {

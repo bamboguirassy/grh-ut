@@ -7,7 +7,7 @@
           (click)="findAll()">Rafraichir</button>
         </tc-card>
       </div>
-        <div class="col-12">
+        <div class="col-12 mt-2">
           <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
           <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true"  [search]="true">
             <tc-table-col [columnTitle]="'Numéro'" [columnName]="'numero'" [enableSorting]="true">
@@ -19,7 +19,7 @@
             <tc-table-col [columnTitle]="'Employé'" [columnName]="'employe'" [enableSorting]="true">
               <ng-template #tableTDTemplate let-value let-row="row">
                 <span class="nowrap" *ngIf="value">
-                    {{value?.prenoms}} {{value?.nom}}
+                   <a [routerLink]="['/'+orientation,employeSrv.getRoutePrefixWithoutSlash(),row?.id]" routerLinkActive="router-link-active">{{value?.prenoms}} {{value?.nom}} ({{value?.matricule}})</a>
                 </span>
                 <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
             </ng-template>
@@ -84,7 +84,5 @@
       </div>
     </nz-collapse-panel>
   </nz-collapse>
-  <!--app-contrat-edit *ngIf="selectedContrat" [selectedContrat]="selectedContrat" (modification)="findByEmploye()"
-    (onClose)="onClose()"></app-contrat-->
   
   <app-access-denied *ngIf="!(contratSrv.resourceName|listable)"></app-access-denied>

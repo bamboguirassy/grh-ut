@@ -29,7 +29,7 @@ export class AncienneteEmployeComponent extends DashboardBaseComponent<Anciennet
   }
 
   setDataChart() {
-    const chartData = [{ data: this.rawChartData.map(r => +r.nombreEmploye), label: 'Effectif' }];
+    const chartData = [];
     const typeEmployes = this.rawChartData[0].categories.map((r) => ({ code: r?.typeEmploye?.code, label: r?.typeEmploye?.nom }));
     for (const te of typeEmployes) {
       const arr: number[] = [];
@@ -49,7 +49,7 @@ export class AncienneteEmployeComponent extends DashboardBaseComponent<Anciennet
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Nombre'
+              labelString: "Nombre d'employés"
             }
           },
           xAxes: {

@@ -24,6 +24,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
     { code: 'SR', title: 'Suivi des entrée-sortie ' },
     { code: 'GR', title: 'Répartition des employés selon les grades' },
     { code: 'EM', title: 'Suivi de la répartition des employés' },
+    { code: 'SSDF', title: 'Suivi des statistiques sur les diplomes/formations' },
   ];
   selectedStatType: { code: string, title: string };
 
