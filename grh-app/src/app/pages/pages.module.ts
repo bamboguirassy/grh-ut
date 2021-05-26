@@ -191,6 +191,7 @@ import { AffectationTimelineComponent } from './gestionemploye/affectation/affec
 import { DiplomeStatsComponent } from './dashboards/diplome/diplome-stats/diplome-stats.component';
 import { EmployeGlobalComponent } from './gestionemploye/employe/employe-global/employe-global.component';
 import { ContratEnExpirationComponent } from './gestionemploye/contrat/contrat-en-expiration/contrat-en-expiration.component';
+import { DiplomeMainDashboardComponent } from './dashboards/diplome/diplome-main-dashboard/diplome-main-dashboard.component';
 
 
 
@@ -436,6 +437,7 @@ import { ContratEnExpirationComponent } from './gestionemploye/contrat/contrat-e
     DiplomeStatsComponent,
     EmployeGlobalComponent,
     ContratEnExpirationComponent,
+    DiplomeMainDashboardComponent,
 
   ],
   exports: [],
