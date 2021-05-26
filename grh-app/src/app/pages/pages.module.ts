@@ -45,6 +45,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+
 import { SharedModule } from '../shared/shared.module';
 import { NgxOrgChartModule } from 'ngx-org-chart';
 import { RecrutementGenreComponent } from './dashboards/recrutement/recrutement-genre/recrutement-genre.component';
@@ -244,7 +246,8 @@ import { ContratEnExpirationComponent } from './gestionemploye/contrat/contrat-e
     // imports all pipes module
     NgPipesModule,
     NzRadioModule,
-    NzIconModule
+    NzIconModule,
+    NzToolTipModule
 
   ],
   declarations: [
