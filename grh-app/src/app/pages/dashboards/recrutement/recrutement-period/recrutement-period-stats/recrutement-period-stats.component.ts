@@ -59,7 +59,6 @@ export class RecrutementPeriodStatsComponent extends DashboardBaseComponent<Recr
     this.chartPlugins = [];
 
     this.chartData = [
-      { data: this.rawChartData.map(r => +r.nbreEmploye), label: "Nombre d'employés" },
       { data: this.rawChartData.map(r => +r.nbrHomme), label: 'Homme' },
       { data: this.rawChartData.map(r => +r.nbrFemme), label: 'Femme' }
     ];
