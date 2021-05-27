@@ -41,6 +41,7 @@ import { typeEntiteRoutes } from '../pages/parametrage/typeentite/typeentite.rou
 import { userRoutes } from '../pages/parametrage/user/user.routes';
 import { TestComponent } from '../pages/tests/test/test.component';
 import { contratRoutes } from '../pages/gestionemploye/contrat/contrat.routes';
+import { commissionRoutes } from '../pages/parametrage/commission/commission.routes';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -75,7 +76,8 @@ const VERTICAL_ROUTES: Routes = [
   gClasseRoutes,
   professionRoutes,
   gCategorieRoutes,
-  organigrammeRoutes
+  organigrammeRoutes,
+  commissionRoutes
 ];
 
 const PUBLIC_ROUTES: Routes = [

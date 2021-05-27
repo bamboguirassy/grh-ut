@@ -37,7 +37,10 @@ class CommissionController extends AbstractController
         $commission = new Commission();
         $form = $this->createForm(CommissionType::class, $commission);
         $form->submit(Utils::serializeRequestContent($request));
-
+        $reqData = Utils::getObjectFromRequest($request);
+        if (isset($reqData->dateCreation)) {
+            $commission->setDateCreation(new \DateTime($reqData->dateCreation));
+        }
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($commission);
         $entityManager->flush();
@@ -63,7 +66,10 @@ class CommissionController extends AbstractController
     public function edit(Request $request, Commission $commission): Commission    {
         $form = $this->createForm(CommissionType::class, $commission);
         $form->submit(Utils::serializeRequestContent($request));
-
+        $reqData = Utils::getObjectFromRequest($request);
+        if (isset($reqData->dateCreation)) {
+            $commission->setDateCreation(new \DateTime($reqData->dateCreation));
+        }
         $this->getDoctrine()->getManager()->flush();
 
         return $commission;

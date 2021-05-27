@@ -1,5 +1,5 @@
 
-@import '~src/assets/sass/variables';
+@import '~src/assets/scss/variables';
 
 :host {
   .actions {
