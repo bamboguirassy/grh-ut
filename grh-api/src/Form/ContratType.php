@@ -18,6 +18,7 @@ class ContratType extends AbstractType
             ->add('dateFinEffective')
             ->add('dateFinPrevue')
             ->add('motifFin')
+            ->add('numero')
             ->add('commentaireSurFinContrat')
             ->add('etat')
             ->add('typeContrat')
