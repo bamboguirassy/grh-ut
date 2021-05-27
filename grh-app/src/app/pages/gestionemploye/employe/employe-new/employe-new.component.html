@@ -9,17 +9,18 @@
     [nzTitle]="'Formulaire - Nouveau - '+typeEmploye?.code" [nzContent]="modalBody" [nzFooter]="modalFooter"
     (nzOnCancel)="closeModal()">
     <ng-template #modalBody>
-        <form #form="ngForm" ngNativeValidate>
-            <div class="row">
-                <div class="col-12">
-                    <nz-steps [nzCurrent]="current">
-                        <nz-step nzTitle="Etat civil"></nz-step>
-                        <nz-step nzTitle="Contact"></nz-step>
-                        <nz-step nzTitle="Social"></nz-step>
-                        <nz-step nzTitle="Infos professionels"></nz-step>
-                    </nz-steps>
-                    <br><hr><br>
-                    <div class="steps-content" *ngIf="current == 0 ">
+        <div class="row">
+            <div class="col-12">
+                <nz-steps [nzCurrent]="current">
+                    <nz-step nzTitle="Etat civil"></nz-step>
+                    <nz-step nzTitle="Contacts"></nz-step>
+                    <nz-step nzTitle="Informations sociales"></nz-step>
+                    <nz-step nzTitle="Informations professionelles"></nz-step>
+                </nz-steps>
+                <br>
+                <hr><br>
+                <div class="steps-content" *ngIf="current == 0 ">
+                    <form (submit)="next()" ngNativeValidate>
                         <div class="row">
                             <div class="col-12 col-md-6 col-lg-4">
                                 <tc-form-group>
@@ -126,8 +127,16 @@
                                 </tc-form-group>
                             </div>
                         </div>
-                    </div>
-                    <div class="steps-content" *ngIf="current == 1">
+                        <div class="steps-action">
+                            <button class="float-right" [afterIcon]="'icofont-arrow-right'" tc-button [type]="'submit'"
+                                [view]="'accent'">
+                                Suivant
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="steps-content" *ngIf="current == 1">
+                    <form (submit)="next()" ngNativeValidate>
                         <div class="row">
                             <div class="col-12 col-md-6 col-lg-4">
                                 <tc-form-group>
@@ -180,8 +189,19 @@
                                 </tc-form-group>
                             </div>
                         </div>
-                    </div>
-                    <div class="steps-content" *ngIf="current == 2">
+                        <div class="steps-action">
+                            <button [beforeIcon]="'icofont-arrow-left'" tc-button [type]="'button'" (click)="pre()">
+                                Précédent
+                            </button>
+                            <button class="float-right" [afterIcon]="'icofont-arrow-right'" tc-button [type]="'submit'"
+                                [view]="'accent'">
+                                Suivant
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="steps-content" *ngIf="current == 2">
+                    <form (submit)="next()" ngNativeValidate>
                         <div class="row">
                             <div class="col-12 col-md-6 col-lg-4">
                                 <tc-form-group>
@@ -257,8 +277,19 @@
                                 </tc-form-group>
                             </div>
                         </div>
-                    </div>
-                    <div class="steps-content" *ngIf="current == 3">
+                        <div class="steps-action">
+                            <button [beforeIcon]="'icofont-arrow-left'" tc-button [type]="'button'" (click)="pre()">
+                                Précédent
+                            </button>
+                            <button class="float-right" [afterIcon]="'icofont-arrow-right'" tc-button [type]="'submit'"
+                                [view]="'accent'">
+                                Suivant
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="steps-content" *ngIf="current == 3">
+                    <form (submit)="next()" ngNativeValidate>
                         <div class="row">
                             <div class="col-12 col-md-6 col-lg-4">
                                 <tc-form-group>
@@ -410,21 +441,15 @@
                                 </tc-form-group>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12">
-                    <div class="steps-action">
-                        <button [beforeIcon]="'icofont-arrow-left'" tc-button [type]="'button'" (click)="pre()" *ngIf="current > 0">
-                            Précédent
-                        </button>
-                        <button class="float-right" [afterIcon]="'icofont-arrow-right'" tc-button [type]="'button'"
-                         (click)="next()" *ngIf="current < 3" [view]="'accent'">
-                           Suivant
-                        </button>
-                    </div>
-                </div>
+                        <div class="steps-action">
+                            <button [beforeIcon]="'icofont-arrow-left'" tc-button [type]="'button'" (click)="pre()">
+                                Précédent
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </form>
+        </div>
     </ng-template>
     <ng-template #modalFooter>
         <div class="actions justify-content-between">
