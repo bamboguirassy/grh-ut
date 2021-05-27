@@ -68,7 +68,7 @@ class ContratController extends AbstractController
             $contrat->getEmploye()->setCommentaireSortie($contrat->getCommentaireSurFinContrat());
             $contrat->getEmploye()->setEtat(true);
         }
-        $contrat->setNumero($this->generateNumeroContrat());
+        // $contrat->setNumero($this->generateNumeroContrat());
 
         $entityManager->persist($contrat);
         $entityManager->flush();
@@ -224,20 +224,20 @@ class ContratController extends AbstractController
     }
 
 
-    public function generateNumeroContrat()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $toDay = new \DateTime();
-        $numero = $toDay->format('Ymd');
-        $i = 1;
-        // check contrats for unique numero
-        $contrats = $em->getRepository(Contrat::class)
-            ->findByNumero($numero . $i);
-        while (count($contrats) > 0) {
-            $i++;
-            $contrats = $em->getRepository(Contrat::class)
-                ->findByNumero($numero . $i);
-        }
-        return $numero . $i;
-    }
+    // public function generateNumeroContrat()
+    // {
+    //     $em = $this->getDoctrine()->getManager();
+    //     $toDay = new \DateTime();
+    //     $numero = $toDay->format('Ymd');
+    //     $i = 1;
+    //     // check contrats for unique numero
+    //     $contrats = $em->getRepository(Contrat::class)
+    //         ->findByNumero($numero . $i);
+    //     while (count($contrats) > 0) {
+    //         $i++;
+    //         $contrats = $em->getRepository(Contrat::class)
+    //             ->findByNumero($numero . $i);
+    //     }
+    //     return $numero . $i;
+    // }
 }

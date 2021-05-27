@@ -245,7 +245,7 @@ export class BamboAuthService {
           },
           
             {
-              title: "Contrat en expiration",
+              title: "Contrats en expiration",
               routing: "contrat-en-expiration",
               enabled: this.checkListAccess('contrat')
             },
