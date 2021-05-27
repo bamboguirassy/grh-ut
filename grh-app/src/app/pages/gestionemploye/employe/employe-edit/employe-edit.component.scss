@@ -1,13 +1,15 @@
+fieldset {
+    padding: 16px;
+    border: 1px solid rgb(0, 153, 255);
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+}
 legend {
-    background-color: rgba(91, 106, 233, 0.897);
-    color: rgb(7, 0, 0);
+    color: rgb(255, 255, 255);
     padding: 3px 6px;
-}
-
-.output {
-    font: 1rem 'Fira Sans', sans-serif;
-}
-
-input {
-    margin: .4rem;
+    text-align: center;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
 }
