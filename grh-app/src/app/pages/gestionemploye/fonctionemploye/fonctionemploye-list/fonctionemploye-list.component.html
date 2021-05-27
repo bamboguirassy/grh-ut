@@ -15,6 +15,18 @@
       </div>
       <div class="col-12">
         <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true">
+          <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+            <ng-template #tableTDTemplate let-row="row">
+              <div class="actions">
+                <button *ngIf="fonctionEmployeSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+                  [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"
+                  (click)="setSelectedFonction(row)"></button>
+                <button *ngIf="fonctionEmployeSrv.resourceName|deletable" (click)="remove(row)" tc-button
+                  [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
+                  [size]="'sm'"></button>
+              </div>
+            </ng-template>
+          </tc-table-col>
           <tc-table-col [columnTitle]="'Fonction'" [columnName]="'responsabilite'" [enableSorting]="true">
             <ng-template #tableTDTemplate let-value>
               <span class="nowrap" *ngIf="value">{{ value?.fonction?.nom }}</span>
@@ -45,18 +57,7 @@
               <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
             </ng-template>
           </tc-table-col>
-          <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-            <ng-template #tableTDTemplate let-row="row">
-              <div class="actions">
-                <button *ngIf="fonctionEmployeSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-                  [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"
-                  (click)="setSelectedFonction(row)"></button>
-                <button *ngIf="fonctionEmployeSrv.resourceName|deletable" (click)="remove(row)" tc-button
-                  [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
-                  [size]="'sm'"></button>
-              </div>
-            </ng-template>
-          </tc-table-col>
+        
         </tc-table>
       </div>
     </div>
