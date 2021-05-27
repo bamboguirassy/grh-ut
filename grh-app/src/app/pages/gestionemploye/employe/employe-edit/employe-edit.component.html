@@ -10,7 +10,7 @@
         </tc-card>
         <tc-card title="Détails" [outline]="true" [view]="secondViewBorder" [tcGradient]="secondGradient">
             <fieldset>
-                <legend>Etat civil</legend>
+                <legend [ngStyle]="{'background-color': sidebarBg}">Etat civil</legend>
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-4">
                         <tc-form-group>
@@ -102,8 +102,9 @@
                     </div>
                 </div>
             </fieldset>
+            <br>
             <fieldset>
-                <legend>Contacts</legend>
+                <legend [ngStyle]="{'background-color': sidebarBg}">Contacts</legend>
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-4">
                         <tc-form-group>
@@ -156,8 +157,9 @@
                     </div>
                 </div>
             </fieldset>
+            <br>
             <fieldset>
-                <legend>Informations sociales</legend>
+                <legend [ngStyle]="{'background-color': sidebarBg}">Informations sociales</legend>
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-4">
                         <tc-form-group>
@@ -217,8 +219,9 @@
                     </div>
                 </div>
             </fieldset>
+            <br>
             <fieldset>
-                <legend>Informations professionelles</legend>
+                <legend [ngStyle]="{'background-color': sidebarBg}">Informations professionelles</legend>
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-4">
                         <tc-form-group>
