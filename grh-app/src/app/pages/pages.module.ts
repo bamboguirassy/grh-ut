@@ -193,6 +193,10 @@ import { DiplomeStatsComponent } from './dashboards/diplome/diplome-stats/diplom
 import { EmployeGlobalComponent } from './gestionemploye/employe/employe-global/employe-global.component';
 import { ContratEnExpirationComponent } from './gestionemploye/contrat/contrat-en-expiration/contrat-en-expiration.component';
 import { DiplomeMainDashboardComponent } from './dashboards/diplome/diplome-main-dashboard/diplome-main-dashboard.component';
+import { CommissionListComponent } from './parametrage/commission/commission-list/commission-list.component';
+import { CommissionEditComponent } from './parametrage/commission/commission-edit/commission-edit.component';
+import { CommissionShowComponent } from './parametrage/commission/commission-show/commission-show.component';
+import { CommissionNewComponent } from './parametrage/commission/commission-new/commission-new.component';
 
 
 
@@ -202,7 +206,7 @@ import { DiplomeMainDashboardComponent } from './dashboards/diplome/diplome-main
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    
+
     ChartsModule,
     NgxChartsModule,
     NgxEchartsModule.forRoot({
@@ -330,6 +334,11 @@ import { DiplomeMainDashboardComponent } from './dashboards/diplome/diplome-main
     EmployeEditComponent,
     EmployeShowComponent,
     EmployeNewComponent,
+    // commission components
+    CommissionListComponent,
+    CommissionEditComponent,
+    CommissionShowComponent,
+    CommissionNewComponent,
     // adresse components
     AdresseListComponent,
     AdresseEditComponent,
@@ -414,7 +423,7 @@ import { DiplomeMainDashboardComponent } from './dashboards/diplome/diplome-main
     StructureFonctionNewComponent,
     GradeManagerComponent,
     DiplomeEmployeTimelineComponent,
-    
+
     // affectation components
     AffectationListComponent,
     AffectationEditComponent,

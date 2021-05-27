@@ -6,7 +6,7 @@ import { first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { BasePageComponent } from 'src/app/pages/base-page';
-import { Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 
 @Component({
   selector: 'app-commission-edit',
@@ -16,10 +16,10 @@ import { Location } from '@angular/common';
 export class CommissionEditComponent extends BasePageComponent<Commission> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public commissionSrv: CommissionService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
+    public commissionSrv: CommissionService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location, public datePipe: DatePipe) {
     super(store, commissionSrv);
     this.pageData = {
       title: 'Modification - Commission',
@@ -29,8 +29,8 @@ export class CommissionEditComponent extends BasePageComponent<Commission> imple
           route: ''
         },
         {
-          title: 'Commissions',
-          route: '/'+this.orientation+'/commission'
+          title: 'Liste des commissions',
+          route: '/' + this.orientation + '/commission'
         },
         {
           title: 'Modification'
@@ -56,6 +56,10 @@ export class CommissionEditComponent extends BasePageComponent<Commission> imple
 
   handlePostUpdate() {
     this.location.back();
+  }
+  update(){
+    this.entity.dateCreation = this.datePipe.transform(this.entity.dateCreation, 'yyyy-MM-dd');
+    super.update();
   }
 
 }

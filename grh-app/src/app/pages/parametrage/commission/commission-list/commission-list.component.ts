@@ -13,7 +13,7 @@ import { Commission } from '../commission';
 export class CommissionListComponent extends BasePageComponent<Commission> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public commissionSrv: CommissionService) {
+    public commissionSrv: CommissionService) {
     super(store, commissionSrv);
 
     this.pageData = {
@@ -43,6 +43,6 @@ export class CommissionListComponent extends BasePageComponent<Commission> imple
     this.findAll();
   }
 
-  handlePostLoad(){}
+  handlePostLoad() { }
 
 }

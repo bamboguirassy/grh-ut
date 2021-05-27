@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChi
 import { CommissionService } from '../commission.service';
 import { Commission } from '../commission';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-commission-new',
@@ -18,13 +19,16 @@ export class CommissionNewComponent implements OnInit {
   isModalVisible = false;
 
   constructor(public commissionSrv: CommissionService,
-    public router: Router) {
+    public router: Router, public datePipe: DatePipe) {
     this.entity = new Commission();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   save() {
+    if (this.entity.dateCreation) {
+      this.entity.dateCreation = this.datePipe.transform(this.entity.dateCreation, 'yyyy-MM-dd');
+    }
     this.commissionSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();

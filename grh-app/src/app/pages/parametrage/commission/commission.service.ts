@@ -13,5 +13,5 @@ export class CommissionService extends BamboAbstractService {
     this.routePrefix = 'commission/';
     this.resourceName = 'COMMISSION';
   }
-  
+
 }

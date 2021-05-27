@@ -194,6 +194,11 @@ export class BamboAuthService {
             title: "Diplomes",
             routing: "diplome",
             enabled: this.checkListAccess('diplome')
+          },
+          {
+            title: "Commissions",
+            routing: "commission",
+            enabled: this.checkListAccess('commission')
           }
         ],
         enabled: false

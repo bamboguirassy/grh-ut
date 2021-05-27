@@ -10,57 +10,64 @@
         </tc-card>
         <tc-card title="Détails" [outline]="true" [view]="secondViewBorder" [tcGradient]="secondGradient">
             <div class="row">
-                                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>Nom</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>Missions</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.missions" name="missions" id="missions" #missions="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="missions"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>Etat</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>Description</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.description" name="description" id="description" #description="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="description"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>DateCreation</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.dateCreation" name="dateCreation" id="dateCreation" #dateCreation="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="dateCreation"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Nom</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Missions</tc-form-label>
+                        <tc-input [(ngModel)]="entity.missions" name="missions" id="missions" #missions="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="missions">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Etat</tc-form-label>
+                        <tc-switcher [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel"
+                            [bgColor]="['transparent', 'transparent', '#ed5564']"
+                            [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']">
+                        </tc-switcher>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Date de création</tc-form-label>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" type="Date" [(ngModel)]="entity.dateCreation"
+                            name="dateCreation" id="dateCreation" required="required" #dateCreation="ngModel">
+                        </nz-date-picker>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="dateCreation">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Description</tc-form-label>
+                        <tc-textarea [(ngModel)]="entity.description" type="text" name="description" id="description"
+                            #description="ngModel">
+                        </tc-textarea>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="description">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+            </div>
         </tc-card>
         <tc-card [view]="secondViewBorder" [outline]="true">
             <div class="actions">
@@ -70,8 +77,8 @@
                     beforeIcon="icofont-save" tc-button view="warning">
                     Mettre à jour
                 </button>
-                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh"
-                    tc-button type="button" view="success">Rafraichir</button>
+                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button
+                    type="button" view="success">Rafraichir</button>
             </div>
         </tc-card>
     </form>
