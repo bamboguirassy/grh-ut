@@ -48,6 +48,12 @@ class MembreCommission
      */
     private $motifSortie;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Commission::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $commission;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +127,18 @@ class MembreCommission
     public function setMotifSortie(?string $motifSortie): self
     {
         $this->motifSortie = $motifSortie;
+
+        return $this;
+    }
+
+    public function getCommission(): ?Commission
+    {
+        return $this->commission;
+    }
+
+    public function setCommission(?Commission $commission): self
+    {
+        $this->commission = $commission;
 
         return $this;
     }

@@ -17,7 +17,7 @@ export class CommissionListComponent extends BasePageComponent<Commission> imple
     super(store, commissionSrv);
 
     this.pageData = {
-      title: 'Liste des Commissions',
+      title: 'Liste des commissions',
       breadcrumbs: [
         {
           title: 'Accueil',

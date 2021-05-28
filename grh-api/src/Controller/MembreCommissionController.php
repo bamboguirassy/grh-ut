@@ -37,7 +37,13 @@ class MembreCommissionController extends AbstractController
         $membreCommission = new MembreCommission();
         $form = $this->createForm(MembreCommissionType::class, $membreCommission);
         $form->submit(Utils::serializeRequestContent($request));
-
+        $reqData = Utils::getObjectFromRequest($request);
+        if (isset($reqData->dateIntegration)) {
+            $membreCommission->setDateIntegration(new \DateTime($reqData->dateIntegration));
+        }
+        if (isset($reqData->dateSortie)) {
+            $membreCommission->setDateSortie(new \DateTime($reqData->dateSortie));
+        }
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($membreCommission);
         $entityManager->flush();
@@ -63,7 +69,13 @@ class MembreCommissionController extends AbstractController
     public function edit(Request $request, MembreCommission $membreCommission): MembreCommission    {
         $form = $this->createForm(MembreCommissionType::class, $membreCommission);
         $form->submit(Utils::serializeRequestContent($request));
-
+        $reqData = Utils::getObjectFromRequest($request);
+        if (isset($reqData->dateIntegration)) {
+            $membreCommission->setDateIntegration(new \DateTime($reqData->dateIntegration));
+        }
+        if (isset($reqData->dateSortie)) {
+            $membreCommission->setDateSortie(new \DateTime($reqData->dateSortie));
+        }
         $this->getDoctrine()->getManager()->flush();
 
         return $membreCommission;
@@ -115,6 +127,19 @@ class MembreCommissionController extends AbstractController
             $entityManager->remove($membreCommission);
         }
         $entityManager->flush();
+
+        return $membreCommissions;
+    }
+     /**
+     * @Rest\Get(path="/{id}/employe", name="membreCommission_employe")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_MEMBRECOMMISSION_INDEX")
+     */
+    public function findByEmploye(\App\Entity\Employe $employe): array
+    {
+        $membreCommissions = $this->getDoctrine()
+            ->getRepository(MembreCommission::class)
+            ->findByEmploye($employe);
 
         return $membreCommissions;
     }
