@@ -208,6 +208,10 @@
                 <app-membresyndicat-list *ngIf="entity && isSyndicatsLoaded" [employe]="entity">
                 </app-membresyndicat-list>
             </nz-tab>
+            <nz-tab (nzSelect)="loadCommissionsTab()" nzTitle="Commissions">
+                <app-membrecommission-list *ngIf="entity && isCommissionsLoaded" [employe]="entity">
+                </app-membrecommission-list>
+            </nz-tab>
         </nz-tabset>
     </div>
 </div>

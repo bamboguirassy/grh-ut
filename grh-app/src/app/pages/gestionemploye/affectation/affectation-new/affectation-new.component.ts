@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./affectation-new.component.scss']
 })
 export class AffectationNewComponent implements OnInit {
-  
+
   @ViewChild('modalBody', { static: true }) modalBody: ElementRef<any>;
   @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
   @ViewChildren('form') form;
@@ -30,7 +30,7 @@ export class AffectationNewComponent implements OnInit {
     this.entity = new Affectation();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   save() {
     this.entity.employe = this.employe.id;
@@ -40,11 +40,12 @@ export class AffectationNewComponent implements OnInit {
     if (this.entity.date) {
       this.entity.date = this.datePipe.transform(this.entity.date, 'yyyy-MM-dd');
     }
-    
+
     this.affectationSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
-        this.creation.emit(data);
+        this.creation.emit(data)
+        this.selectedStructure = null;
         this.entity = new Affectation();
       }, error => this.affectationSrv.httpSrv.catchError(error));
   }

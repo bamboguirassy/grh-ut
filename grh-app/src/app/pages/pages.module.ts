@@ -197,6 +197,10 @@ import { CommissionListComponent } from './parametrage/commission/commission-lis
 import { CommissionEditComponent } from './parametrage/commission/commission-edit/commission-edit.component';
 import { CommissionShowComponent } from './parametrage/commission/commission-show/commission-show.component';
 import { CommissionNewComponent } from './parametrage/commission/commission-new/commission-new.component';
+import { MembreCommissionListComponent } from './gestionemploye/membrecommission/membrecommission-list/membrecommission-list.component';
+import { MembreCommissionEditComponent } from './gestionemploye/membrecommission/membrecommission-edit/membrecommission-edit.component';
+import { MembreCommissionShowComponent } from './gestionemploye/membrecommission/membrecommission-show/membrecommission-show.component';
+import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/membrecommission-new/membrecommission-new.component';
 
 
 
@@ -369,6 +373,12 @@ import { CommissionNewComponent } from './parametrage/commission/commission-new/
     FonctionEmployeShowComponent,
     FonctionEmployeCloneComponent,
     FonctionEmployeNewComponent,
+
+    // membrecommission components
+    MembreCommissionListComponent,
+    MembreCommissionEditComponent,
+    MembreCommissionShowComponent,
+    MembreCommissionNewComponent,
     // gcategorie components
     GCategorieListComponent,
     GCategorieEditComponent,
@@ -389,6 +399,7 @@ import { CommissionNewComponent } from './parametrage/commission/commission-new/
     GNiveauEditComponent,
     GNiveauShowComponent,
     GNiveauNewComponent,
+
     // profession components
     ProfessionListComponent,
     ProfessionEditComponent,

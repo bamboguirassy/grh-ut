@@ -40,78 +40,78 @@
                             <span class="nowrap" *ngIf="value">
                                 <a [routerLink]="[row.id]" routerLinkActive="router-link-active">{{ value }}</a>
                             </span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value }}</span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Date Naissance'" [columnName]="'dateNaissance'"
                         [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Lieu Naissance'" [columnName]="'lieuNaissance'"
                         [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value }}</span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'CNI/Passeport'" [columnName]="'cni'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value }}</span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Matricule'" [columnName]="'matricule'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value }}</span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Profession'" [columnName]="'profession'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value?.nom }}</span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Matricule Caisse Sociale'" [columnName]="'matriculeCaisseSociale'"
                         [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value }}</span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Date Recrutement'" [columnName]="'dateRecrutement'"
                         [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Situtation Matrimoniale'" [columnName]="'situtationMatrimoniale'"
                         [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value }}</span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Genre'" [columnName]="'genre'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value }}</span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Etat'" [columnName]="'etat'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
-                            <tc-badge view="error" *ngIf="!value">Non</tc-badge>
-                            <tc-badge view="success" *ngIf="value">Oui</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Non</tc-badge>
+                            <tc-badge view="success" [outline]="true" *ngIf="value">Oui</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Email Instutitionnel'" [columnName]="'emailUniv'"
@@ -120,7 +120,7 @@
                             <span class="nowrap" *ngIf="value">
                                 <a href="mailto:{{value}}">{{value}}</a>
                             </span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Email Personnel'" [columnName]="'email'" [enableSorting]="true">
@@ -128,7 +128,7 @@
                             <span class="nowrap" *ngIf="value">
                                 <a href="mailto:{{value}}">{{value}}</a>
                             </span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Téléphone Primaire'" [columnName]="'telephonePrimaire'"
@@ -137,7 +137,7 @@
                             <span class="nowrap" *ngIf="value">
                                 <a href="tel:{{ value }}">{{value}}</a>
                             </span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Téléphone Secondaire'" [columnName]="'telephoneSecondaire'"
@@ -146,7 +146,7 @@
                             <span class="nowrap" *ngIf="value">
                                 <a href="tel:{{ value }}">{{value}}</a>
                             </span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Nationalité'" [columnName]="'nationalite'" [enableSorting]="true">
@@ -154,7 +154,7 @@
                             <span class="nowrap" *ngIf="value">
                                 {{value?.nationalite}}
                             </span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Grade'" [columnName]="'grade'" [enableSorting]="true">
@@ -162,7 +162,7 @@
                             <span class="nowrap" *ngIf="value">
                                 {{value?.classification}}
                             </span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Structure'" [columnName]="'structure'" [enableSorting]="true">
@@ -170,7 +170,7 @@
                             <span class="nowrap" *ngIf="value">
                                 {{value?.nom}}
                             </span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Caisse Sociale'" [columnName]="'caisseSociale'"
@@ -179,7 +179,7 @@
                             <span class="nowrap" *ngIf="value">
                                 {{value?.code}}
                             </span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Mutuelle de Santé'" [columnName]="'mutuelleSante'"
@@ -188,20 +188,20 @@
                             <span class="nowrap" *ngIf="value">
                                 {{value?.code}}
                             </span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Date Prise Service'" [columnName]="'datePriseService'"
                         [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Date Sortie'" [columnName]="'dateSortie'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Motif Sortie'" [columnName]="'motifSortie'" [enableSorting]="true">
@@ -209,7 +209,7 @@
                             <span class="nowrap" *ngIf="value">
                                 {{ value }}
                             </span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Numero Main d\'Oeuvre'" [columnName]="'numeroMainOeuvre'"
@@ -218,7 +218,7 @@
                             <span class="nowrap" *ngIf="value">
                                 {{ value }}
                             </span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Numero Affiliation Ipres'" [columnName]="'numeroAffiliationIpres'"
@@ -227,7 +227,7 @@
                             <span class="nowrap" *ngIf="value">
                                 {{ value }}
                             </span>
-                            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
                 </tc-table>

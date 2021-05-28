@@ -18,6 +18,7 @@ class MembreCommissionType extends AbstractType
             ->add('dateSortie')
             ->add('motifSortie')
             ->add('employe')
+            ->add('commission')
         ;
     }
 
