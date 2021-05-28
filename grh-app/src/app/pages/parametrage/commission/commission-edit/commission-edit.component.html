@@ -47,7 +47,7 @@
                     <tc-form-group>
                         <tc-form-label>Date de création</tc-form-label>
                         <nz-date-picker [nzFormat]="'dd/MM/yyyy'" type="Date" [(ngModel)]="entity.dateCreation"
-                            name="dateCreation" id="dateCreation" required="required" #dateCreation="ngModel">
+                            name="dateCreation" id="dateCreation" #dateCreation="ngModel">
                         </nz-date-picker>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="dateCreation">

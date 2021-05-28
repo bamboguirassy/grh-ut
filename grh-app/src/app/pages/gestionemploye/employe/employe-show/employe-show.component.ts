@@ -31,11 +31,13 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   isAdresseLoaded = false;
   isFamilleLoaded = false;
   isSyndicatsLoaded = false;
+  isCommissionsLoaded = false;
   isDocumentsLoaded = false;
   isFonctionsLoaded = false;
   isGradeLoaded = false;
   isDiplomeLoaded = false;
   isContratLoaded = false;
+  isCommissionLoaded = false;
   titre: string;
   topbarBg = SETTINGS.topbarBg;
   isAffectationLoaded = false;
@@ -67,11 +69,13 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
       this.isAdresseLoaded = false;
       this.isFamilleLoaded = false;
       this.isSyndicatsLoaded = false;
+      this.isCommissionsLoaded = false;
       this.isDocumentsLoaded = false;
       this.isFonctionsLoaded = false;
       this.isGradeLoaded = false;
       this.isDiplomeLoaded = false;
       this.isContratLoaded = false;
+      this.isCommissionLoaded = false;
       this.loadAdressesTab();
       this.loadFamillesTab();
     });
@@ -172,6 +176,10 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
 
   loadAffectationsTab() {
     this.isAffectationLoaded = true;
+  }
+
+  loadCommissionsTab() {
+    this.isCommissionsLoaded = true;
   }
 
 }

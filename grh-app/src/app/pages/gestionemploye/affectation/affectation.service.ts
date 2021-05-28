@@ -18,5 +18,5 @@ export class AffectationService extends BamboAbstractService {
   findByEmploye(employe: Employe) {
     return this.httpSrv.get(this.routePrefix + employe.id + '/employe');
   }
-  
+
 }

@@ -80,6 +80,7 @@ export class ContratNewComponent implements OnInit {
       .subscribe((data: any) => {
         this.closeModal();
         this.creation.emit(data);
+        this.selectedTypeContrat = null;
         this.initNewContrat();
       }, error => this.contratSrv.httpSrv.catchError(error));
   }
@@ -87,7 +88,6 @@ export class ContratNewComponent implements OnInit {
   initNewContrat() {
     this.entity = new Contrat();
     this.entity.etat = true;
-    this.entity.typeContrat = null;
   }
 
   // open modal window
