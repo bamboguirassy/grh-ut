@@ -125,7 +125,7 @@
               "src/assets/scss/styles.scss"
             ],
             "scripts": [
-              "node_modules/chart.js/dist/Chart.min.js",
+              "node_modules/chart.js/dist/chart.min.js",
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"
             ],
