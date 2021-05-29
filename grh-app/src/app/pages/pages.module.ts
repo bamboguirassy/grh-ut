@@ -4,12 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { ChartsModule } from 'ng2-charts';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { NgxEchartsModule } from 'ngx-echarts';
-import * as echarts from 'echarts';
 import { AgmCoreModule } from '@agm/core';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { FullCalendarModule } from '@fullcalendar/angular';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -212,15 +208,10 @@ import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/
     RouterModule,
 
     ChartsModule,
-    NgxChartsModule,
-    NgxEchartsModule.forRoot({
-      echarts: { init: echarts.init }
-    }),
     AgmCoreModule.forRoot({
       apiKey: environment.googleMapApiKey
     }),
     LeafletModule,
-    FullCalendarModule,
     NzDatePickerModule,
     NzDividerModule,
     NzTableModule,
