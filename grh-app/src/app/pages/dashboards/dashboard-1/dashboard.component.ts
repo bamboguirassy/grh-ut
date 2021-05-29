@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import { EChartOption } from 'echarts';
 import { BasePageComponent } from '../../base-page';
 import { IAppState } from '../../../interfaces/app-state';
 import { HttpService } from '../../../services/http/http.service';
