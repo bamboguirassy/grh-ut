@@ -87,7 +87,9 @@ export class OrganigrammeViewComponent implements OnInit {
       name: struct.nom,
       cssClass: 'ngx-org-ceo',
       image: 'assets/img/university.svg',
-      title: struct.structureFonctions.length ? `${struct?.structureFonctions?.find(sf => sf.etat ).fonction.nom}` : 'Poste vacant',
+      title: struct.structureFonctions.length 
+              ? `${struct?.structureFonctions?.find(sf => sf.etat ).fonction.nom}`
+              : 'Aucun Poste définie',
       data: struct,
       nodeType: 'struct',
       childs: this.getChartTreeItem(struct)

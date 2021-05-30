@@ -149,7 +149,10 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
           .create(this.fonctionEmploye)
           .subscribe((createdFonctionEmploye: any) => {
             this.currentFonctionEmploye = createdFonctionEmploye;
-            if (this.isAffectation && (this.structure !== this?.selectedEmploye?.structure || this.selectedEmploye.structure  === null)) {
+            console.log(this.structure.id);
+            console.log(this.selectedEmploye.structure.id);
+            
+            if (this.isAffectation && (this.structure.id !== this.selectedEmploye.structure.id || this.selectedEmploye.structure  === null)) {
               this.executeAffectationTrigger();
             }
           }, err => {
@@ -161,8 +164,8 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
   executeAffectationTrigger() {
     this.affectation.date = this.fonctionEmploye.datePriseFonction;
     this.affectation.employe = this.selectedEmploye.id;
-    this.affectation.poste = this.fonctionEmploye.responsabilite.fonction.nom;
-    this.affectation.structure = this.fonctionEmploye.responsabilite.structure.id;
+    this.affectation.poste = this.structureFonctionActive.fonction.nom;
+    this.affectation.structure = this.structureFonctionActive.structure.id;
 
     this.selectedEmploye.structure = this.structureFonctionActive.structure;
     this
