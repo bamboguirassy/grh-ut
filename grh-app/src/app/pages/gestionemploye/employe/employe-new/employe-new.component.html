@@ -11,11 +11,13 @@
     <ng-template #modalBody>
         <div class="row">
             <div class="col-12">
-                <nz-steps [nzCurrent]="current">
+                <nz-steps nzSize="small" [nzCurrent]="current">
+                    <div style="overflow-y:auto">
                     <nz-step nzTitle="Etat civil"></nz-step>
                     <nz-step nzTitle="Contacts"></nz-step>
                     <nz-step nzTitle="Informations sociales"></nz-step>
                     <nz-step nzTitle="Informations professionelles"></nz-step>
+                </div>
                 </nz-steps>
                 <br>
                 <hr><br>
@@ -193,7 +195,7 @@
                         </div>
                         <div class="steps-action">
                             <button beforeIcon="icofont-close" tc-button [type]="'button'" [view]="'error'"
-                            (click)="closeModal()">Fermer</button>
+                                (click)="closeModal()">Fermer</button>
                             <button [beforeIcon]="'icofont-arrow-left'" tc-button [type]="'button'" (click)="pre()">
                                 Précédent
                             </button>
@@ -283,7 +285,7 @@
                         </div>
                         <div class="steps-action">
                             <button beforeIcon="icofont-close" tc-button [type]="'button'" [view]="'error'"
-                            (click)="closeModal()">Fermer</button>
+                                (click)="closeModal()">Fermer</button>
                             <button [beforeIcon]="'icofont-arrow-left'" tc-button [type]="'button'" (click)="pre()">
                                 Précédent
                             </button>
@@ -449,7 +451,7 @@
                         </div>
                         <div class="steps-action">
                             <button beforeIcon="icofont-close" tc-button [type]="'button'" [view]="'error'"
-                            (click)="closeModal()">Fermer</button>
+                                (click)="closeModal()">Fermer</button>
                             <button [beforeIcon]="'icofont-arrow-left'" tc-button [type]="'button'" (click)="pre()">
                                 Précédent
                             </button>
