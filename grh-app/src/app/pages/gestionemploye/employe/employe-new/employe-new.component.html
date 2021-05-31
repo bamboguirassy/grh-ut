@@ -132,6 +132,8 @@
                                 [view]="'accent'">
                                 Suivant
                             </button>
+                            <button beforeIcon="icofont-close" tc-button [type]="'button'" [view]="'error'"
+                                (click)="closeModal()">Fermer</button>
                         </div>
                     </form>
                 </div>
@@ -190,6 +192,8 @@
                             </div>
                         </div>
                         <div class="steps-action">
+                            <button beforeIcon="icofont-close" tc-button [type]="'button'" [view]="'error'"
+                            (click)="closeModal()">Fermer</button>
                             <button [beforeIcon]="'icofont-arrow-left'" tc-button [type]="'button'" (click)="pre()">
                                 Précédent
                             </button>
@@ -278,6 +282,8 @@
                             </div>
                         </div>
                         <div class="steps-action">
+                            <button beforeIcon="icofont-close" tc-button [type]="'button'" [view]="'error'"
+                            (click)="closeModal()">Fermer</button>
                             <button [beforeIcon]="'icofont-arrow-left'" tc-button [type]="'button'" (click)="pre()">
                                 Précédent
                             </button>
@@ -442,6 +448,8 @@
                             </div>
                         </div>
                         <div class="steps-action">
+                            <button beforeIcon="icofont-close" tc-button [type]="'button'" [view]="'error'"
+                            (click)="closeModal()">Fermer</button>
                             <button [beforeIcon]="'icofont-arrow-left'" tc-button [type]="'button'" (click)="pre()">
                                 Précédent
                             </button>
@@ -453,8 +461,6 @@
     </ng-template>
     <ng-template #modalFooter>
         <div class="actions justify-content-between">
-            <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
-                (click)="closeModal()">Fermer</button>
             <button *ngIf="current === 3" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
                 tc-button [view]="'accent'">
                 Enregistrer
