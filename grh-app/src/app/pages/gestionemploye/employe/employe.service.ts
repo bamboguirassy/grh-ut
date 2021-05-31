@@ -47,6 +47,10 @@ export class EmployeService extends BamboAbstractService {
     return this.httpSrv.put(this.routePrefix + 'upload-photo/'+employe.id, { photo, fileName });
   }
 
+  realtimeSearch(searchTerm: any) {
+    return this.httpSrv.post(this.routePrefix+ 'public/realtime-search',{'searchTerm': searchTerm})
+  }
+
   
   findAll(): any {
     this
