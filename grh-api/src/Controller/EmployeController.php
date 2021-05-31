@@ -317,8 +317,9 @@ $employe->setProfession($faker->randomElement($professions));
     }
     
     /**
-     * @Rest\Post(path="/public/realtime-search", name="employe_realtime_search")
+     * @Rest\Post(path="/realtime-search", name="employe_realtime_search")
      * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
     public function realtimeSearch(Request $request) {
         $em = $this->getDoctrine()->getManager();

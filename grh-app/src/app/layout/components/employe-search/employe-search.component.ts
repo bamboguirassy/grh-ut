@@ -21,11 +21,9 @@ export class EmployeSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.getEmployes();
   }
 
   selectEvent(item) {
-    // do something with selected item
     this.router.navigate(['/'+this.layout+'/' + this.employeSrv.getRoutePrefix() + item.id]);
     item = null;
   }

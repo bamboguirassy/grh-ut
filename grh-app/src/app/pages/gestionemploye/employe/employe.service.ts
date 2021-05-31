@@ -48,7 +48,7 @@ export class EmployeService extends BamboAbstractService {
   }
 
   realtimeSearch(searchTerm: any) {
-    return this.httpSrv.post(this.routePrefix+ 'public/realtime-search',{'searchTerm': searchTerm})
+    return this.httpSrv.post(this.routePrefix+ 'realtime-search',{'searchTerm': searchTerm})
   }
 
   
