@@ -18,3 +18,9 @@
     margin-top: 3px;
     justify-content: center;
 }
+
+.table-scrollable{
+    display: block;
+overflow-x: auto;
+white-space: nowrap;
+}
