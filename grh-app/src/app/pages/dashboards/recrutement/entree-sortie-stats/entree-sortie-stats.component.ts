@@ -31,8 +31,10 @@ export class EntreeSortieStatsComponent extends DashboardBaseComponent<any> impl
     const chartData: ChartDataset[] = [];
     let annees = this.rawChartData.map((data) => data.annee);
     let groups = [
-      { code: 'nombreRecrutement', label: 'Entrée' },
-      { code: 'nombreSortie', label: 'Sortie' }
+      { code: 'nombreDemission', label: 'Nombre Demission' },
+      { code: 'nombreDepartRetraite', label: 'Nombre Depart Retraite' },
+      { code: 'nombreMisAPied', label: 'Nombre Mis A Pied' },
+      { code: 'nombreExpirationContrat', label: 'Nombre Expiration Contrat' }
     ]
     groups.forEach(group => {
       const arr: number[] = [];

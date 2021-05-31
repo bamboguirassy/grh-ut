@@ -316,4 +316,44 @@ $employe->setProfession($faker->randomElement($professions));
         return $tab;
     }
     
+    /**
+     * @Rest\Post(path="/realtime-search", name="employe_realtime_search")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function realtimeSearch(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $redData = Utils::serializeRequestContent($request);
+        $employes = [];
+        if(isset($redData['searchTerm'])){
+            $names = explode(' ',$redData['searchTerm']);
+            $firstName = $names[0];
+            for($i=1; $i < count($names)-1; $i++){                
+                $firstName = $firstName." ".$names[$i]; 
+            }
+            $lastName = $names[count($names)-1];            
+            
+            if(count($names)>1){
+                $employes = $em->createQuery('SELECT e
+                    FROM App\Entity\Employe e
+                    WHERE e.prenoms LIKE :firstName AND e.nom LIKE :lastName')
+                ->setParameter('firstName', '%'.$firstName.'%')
+                ->setParameter('lastName', '%'.$lastName.'%')
+                ->getResult();
+            }else{
+                $employes = $em->createQuery('SELECT e
+                    FROM App\Entity\Employe e
+                    WHERE e.prenoms LIKE :term OR
+                    e.nom LIKE :term OR 
+                    e.matricule LIKE :term OR 
+                    e.emailUniv LIKE :term OR 
+                    e.cni LIKE :term')
+                ->setParameter('term', '%'.$redData['searchTerm'].'%')
+                ->getResult();
+            }
+        }
+        
+        return $employes;
+    }
+    
 }
