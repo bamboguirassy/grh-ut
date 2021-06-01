@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { Employe } from './employe';
+import { CaisseSociale } from '../../parametrage/caissesociale/caissesociale';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class EmployeService extends BamboAbstractService {
   public genres: any[] = [
     { label: 'Masculin', value: 'Masculin' },
     { label: 'Féminin', value: 'Féminin' },
-  ];  
+  ];
   public motifSorties: any[] = [
     { label: 'Démission', value: 'Démission' },
     { label: 'Retraite', value: 'Retraite' },
@@ -44,10 +45,10 @@ export class EmployeService extends BamboAbstractService {
   }
 
   uploadPhoto(employe: Employe, photo: any, fileName: any) {
-    return this.httpSrv.put(this.routePrefix + 'upload-photo/'+employe.id, { photo, fileName });
+    return this.httpSrv.put(this.routePrefix + 'upload-photo/' + employe.id, { photo, fileName });
   }
 
-  
+
   findAll(): any {
     this
       .httpSrv
@@ -57,6 +58,10 @@ export class EmployeService extends BamboAbstractService {
       }, err => {
         this.httpSrv.handleError(err);
       });
+  }
+
+  findByCaisseSociale(caissesociale: CaisseSociale) {
+    return this.httpSrv.get(this.routePrefix + "caisse-sociale/" + caissesociale.id);
   }
 
 

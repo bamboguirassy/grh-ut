@@ -125,6 +125,17 @@ $employe->setProfession($faker->randomElement($professions));
         return $employe;
     }
 
+    /**
+     * @Rest\Get(path="/caisse-sociale/{id}", name="caisse_sociale_employe",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_EMPLOYE_SHOW")
+     */
+    public function findByCaiseSociale(CaisseSociale $caisseSociale)
+    {
+        return $caisseSociale->getEmployes();
+    }
+
+
 
     /**
      * @Rest\Put(path="/{id}/edit", name="employe_edit",requirements = {"id"="\d+"})

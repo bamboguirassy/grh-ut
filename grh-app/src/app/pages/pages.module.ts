@@ -197,6 +197,7 @@ import { MembreCommissionListComponent } from './gestionemploye/membrecommission
 import { MembreCommissionEditComponent } from './gestionemploye/membrecommission/membrecommission-edit/membrecommission-edit.component';
 import { MembreCommissionShowComponent } from './gestionemploye/membrecommission/membrecommission-show/membrecommission-show.component';
 import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/membrecommission-new/membrecommission-new.component';
+import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
 
 
 
@@ -451,6 +452,7 @@ import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/
     EmployeGlobalComponent,
     ContratEnExpirationComponent,
     DiplomeMainDashboardComponent,
+    MembreCaisseSocialeComponent,
 
   ],
   exports: [],
