@@ -39,7 +39,9 @@ class DashboardController extends AbstractController
         foreach ($types as $type) {
             $employes = $em->getRepository(Employe::class)
                 ->findByTypeEmploye($type);
-            $tab [] = [
+            $total = $em->getRepository(Employe::class);
+            $tab[] = [
+                'total' => count($total),
                 'type' => $type,
                 'nbreEmploye' => count($employes)
             ];
@@ -169,7 +171,7 @@ class DashboardController extends AbstractController
             else if ($age >= 50 && $age < 60) $tranche5060++;
             else if ($age >= 60) $tranche60Plus++;
         }
-        $tab [] = [
+        $tab[] = [
             'nombreEmploye' => count($employes),
             'nombreHomme' => $nbrHomme,
             'nombreFemme' => $nbrFemme,
@@ -181,8 +183,8 @@ class DashboardController extends AbstractController
             'caisseSociales' => $tabCaisse,
             'anneePrec' => $annees,
             'recrutement' => $tabRecrutement
-//            'recrutementCourant' => $tabRecrutementCourant,
-//            'recrutementPrecedent' => $tabRecrutementPrecedent
+            //            'recrutementCourant' => $tabRecrutementCourant,
+            //            'recrutementPrecedent' => $tabRecrutementPrecedent
         ];
 
 
@@ -237,7 +239,6 @@ class DashboardController extends AbstractController
         }
 
         return count($tabRecrutement) ? $tabRecrutement : [];
-
     }
 
     /**
@@ -260,7 +261,7 @@ class DashboardController extends AbstractController
         foreach ($grades as $grade) {
             $employes = $entityManager->getRepository(Employe::class)
                 ->findByGrade($grade);
-            $tab [] = [
+            $tab[] = [
                 'grade' => $grade,
                 'nombreEmploye' => count($employes)
             ];
@@ -340,7 +341,6 @@ class DashboardController extends AbstractController
         ];
 
         return $tab;
-
     }
 
     /**
@@ -430,7 +430,7 @@ class DashboardController extends AbstractController
                 ->setParameter(1, $profession)
                 ->setParameter(2, 'Féminin')
                 ->getSingleScalarResult();
-            $tab [] = [
+            $tab[] = [
                 'profession' => $profession,
                 'nbreEmploye' => $nombreEmployeHomme + $nombreEmployeFemme,
                 'nbrHomme' => $nombreEmployeHomme,
@@ -471,7 +471,7 @@ class DashboardController extends AbstractController
                 else
                     $nbrFemme++;
             }
-            $tab [] = [
+            $tab[] = [
                 'typeEmploye' => $typeEmploye,
                 'nbreEmploye' => count($employes),
                 'nbrHomme' => $nbrHomme,
@@ -512,7 +512,7 @@ class DashboardController extends AbstractController
                 ->setParameter(1, $structure)
                 ->setParameter(2, 'Féminin')
                 ->getSingleScalarResult();
-            $tab [] = [
+            $tab[] = [
                 'structure' => $structure,
                 'nbreEmploye' => $nombreEmployeHomme + $nombreEmployeFemme,
                 'nbrHomme' => $nombreEmployeHomme,
@@ -566,9 +566,11 @@ class DashboardController extends AbstractController
                 ->setParameter(1, $annee . '%')
                 ->setParameter(2, 'Expiration Contrat')
                 ->getSingleScalarResult();
-            $tab[] = ['annee' => $annee, 'nombreRecrutement' => $nombreRecrutement,
+            $tab[] = [
+                'annee' => $annee, 'nombreRecrutement' => $nombreRecrutement,
                 'nombreDemission' => $nombreDemission, 'nombreDepartRetraite' => $nombreDepartRetraite,
-                'nombreMisAPied' => $nombreMisAPied, 'nombreExpirationContrat' => $nombreExpirationContrat];
+                'nombreMisAPied' => $nombreMisAPied, 'nombreExpirationContrat' => $nombreExpirationContrat
+            ];
         }
         return $tab;
     }
@@ -688,7 +690,7 @@ class DashboardController extends AbstractController
                 ->setParameter(3, $dateDebut)
                 ->setParameter(4, $dateFin)
                 ->getSingleScalarResult();
-            $tab [] = [
+            $tab[] = [
                 'typeEmploye' => $typeEmploye,
                 'nbreEmploye' => $nombreEmployeHomme + $nombreEmployeFemme,
                 'nbrHomme' => $nombreEmployeHomme,
@@ -734,7 +736,7 @@ class DashboardController extends AbstractController
                 ->setParameter(2, 'Féminin')
                 ->setParameter(3, $date)
                 ->getSingleScalarResult();
-            $tab [] = [
+            $tab[] = [
                 'typeEmploye' => $typeEmploye,
                 'nbreEmploye' => $nombreEmployeHomme + $nombreEmployeFemme,
                 'nbrHomme' => $nombreEmployeHomme,
@@ -744,125 +746,115 @@ class DashboardController extends AbstractController
 
         return count($tab) ? $tab : [];
     }
-    
-    
-     /**
+
+
+    /**
      * @Rest\Get(path="/employe/count-by-typecontrat", name="employe_count_statistic_by_type_contrat")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
-    
-      public function countEmployeByContratGroupByTypeContrat(EntityManagerInterface $entityManager){
-              $em = $this->getDoctrine()->getManager();
-             
-              $typeContrats = $em->createQuery('Select tc FROM App\Entity\TypeContrat tc '
-                      . 'WHERE tc IN (SELECT tyc FROM App\Entity\Contrat c JOIN c.typeContrat tyc ) ')
-                      ->getResult();
-                $tab = [];
-              
-                
-              foreach ($typeContrats as $typeContrat){
-                   $employes= $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '                           
-                      . 'WHERE e IN(select ec FROM App\Entity\Contrat c JOIN c.employe ec where c.typeContrat=:typeContrat) 
+
+    public function countEmployeByContratGroupByTypeContrat(EntityManagerInterface $entityManager)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $typeContrats = $em->createQuery('Select tc FROM App\Entity\TypeContrat tc '
+            . 'WHERE tc IN (SELECT tyc FROM App\Entity\Contrat c JOIN c.typeContrat tyc ) ')
+            ->getResult();
+        $tab = [];
+
+
+        foreach ($typeContrats as $typeContrat) {
+            $employes = $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '
+                . 'WHERE e IN(select ec FROM App\Entity\Contrat c JOIN c.employe ec where c.typeContrat=:typeContrat) 
                         ')
-                           ->setParameter('typeContrat', $typeContrat)
-                     ->getSingleScalarResult();
-                   
-                   $tab[]=[
-                      'typeContrat'=>$typeContrat,
-                       'nbreEmploye' =>$employes
-                       
-                   ];
-                  
-              }     
-             
-              return count($tab) ? $tab : [];
-                   
-          }
-           /**
+                ->setParameter('typeContrat', $typeContrat)
+                ->getSingleScalarResult();
+
+            $tab[] = [
+                'typeContrat' => $typeContrat,
+                'nbreEmploye' => $employes
+
+            ];
+        }
+
+        return count($tab) ? $tab : [];
+    }
+    /**
      * @Rest\Get(path="/employe/count-by-typecontrat-actif", name="employe_count_statistic_by_type_contrat_actif")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
-    
-      public function countEmployeByContratGroupByTypeContratActif(){
-              $em = $this->getDoctrine()->getManager();
-             
-              $typeContrats = $em->createQuery('Select tc FROM App\Entity\TypeContrat tc '
-                      . 'WHERE tc IN (SELECT tyc FROM App\Entity\Contrat c JOIN c.typeContrat tyc ) ')
-                      ->getResult();
-                $tab = [];
-              
-                
-              foreach ($typeContrats as $typeContrat){
-                  $nbreEmploye = 0;
-                   $employes= $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '                           
-                      . 'WHERE e IN(select ec FROM App\Entity\Contrat c JOIN 
+
+    public function countEmployeByContratGroupByTypeContratActif()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $typeContrats = $em->createQuery('Select tc FROM App\Entity\TypeContrat tc '
+            . 'WHERE tc IN (SELECT tyc FROM App\Entity\Contrat c JOIN c.typeContrat tyc ) ')
+            ->getResult();
+        $tab = [];
+
+
+        foreach ($typeContrats as $typeContrat) {
+            $nbreEmploye = 0;
+            $employes = $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '
+                . 'WHERE e IN(select ec FROM App\Entity\Contrat c JOIN 
                           c.employe ec where c.typeContrat=?1 and c.etat=?2) 
                         ')
-                           ->setParameter(1,$typeContrat)
-                           ->setParameter(2,true)
-                     ->getSingleScalarResult();
-                   
-                   $tab[]=[
-                      'typeContrat'=>$typeContrat,
-                       'nbreEmploye' =>$employes
-                       
-                   ];
-             
-                  
-                  
-              } 
-               
-              return count($tab) ? $tab : [];
-                   
-          }
-          
+                ->setParameter(1, $typeContrat)
+                ->setParameter(2, true)
+                ->getSingleScalarResult();
+
+            $tab[] = [
+                'typeContrat' => $typeContrat,
+                'nbreEmploye' => $employes
+
+            ];
+        }
+
+        return count($tab) ? $tab : [];
+    }
+
     /**
      * @Rest\Get(path="/employe/count-by-diplome", name="employe_count_statistic_by_diplome")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
-    public function countEmployeByDiplome() {
+    public function countEmployeByDiplome()
+    {
         $em = $this->getDoctrine()->getManager();
         $diplomes = $em->getRepository(Diplome::class)
-                ->findAll();
+            ->findAll();
         $tab = [];
-            foreach ($diplomes as $diplome){
-                $nbreEmploye = $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '                           
-                      . 'WHERE e IN(select de FROM App\Entity\DiplomeEmploye de 
+        foreach ($diplomes as $diplome) {
+            $nbreEmploye = $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '
+                . 'WHERE e IN(select de FROM App\Entity\DiplomeEmploye de 
                           JOIN de.employe dee
                           JOIN de.diplome ded 
                           where dee = e and ded =?1) 
                         ')
-                     ->setParameter(1, $diplome)
-                     ->getSingleScalarResult();
-                
-                $tab[]=[
-                      'diplome'=>$diplome,
-                      'nbreEmploye' =>$nbreEmploye                       
-                   ];
-            }
-            $sansDiplome = $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '                           
-                      . 'WHERE e IN(select de FROM App\Entity\DiplomeEmploye de 
+                ->setParameter(1, $diplome)
+                ->getSingleScalarResult();
+
+            $tab[] = [
+                'diplome' => $diplome,
+                'nbreEmploye' => $nbreEmploye
+            ];
+        }
+        $sansDiplome = $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '
+            . 'WHERE e IN(select de FROM App\Entity\DiplomeEmploye de 
                           JOIN de.employe dee
                           where dee != e) 
                         ')
-                     ->getSingleScalarResult();
-            $sansDpme = new Diplome();
-            $sansDpme->setNom("Sans Diplôme");
-            $tab[]=[
-                      'diplome' => $sansDpme,
-                      'nbreEmploye' =>$sansDiplome                       
-                   ];
-        
+            ->getSingleScalarResult();
+        $sansDpme = new Diplome();
+        $sansDpme->setNom("Sans Diplôme");
+        $tab[] = [
+            'diplome' => $sansDpme,
+            'nbreEmploye' => $sansDiplome
+        ];
+
         return $tab;
     }
-          
-        
-      
-    
 }
-
-
-
