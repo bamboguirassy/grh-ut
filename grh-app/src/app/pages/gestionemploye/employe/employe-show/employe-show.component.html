@@ -67,7 +67,7 @@
                         </li>
                         <li class="info-line">
                             <div class="row">
-                                <div class="col-6 col-md-5 title">Date Prise Service:</div>
+                                <div class="col-6 col-md-5 title">Date Prise Fonction:</div>
                                 <div class="col-6 col-md-7 content">{{entity?.datePriseService|date:'dd/MM/yyyy'}}</div>
                             </div>
                         </li>
@@ -141,8 +141,7 @@
                 </div>
             </div>
         </tc-card>
-
-        <table class="table table-bordered my-1 table-scrollable">
+        <table class="table table-bordered mt-1">
             <tr>
                 <th>Caisse Sociale</th>
                 <td>
@@ -205,13 +204,9 @@
                 <app-fonctionemploye-list *ngIf="entity && isFonctionsLoaded" [employe]="entity">
                 </app-fonctionemploye-list>
             </nz-tab>
-            <nz-tab (nzSelect)="loadSyndicatsTab()" nzTitle="Syndicats & amicales">
+            <nz-tab nzTitle="Syndicats & amicales">
                 <app-membresyndicat-list *ngIf="entity && isSyndicatsLoaded" [employe]="entity">
                 </app-membresyndicat-list>
-            </nz-tab>
-            <nz-tab (nzSelect)="loadCommissionsTab()" nzTitle="Commissions">
-                <app-membrecommission-list *ngIf="entity && isCommissionsLoaded" [employe]="entity">
-                </app-membrecommission-list>
             </nz-tab>
         </nz-tabset>
     </div>
