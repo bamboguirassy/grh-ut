@@ -41,6 +41,11 @@ class StructureFonction
      */
     private $fonctionEmployes;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $duree;
+
     public function __construct()
     {
         $this->fonctionEmployes = new ArrayCollection();
@@ -113,6 +118,18 @@ class StructureFonction
                 $fonctionEmploye->setResponsabilite(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDuree(): ?int
+    {
+        return $this->duree;
+    }
+
+    public function setDuree(?int $duree): self
+    {
+        $this->duree = $duree;
 
         return $this;
     }

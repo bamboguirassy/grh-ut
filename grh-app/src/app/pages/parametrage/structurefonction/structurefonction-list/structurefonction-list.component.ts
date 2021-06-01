@@ -33,6 +33,7 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
   affectation = new Affectation();
   canChooseDateFin = false;
 
+
   constructor(store: Store<IAppState>, public employeSrv: EmployeService,
     public fonctionEmployeSrv: FonctionEmployeService,
     public affectationSrv: AffectationService,
@@ -136,8 +137,8 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
     });
   }
 
-  disableCurrentFonctionEmploye(event: any) {
-    this.currentFonctionEmploye.etat = event;
+  disableCurrentFonctionEmploye() {
+    this.currentFonctionEmploye.etat = false;
     Swal.fire({
       title: event ? 'Êtes-vous sûr de vouloir activer la fonction de cet employé ?' : 'Êtes-vous sûr de vouloir désactiver la fonction de cet employé ?',
       showCancelButton: true,
@@ -183,6 +184,12 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
     this.fonctionEmploye.employe = this.selectedEmploye.id;
     this.fonctionEmploye.responsabilite = this.structureFonctionActive.id;
     this.fonctionEmploye.etat = true;
+    if(this.structureFonctionActive.duree > 0) {
+      let dateDeb = new Date(this.fonctionEmploye.datePriseFonction);
+      const duree = +this.structureFonctionActive.duree;
+      let dateFin = dateDeb.setMonth(dateDeb.getMonth() + duree);
+      this.fonctionEmploye.dateFin = dateFin as any;
+    }
     this
       .addSubscription(
         this

@@ -15,6 +15,7 @@ class StructureFonctionType extends AbstractType
             ->add('etat')
             ->add('structure')
             ->add('fonction')
+            ->add('duree')
         ;
     }
 
