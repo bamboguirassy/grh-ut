@@ -327,18 +327,11 @@ $employe->setProfession($faker->randomElement($professions));
         $employes = [];
         if(isset($redData['searchTerm'])){
             $names = explode(' ',$redData['searchTerm']);
-            $firstName = $names[0];
-            for($i=1; $i < count($names)-1; $i++){                
-                $firstName = $firstName." ".$names[$i]; 
-            }
-            $lastName = $names[count($names)-1];            
-            
             if(count($names)>1){
                 $employes = $em->createQuery('SELECT e
                     FROM App\Entity\Employe e
-                    WHERE e.prenoms LIKE :firstName AND e.nom LIKE :lastName')
-                ->setParameter('firstName', '%'.$firstName.'%')
-                ->setParameter('lastName', '%'.$lastName.'%')
+                    WHERE CONCAT(e.prenoms,\' \',e.nom) LIKE :term')
+                ->setParameter('term', '%'.$redData['searchTerm'].'%')
                 ->getResult();
             }else{
                 $employes = $em->createQuery('SELECT e
