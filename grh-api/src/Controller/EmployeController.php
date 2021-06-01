@@ -29,7 +29,7 @@ class EmployeController extends AbstractController
 {
     /**
      * @Rest\Get(path="/", name="employe_index")
-     * @Rest\View(StatusCode = 200)
+     * @Rest\View(StatusCode = 200, serializerEnableMaxDepthChecks=true)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
     public function index(): array
@@ -43,12 +43,11 @@ class EmployeController extends AbstractController
 
     /**
      * @Rest\Get(path="/{id}/typeemploye", name="employe_by_typeemploye")
-     * @Rest\View(StatusCode = 200)
+     * @Rest\View(StatusCode = 200, serializerEnableMaxDepthChecks=true)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
     public function findByTypeEmploye(\App\Entity\TypeEmploye $typeEmploye): array
     {
-
         $employes = $this->getDoctrine()
             ->getRepository(Employe::class)
             ->findByTypeEmploye($typeEmploye);

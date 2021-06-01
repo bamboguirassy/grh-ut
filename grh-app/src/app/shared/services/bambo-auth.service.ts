@@ -21,10 +21,6 @@ export class BamboAuthService {
 
   constructor(public httpSrv: BamboHttpService, private injector: Injector) { }
 
-  public get employeSrv(): EmployeService {
-    return this.injector.get<EmployeService>(EmployeService as Type<EmployeService>);
-  }
-
   public get listablePipe(): ListablePipe {
     return this.injector.get<ListablePipe>(ListablePipe as Type<ListablePipe>);
   }
@@ -48,9 +44,6 @@ export class BamboAuthService {
         pipe(first()).subscribe((data: any) => {
           this.currentUser = data;
           this.currentUserManager.next(data);
-          if (this.listablePipe.transform(this.employeSrv.resourceName)) {
-            this.employeSrv.findAll();
-          }
           resolve(this.currentUser);
         }, error => {
           console.log(error);
