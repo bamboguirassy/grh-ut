@@ -83,33 +83,52 @@ export class OrganigrammeViewComponent implements OnInit {
   }
 
   getChartTreeItem(structure: Structure): OrgchartTreeItem<Structure>[] {
-    return structure.children.map(struct => ({
-      name: struct.nom,
-      cssClass: 'ngx-org-ceo',
-      image: 'assets/img/university.svg',
-      title: struct.structureFonctions.length 
-              ? `${struct?.structureFonctions?.find(sf => sf.etat ).fonction.nom}`
-              : 'Aucun Poste définie',
-      data: struct,
-      nodeType: 'struct',
-      childs: this.getChartTreeItem(struct)
-    }));
+    return structure.children.map(struct => {
+      let title = '';
+      if (struct.structureFonctions.length && struct.structureFonctions.some(sf => sf.etat)) {
+        title += `${struct.structureFonctions.find(sf => sf.etat).fonction.nom}`;
+      }
+      if (struct.structureFonctions.length && struct.structureFonctions.some(sf => sf.etat) && struct.structureFonctions.find(sf => sf.etat).fonctionEmployes.some(fe => fe.etat)) {
+        title += ` - ${struct.structureFonctions.find(sf => sf.etat).fonctionEmployes.find(fe => fe.etat)?.employe?.prenoms + ' ' + struct.structureFonctions.find(sf => sf.etat).fonctionEmployes.find(fe => fe.etat)?.employe?.nom}`;
+      }
+      return {
+        name: struct.nom,
+        cssClass: 'ngx-org-ceo',
+        image: 'assets/img/university.svg',
+        title: struct.structureFonctions.length
+          ? `${title}`
+          : 'Aucun Poste définie',
+        data: struct,
+        nodeType: 'struct',
+        childs: this.getChartTreeItem(struct)
+      };
+    }
+    );
   }
 
   buildOrgChart() {
     const orgchartTreeItems: OrgchartTreeItem<Structure>[] = [];
     const rootEntity = this.structures.find(s => s.structureParente === null);
+    let title = '';
+    if (rootEntity.structureFonctions.length && rootEntity.structureFonctions.some(sf => sf.etat)) {
+      title += `${rootEntity.structureFonctions.find(sf => sf.etat).fonction.nom}`;
+    }
+    if (rootEntity.structureFonctions.length && rootEntity.structureFonctions.some(sf => sf.etat) && rootEntity.structureFonctions.find(sf => sf.etat).fonctionEmployes.some(fe => fe.etat)) {
+      title += ` - ${rootEntity.structureFonctions.find(sf => sf.etat).fonctionEmployes.find(fe => fe.etat)?.employe?.prenoms + ' ' + rootEntity.structureFonctions.find(sf => sf.etat).fonctionEmployes.find(fe => fe.etat)?.employe?.nom}`;
+    }
     orgchartTreeItems.push({
       name: rootEntity.nom,
       cssClass: 'ngx-org-ceo',
       image: 'assets/img/university.svg',
-      title: rootEntity.typeEntite.nom,
+      title: rootEntity.structureFonctions.length
+        ? `${title}`
+        : 'Aucun Poste définie',
       data: rootEntity,
       nodeType: 'struct',
       childs: this.getChartTreeItem(rootEntity)
     });
     this.nodes = orgchartTreeItems;
-    
+
   }
 
   onCreatedStructureFonction(structureFonctions: StructureFonction[]) {

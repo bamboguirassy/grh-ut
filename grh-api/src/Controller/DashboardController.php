@@ -525,16 +525,42 @@ class DashboardController extends AbstractController
         $tab = [];
         $em = $this->getDoctrine()->getManager();
         foreach ($annees as $annee) {
-            $nombreRecrutement = $em->createQuery('select count(e) 
-            from App\Entity\Employe e where e.dateRecrutement like ?1')
+//            $nombreRecrutement = $em->createQuery('select count(e) 
+//            from App\Entity\Employe e where e.dateRecrutement like ?1')
+//                ->setParameter(1, $annee . '%')
+//                ->getSingleScalarResult();
+//            $nombreSortie = $em->createQuery('select count(e) 
+//                from App\Entity\Employe e where e.dateSortie like ?1')
+//                    ->setParameter(1, $annee . '%')
+//                    ->getSingleScalarResult();
+            $nombreDemission = $em->createQuery('select count(e)
+            from App\Entity\Employe e where e.dateSortie like ?1
+            and e.motifSortie=?2')
                 ->setParameter(1, $annee . '%')
+                ->setParameter(2, 'Démission')
                 ->getSingleScalarResult();
-            $nombreSortie = $em->createQuery('select count(e) 
-                from App\Entity\Employe e where e.dateSortie like ?1')
-                    ->setParameter(1, $annee . '%')
-                    ->getSingleScalarResult();
-            $tab[] = ['annee' => $annee, 'nombreRecrutement' => $nombreRecrutement,
-                'nombreSortie' => $nombreSortie];
+            $nombreDepartRetraite = $em->createQuery('select count(e)
+            from App\Entity\Employe e where e.dateSortie like ?1
+            and e.motifSortie in (?2)')
+                ->setParameter(1, $annee . '%')
+                ->setParameter(2, ['Retraite', 'Retraite Anticipé'])
+                ->getSingleScalarResult();
+            $nombreMisAPied = $em->createQuery('select count(e)
+            from App\Entity\Employe e where e.dateSortie like ?1
+            and e.motifSortie=?2')
+                ->setParameter(1, $annee . '%')
+                ->setParameter(2, 'Mis à pied')
+                ->getSingleScalarResult();
+            $nombreExpirationContrat = $em->createQuery('select count(e)
+            from App\Entity\Employe e where e.dateSortie like ?1
+            and e.motifSortie=?2')
+                ->setParameter(1, $annee . '%')
+                ->setParameter(2, 'Expiration Contrat')
+                ->getSingleScalarResult();
+            $tab[] = ['annee' => $annee, 'nombreDemission' => $nombreDemission,
+                'nombreDepartRetraite' => $nombreDepartRetraite,
+                'nombreMisAPied' => $nombreMisAPied,
+                'nombreExpirationContrat' => $nombreExpirationContrat ];
         }
         return $tab;
     }

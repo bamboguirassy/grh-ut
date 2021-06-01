@@ -16,6 +16,7 @@ export class FonctionEmployeListComponent implements OnInit {
   @Input() employe: Employe;
   selectedFonction: FonctionEmploye;
   tab =  [];
+  @Input() fonctionEmploiyes: FonctionEmploye[] = [];
   items: Document[] = [];
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];

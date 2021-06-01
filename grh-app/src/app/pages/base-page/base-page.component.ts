@@ -37,6 +37,7 @@ export class BasePageComponent<T extends BamboAbstractObject> implements OnInit,
     public httpSv: BamboAbstractService
   ) {
     this.sidebarBg = SETTINGS.sidebarBg;
+    this.orientation = SETTINGS.layout;
   }
 
   ngOnInit() {
