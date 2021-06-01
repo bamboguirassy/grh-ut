@@ -70,18 +70,31 @@ export class ContratEditComponent implements OnInit, OnDestroy {
 
   prepareUpdate() {
     this.entity.typeContrat = this.selectedTypeContratId;
-    this.entity.dateSignature = this.datePipe.transform(this.entity.dateSignature, 'yyyy-MM-dd');
-    this.entity.dateFinEffective = this.datePipe.transform(this.entity.dateFinEffective, 'yyyy-MM-dd');
-    this.entity.dateFinPrevue = this.datePipe.transform(this.entity.dateFinPrevue, 'yyyy-MM-dd');
-    this.entity.dateDebut = this.datePipe.transform(this.entity.dateDebut, 'yyyy-MM-dd');
+   
+    if (this.entity.dateSignature) {
+      this.entity.dateSignature = this.datePipe.transform(this.entity.dateSignature, 'yyyy-MM-dd');
+    }
+    if (this.entity.dateDebut) {
+      this.entity.dateDebut = this.datePipe.transform(this.entity.dateDebut, 'yyyy-MM-dd');
+    }
+    if (this.selectedTypeContrat.code == 'CDI') {
+      this.entity.dureeEnMois = null;
+      this.entity.dateFinPrevue = null;
+    }
+    if (this.entity.dateFinPrevue) {
+      this.entity.dateFinPrevue = this.datePipe.transform(this.entity.dateFinPrevue, 'yyyy-MM-dd');
+    }
     if (this.entity.etat) {
       this.entity.motifFin = null;
       this.entity.dateFinEffective = null;
       this.entity.commentaireSurFinContrat = null;
     }
-    if (this.selectedTypeContrat.code == 'CDI') {
+    if (this.selectedTypeContrat.code == 'CDI' ) {
       this.entity.dureeEnMois = null;
-      this.entity.dateFinEffective = null;
+      this.entity.dateFinPrevue = null;
+    }
+    if (this.entity.dateFinEffective) {
+      this.entity.dateFinEffective = this.datePipe.transform(this.entity.dateFinEffective, 'yyyy-MM-dd');
     }
   }
 
