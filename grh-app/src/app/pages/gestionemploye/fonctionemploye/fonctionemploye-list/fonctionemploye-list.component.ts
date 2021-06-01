@@ -13,42 +13,22 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./fonctionemploye-list.component.scss']
 })
 export class FonctionEmployeListComponent implements OnInit {
+  @Input() fonctionEmploiyes: FonctionEmploye[] = [];
   @Input() employe: Employe;
-  selectedFonction: FonctionEmploye;
   tab =  [];
-  items: Document[] = [];
+  selectedFonction: FonctionEmploye;
+  items: FonctionEmploye[] = [];
+  
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];
 
-  constructor(public fonctionEmployeSrv: FonctionEmployeService,  private activatedRoute: ActivatedRoute, public datePipe: DatePipe) {}
+  constructor(public fonctionEmployeSrv: FonctionEmployeService,  private activatedRoute: ActivatedRoute,) {}
 
   ngOnInit(): void {
     this.findByEmploye();
   }
   
-  setTimeline() {
-    const sectionData = this.items.map((i: any) => ({
-     date: `${i.datePriseFonction?`${this.datePipe.
-      transform(`${i.datePriseFonction}` , 'dd/MM/yyyy')}`
-      :'Indefini'} - ${i.etat?'En Cours'
-      :`${i.dateFin?`${this.datePipe.transform(`${i.dateFin}`
-       , 'dd/MM/yyyy')}`:'En Cours'}`}`,
-      title: i.responsabilite.fonction.nom,
-      content: i.responsabilite.structure.nom,
-      icon: "icofont-business-man-alt-1",
-      iconBg: SETTINGS.sidebarBg,
-      iconColor: "#fff"
-    }))
-    this.tab = [
-      {
-        "sectionLabel": {
-          "text": "Fonction Structure",
-          "view": "error"
-        },
-        "sectionData": sectionData
-      },
-    ];
-  }
+ 
 
   setSelectedFonction(element: FonctionEmploye){
       this.selectedFonction = element;
@@ -63,12 +43,12 @@ export class FonctionEmployeListComponent implements OnInit {
     this.fonctionEmployeSrv.findByEmploye(this.employe)
     .subscribe((data: any)=>{
       this.items = data;
-      this.setTimeline();
+     
     },err=>this.fonctionEmployeSrv.httpSrv.catchError(err));
   }
   
 
-  onCreate(item: Document) {
+  onCreate(item: FonctionEmploye) {
     this.items = [item, ...this.items];
   }
 

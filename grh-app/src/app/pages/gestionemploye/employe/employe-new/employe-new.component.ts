@@ -27,7 +27,6 @@ import { ProfessionService } from 'src/app/pages/parametrage/profession/professi
 export class EmployeNewComponent implements OnInit {
 
   @ViewChild('modalBody', { static: true }) modalBody: ElementRef<any>;
-  @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
   @ViewChildren('form') form;
   entity: Employe;
   @Output() creation: EventEmitter<Employe> = new EventEmitter();

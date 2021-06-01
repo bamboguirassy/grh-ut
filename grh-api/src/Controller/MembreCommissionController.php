@@ -33,7 +33,8 @@ class MembreCommissionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MEMBRECOMMISSION_CREATE")
      */
-    public function create(Request $request): MembreCommission    {
+    public function create(Request $request): MembreCommission
+    {
         $membreCommission = new MembreCommission();
         $form = $this->createForm(MembreCommissionType::class, $membreCommission);
         $form->submit(Utils::serializeRequestContent($request));
@@ -45,6 +46,14 @@ class MembreCommissionController extends AbstractController
             $membreCommission->setDateSortie(new \DateTime($reqData->dateSortie));
         }
         $entityManager = $this->getDoctrine()->getManager();
+        // rechercher les missions de l'employé
+        $commissionEmployes = $entityManager->getRepository(MembreCommission::class)
+        ->findBy(['employe' => $membreCommission->getEmploye()]);
+        foreach ($commissionEmployes as $commissionEmploye) {
+            if ($membreCommission->getCommission()==$commissionEmploye->getCommission()) {
+                throw $this->createAccessDeniedException("Cet employé est déja membre de cette commission");
+            }
+        }
         $entityManager->persist($membreCommission);
         $entityManager->flush();
 
@@ -56,7 +65,8 @@ class MembreCommissionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MEMBRECOMMISSION_SHOW")
      */
-    public function show(MembreCommission $membreCommission): MembreCommission    {
+    public function show(MembreCommission $membreCommission): MembreCommission
+    {
         return $membreCommission;
     }
 
@@ -66,7 +76,8 @@ class MembreCommissionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MEMBRECOMMISSION_EDIT")
      */
-    public function edit(Request $request, MembreCommission $membreCommission): MembreCommission    {
+    public function edit(Request $request, MembreCommission $membreCommission): MembreCommission
+    {
         $form = $this->createForm(MembreCommissionType::class, $membreCommission);
         $form->submit(Utils::serializeRequestContent($request));
         $reqData = Utils::getObjectFromRequest($request);
@@ -86,7 +97,8 @@ class MembreCommissionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MEMBRECOMMISSION_CLONE")
      */
-    public function cloner(Request $request, MembreCommission $membreCommission):  MembreCommission {
+    public function cloner(Request $request, MembreCommission $membreCommission):  MembreCommission
+    {
         $em=$this->getDoctrine()->getManager();
         $membreCommissionNew=new MembreCommission();
         $form = $this->createForm(MembreCommissionType::class, $membreCommissionNew);
@@ -103,7 +115,8 @@ class MembreCommissionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MEMBRECOMMISSION_EDIT")
      */
-    public function delete(MembreCommission $membreCommission): MembreCommission    {
+    public function delete(MembreCommission $membreCommission): MembreCommission
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($membreCommission);
         $entityManager->flush();
@@ -116,7 +129,8 @@ class MembreCommissionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MEMBRECOMMISSION_DELETE")
      */
-    public function deleteMultiple(Request $request): array {
+    public function deleteMultiple(Request $request): array
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $membreCommissions = Utils::getObjectFromRequest($request);
         if (!count($membreCommissions)) {
@@ -130,11 +144,11 @@ class MembreCommissionController extends AbstractController
 
         return $membreCommissions;
     }
-     /**
-     * @Rest\Get(path="/{id}/employe", name="membreCommission_employe")
-     * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_MEMBRECOMMISSION_INDEX")
-     */
+    /**
+    * @Rest\Get(path="/{id}/employe", name="membreCommission_employe")
+    * @Rest\View(StatusCode = 200)
+    * @IsGranted("ROLE_MEMBRECOMMISSION_INDEX")
+    */
     public function findByEmploye(\App\Entity\Employe $employe): array
     {
         $membreCommissions = $this->getDoctrine()

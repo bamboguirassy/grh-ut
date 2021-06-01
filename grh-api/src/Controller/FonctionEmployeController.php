@@ -218,4 +218,20 @@ class FonctionEmployeController extends AbstractController
 
         return $fonctionEmployes;
     }
+     /**
+     * @Rest\Get(path="/fonction-non-expiree", name="fonction_non_expiree")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_FONCTIONEMPLOYE_INDEX")
+     */
+    public function findNonExpiree(): array
+    {
+        $em = $this->getDoctrine()->getManager();
+        $toDay = new \DateTime();
+        $toDay = $toDay->format('Y-m-d');
+        $fonctionNonExpirees = $em->createQuery('select fe from App\Entity\FonctionEmploye fe 
+        where fe.dateFin >= ?1')
+            ->setParameter(1, $toDay)
+            ->getResult();
+        return $fonctionNonExpirees;
+    }
 }

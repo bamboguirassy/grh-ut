@@ -198,8 +198,8 @@ import { MembreCommissionEditComponent } from './gestionemploye/membrecommission
 import { MembreCommissionShowComponent } from './gestionemploye/membrecommission/membrecommission-show/membrecommission-show.component';
 import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/membrecommission-new/membrecommission-new.component';
 import { MembreCommissionEmployeComponent } from './gestionemploye/membrecommission/membre-commission-employe/membre-commission-employe.component';
-
-
+import { FonctionemployeTimelineComponent } from './gestionemploye/fonctionemploye/fonctionemploye-timeline/fonctionemploye-timeline.component';
+import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/fonction-en-expiration/fonction-en-expiration.component';
 
 @NgModule({
   imports: [
@@ -453,6 +453,8 @@ import { MembreCommissionEmployeComponent } from './gestionemploye/membrecommiss
     ContratEnExpirationComponent,
     DiplomeMainDashboardComponent,
     MembreCommissionEmployeComponent,
+    FonctionemployeTimelineComponent,
+    FonctionEnExpirationComponent,
 
   ],
   exports: [],

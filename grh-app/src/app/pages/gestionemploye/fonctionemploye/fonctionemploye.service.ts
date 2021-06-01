@@ -27,5 +27,8 @@ export class FonctionEmployeService extends BamboAbstractService {
   findByResponsabilite(responsabilite: StructureFonction) {
     return this.httpSrv.get(this.routePrefix + 'responsabilite/' + responsabilite.id);
   }
+  findNonExpiree() {
+    return this.httpSrv.get(this.routePrefix + 'fonction-non-expiree');
+  }
 
 }
