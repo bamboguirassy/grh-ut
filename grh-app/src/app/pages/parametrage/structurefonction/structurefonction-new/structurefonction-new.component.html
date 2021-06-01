@@ -10,7 +10,7 @@
       <tc-form-group>
         <tc-form-label>Fonctions</tc-form-label>
         <nz-select (ngModelChange)="onFonctionSelected($event)" style="width: 100%;"
-          (nzOpenChange)="fetchNotBindedFonctions()" nzMode="default" [nzAllowClear]="true" [nzShowSearch]="true" 
+          (nzOpenChange)="fetchNotBindedFonctions()" nzMode="default" [nzAllowClear]="true" [nzShowSearch]="true"
           name="fonctions" nzPlaceHolder="Selectionner le poste principal" [(ngModel)]="selectedFonctions">
           <ng-container *ngFor="let fonction of fonctions">
             <nz-option *ngIf="!fetching" [nzLabel]="fonction?.nom" [nzValue]="fonction">
@@ -41,6 +41,21 @@
       </tc-switcher>
     </ng-template>
   </tc-table-col>
+  <tc-table-col [columnTitle]="'Durée limité'" [columnName]="'dl'" [enableSorting]="true">
+    <ng-template #tableTDTemplate let-value let-row>
+      <nz-radio-group [(ngModel)]="isLimited">
+        <label nz-radio [nzValue]="true">Oui</label>
+        <label nz-radio [nzValue]="false">Non</label>
+      </nz-radio-group>
+    </ng-template>
+  </tc-table-col>
+  <tc-table-col *ngIf="isLimited" [columnTitle]="'Durrée en mois'" [columnName]="'duree'" [enableSorting]="true">
+    <ng-template #tableTDTemplate let-value let-row>
+      <tc-input type="number" [(ngModel)]="duree" name="dureeEnMois" id="dureeEnMois" #dureeEnMois="ngModel">
+      </tc-input>
+    </ng-template>
+  </tc-table-col>
+
 </tc-table>
 
 
