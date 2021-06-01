@@ -22,7 +22,7 @@ import { AffectationService } from 'src/app/pages/gestionemploye/affectation/aff
 export class StructureFonctionListComponent extends BasePageComponent<StructureFonction> implements OnInit, OnDestroy {
 
   @Input() structure: Structure;
-  @Output() assignedFunction: EventEmitter<any> = new EventEmitter<any>();
+  @Output() functionStateChange: EventEmitter<any> = new EventEmitter<any>();
   structureFonctionActive: StructureFonction;
   fonctionEmploye: FonctionEmploye = new FonctionEmploye();
   employes: Employe[] = [];
@@ -31,6 +31,7 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
   isAffectation = false;
   currentFonctionEmploye: FonctionEmploye;
   affectation = new Affectation();
+  canChooseDateFin = false;
 
   constructor(store: Store<IAppState>, public employeSrv: EmployeService,
     public fonctionEmployeSrv: FonctionEmployeService,
@@ -154,6 +155,7 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
             });
         }).then((updatedFe: any) => {
           this.currentFonctionEmploye = updatedFe;
+          this.functionStateChange.emit();
           this.structureFonctionSrv.httpSrv.toastr.success('Modification effectuée avec succès.');
           Swal.close();
         }).catch(err => {
@@ -189,7 +191,7 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
           .subscribe((createdFonctionEmploye: any) => {
             this.currentFonctionEmploye = createdFonctionEmploye;
             if (!this.isAffectation) {
-              this.assignedFunction.emit();
+              this.functionStateChange.emit();
             }
             if (this.isAffectation && (this.structure.id !== this.selectedEmploye.structure.id || this.selectedEmploye.structure === null)) {
               this.executeAffectationTrigger();
@@ -217,7 +219,7 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
               .employeSrv
               .update(this.selectedEmploye)
               .subscribe(data => {
-                this.assignedFunction.emit();
+                this.functionStateChange.emit();
               }, err => {
                 this.structureFonctionSrv.httpSrv.catchError(err);
               })

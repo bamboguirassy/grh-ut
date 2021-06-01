@@ -34,6 +34,6 @@
     </ng-template>
 
     <ng-template #fonctionModalContent>
-        <app-structurefonction-list (assignedFunction)="findStructures()" [structure]="selectedStructure" ></app-structurefonction-list>
+        <app-structurefonction-list (functionStateChange)="findStructures()" [structure]="selectedStructure" ></app-structurefonction-list>
     </ng-template>
 </nz-modal>

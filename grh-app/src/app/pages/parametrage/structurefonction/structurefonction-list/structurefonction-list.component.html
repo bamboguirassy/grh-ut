@@ -47,12 +47,25 @@
             <span class="badge badge-primary" style="font-style: italic; font-size: 15px;">
               {{ currentFonctionEmploye?.employe?.matricule }}
             </span>
-
-            <nz-radio-group class="ml-3" (ngModelChange)="disableCurrentFonctionEmploye($event)" [(ngModel)]="currentFonctionEmploye.etat" nzSize="small">
-              <!--<label nz-radio-button [nzDisabled]="currentFonctionEmploye.etat" [nzValue]="true">Activer</label>-->
-              <label nz-radio-button [nzDisabled]="!currentFonctionEmploye.etat" [nzValue]="false">Désactiver</label>
-            </nz-radio-group>
           </p>
+          <p>
+            <button class="ml-3" tc-button afterIcon="icofont-close-squared-alt"
+              [view]="canChooseDateFin ? 'error' : 'accent'" [size]="'sm'"
+              (click)="canChooseDateFin = !canChooseDateFin">{{ canChooseDateFin ? 'Annuler' : 'Désactiver'}}</button>
+          </p>
+          <div class="col-12 pl-4 pr-4" *ngIf="canChooseDateFin">
+            <tc-form-group>
+              <tc-form-label>Date de Fin</tc-form-label>
+              <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required [(ngModel)]="fonctionEmploye.dateFin" name="dateFin"
+                id="dateFin" #dateFin="ngModel">
+              </nz-date-picker>
+            </tc-form-group>
+            <button class="ml-3" [disabled]="dateFin?.invalid" tc-button afterIcon="icofont-check-circled"
+              [view]="'accent'" [size]="'sm'"
+              (click)="disableCurrentFonctionEmploye()">
+              Valider
+            </button>
+          </div>
           <!-- <p>lorem ipsum dolor</p>-->
           <!--<div class="social" *ngIf="!currentFonctionEmploye">
             <button tc-button [afterIcon]="canChooseEmploye ? 'icofont-minus-circle' : 'icofont-plus'"
