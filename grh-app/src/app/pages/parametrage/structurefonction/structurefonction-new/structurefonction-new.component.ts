@@ -57,13 +57,8 @@ export class StructureFonctionNewComponent implements OnInit {
     this.isModalVisible = false;
   }
 
-  onFonctionSelected(fonctions: Array<any>) {
-    if (this.structure.structureFonctions.some(sf => sf.etat === true) || this.structureFonctions.some(sf => sf.etat === true)) {
-      this.structureFonctions = fonctions.map(f => ({ etat: false, fonction: f, structure: this.structure } as any));
-    } else {
-      this.structureFonctions = fonctions.map(f => ({ etat: true, fonction: f, structure: this.structure } as any));
-
-    }
+  onFonctionSelected(fonction: any) {
+    this.structureFonctions = [{ etat: false, fonction: fonction, structure: this.structure } as any];
   }
 
   fetchNotBindedFonctions() {
@@ -76,7 +71,7 @@ export class StructureFonctionNewComponent implements OnInit {
       .subscribe((fonctions: any) => {
         this.fonctions = fonctions;
       }, err => {
-        this.fonctionSrv.httpSrv.handleError(err);
+        this.fonctionSrv.httpSrv.catchError(err);
       });
   }
 }
