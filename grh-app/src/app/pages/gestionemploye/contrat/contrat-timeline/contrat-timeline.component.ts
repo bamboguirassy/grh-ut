@@ -12,6 +12,7 @@ import { Employe } from '../../employe/employe';
 })
 export class ContratTimelineComponent implements OnInit {
   @Input() employe: Employe;
+  @Input() contrats: any;
   items:Contrat[]=[];
   tab = [];
   secondViewBorder = 'warning';
@@ -19,19 +20,13 @@ export class ContratTimelineComponent implements OnInit {
   constructor(public contratSrv: ContratService, public datePipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.findByEmploye();
+    
+    this.setTimeline();
   }
 
-  findByEmploye() {
-    this.contratSrv.findByEmploye(this.employe)
-    .subscribe((data: any)=>{
-      this.items = data;
-      this.setTimeline();
-            
-    },err=>this.contratSrv.httpSrv.catchError(err));
-  }
+  
   setTimeline() {
-    const sectionData = this.items.map((i: any) => ({
+    const sectionData = this.contrats.map((i: any) => ({
       date: `${i.dateDebut?`${this.datePipe.
         transform(`${i.dateDebut}` , 'dd/MM/yyyy')}`
         :'Indefini'} - ${i.boolean?'En Cours'
