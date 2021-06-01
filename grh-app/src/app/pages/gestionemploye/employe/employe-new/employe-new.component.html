@@ -345,16 +345,16 @@
                             </div>
                             <div class="col-12 col-md-6 col-lg-4">
                                 <tc-form-group>
-                                    <tc-form-label>Grade</tc-form-label>
-                                    <nz-select style="width: 100%" nzPlaceHolder="Sélectionner grade" nzAllowClear
-                                        nzShowSearch [(ngModel)]="selectedGrade" name="grade" id="grade"
-                                        #grade="ngModel">
-                                        <ng-container *ngFor="let grade of grades">
-                                            <nz-option [nzValue]="grade" [nzLabel]="grade.classification"></nz-option>
+                                    <tc-form-label>Indice</tc-form-label>
+                                    <nz-select style="width: 100%" nzPlaceHolder="Sélectionner l'indice courant" nzAllowClear
+                                        nzShowSearch [(ngModel)]="selectedGrade" name="indice" id="indice"
+                                        #indice="ngModel">
+                                        <ng-container *ngFor="let indice of indices">
+                                            <nz-option [nzValue]="indice" [nzLabel]="indice.classification"></nz-option>
                                         </ng-container>
                                     </nz-select>
                                     <tc-form-description>
-                                        <app-form-field-validation-message [formField]="grade">
+                                        <app-form-field-validation-message [formField]="indice">
                                         </app-form-field-validation-message>
                                     </tc-form-description>
                                 </tc-form-group>

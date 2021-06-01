@@ -81,18 +81,13 @@ export class EmployeNewComponent implements OnInit {
       this.entity.mutuelleSante = this.selectedMutuelleSante.id;
     }
     if (this.selectedGrade) {
-      this.entity.grade = this.selectedGrade.id;
+      this.entity.indice = this.selectedGrade.id;
     }
-    this.entity.nationalite = this.selectedNationalite.id;
-    this.entity.typeEmploye = this.typeEmploye.id;
     if(this.selectedStructure) {
       this.entity.structure = this.selectedStructure.id;
     }
+    if(this.selectedProfession) {
     this.entity.profession = this.selectedProfession.id;
-
-
-    if (this.selectedGrade) {
-      this.entity.grade = this.selectedGrade.id;
     }
     if (this.selectedNationalite) {
       this.entity.nationalite = this.selectedNationalite.id;
