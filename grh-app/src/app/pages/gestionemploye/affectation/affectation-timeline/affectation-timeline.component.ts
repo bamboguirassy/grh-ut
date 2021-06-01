@@ -13,25 +13,19 @@ import { AffectationService } from '../affectation.service';
 export class AffectationTimelineComponent implements OnInit {
   @Input() employe: Employe;
   items: Affectation[]=[];
+  @Input() affectations: any;
   tab = [];
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];
   constructor( public affectationSrv: AffectationService, public datePipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.findByEmploye();
+     this.setTimeline();
   }
 
-  findByEmploye() {
-    this.affectationSrv.findByEmploye(this.employe)
-    .subscribe((data: any)=>{
-      this.items = data;
-      this.setTimeline();
-            
-    },err=>this.affectationSrv.httpSrv.catchError(err));
-  }
+ 
   setTimeline() {
-    const sectionData = this.items.map((i: any) => ({
+    const sectionData = this.affectations.map((i: any) => ({
     date: `${i.date?`${this.datePipe.transform(`${i.date}`,'dd/MM/yyyy')}` :'Indefini'}`,
       title: i.structure.nom,
       content: i.poste,

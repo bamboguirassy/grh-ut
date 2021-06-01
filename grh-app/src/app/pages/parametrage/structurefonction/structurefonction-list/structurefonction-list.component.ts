@@ -187,7 +187,7 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
     if(this.structureFonctionActive.duree > 0) {
       let dateDeb = new Date(this.fonctionEmploye.datePriseFonction);
       const duree = +this.structureFonctionActive.duree;
-      let dateFin = dateDeb.setMonth(dateDeb.getMonth() + duree);
+      let dateFin = new Date(dateDeb.setMonth(dateDeb.getMonth() + duree)) ;
       this.fonctionEmploye.dateFin = dateFin as any;
     }
     this
