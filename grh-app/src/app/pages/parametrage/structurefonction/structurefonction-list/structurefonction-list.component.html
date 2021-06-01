@@ -47,6 +47,11 @@
             <span class="badge badge-primary" style="font-style: italic; font-size: 15px;">
               {{ currentFonctionEmploye?.employe?.matricule }}
             </span>
+
+            <nz-radio-group class="ml-3" (ngModelChange)="disableCurrentFonctionEmploye($event)" [(ngModel)]="currentFonctionEmploye.etat" nzSize="small">
+              <!--<label nz-radio-button [nzDisabled]="currentFonctionEmploye.etat" [nzValue]="true">Activer</label>-->
+              <label nz-radio-button [nzDisabled]="!currentFonctionEmploye.etat" [nzValue]="false">Désactiver</label>
+            </nz-radio-group>
           </p>
           <!-- <p>lorem ipsum dolor</p>-->
           <!--<div class="social" *ngIf="!currentFonctionEmploye">
@@ -71,7 +76,8 @@
                   nzPlaceHolder="Sélectionner l'employé'" nzAllowClear nzShowSearch [(ngModel)]="selectedEmploye"
                   name="classe" id="classe" #classe="ngModel">
                   <ng-container *ngFor="let employe of employes">
-                    <nz-option [nzValue]="employe" [nzLabel]="employe?.prenoms + ' ' + employe?.nom"></nz-option>
+                    <nz-option [nzValue]="employe"
+                      [nzLabel]="employe?.prenoms + ' ' + employe?.nom + ' - ' + employe?.matricule"></nz-option>
                   </ng-container>
                 </nz-select>
                 <tc-form-description>
@@ -96,8 +102,8 @@
               </tc-form-group>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-6">
-              <button tc-button [afterIcon]="'icofont-minus-circle'" (click)="assignFunction()"
-                [disabled]="form?.invalid" [view]="'accent'" [square]="true" [tcShape]="300" [size]="'sm'">
+              <button tc-button [afterIcon]="'icofont-check-circled'" (click)="assignFunction()"
+                [disabled]="form?.invalid" [view]="'accent'" [square]="false" [tcShape]="800" [size]="'sm'">
                 Assigner
               </button>
             </div>
