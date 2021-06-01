@@ -5,6 +5,7 @@ import { BamboAbstractObject } from './../../../shared/classes/bambo-abstract-ob
 
 export class StructureFonction extends BamboAbstractObject {
     etat: boolean;
+    duree: number;
     structure: Structure;
     fonction: Fonction;
     fonctionEmployes: FonctionEmploye[];
