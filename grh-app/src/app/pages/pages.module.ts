@@ -4,12 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { ChartsModule } from 'ng2-charts';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { NgxEchartsModule } from 'ngx-echarts';
-import * as echarts from 'echarts';
 import { AgmCoreModule } from '@agm/core';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { FullCalendarModule } from '@fullcalendar/angular';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -42,9 +38,12 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+
 import { SharedModule } from '../shared/shared.module';
 import { NgxOrgChartModule } from 'ngx-org-chart';
 import { RecrutementGenreComponent } from './dashboards/recrutement/recrutement-genre/recrutement-genre.component';
@@ -187,8 +186,17 @@ import { GradeStatsViewMainComponent } from './dashboards/grade/grade-stats-view
 import { EmployeStatsViewMainComponent } from './dashboards/typeemploye/employe-stats-view-main/employe-stats-view-main.component';
 import { AffectationTimelineComponent } from './gestionemploye/affectation/affectation-timeline/affectation-timeline.component';
 import { DiplomeStatsComponent } from './dashboards/diplome/diplome-stats/diplome-stats.component';
+import { EmployeGlobalComponent } from './gestionemploye/employe/employe-global/employe-global.component';
 import { ContratEnExpirationComponent } from './gestionemploye/contrat/contrat-en-expiration/contrat-en-expiration.component';
-import { EmployeListAllComponent } from './gestionemploye/employe/employe-list-all/employe-list-all.component';
+import { DiplomeMainDashboardComponent } from './dashboards/diplome/diplome-main-dashboard/diplome-main-dashboard.component';
+import { CommissionListComponent } from './parametrage/commission/commission-list/commission-list.component';
+import { CommissionEditComponent } from './parametrage/commission/commission-edit/commission-edit.component';
+import { CommissionShowComponent } from './parametrage/commission/commission-show/commission-show.component';
+import { CommissionNewComponent } from './parametrage/commission/commission-new/commission-new.component';
+import { MembreCommissionListComponent } from './gestionemploye/membrecommission/membrecommission-list/membrecommission-list.component';
+import { MembreCommissionEditComponent } from './gestionemploye/membrecommission/membrecommission-edit/membrecommission-edit.component';
+import { MembreCommissionShowComponent } from './gestionemploye/membrecommission/membrecommission-show/membrecommission-show.component';
+import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/membrecommission-new/membrecommission-new.component';
 
 
 
@@ -198,17 +206,12 @@ import { EmployeListAllComponent } from './gestionemploye/employe/employe-list-a
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    
+
     ChartsModule,
-    NgxChartsModule,
-    NgxEchartsModule.forRoot({
-      echarts: { init: echarts.init }
-    }),
     AgmCoreModule.forRoot({
       apiKey: environment.googleMapApiKey
     }),
     LeafletModule,
-    FullCalendarModule,
     NzDatePickerModule,
     NzDividerModule,
     NzTableModule,
@@ -233,6 +236,7 @@ import { EmployeListAllComponent } from './gestionemploye/employe/employe-list-a
     NzInputModule,
     NzListModule,
     NzModalModule,
+    NzStepsModule,
     NzPopconfirmModule,
     NzSelectModule,
     NzTableModule,
@@ -244,7 +248,8 @@ import { EmployeListAllComponent } from './gestionemploye/employe/employe-list-a
     // imports all pipes module
     NgPipesModule,
     NzRadioModule,
-    NzIconModule
+    NzIconModule,
+    NzToolTipModule
 
   ],
   declarations: [
@@ -324,6 +329,11 @@ import { EmployeListAllComponent } from './gestionemploye/employe/employe-list-a
     EmployeEditComponent,
     EmployeShowComponent,
     EmployeNewComponent,
+    // commission components
+    CommissionListComponent,
+    CommissionEditComponent,
+    CommissionShowComponent,
+    CommissionNewComponent,
     // adresse components
     AdresseListComponent,
     AdresseEditComponent,
@@ -354,6 +364,12 @@ import { EmployeListAllComponent } from './gestionemploye/employe/employe-list-a
     FonctionEmployeShowComponent,
     FonctionEmployeCloneComponent,
     FonctionEmployeNewComponent,
+
+    // membrecommission components
+    MembreCommissionListComponent,
+    MembreCommissionEditComponent,
+    MembreCommissionShowComponent,
+    MembreCommissionNewComponent,
     // gcategorie components
     GCategorieListComponent,
     GCategorieEditComponent,
@@ -374,6 +390,7 @@ import { EmployeListAllComponent } from './gestionemploye/employe/employe-list-a
     GNiveauEditComponent,
     GNiveauShowComponent,
     GNiveauNewComponent,
+
     // profession components
     ProfessionListComponent,
     ProfessionEditComponent,
@@ -408,7 +425,7 @@ import { EmployeListAllComponent } from './gestionemploye/employe/employe-list-a
     StructureFonctionNewComponent,
     GradeManagerComponent,
     DiplomeEmployeTimelineComponent,
-    
+
     // affectation components
     AffectationListComponent,
     AffectationEditComponent,
@@ -431,8 +448,9 @@ import { EmployeListAllComponent } from './gestionemploye/employe/employe-list-a
     EmployeStatsViewMainComponent,
     AffectationTimelineComponent,
     DiplomeStatsComponent,
+    EmployeGlobalComponent,
     ContratEnExpirationComponent,
-    EmployeListAllComponent,
+    DiplomeMainDashboardComponent,
 
   ],
   exports: [],

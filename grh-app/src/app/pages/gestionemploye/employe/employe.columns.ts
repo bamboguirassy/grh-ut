@@ -17,7 +17,7 @@ const employeColumns = [
     { header: 'TelephonePrimaire', field: 'telephonePrimaire', dataKey: 'telephonePrimaire' },
     { header: 'TelephoneSecondaire', field: 'telephoneSecondaire', dataKey: 'telephoneSecondaire' },
 ];
-
+​
 const allowedEmployeFieldsForFilter = [
     'prenoms',
     'nom',
@@ -37,5 +37,5 @@ const allowedEmployeFieldsForFilter = [
     'telephonePrimaire',
     'telephoneSecondaire',
 ];
-
+​
 export { employeColumns, allowedEmployeFieldsForFilter };

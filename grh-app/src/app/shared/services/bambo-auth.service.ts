@@ -194,6 +194,11 @@ export class BamboAuthService {
             title: "Diplomes",
             routing: "diplome",
             enabled: this.checkListAccess('diplome')
+          },
+          {
+            title: "Commissions",
+            routing: "commission",
+            enabled: this.checkListAccess('commission')
           }
         ],
         enabled: false
@@ -245,7 +250,7 @@ export class BamboAuthService {
           },
           
             {
-              title: "Contrat en expiration",
+              title: "Contrats en expiration",
               routing: "contrat-en-expiration",
               enabled: this.checkListAccess('contrat')
             },

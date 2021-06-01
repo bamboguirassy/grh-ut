@@ -19,9 +19,10 @@ import { Profession } from 'src/app/pages/parametrage/profession/profession';
 import { ProfessionService } from 'src/app/pages/parametrage/profession/profession.service';
 
 @Component({
-  selector: 'app-employe-new',
+  selector: 'app-employe-new, nz-demo-steps-step-next',
   templateUrl: './employe-new.component.html',
   styleUrls: ['./employe-new.component.scss']
+ 
 })
 export class EmployeNewComponent implements OnInit {
 
@@ -46,10 +47,16 @@ export class EmployeNewComponent implements OnInit {
   selectedGrade: Grade;
   professions: Profession[] = [];
   selectedProfession: Profession;
-
   areDataLoaded = false;
 
-
+  current = 0;
+  pre(): void {
+    this.current -= 1;
+  }
+  next(): void {
+    this.current += 1;
+  }
+  
   constructor(public employeSrv: EmployeService,
     public router: Router, public paysSrv: PaysService,
     public mutuelleSanteSrv: MutuelleSanteService,

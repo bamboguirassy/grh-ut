@@ -83,46 +83,17 @@ export class OrganigrammeViewComponent implements OnInit {
   }
 
   getChartTreeItem(structure: Structure): OrgchartTreeItem<Structure>[] {
-
-    return [
-      {
-        name: 'Sous structure',
-        cssClass: 'ngx-org-ceo',
-        image: 'assets/img/university.svg',
-        title: 'Sous structure',
-        data: structure,
-        nodeType: 'subStructParent',
-        hasChild: structure.children.length > 0 ? true : false,
-        childs: structure.children.map(struct => ({
-          name: struct.nom,
-          cssClass: 'ngx-org-ceo',
-          image: 'assets/img/university.svg',
-          title: struct.typeEntite.nom,
-          data: struct,
-          hasChild: struct.children.length > 0 ? true : false,
-          nodeType: 'struct',
-          childs: this.getChartTreeItem(struct)
-        }))
-      },
-      {
-        name: 'Fonctions',
-        cssClass: 'ngx-org-ceo',
-        image: 'assets/img/university.svg',
-        title: 'Fonctions associées',
-        data: structure,
-        nodeType: 'fonctionParent',
-        hasChild: structure.structureFonctions.length > 0 ? true : false,
-        childs: structure.structureFonctions.map(sf => ({
-          name: sf.fonction.nom,
-          cssClass: 'ngx-org-ceo',
-          image: 'assets/img/university.svg',
-          title: sf.fonction.etat ? 'Actif' : 'Inactif',
-          data: structure,
-          hasChild: false,
-          nodeType: 'fonction',
-        })) as any
-      }
-    ];
+    return structure.children.map(struct => ({
+      name: struct.nom,
+      cssClass: 'ngx-org-ceo',
+      image: 'assets/img/university.svg',
+      title: struct.structureFonctions.length 
+              ? `${struct?.structureFonctions?.find(sf => sf.etat ).fonction.nom}`
+              : 'Aucun Poste définie',
+      data: struct,
+      nodeType: 'struct',
+      childs: this.getChartTreeItem(struct)
+    }));
   }
 
   buildOrgChart() {

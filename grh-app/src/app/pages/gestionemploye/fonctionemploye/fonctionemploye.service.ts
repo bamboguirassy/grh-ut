@@ -3,6 +3,7 @@ import { BamboAbstractService } from '../../../shared/services/bambo-abstract.se
 import { BamboHttpService } from './../../../shared/services/bambo-http.service';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { StructureFonction } from '../../parametrage/structurefonction/structurefonction';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class FonctionEmployeService extends BamboAbstractService {
 
   findLatest(employe: Employe) {
     return this.httpSrv.get(this.routePrefix + 'employe/' + employe.id + '/latest');
+  }
+
+  findByResponsabilite(responsabilite: StructureFonction) {
+    return this.httpSrv.get(this.routePrefix + 'responsabilite/' + responsabilite.id);
   }
 
 }

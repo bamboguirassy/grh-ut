@@ -56,7 +56,6 @@ export class ProfessionStatsComponent extends DashboardBaseComponent<ProfessionS
     this.chartPlugins = [];
 
     this.chartData = [
-      { data: this.rawChartData.map(r => +r.nbreEmploye), label: 'Nombre employé' },
       { data: this.rawChartData.map(r => +r.nbrHomme), label: 'Homme' },
       { data: this.rawChartData.map(r => +r.nbrFemme), label: 'Femme' }
     ];

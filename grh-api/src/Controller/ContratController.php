@@ -68,7 +68,7 @@ class ContratController extends AbstractController
             $contrat->getEmploye()->setCommentaireSortie($contrat->getCommentaireSurFinContrat());
             $contrat->getEmploye()->setEtat(true);
         }
-        $contrat->setNumero($this->generateNumeroContrat());
+        // $contrat->setNumero($this->generateNumeroContrat());
 
         $entityManager->persist($contrat);
         $entityManager->flush();
@@ -215,27 +215,29 @@ class ContratController extends AbstractController
         $newDate = strtotime($toDay . "+ 3 months");
         $date = date("Y-m-d", $newDate);
         $contratEnExpirations = $em->createQuery('select c from App\Entity\Contrat c 
-        where c.dateFinPrevue <= ?1')
+        where c.dateFinPrevue <= ?1 and c.dateFinPrevue >=?2 and c.etat=?3')
             ->setParameter(1, $date)
+            ->setParameter(2, $toDay)
+            ->setParameter(3, true)
             ->getResult();
         return $contratEnExpirations;
     }
 
 
-    public function generateNumeroContrat()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $toDay = new \DateTime();
-        $numero = $toDay->format('Ymd');
-        $i = 1;
-        // check contrats for unique numero
-        $contrats = $em->getRepository(Contrat::class)
-            ->findByNumero($numero . $i);
-        while (count($contrats) > 0) {
-            $i++;
-            $contrats = $em->getRepository(Contrat::class)
-                ->findByNumero($numero . $i);
-        }
-        return $numero . $i;
-    }
+    // public function generateNumeroContrat()
+    // {
+    //     $em = $this->getDoctrine()->getManager();
+    //     $toDay = new \DateTime();
+    //     $numero = $toDay->format('Ymd');
+    //     $i = 1;
+    //     // check contrats for unique numero
+    //     $contrats = $em->getRepository(Contrat::class)
+    //         ->findByNumero($numero . $i);
+    //     while (count($contrats) > 0) {
+    //         $i++;
+    //         $contrats = $em->getRepository(Contrat::class)
+    //             ->findByNumero($numero . $i);
+    //     }
+    //     return $numero . $i;
+    // }
 }

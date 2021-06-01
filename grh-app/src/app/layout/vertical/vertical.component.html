@@ -1,19 +1,9 @@
-<div
-  class="app-container"
-  [ngClass]="{ boxed: appSettings.boxed, scrolled: scrolled, loaded: loaded }"
-  *ngIf="appSettings"
->
+<div class="app-container" [ngClass]="{ boxed: appSettings.boxed, scrolled: scrolled, loaded: loaded }"
+  *ngIf="appSettings">
   <!-- Horizontal navbar -->
-  <navbar
-    [boxed]="appSettings.boxed"
-    [tcBgColor]="appSettings.topbarBg"
-    [tcColor]="appSettings.topbarColor"
-    [minHeight]="'4.28571429rem'"
-  >
-    <button
-      class="no-style navbar-toggle d-lg-none"
-      (click)="toggleSidebar(true)"
-    >
+  <navbar [boxed]="appSettings.boxed" [tcBgColor]="appSettings.topbarBg" [tcColor]="appSettings.topbarColor"
+    [minHeight]="'4.28571429rem'">
+    <button class="no-style navbar-toggle d-lg-none" (click)="toggleSidebar(true)">
       <span></span><span></span><span></span>
     </button>
 
@@ -26,29 +16,17 @@
   <!-- end Horizontal navbar -->
 
   <!-- Vertical navbar -->
-  <navbar
-    [orientation]="'vertical'"
-    [tcBgColor]="appSettings.sidebarBg"
-    [tcColor]="appSettings.sidebarColor"
-    [opened]="appSettings.sidebarOpened"
-  >
-    <button
-      class="no-style navbar-close icofont-close-line d-lg-none"
-      (click)="toggleSidebar(false)"
-    ></button>
+  <navbar [orientation]="'vertical'" [tcBgColor]="appSettings.sidebarBg" [tcColor]="appSettings.sidebarColor"
+    [opened]="appSettings.sidebarOpened">
+    <button class="no-style navbar-close icofont-close-line d-lg-none" (click)="toggleSidebar(false)"></button>
 
     <logo [src]="'assets/img/logo.svg'" [width]="147" [height]="33"></logo>
 
     <app-menu [menuItems]="menuItems"></app-menu>
 
     <div class="add-patient">
-      <button
-        tc-button
-        [view]="'accent'"
-        [block]="true"
-        [beforeIcon]="'icofont-plus'"
-        (click)="openModal(modalBody, 'Add new patient', modalFooter)"
-      >Add Patient</button>
+      <button tc-button [view]="'accent'" [block]="true" [beforeIcon]="'icofont-plus'"
+        (click)="openModal(modalBody, 'Add new patient', modalFooter)">Add Patient</button>
     </div>
 
     <menu class="assistant-menu">
@@ -90,14 +68,8 @@
         <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
 
         <tc-avatar [src]="currentAvatar"></tc-avatar>
-        <button
-          tc-button
-          [type]="'button'"
-          [afterIcon]="'icofont-ui-user'"
-          [view]="'accent'"
-          [outline]="true"
-          (click)="fileInput.click()"
-        >
+        <button tc-button [type]="'button'" [afterIcon]="'icofont-ui-user'" [view]="'accent'" [outline]="true"
+          (click)="fileInput.click()">
           Select image
         </button>
       </tc-form-group>
@@ -133,9 +105,6 @@
   <ng-template #modalFooter>
     <div class="actions justify-content-between">
       <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Cancel</button>
-      <button tc-button [view]="'info'" [disabled]="patientForm.invalid" (click)="addPatient(patientForm)">
-        Add patient
-      </button>
     </div>
   </ng-template>
 </ng-container>

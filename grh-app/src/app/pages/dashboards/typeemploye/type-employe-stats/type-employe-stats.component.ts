@@ -31,7 +31,7 @@ export class TypeEmployeStatsComponent extends DashboardBaseComponent<TypeEmploy
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Nombres'
+              labelString: "Nombre d'employés"
             }
           },
           xAxes: {
@@ -56,7 +56,6 @@ export class TypeEmployeStatsComponent extends DashboardBaseComponent<TypeEmploy
     this.chartPlugins = [];
 
     this.chartData = [
-      { data: this.rawChartData.map(r => +r.nbreEmploye), label: 'Nombres employé' },
       { data: this.rawChartData.map(r => +r.nbrHomme), label: 'Homme' },
       { data: this.rawChartData.map(r => +r.nbrFemme), label: 'Femme' }
     ];

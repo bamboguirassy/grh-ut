@@ -77,6 +77,7 @@ class FonctionController extends AbstractController
                 JOIN sf.fonction bf
                 WHERE sf.structure = :structure
             )
+            ORDER BY f.nom
         ')->setParameter('structure', $structure)->getResult();
     }
 

@@ -48,11 +48,6 @@ export class ContratNewComponent implements OnInit {
     if (this.selectedTypeContrat) {
       this.entity.typeContrat = this.selectedTypeContrat.id;
     }
-    if (this.entity.etat) {
-      this.entity.motifFin = null;
-      this.entity.dateFinEffective = null;
-      this.entity.commentaireSurFinContrat = null;
-    }
     if (this.entity.typeContrat.code == 'CDI') {
       this.entity.dureeEnMois = null;
       this.entity.dateFinPrevue = null;
@@ -69,14 +64,27 @@ export class ContratNewComponent implements OnInit {
     if (this.entity.dateFinPrevue) {
       this.entity.dateFinPrevue = this.datePipe.transform(this.entity.dateFinPrevue, 'yyyy-MM-dd');
     }
+    if (this.entity.etat) {
+      this.entity.motifFin = null;
+      this.entity.dateFinEffective = null;
+      this.entity.commentaireSurFinContrat = null;
+      this.createContrat();
+    }
+    else if (this.entity.motifFin && this.entity.dateFinEffective) {
+      this.createContrat();
+    }
+  }
+
+  createContrat() {
     this.contratSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
         this.creation.emit(data);
+        this.selectedTypeContrat = null;
         this.initNewContrat();
       }, error => this.contratSrv.httpSrv.catchError(error));
   }
-
+  
   initNewContrat() {
     this.entity = new Contrat();
     this.entity.etat = true;

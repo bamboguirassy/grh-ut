@@ -1,1 +1,15 @@
-
+fieldset {
+    padding: 16px;
+    border: 1px solid rgb(0, 153, 255);
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+}
+legend {
+    color: rgb(255, 255, 255);
+    padding: 3px 6px;
+    text-align: center;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+}

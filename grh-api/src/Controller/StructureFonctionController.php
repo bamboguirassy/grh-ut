@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Utils\Utils;
@@ -48,14 +49,32 @@ class StructureFonctionController extends AbstractController
     }
 
     /**
-     * @Rest\Post(path="/create-multiple", name="structure_fonction_create_multiple")
+     * @Rest\Post(path="/create-multiple/{id}", name="structure_fonction_create_multiple")
      * @Rest\View(statusCode=200)
      * @IsGranted("ROLE_STRUCTUREFONCTION_CREATE")
      */
-    public function createMultiple(Request $request, EntityManagerInterface $entityManager)
+    public function createMultipleByStructure(Request $request, EntityManagerInterface $entityManager, Structure $structure)
     {
         $structureFonctions = Utils::serializeRequestContent($request)['structureFonctions'];
         $createdStructureFonctions = [];
+
+        $associatedStructureFonctions = $entityManager->createQuery('
+            SELECT sf
+            FROM App\Entity\StructureFonction sf
+            WHERE sf.structure = :structure
+                AND sf.etat = :etat
+        ')->setParameters([
+            'structure' => $structure,
+            'etat' => true
+        ])->getResult();
+
+        $isSomeActive = false;
+        foreach ($structureFonctions as $structureFonction)
+            if($structureFonction['etat'] == true)
+                $isSomeActive = true;
+
+        if(count($associatedStructureFonctions) && $isSomeActive)
+            throw new BadRequestHttpException("Vous ne pouvez pas paramétrer plus d'une fonction active.");
         foreach ($structureFonctions as $deserializedStructureFonction)
         {
             $structureFonction = new StructureFonction();

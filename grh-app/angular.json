@@ -38,8 +38,6 @@
               "src/assets/css/icofont.min.css",
               "node_modules/leaflet/dist/leaflet.css",
               "node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css",
-              "node_modules/@fullcalendar/core/main.css",
-              "node_modules/@fullcalendar/daygrid/main.css",
               "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "src/assets/scss/ng-zorro-theme.less",
               "node_modules/animate.css/animate.min.css",
@@ -49,7 +47,7 @@
               "node_modules/sweetalert2/dist/sweetalert2.min.css"
             ],
             "scripts": [
-              "node_modules/chart.js/dist/Chart.min.js",
+              "node_modules/chart.js/dist/chart.min.js",
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js",
               "node_modules/sweetalert2/dist/sweetalert2.min.js"
@@ -115,8 +113,6 @@
               "src/assets/css/icofont.min.css",
               "node_modules/leaflet/dist/leaflet.css",
               "node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css",
-              "node_modules/@fullcalendar/core/main.css",
-              "node_modules/@fullcalendar/daygrid/main.css",
               "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "src/assets/scss/ng-zorro-theme.less",
               "node_modules/animate.css/animate.min.css",
@@ -124,7 +120,7 @@
               "src/assets/scss/styles.scss"
             ],
             "scripts": [
-              "node_modules/chart.js/dist/Chart.min.js",
+              "node_modules/chart.js/dist/chart.min.js",
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"
             ],

@@ -1,72 +1,71 @@
-
-<button tc-button [afterIcon]="'icofont-plus'" *ngIf="affectationSrv.resourceName|creable" [view]="'accent'" [square]="true"
-    [tcShape]="500" (click)="openModal()"></button>
+<button tc-button [afterIcon]="'icofont-plus'" *ngIf="affectationSrv.resourceName|creable" [view]="'accent'"
+    [square]="true" [tcShape]="500" (click)="openModal()"></button>
 <app-access-denied *ngIf="!(affectationSrv.resourceName|creable)"></app-access-denied>
 
 <!-- Modal window -->
 <nz-modal nzWidth="80%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
-  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
-  <ng-template #modalBody>
-    <form #form="ngForm" ngNativeValidate>
-              <div class="row">
+    [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+    <ng-template #modalBody>
+        <form #form="ngForm" ngNativeValidate>
+            <div class="row">
                 <div class="col-12 col-md-6">
-                  <tc-form-group>
-                      <tc-form-label>Structure</tc-form-label>
-                      <nz-select [required]="true" style="width: 100%" nzPlaceHolder="Sélectionner type contrat" nzAllowClear
-                          nzShowSearch [(ngModel)]="selectedStructure" name="typeContrat" id="typeContrat"
-                          #typeContrat="ngModel">
-                          <ng-container *ngFor="let structureItem of structures">
-                              <nz-option [nzValue]="structureItem" [nzLabel]="structureItem.nom"></nz-option>
-                          </ng-container>
-                      </nz-select>
-                      <tc-form-description>
-                          <app-form-field-validation-message [formField]="typeContrat">
-                          </app-form-field-validation-message>
-                      </tc-form-description>
-                  </tc-form-group>
-              </div>
-                 <div class="col-12 col-md-6">
-                        <tc-form-group>
-                            <tc-form-label>Date</tc-form-label>
-                           <nz-date-picker [required]="true" [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.date" name="date"
-                                    id="date" #date="ngModel"></nz-date-picker>
-                            <tc-form-description>
-                                <app-form-field-validation-message [formField]="date"></app-form-field-validation-message>
-                            </tc-form-description>
-                        </tc-form-group>
-                    </div>
-                                                                <div class="col-12 col-md-6">
-                        <tc-form-group>
-                            <tc-form-label>Motif</tc-form-label>
-                            <tc-input [(ngModel)]="entity.motif" name="motif" id="motif" #motif="ngModel">
-                            </tc-input>
-                            <tc-form-description>
-                                <app-form-field-validation-message [formField]="motif"></app-form-field-validation-message>
-                            </tc-form-description>
-                        </tc-form-group>
-                    </div>
-                                                                <div class="col-12 col-md-6">
-                        <tc-form-group>
-                            <tc-form-label>Poste</tc-form-label>
-                            <tc-input [required]="true" [(ngModel)]="entity.poste" name="poste" id="poste" #poste="ngModel">
-                            </tc-input>
-                            <tc-form-description>
-                                <app-form-field-validation-message [formField]="poste"></app-form-field-validation-message>
-                            </tc-form-description>
-                        </tc-form-group>
-                    </div>
-                                    </div>
-    </form>
-  </ng-template>
-  <ng-template #modalFooter>
-    <div class="actions justify-content-between">
-        <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
-            (click)="closeModal()">Fermer</button>
-        <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
-            tc-button [view]="'accent'">
-            Enregistrer
-        </button>
-    </div>
-</ng-template>
+                    <tc-form-group>
+                        <tc-form-label>Structure</tc-form-label>
+                        <nz-select [required]="true" style="width: 100%" nzPlaceHolder="Sélectionner la structure"
+                            nzAllowClear nzShowSearch [(ngModel)]="selectedStructure" name="structure"
+                            id="structure" #structure="ngModel">
+                            <ng-container *ngFor="let structureItem of structures">
+                                <nz-option [nzValue]="structureItem" [nzLabel]="structureItem.nom"></nz-option>
+                            </ng-container>
+                        </nz-select>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="structure">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Date</tc-form-label>
+                        <nz-date-picker [required]="true" [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.date"
+                            name="date" id="date" #date="ngModel"></nz-date-picker>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="date"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Motif</tc-form-label>
+                        <tc-input [(ngModel)]="entity.motif" name="motif" id="motif" #motif="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="motif"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Poste</tc-form-label>
+                        <tc-input [required]="true" [(ngModel)]="entity.poste" name="poste" id="poste" #poste="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="poste"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="actions justify-content-between">
+            <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+                (click)="closeModal()">Fermer</button>
+            <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
+                tc-button [view]="'accent'">
+                Enregistrer
+            </button>
+        </div>
+    </ng-template>
 </nz-modal>
 <!-- end Modal window -->

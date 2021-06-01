@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import { EChartOption } from 'echarts';
 import { BasePageComponent } from '../../base-page';
 import { IAppState } from '../../../interfaces/app-state';
 import { HttpService } from '../../../services/http/http.service';
@@ -24,6 +23,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
     { code: 'SR', title: 'Suivi des entrée-sortie ' },
     { code: 'GR', title: 'Répartition des employés selon les grades' },
     { code: 'EM', title: 'Suivi de la répartition des employés' },
+    { code: 'SSDF', title: 'Suivi des statistiques sur les diplomes/formations' },
   ];
   selectedStatType: { code: string, title: string };
 

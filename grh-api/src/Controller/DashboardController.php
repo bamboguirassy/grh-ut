@@ -36,6 +36,7 @@ class DashboardController extends AbstractController
         $types = $em->getRepository('App\Entity\TypeEmploye')
             ->findAll();
         $tab = [];
+        $nombreEmployes=0;
         foreach ($types as $type) {
             $employes = $em->getRepository(Employe::class)
                 ->findByTypeEmploye($type);
@@ -43,11 +44,16 @@ class DashboardController extends AbstractController
             $tab[] = [
                 'total' => count($total),
                 'type' => $type,
-                'nbreEmploye' => count($employes)
+                'nbreEmploye' => count($employes),
+
             ];
+            $nombreEmployes+=count($employes);
+            
         }
-
-
+        $tab [] = [
+            'type' => ['code'=>'Nombre total employés'],
+            'nbreEmploye' => $nombreEmployes
+        ];
         return count($tab) ? $tab : [];
     }
 
@@ -183,8 +189,11 @@ class DashboardController extends AbstractController
             'caisseSociales' => $tabCaisse,
             'anneePrec' => $annees,
             'recrutement' => $tabRecrutement
+<<<<<<< HEAD
             //            'recrutementCourant' => $tabRecrutementCourant,
             //            'recrutementPrecedent' => $tabRecrutementPrecedent
+=======
+>>>>>>> 88fb19157e340929bcb15e92fc3188134740def7
         ];
 
 
@@ -284,13 +293,6 @@ class DashboardController extends AbstractController
             $ancienneteSuivant = $anciennete + 5;
             $label = "{$anciennete} à {$ancienneteSuivant} ans";
             $categories = [];
-            $nombreEmploye = $entityManager->createQuery('
-                SELECT COUNT(e)
-                FROM App\Entity\Employe e
-                WHERE ((DATE_DIFF(CURRENT_DATE(), e.dateRecrutement)) / 365) >= :anciennete 
-                    AND ((DATE_DIFF(CURRENT_DATE(), e.dateRecrutement)) / 365) < :ancienneteSuivant
-           ')->setParameters(['anciennete' => $anciennete, 'ancienneteSuivant' => ($anciennete + 5)])
-                ->getSingleScalarResult();
             foreach ($typeEmployes as $typeEmploye) {
                 $count = $entityManager->createQuery('
                     SELECT COUNT(e)
@@ -308,17 +310,11 @@ class DashboardController extends AbstractController
             }
             $tab[] = [
                 'anciennete' => $label,
-                'nombreEmploye' => $nombreEmploye,
                 'categories' => $categories
             ];
         }
         $label = "25 ans et +";
         $categories = [];
-        $nombreEmploye = $entityManager->createQuery('
-                SELECT COUNT(e)
-                FROM App\Entity\Employe e
-                WHERE ((DATE_DIFF(CURRENT_DATE(), e.dateRecrutement)) / 365) >= 25
-           ')->getSingleScalarResult();
         foreach ($typeEmployes as $typeEmploye) {
             $count = $entityManager->createQuery('
                     SELECT COUNT(e)
@@ -336,7 +332,6 @@ class DashboardController extends AbstractController
 
         $tab[] = [
             'anciennete' => $label,
-            'nombreEmploye' => $nombreEmploye,
             'categories' => $categories
         ];
 
@@ -432,7 +427,6 @@ class DashboardController extends AbstractController
                 ->getSingleScalarResult();
             $tab[] = [
                 'profession' => $profession,
-                'nbreEmploye' => $nombreEmployeHomme + $nombreEmployeFemme,
                 'nbrHomme' => $nombreEmployeHomme,
                 'nbrFemme' => $nombreEmployeFemme,
             ];
@@ -473,7 +467,6 @@ class DashboardController extends AbstractController
             }
             $tab[] = [
                 'typeEmploye' => $typeEmploye,
-                'nbreEmploye' => count($employes),
                 'nbrHomme' => $nbrHomme,
                 'nbrFemme' => $nbrFemme
             ];
@@ -514,7 +507,6 @@ class DashboardController extends AbstractController
                 ->getSingleScalarResult();
             $tab[] = [
                 'structure' => $structure,
-                'nbreEmploye' => $nombreEmployeHomme + $nombreEmployeFemme,
                 'nbrHomme' => $nombreEmployeHomme,
                 'nbrFemme' => $nombreEmployeFemme
             ];
@@ -538,39 +530,50 @@ class DashboardController extends AbstractController
         $tab = [];
         $em = $this->getDoctrine()->getManager();
         foreach ($annees as $annee) {
-            $nombreRecrutement = $em->createQuery('select count(e) 
-            from App\Entity\Employe e where e.dateRecrutement like ?1')
-                ->setParameter(1, $annee . '%')
-                ->getSingleScalarResult();
-            $nombreDemission = $em->createQuery('select count(e) 
-            from App\Entity\Employe e where e.dateSortie like ?1 
+//            $nombreRecrutement = $em->createQuery('select count(e) 
+//            from App\Entity\Employe e where e.dateRecrutement like ?1')
+//                ->setParameter(1, $annee . '%')
+//                ->getSingleScalarResult();
+//            $nombreSortie = $em->createQuery('select count(e) 
+//                from App\Entity\Employe e where e.dateSortie like ?1')
+//                    ->setParameter(1, $annee . '%')
+//                    ->getSingleScalarResult();
+            $nombreDemission = $em->createQuery('select count(e)
+            from App\Entity\Employe e where e.dateSortie like ?1
             and e.motifSortie=?2')
                 ->setParameter(1, $annee . '%')
                 ->setParameter(2, 'Démission')
                 ->getSingleScalarResult();
-            $nombreDepartRetraite = $em->createQuery('select count(e) 
-            from App\Entity\Employe e where e.dateSortie like ?1 
+            $nombreDepartRetraite = $em->createQuery('select count(e)
+            from App\Entity\Employe e where e.dateSortie like ?1
             and e.motifSortie in (?2)')
                 ->setParameter(1, $annee . '%')
                 ->setParameter(2, ['Retraite', 'Retraite Anticipé'])
                 ->getSingleScalarResult();
-            $nombreMisAPied = $em->createQuery('select count(e) 
-            from App\Entity\Employe e where e.dateSortie like ?1 
+            $nombreMisAPied = $em->createQuery('select count(e)
+            from App\Entity\Employe e where e.dateSortie like ?1
             and e.motifSortie=?2')
                 ->setParameter(1, $annee . '%')
                 ->setParameter(2, 'Mis à pied')
                 ->getSingleScalarResult();
-            $nombreExpirationContrat = $em->createQuery('select count(e) 
-            from App\Entity\Employe e where e.dateSortie like ?1 
+            $nombreExpirationContrat = $em->createQuery('select count(e)
+            from App\Entity\Employe e where e.dateSortie like ?1
             and e.motifSortie=?2')
                 ->setParameter(1, $annee . '%')
                 ->setParameter(2, 'Expiration Contrat')
                 ->getSingleScalarResult();
+<<<<<<< HEAD
             $tab[] = [
                 'annee' => $annee, 'nombreRecrutement' => $nombreRecrutement,
                 'nombreDemission' => $nombreDemission, 'nombreDepartRetraite' => $nombreDepartRetraite,
                 'nombreMisAPied' => $nombreMisAPied, 'nombreExpirationContrat' => $nombreExpirationContrat
             ];
+=======
+            $tab[] = ['annee' => $annee, 'nombreDemission' => $nombreDemission,
+                'nombreDepartRetraite' => $nombreDepartRetraite,
+                'nombreMisAPied' => $nombreMisAPied,
+                'nombreExpirationContrat' => $nombreExpirationContrat ];
+>>>>>>> 88fb19157e340929bcb15e92fc3188134740def7
         }
         return $tab;
     }
@@ -662,7 +665,6 @@ class DashboardController extends AbstractController
 
         $dateFin = str_replace('/', '-', $dates['dateFin']);
         $dateFin = date('Y-m-d', strtotime($dateFin));
-        //throw $this->createNotFoundException("Date fin ".$dateDebut);
         $typeEmployes = $em->createQuery('
             SELECT t
             FROM App\Entity\TypeEmploye t
@@ -692,7 +694,6 @@ class DashboardController extends AbstractController
                 ->getSingleScalarResult();
             $tab[] = [
                 'typeEmploye' => $typeEmploye,
-                'nbreEmploye' => $nombreEmployeHomme + $nombreEmployeFemme,
                 'nbrHomme' => $nombreEmployeHomme,
                 'nbrFemme' => $nombreEmployeFemme
             ];
@@ -738,7 +739,6 @@ class DashboardController extends AbstractController
                 ->getSingleScalarResult();
             $tab[] = [
                 'typeEmploye' => $typeEmploye,
-                'nbreEmploye' => $nombreEmployeHomme + $nombreEmployeFemme,
                 'nbrHomme' => $nombreEmployeHomme,
                 'nbrFemme' => $nombreEmployeFemme
             ];
@@ -753,6 +753,7 @@ class DashboardController extends AbstractController
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
+<<<<<<< HEAD
 
     public function countEmployeByContratGroupByTypeContrat(EntityManagerInterface $entityManager)
     {
@@ -780,11 +781,38 @@ class DashboardController extends AbstractController
 
         return count($tab) ? $tab : [];
     }
+=======
+    
+      public function countEmployeByContratGroupByTypeContrat(EntityManagerInterface $entityManager){
+              $em = $this->getDoctrine()->getManager();
+             
+              $typeContrats = $em->createQuery('Select tc FROM App\Entity\TypeContrat tc '
+                      . 'WHERE tc IN (SELECT tyc FROM App\Entity\Contrat c JOIN c.typeContrat tyc ) ')
+                      ->getResult();
+                $tab = [];
+              foreach ($typeContrats as $typeContrat){
+                   $employes= $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '                           
+                      . 'WHERE e IN(select ec FROM App\Entity\Contrat c JOIN c.employe ec where c.typeContrat=:typeContrat) 
+                        ')
+                           ->setParameter('typeContrat', $typeContrat)
+                     ->getSingleScalarResult();
+                   
+                   $tab[]=[
+                      'typeContrat'=>$typeContrat,
+                       'nbreEmploye' =>$employes
+                   ];
+                  
+              }     
+              return count($tab) ? $tab : [];
+          }
+
+>>>>>>> 88fb19157e340929bcb15e92fc3188134740def7
     /**
      * @Rest\Get(path="/employe/count-by-typecontrat-actif", name="employe_count_statistic_by_type_contrat_actif")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
+<<<<<<< HEAD
 
     public function countEmployeByContratGroupByTypeContratActif()
     {
@@ -816,10 +844,34 @@ class DashboardController extends AbstractController
         return count($tab) ? $tab : [];
     }
 
+=======
+      public function countEmployeByContratGroupByTypeContratActif(){
+              $em = $this->getDoctrine()->getManager();
+              $typeContrats = $em->createQuery('Select tc FROM App\Entity\TypeContrat tc '
+                      . 'WHERE tc IN (SELECT tyc FROM App\Entity\Contrat c JOIN c.typeContrat tyc ) ')
+                      ->getResult();
+                $tab = [];
+              foreach ($typeContrats as $typeContrat){
+                  $nbreEmploye = 0;
+                   $employes= $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '                           
+                      . 'WHERE e IN(select ec FROM App\Entity\Contrat c JOIN 
+                          c.employe ec where c.typeContrat=?1 and c.etat=?2) 
+                        ')
+                           ->setParameter(1,$typeContrat)
+                           ->setParameter(2,true)
+                     ->getSingleScalarResult();
+                   $tab[]=[
+                      'typeContrat'=>$typeContrat,
+                       'nbreEmploye' =>$employes
+                   ];
+              } 
+              return count($tab) ? $tab : [];
+        }
+          
+>>>>>>> 88fb19157e340929bcb15e92fc3188134740def7
     /**
      * @Rest\Get(path="/employe/count-by-diplome", name="employe_count_statistic_by_diplome")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
     public function countEmployeByDiplome()
     {
@@ -827,6 +879,7 @@ class DashboardController extends AbstractController
         $diplomes = $em->getRepository(Diplome::class)
             ->findAll();
         $tab = [];
+<<<<<<< HEAD
         foreach ($diplomes as $diplome) {
             $nbreEmploye = $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '
                 . 'WHERE e IN(select de FROM App\Entity\DiplomeEmploye de 
@@ -858,3 +911,36 @@ class DashboardController extends AbstractController
         return $tab;
     }
 }
+=======
+            foreach ($diplomes as $diplome){
+                $nbreEmploye = $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '                           
+                      . 'WHERE e IN(select emp FROM App\Entity\DiplomeEmploye de 
+                          JOIN de.diplome dip 
+                          JOIN de.employe emp 
+                          where dip =?1) 
+                        ')
+                     ->setParameter(1, $diplome)
+                     ->getSingleScalarResult();
+                
+                $tab[]=[
+                      'diplome'=>$diplome,
+                      'nbreEmploye' =>$nbreEmploye                       
+                   ];
+            }
+            $nbreSansDiplome = $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '                           
+                      . 'WHERE e NOT IN(select emp FROM App\Entity\DiplomeEmploye de 
+                          JOIN de.employe emp where emp = e) 
+                        ')
+                    ->getSingleScalarResult();
+            $tab[]=[
+                      'diplome' => ['nom'=>'Sans Diplôme'],
+                      'nbreEmploye' =>$nbreSansDiplome                       
+                   ];
+        return $tab;
+    }
+          
+        
+      
+    
+}
+>>>>>>> 88fb19157e340929bcb15e92fc3188134740def7

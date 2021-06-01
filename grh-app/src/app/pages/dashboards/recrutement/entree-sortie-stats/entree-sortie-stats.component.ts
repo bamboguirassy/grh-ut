@@ -31,11 +31,10 @@ export class EntreeSortieStatsComponent extends DashboardBaseComponent<any> impl
     const chartData: ChartDataset[] = [];
     let annees = this.rawChartData.map((data) => data.annee);
     let groups = [
-      { code: 'nombreRecrutement', label: 'Recrutement' },
-      { code: 'nombreDemission', label: 'Démission' },
-      { code: 'nombreDepartRetraite', label: 'Retraite' },
-      { code: 'nombreMisAPied', label: 'Mis à pied' },
-      { code: 'nombreExpirationContrat', label: 'Contrat expiré' },
+      { code: 'nombreDemission', label: 'Nombre Demission' },
+      { code: 'nombreDepartRetraite', label: 'Nombre Depart Retraite' },
+      { code: 'nombreMisAPied', label: 'Nombre Mis A Pied' },
+      { code: 'nombreExpirationContrat', label: 'Nombre Expiration Contrat' }
     ]
     groups.forEach(group => {
       const arr: number[] = [];
@@ -52,7 +51,7 @@ export class EntreeSortieStatsComponent extends DashboardBaseComponent<any> impl
           display: true,
           scaleLabel: {
             display: true,
-            labelString: 'Nombres'
+            labelString: "Nombre d'employés"
           }
         },
         xAxes: {
@@ -66,7 +65,7 @@ export class EntreeSortieStatsComponent extends DashboardBaseComponent<any> impl
       plugins: {
         title: {
           display: true,
-          text: 'Évolution des entrées-sorties pour les 7 dernières années'
+          text: 'Évolution des entrée-sortie pour les 7 dernières années'
         }
       }
 
