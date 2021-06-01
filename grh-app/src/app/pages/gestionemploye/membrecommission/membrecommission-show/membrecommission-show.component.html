@@ -18,8 +18,7 @@
                     view="error" beforeIcon="icofont-trash" class=" float-right ml-1"></button>
                 <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
                     beforeIcon="icofont-refresh"></button>
-                <button tc-button class="float-right" (click)="location.back()"
-                    beforeIcon="icofont-reply"></button>
+                <button tc-button class="float-right" (click)="location.back()" beforeIcon="icofont-reply"></button>
             </div>
         </div>
     </tc-card>
@@ -27,42 +26,42 @@
         <div class="col-12 col-md-4">
             <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
                 <table class="table">
-                                                                                                <tr>
-                            <th>Fonction</th>
-                            <td>
-                                <span *ngIf="entity?.fonction">{{ entity?.fonction }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.fonction">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>DateIntegration</th>
-                            <td>
-                                <span *ngIf="entity?.dateIntegration">{{ entity?.dateIntegration }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.dateIntegration">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Statut</th>
-                            <td>
-                                <span *ngIf="entity?.statut">{{ entity?.statut }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.statut">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>DateSortie</th>
-                            <td>
-                                <span *ngIf="entity?.dateSortie">{{ entity?.dateSortie }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.dateSortie">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>MotifSortie</th>
-                            <td>
-                                <span *ngIf="entity?.motifSortie">{{ entity?.motifSortie }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.motifSortie">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                    </table>
+                    <tr>
+                        <th>Fonction</th>
+                        <td>
+                            <span *ngIf="entity?.fonction">{{ entity?.fonction }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.fonction">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>DateIntegration</th>
+                        <td>
+                            <span *ngIf="entity?.dateIntegration">{{ entity?.dateIntegration }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.dateIntegration">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Statut</th>
+                        <td>
+                            <span *ngIf="entity?.statut">{{ entity?.statut }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.statut">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>DateSortie</th>
+                        <td>
+                            <span *ngIf="entity?.dateSortie">{{ entity?.dateSortie }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.dateSortie">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>MotifSortie</th>
+                        <td>
+                            <span *ngIf="entity?.motifSortie">{{ entity?.motifSortie }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.motifSortie">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                </table>
             </tc-card>
         </div>
     </div>
