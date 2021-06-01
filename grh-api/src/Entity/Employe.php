@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * Employe
@@ -157,6 +158,7 @@ class Employe
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="grade", referencedColumnName="id")
      * })
+     * @MaxDepth(1)
      */
     private $grade;
 
@@ -167,6 +169,7 @@ class Employe
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="mutuelle_sante", referencedColumnName="id")
      * })
+     * @MaxDepth(1)
      */
     private $mutuelleSante;
 
@@ -192,6 +195,7 @@ class Employe
 
     /**
      * @ORM\ManyToOne(targetEntity=Profession::class)
+     * @MaxDepth(1)
      */
     private $profession;
 
@@ -225,6 +229,7 @@ class Employe
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="structure_id", referencedColumnName="id",nullable=true)
      * })
+     * @MaxDepth(1)
      */
     private $structure;
 
