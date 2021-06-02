@@ -40,10 +40,10 @@ export class EmployeNewComponent implements OnInit {
   selectedCaisseSociale: CaisseSociale;
   mutuelleSantes: MutuelleSante[] = [];
   selectedMutuelleSante: MutuelleSante;
-  grades: Grade[] = [];
+  indices: Grade[] = [];
   structures: Structure[] = [];
   selectedStructure: Structure;
-  selectedGrade: Grade;
+  selectedIndice: Grade;
   professions: Profession[] = [];
   selectedProfession: Profession;
   areDataLoaded = false;
@@ -80,8 +80,8 @@ export class EmployeNewComponent implements OnInit {
     if (this.selectedMutuelleSante) {
       this.entity.mutuelleSante = this.selectedMutuelleSante.id;
     }
-    if (this.selectedGrade) {
-      this.entity.indice = this.selectedGrade.id;
+    if (this.selectedIndice) {
+      this.entity.indice = this.selectedIndice.id;
     }
     if(this.selectedStructure) {
       this.entity.structure = this.selectedStructure.id;
@@ -124,7 +124,7 @@ export class EmployeNewComponent implements OnInit {
       this.findNationalites();
       this.findCaisseSociales();
       this.findMutuelleSantes();
-      this.findGrades();
+      this.findIndices();
       this.findStructures();
       this.areDataLoaded = true;
     }
@@ -168,10 +168,10 @@ export class EmployeNewComponent implements OnInit {
       }, err => this.caisseSocialeSrv.httpSrv.catchError(err));
   }
 
-  findGrades() {
+  findIndices() {
     this.gradeSrv.findByTypeEmploye(this.typeEmploye)
       .subscribe((data: any) => {
-        this.grades = data;
+        this.indices = data;
       }, err => this.gradeSrv.httpSrv.catchError(err));
   }
 
