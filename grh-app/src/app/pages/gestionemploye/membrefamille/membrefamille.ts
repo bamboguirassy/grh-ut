@@ -5,6 +5,7 @@ export class MembreFamille extends BamboAbstractObject {
     prenoms: string;
     nom: string;
     dateNaissance: string;
+    dateMariage: string;
     lieuNaissance: string;
     genre: string;
     lienParente: string;
