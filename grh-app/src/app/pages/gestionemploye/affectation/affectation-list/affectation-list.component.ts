@@ -20,6 +20,8 @@ export class AffectationListComponent implements OnInit, OnDestroy {
   items: Affectation[]=[];
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];
+  @Input() diplayTimeline: boolean = true;
+
 
   constructor(store: Store<IAppState>,
               public affectationSrv: AffectationService) {

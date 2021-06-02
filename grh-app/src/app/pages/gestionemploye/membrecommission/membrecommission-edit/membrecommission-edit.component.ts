@@ -67,7 +67,6 @@ export class MembreCommissionEditComponent implements OnInit, OnDestroy {
     this.prepareUpdate();
     this.membreCommissionSrv.update(this.entity)
       .subscribe((resp: any) => {
-        console.log(this.entity);
         this.closeModal();
         this.modification.emit(resp);
       }, (err) => {

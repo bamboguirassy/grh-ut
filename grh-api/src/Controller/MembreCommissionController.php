@@ -51,7 +51,7 @@ class MembreCommissionController extends AbstractController
         ->findBy(['employe' => $membreCommission->getEmploye()]);
         foreach ($commissionEmployes as $commissionEmploye) {
             if ($membreCommission->getCommission()==$commissionEmploye->getCommission()) {
-                throw $this->createAccessDeniedException("Cet employé est déja membre de cette commission");
+                throw $this->createAccessDeniedException("Cet employé est déjà membre de cette commission");
             }
         }
         $entityManager->persist($membreCommission);

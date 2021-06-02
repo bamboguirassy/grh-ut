@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -48,6 +50,12 @@ class CaisseSociale
      * @ORM\Column(name="filepath", type="text", length=65535, nullable=true)
      */
     private $filepath;
+
+
+    public function __construct()
+    {
+        $this->employes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -98,6 +106,36 @@ class CaisseSociale
     public function setFilepath(?string $filepath): self
     {
         $this->filepath = $filepath;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Employe[]
+     */
+    public function getEmployes(): Collection
+    {
+        return $this->employes;
+    }
+
+    public function addEmploye(Employe $employe): self
+    {
+        if (!$this->employes->contains($employe)) {
+            $this->employes[] = $employe;
+            $employe->setCaisseSociale($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmploye(Employe $employe): self
+    {
+        if ($this->employes->removeElement($employe)) {
+            // set the owning side to null (unless already changed)
+            if ($employe->getCaisseSociale() === $this) {
+                $employe->setCaisseSociale(null);
+            }
+        }
 
         return $this;
     }
