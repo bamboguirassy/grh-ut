@@ -21,6 +21,8 @@ export class AffectationListComponent implements OnInit, OnDestroy {
   affectations: Affectation[]=[];
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];
+  @Input() displayTimeline: boolean = true;
+
 
   constructor(store: Store<IAppState>,
               public affectationSrv: AffectationService) {

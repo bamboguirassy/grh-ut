@@ -31,6 +31,8 @@ class EmployeType extends AbstractType
             ->add('telephoneSecondaire')
             ->add('caisseSociale')
             ->add('grade')
+            ->add('indice')
+            ->add('diplomeAcademique')
             ->add('mutuelleSante')
             ->add('nationalite')
             ->add('typeEmploye')

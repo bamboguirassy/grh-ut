@@ -13,7 +13,7 @@ import { FonctionEmploye } from '../fonctionemploye';
 export class FonctionemployeTimelineComponent implements OnInit {
   @Input() employe: Employe;
   items: FonctionEmploye[]=[];
-  @Input() set setItem(values){
+  @Input() set setItems(values){
     this.items = values;
     this.setTimeline();
   }

@@ -38,6 +38,15 @@ export class CommissionShowComponent extends BasePageComponent<Commission> imple
     };
   }
 
+  nzStatus(etat: any){
+    return etat == true ? "finish" : "error";
+  }
+
+
+  nzDescription(etat: any){
+    return etat == true ? "Activé" : "Désactivé";
+  }
+
   ngOnInit(): void {
     super.ngOnInit();
     this.findEntity(this.activatedRoute.snapshot.params.id);

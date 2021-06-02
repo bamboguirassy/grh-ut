@@ -1,0 +1,68 @@
+<div *ngIf="isShowable" class="container-fluid">
+    <tc-card [outline]="true" [view]="secondViewBorder" title="Membres de la commission" [tcGradient]="secondGradient">
+        <ng-container *ngIf="items.length != 0; else elseTemplate">
+            <tc-table class="table-scrollable" [itemsPerPage]="15" [rows]="items" [hovered]="true" [pagination]="true"
+                [search]="false">
+                <tc-table-col [columnTitle]="'Matricule'" [columnName]="'employe'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value let-row="row">
+                        <b>{{ value.matricule | uppercase}}</b>
+                        <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
+                    </ng-template>
+                </tc-table-col>
+                <tc-table-col [columnTitle]="'Prénom'" [columnName]="'employe'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value let-row="row">
+                        {{ value.prenoms }}
+                        <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
+                    </ng-template>
+                </tc-table-col>
+                <tc-table-col [columnTitle]="'Nom'" [columnName]="'employe'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value let-row="row">
+                        {{ value.nom }}
+                        <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
+                    </ng-template>
+                </tc-table-col>
+                <tc-table-col [columnTitle]="'Fonction'" [columnName]="'fonction'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value let-row="row">
+                        {{ value }}
+                        <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
+                    </ng-template>
+                </tc-table-col>
+                <tc-table-col [columnTitle]="'Statut'" [columnName]="'statut'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value let-row="row">
+                        <tc-badge view="success" [outline]="true" *ngIf="value">Actif</tc-badge>
+                        <tc-badge view="error" [outline]="true" *ngIf="!value">Inactif</tc-badge>
+                    </ng-template>
+                </tc-table-col>
+                <tc-table-col [columnTitle]="'Date d\'integration'" [columnName]="'dateIntegration'"
+                    [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value let-row="row">
+                        {{ value | date:'dd/MM/yyyy' }}
+                        <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
+                    </ng-template>
+                </tc-table-col>
+                <tc-table-col [columnTitle]="'Date de sortie'" [columnName]="'dateSortie'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value let-row="row">
+                        {{ value | date:'dd/MM/yyyy' }}
+                        <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
+                    </ng-template>
+                </tc-table-col>
+                <tc-table-col [columnTitle]="'Motif sortie'" [columnName]="'motifSortie'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value let-row="row">
+                        {{ value }}
+                        <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
+                    </ng-template>
+                </tc-table-col>
+            </tc-table>
+        </ng-container>
+        <ng-template #elseTemplate>
+            <div class="alert d-flex justify-content-start align-items-center p-2">
+                <div>
+                    <i nz-icon nzType="info-circle" nzTheme="outline" class="mr-3 size-3"></i>
+                </div>
+                <div>
+                    <h5 class="rounded-border">Aucun membre dans la {{ commission.nom | lowercase}}</h5>
+                </div>
+            </div>
+        </ng-template>
+    </tc-card>
+</div>
