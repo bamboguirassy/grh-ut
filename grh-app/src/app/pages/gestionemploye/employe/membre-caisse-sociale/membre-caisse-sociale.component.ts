@@ -19,13 +19,13 @@ export class MembreCaisseSocialeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.caisseSociale);
-    
+    this.findEmploye();
   }
 
   findEmploye() {
     this.employeSrv.findByCaisseSociale(this.caisseSociale).pipe(first())
       .subscribe((data: any) => this.employes = data,
         error => this.employeSrv.httpSrv.catchError(error));
+        console.log(this.employes);
   }
 }
