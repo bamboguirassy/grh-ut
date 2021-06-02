@@ -126,7 +126,7 @@ $employe->setProfession($faker->randomElement($professions));
 
     /**
      * @Rest\Get(path="/caisse-sociale/{id}", name="caisse_sociale_employe",requirements = {"id"="\d+"})
-     * @Rest\View(StatusCode=200)
+     * @Rest\View(StatusCode=200, serializerEnableMaxDepthChecks=true)
      * @IsGranted("ROLE_EMPLOYE_SHOW")
      */
     public function findByCaiseSociale(CaisseSociale $caisseSociale)
