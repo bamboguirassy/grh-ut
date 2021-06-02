@@ -21,7 +21,7 @@ export class CaisseSocialeShowComponent extends BasePageComponent<CaisseSociale>
     public location: Location) {
     super(store, caisseSocialeSrv);
     this.pageData = {
-      title: 'Détails - CaisseSociale',
+      title: 'Détails - Caisse Sociale',
       breadcrumbs: [
         {
           title: 'Accueil',
