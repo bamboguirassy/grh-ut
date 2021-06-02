@@ -21,13 +21,16 @@ export class MembreSyndicatNewComponent implements OnInit {
   @Output() creation: EventEmitter<MembreSyndicat> = new EventEmitter();
   isModalVisible = false;
   @Input() employe: Employe;
-  syndicats: Syndicat[] = [];
+  syndicats: any[] = [];
+  filtreSyndicats: any = [];
   selectedSyndicat: Syndicat;
+  selectedType: any;
 
   constructor(public membreSyndicatSrv: MembreSyndicatService,
     public router: Router, public datePipe: DatePipe,
     public syndicatSrv: SyndicatService) {
     this.entity = new MembreSyndicat();
+
   }
 
   ngOnInit(): void {

@@ -4,12 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { ChartsModule } from 'ng2-charts';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { NgxEchartsModule } from 'ngx-echarts';
-import * as echarts from 'echarts';
 import { AgmCoreModule } from '@agm/core';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { FullCalendarModule } from '@fullcalendar/angular';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -42,9 +38,12 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+
 import { SharedModule } from '../shared/shared.module';
 import { NgxOrgChartModule } from 'ngx-org-chart';
 import { RecrutementGenreComponent } from './dashboards/recrutement/recrutement-genre/recrutement-genre.component';
@@ -163,9 +162,51 @@ import { UserShowComponent } from './parametrage/user/user-show/user-show.compon
 import { NgPipesModule } from 'ng-pipes';
 import { GradeManagerComponent } from './gestiongrade/grade/grade-manager/grade-manager.component';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+<<<<<<< HEAD
 import { MembresMutuellesanteComponent } from './gestionemploye/employe/membres-mutuellesante/membres-mutuellesante.component';
+=======
+import { DiplomeEmployeTimelineComponent } from './gestionemploye/diplomeemploye/diplomeemploye-timeline/diplomeemploye-timeline.component';
+import { AffectationListComponent } from './gestionemploye/affectation/affectation-list/affectation-list.component';
+import { AffectationEditComponent } from './gestionemploye/affectation/affectation-edit/affectation-edit.component';
+import { AffectationNewComponent } from './gestionemploye/affectation/affectation-new/affectation-new.component';
+import { ContratTimelineComponent } from './gestionemploye/contrat/contrat-timeline/contrat-timeline.component';
+import { GradeEmployeGlobalComponent } from './dashboards/grade/grade-employe-global/grade-employe-global.component';
+import { TestComponent } from './tests/test/test.component';
+import { ProfessionStatsComponent } from './dashboards/profession/profession-stats/profession-stats.component';
+import { StructureStatsComponent } from './dashboards/structure/structure-stats/structure-stats.component';
+import { TypeEmployeStatsComponent } from './dashboards/typeemploye/type-employe-stats/type-employe-stats.component';
+import { RecrutementRangeStatsComponent } from './dashboards/recrutement/recrutement-range/recrutement-range-stats/recrutement-range-stats.component';
+import { EntreeSortieStatsComponent } from './dashboards/recrutement/entree-sortie-stats/entree-sortie-stats.component';
+import { DemissionEmployeProfessionAnneeStatsComponent } from './dashboards/recrutement/demission-employe-profession-annee-stats/demission-employe-profession-annee-stats.component';
+import { DemissionEmployeStructureAnneeStatsComponent } from './dashboards/recrutement/demission-employe-structure-annee-stats/demission-employe-structure-annee-stats.component';
+import { TypeContratStatsComponent } from './dashboards/typecontrat/type-contrat-stats/type-contrat-stats.component';
+import { TypeContratActifStatsComponent } from './dashboards/typecontrat/type-contrat-actif-stats/type-contrat-actif-stats.component';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { RecrutementPeriodStatsComponent } from './dashboards/recrutement/recrutement-period/recrutement-period-stats/recrutement-period-stats.component';
+import { AncienneteEmployeComponent } from './dashboards/anciennete/anciennete-employe/anciennete-employe.component';
+import { RecrutementStatsViewMainComponent } from './dashboards/recrutement/recrutement-stats-view-main/recrutement-stats-view-main.component';
+import { GradeStatsViewMainComponent } from './dashboards/grade/grade-stats-view-main/grade-stats-view-main.component';
+import { EmployeStatsViewMainComponent } from './dashboards/typeemploye/employe-stats-view-main/employe-stats-view-main.component';
+import { AffectationTimelineComponent } from './gestionemploye/affectation/affectation-timeline/affectation-timeline.component';
+import { DiplomeStatsComponent } from './dashboards/diplome/diplome-stats/diplome-stats.component';
+import { EmployeGlobalComponent } from './gestionemploye/employe/employe-global/employe-global.component';
+import { ContratEnExpirationComponent } from './gestionemploye/contrat/contrat-en-expiration/contrat-en-expiration.component';
+import { DiplomeMainDashboardComponent } from './dashboards/diplome/diplome-main-dashboard/diplome-main-dashboard.component';
+import { CommissionListComponent } from './parametrage/commission/commission-list/commission-list.component';
+import { CommissionEditComponent } from './parametrage/commission/commission-edit/commission-edit.component';
+import { CommissionShowComponent } from './parametrage/commission/commission-show/commission-show.component';
+import { CommissionNewComponent } from './parametrage/commission/commission-new/commission-new.component';
+import { MembreCommissionListComponent } from './gestionemploye/membrecommission/membrecommission-list/membrecommission-list.component';
+import { MembreCommissionEditComponent } from './gestionemploye/membrecommission/membrecommission-edit/membrecommission-edit.component';
+import { MembreCommissionShowComponent } from './gestionemploye/membrecommission/membrecommission-show/membrecommission-show.component';
+import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/membrecommission-new/membrecommission-new.component';
+import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
+>>>>>>> 84d747ea6544b43592585f128d4d5f82fae6979d
 
 
+import { MembreCommissionEmployeComponent } from './gestionemploye/membrecommission/membre-commission-employe/membre-commission-employe.component';
+import { FonctionemployeTimelineComponent } from './gestionemploye/fonctionemploye/fonctionemploye-timeline/fonctionemploye-timeline.component';
+import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/fonction-en-expiration/fonction-en-expiration.component';
 
 @NgModule({
   imports: [
@@ -175,15 +216,10 @@ import { MembresMutuellesanteComponent } from './gestionemploye/employe/membres-
     RouterModule,
 
     ChartsModule,
-    NgxChartsModule,
-    NgxEchartsModule.forRoot({
-      echarts: { init: echarts.init }
-    }),
     AgmCoreModule.forRoot({
       apiKey: environment.googleMapApiKey
     }),
     LeafletModule,
-    FullCalendarModule,
     NzDatePickerModule,
     NzDividerModule,
     NzTableModule,
@@ -208,6 +244,7 @@ import { MembresMutuellesanteComponent } from './gestionemploye/employe/membres-
     NzInputModule,
     NzListModule,
     NzModalModule,
+    NzStepsModule,
     NzPopconfirmModule,
     NzSelectModule,
     NzTableModule,
@@ -218,7 +255,9 @@ import { MembresMutuellesanteComponent } from './gestionemploye/employe/membres-
     NgxOrgChartModule,
     // imports all pipes module
     NgPipesModule,
-    NzRadioModule
+    NzRadioModule,
+    NzIconModule,
+    NzToolTipModule
 
   ],
   declarations: [
@@ -251,6 +290,7 @@ import { MembresMutuellesanteComponent } from './gestionemploye/employe/membres-
     TypeContratEditComponent,
     TypeContratShowComponent,
     TypeContratNewComponent,
+    ContratTimelineComponent,
     // typedocument components
     TypeDocumentListComponent,
     TypeDocumentEditComponent,
@@ -297,6 +337,11 @@ import { MembresMutuellesanteComponent } from './gestionemploye/employe/membres-
     EmployeEditComponent,
     EmployeShowComponent,
     EmployeNewComponent,
+    // commission components
+    CommissionListComponent,
+    CommissionEditComponent,
+    CommissionShowComponent,
+    CommissionNewComponent,
     // adresse components
     AdresseListComponent,
     AdresseEditComponent,
@@ -327,6 +372,12 @@ import { MembresMutuellesanteComponent } from './gestionemploye/employe/membres-
     FonctionEmployeShowComponent,
     FonctionEmployeCloneComponent,
     FonctionEmployeNewComponent,
+
+    // membrecommission components
+    MembreCommissionListComponent,
+    MembreCommissionEditComponent,
+    MembreCommissionShowComponent,
+    MembreCommissionNewComponent,
     // gcategorie components
     GCategorieListComponent,
     GCategorieEditComponent,
@@ -347,6 +398,7 @@ import { MembresMutuellesanteComponent } from './gestionemploye/employe/membres-
     GNiveauEditComponent,
     GNiveauShowComponent,
     GNiveauNewComponent,
+
     // profession components
     ProfessionListComponent,
     ProfessionEditComponent,
@@ -380,7 +432,42 @@ import { MembresMutuellesanteComponent } from './gestionemploye/employe/membres-
     StructureFonctionListComponent,
     StructureFonctionNewComponent,
     GradeManagerComponent,
+<<<<<<< HEAD
     MembresMutuellesanteComponent
+=======
+    DiplomeEmployeTimelineComponent,
+
+    // affectation components
+    AffectationListComponent,
+    AffectationEditComponent,
+    AffectationNewComponent,
+    GradeEmployeGlobalComponent,
+    TestComponent,
+    ProfessionStatsComponent,
+    StructureStatsComponent,
+    TypeEmployeStatsComponent,
+    RecrutementRangeStatsComponent,
+    EntreeSortieStatsComponent,
+    DemissionEmployeProfessionAnneeStatsComponent,
+    DemissionEmployeStructureAnneeStatsComponent,
+    RecrutementPeriodStatsComponent,
+    TypeContratStatsComponent,
+    TypeContratActifStatsComponent,
+    AncienneteEmployeComponent,
+    RecrutementStatsViewMainComponent,
+    GradeStatsViewMainComponent,
+    EmployeStatsViewMainComponent,
+    AffectationTimelineComponent,
+    DiplomeStatsComponent,
+    EmployeGlobalComponent,
+    ContratEnExpirationComponent,
+    DiplomeMainDashboardComponent,
+    MembreCaisseSocialeComponent,
+    MembreCommissionEmployeComponent,
+    FonctionemployeTimelineComponent,
+    FonctionEnExpirationComponent,
+
+>>>>>>> 84d747ea6544b43592585f128d4d5f82fae6979d
   ],
   exports: [],
   entryComponents: []

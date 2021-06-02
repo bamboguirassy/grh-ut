@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChartDataset, ChartOptions, ChartType, Color } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { finalize } from 'rxjs/operators';
+import { DashboardService } from 'src/app/pages/dashboards/dashboard.service';
 import { SETTINGS } from 'src/environments/settings';
 import { BamboAbstractChartModel } from '../../classes/bambo-abstract-chart-model';
 import { BamboAbstractService } from '../../services/bambo-abstract.service';
@@ -12,7 +13,7 @@ import { BamboAbstractService } from '../../services/bambo-abstract.service';
   styleUrls: ['./dashboard-base.component.scss']
 })
 export class DashboardBaseComponent<T extends BamboAbstractChartModel> implements OnInit {
-  rawChartData: T[];
+  rawChartData: T[]|any;
   chartLabels: Label[] = [];
   chartType: ChartType = 'bar';
   chartLegend = true;
@@ -29,7 +30,7 @@ export class DashboardBaseComponent<T extends BamboAbstractChartModel> implement
   // colors: Color[] = [SETTINGS.sidebarBg, 'red', 'green','orange'];
 
   constructor(
-    public httpSrv: BamboAbstractService,
+    public httpSrv: DashboardService,
   ) {
 
   }
@@ -50,7 +51,7 @@ export class DashboardBaseComponent<T extends BamboAbstractChartModel> implement
       .subscribe((data: any) => {
         this.handlePostFetch(data as T[]);
       }, err => {
-        this.httpSrv.httpSrv.handleError(err);
+        this.httpSrv.httpSrv.catchError(err);
       });
   }
 

@@ -43,6 +43,9 @@ import { DashboardBaseComponent } from './components/dashboard-base/dashboard-ba
     AccessDeniedComponent,
     EmptyTableMessageComponent,
     FormFieldValidationMessageComponent
-  ]
+  ],
+   providers: [
+     ListablePipe,
+   ]
 })
 export class SharedModule { }

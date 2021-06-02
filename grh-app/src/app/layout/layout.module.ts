@@ -20,6 +20,8 @@ import { LoginFormComponent } from './components/login-form';
 import { RegisterFormComponent } from './components/register-form';
 import { NavbarSkeletonComponent } from './components/navbar-skeleton';
 import { SettingsComponent } from './components/settings';
+import { EmployeSearchComponent } from './components/employe-search/employe-search.component';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 
 @NgModule({
   imports: [
@@ -28,7 +30,8 @@ import { SettingsComponent } from './components/settings';
     FormsModule,
     ReactiveFormsModule,
     MalihuScrollbarModule.forRoot(),
-    UIModule
+    UIModule,
+    NzAutocompleteModule
   ],
   declarations: [
     BaseLayoutComponent,
@@ -45,12 +48,14 @@ import { SettingsComponent } from './components/settings';
     LoginFormComponent,
     RegisterFormComponent,
     NavbarSkeletonComponent,
-    SettingsComponent
+    SettingsComponent,
+    EmployeSearchComponent
   ],
   exports: [
     LoginFormComponent,
     RegisterFormComponent,
-    SettingsComponent
+    SettingsComponent,
+    EmployeSearchComponent
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

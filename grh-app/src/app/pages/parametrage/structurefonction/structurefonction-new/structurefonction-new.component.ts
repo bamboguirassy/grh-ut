@@ -25,6 +25,8 @@ export class StructureFonctionNewComponent implements OnInit {
   fetching = false;
   selectedFonctions: Fonction[] = [];
   structureFonctions: StructureFonction[] = [];
+  isLimited = false;
+  duree = 0;
   constructor(public structureFonctionSrv: StructureFonctionService, public fonctionSrv: FonctionService,
     public router: Router) {
     this.entity = new StructureFonction();
@@ -36,11 +38,14 @@ export class StructureFonctionNewComponent implements OnInit {
   save() {
     this
       .structureFonctionSrv
-      .createMultiple(this.structureFonctions.map(sf => ({ etat: sf.etat, fonction: sf.fonction.id , structure: this.structure.id } as any) ))
+      .createMultiple(this.structureFonctions.map(sf => ({ etat: sf.etat, fonction: sf.fonction.id, structure: this.structure.id, duree: this.duree } as any)), this.structure)
       .subscribe((data: any) => {
         this.closeModal();
+        this.structure.structureFonctions.concat(data);
         this.creation.emit(data);
         this.entity = new StructureFonction();
+        this.selectedFonctions = [];
+        this.structureFonctions = [];
       }, error => this.structureFonctionSrv.httpSrv.catchError(error));
   }
 
@@ -54,8 +59,8 @@ export class StructureFonctionNewComponent implements OnInit {
     this.isModalVisible = false;
   }
 
-  onFonctionSelected(fonction: Array<any>) {
-    this.structureFonctions = fonction.map(f =>({ etat: false, fonction: f , structure: this.structure } as any))
+  onFonctionSelected(fonction: any) {
+    this.structureFonctions = [{ etat: false, fonction: fonction, structure: this.structure, duree: 0 } as any];
   }
 
   fetchNotBindedFonctions() {
@@ -68,7 +73,7 @@ export class StructureFonctionNewComponent implements OnInit {
       .subscribe((fonctions: any) => {
         this.fonctions = fonctions;
       }, err => {
-        this.fonctionSrv.httpSrv.handleError(err);
+        this.fonctionSrv.httpSrv.catchError(err);
       });
   }
 

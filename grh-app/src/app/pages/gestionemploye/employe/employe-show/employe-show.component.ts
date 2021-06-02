@@ -1,5 +1,5 @@
 import { split } from 'ts-node';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy,ViewChild, ElementRef, Output, EventEmitter, ViewChildren, Input } from '@angular/core';
 import { BasePageComponent } from 'src/app/pages/base-page';
 import { EmployeService } from '../employe.service';
 import { Store } from '@ngrx/store';
@@ -14,12 +14,17 @@ import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
 import { FormGroup } from '@angular/forms';
 import { SETTINGS } from 'src/environments/settings';
 
+
 @Component({
   selector: 'app-employe-show',
   templateUrl: './employe-show.component.html',
   styleUrls: ['./employe-show.component.scss']
 })
 export class EmployeShowComponent extends BasePageComponent<Employe> implements OnInit, OnDestroy {
+  @ViewChild('modalBody', { static: true }) modalBody: ElementRef<any>;
+  @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
+  @ViewChildren('form') form;
+  isModalVisible = false;
   entity: Employe;
   employeForm: FormGroup;
   latestFonction: FonctionEmploye;
@@ -27,18 +32,20 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   filename: any;
   image: any;
   currentAvatar: any;
-  defaultAvatar: string;
   changes: boolean;
   isAdresseLoaded = false;
   isFamilleLoaded = false;
   isSyndicatsLoaded = false;
+  isCommissionsLoaded = false;
   isDocumentsLoaded = false;
   isFonctionsLoaded = false;
   isGradeLoaded = false;
   isDiplomeLoaded = false;
   isContratLoaded = false;
+  isCommissionLoaded = false;
   titre: string;
   topbarBg = SETTINGS.topbarBg;
+  isAffectationLoaded = false;
 
   constructor(store: Store<IAppState>,
     public employeSrv: EmployeService, public fonctionEmployeSrv: FonctionEmployeService,
@@ -62,15 +69,25 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
         }
       ]
     };
-
-
-
-
+    activatedRoute.params.subscribe(() => {
+      this.findEntity(this.activatedRoute.snapshot.params.id);
+      this.isAdresseLoaded = false;
+      this.isFamilleLoaded = false;
+      this.isSyndicatsLoaded = false;
+      this.isCommissionsLoaded = false;
+      this.isDocumentsLoaded = false;
+      this.isFonctionsLoaded = false;
+      this.isGradeLoaded = false;
+      this.isDiplomeLoaded = false;
+      this.isContratLoaded = false;
+      this.isCommissionLoaded = false;
+      this.loadAdressesTab();
+      this.loadFamillesTab();
+    });
   }
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.findEntity(this.activatedRoute.snapshot.params.id);
   }
 
   ngOnDestroy() {
@@ -81,6 +98,8 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     this.title = this.entity?.prenoms + ' ' + this.entity?.nom + ' (' + this.entity?.matricule + ')';
     this.findLatestFonction();
     this.setTitre();
+    this.loadFamillesTab();
+    this.loadAdressesTab();
   }
 
   handlePostDelete() {
@@ -110,25 +129,25 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
         this.fonctionEmployeSrv.httpSrv.handleError(err);
       })
   }
-  updateProfile(form: FormGroup) {
-    if (form.valid) {
-      this.update();
-    }
-  }
+
+  // upload new file
   onFileChanged(inputValue: any) {
     let file: File = inputValue.target.files[0];
     let reader: FileReader = new FileReader();
     reader.onloadend = () => {
       this.currentAvatar = reader.result;
-      this.employeSrv.uploadPhoto(this.currentAvatar.split(',')[1], file.name.split('.')[0])
+      this.employeSrv.uploadPhoto(this.entity, this.currentAvatar.split(',')[1], file.name.split('.')[0])
         .subscribe(
-          (user: any) => {
-            this.employeSrv.toastr.success('votre photo mise à jour !')
+          (data: any) => {
+            this.entity = data;
+            this.handlePostLoad();
+            this.employeSrv.toastr.success('Photo mise à jour !')
           },
           error => this.employeSrv.httpSrv.catchError(error))
     };
     reader.readAsDataURL(file);
   }
+
   loadAdressesTab() {
     this.isAdresseLoaded = true;
   }
@@ -141,7 +160,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     this.isSyndicatsLoaded = true;
   }
 
-  loaderDocumentsTab() {
+  loadDocumentsTab() {
     this.isDocumentsLoaded = true;
   }
 
@@ -159,5 +178,24 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   loadContratsTab() {
     this.isContratLoaded = true;
   }
+
+  loadAffectationsTab() {
+    this.isAffectationLoaded = true;
+  }
+
+  loadCommissionsTab() {
+    this.isCommissionsLoaded = true;
+  }
+
+ // open modal window
+  openModal() {
+    this.isModalVisible = true;
+  }
+
+  // close modal window
+  closeModal() {
+    this.isModalVisible = false;
+  }
+
 
 }

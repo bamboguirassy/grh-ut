@@ -1,0 +1,76 @@
+<tc-card *ngIf="commissionSrv.resourceName|showable" [tcGradient]="lightGradient">
+    <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="align-self-start">
+                <blockquote class="blockquote">
+                    <p class="h4">{{entity?.nom}}</p>
+                </blockquote>
+            </div>
+            <div class="align-self-end">
+                <button *ngIf="commissionSrv.resourceName|editable"
+                    [routerLink]="['/'+orientation,commissionSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+                    class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
+                <button (click)="remove(entity)" *ngIf="commissionSrv.resourceName|deletable" tc-button view="error"
+                    beforeIcon="icofont-trash" class=" float-right ml-1"></button>
+                <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
+                    beforeIcon="icofont-refresh"></button>
+                <button tc-button class="float-right" (click)="location.back()" beforeIcon="icofont-reply"></button>
+            </div>
+        </div>
+    </tc-card>
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <tc-card [outline]="true" *ngIf="entity" [view]="secondViewBorder" title="Plus d'informations"
+                [tcGradient]="secondGradient">
+                <nz-steps [nzCurrent]="4" nzProgressDot nzDirection="vertical">
+                    <nz-step nzTitle="Mission" [nzDescription]="entity.missions"></nz-step>
+                    <nz-step *ngIf="entity.description" nzTitle="Déscription" [nzDescription]="entity.description">
+                    </nz-step>
+                    <nz-step nzTitle="Date de création" [nzDescription]="entity.dateCreation | date:'dd/MM/yyyy'">
+                    </nz-step>
+                    <nz-step nzTitle="Statut" [nzStatus]="nzStatus(entity.etat)"
+                        [nzDescription]="nzDescription(entity.etat)">
+                    </nz-step>
+                </nz-steps>
+
+                <!-- <table class="table">
+                    <tr>
+                        <th>Mission</th>
+                        <td>
+                            <span *ngIf="entity?.missions">{{ entity?.missions }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.missions">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Déscription</th>
+                        <td>
+                            <span *ngIf="entity?.description">{{ entity?.description }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.description">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>État</th>
+                        <td>
+                            <span *ngIf="entity?.etat">
+                                <tc-badge view="success">Acitvée</tc-badge>
+                            </span>
+                            <tc-badge view="error" *ngIf="!entity?.etat">Désactivée</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Date de création</th>
+                        <td>
+                            <span *ngIf="entity?.dateCreation">{{ }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.dateCreation">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                </table> -->
+            </tc-card>
+        </div>
+        <div class="col-12 col-md-8">
+            <app-membre-commission-employe *ngIf="entity" [commission]="entity"></app-membre-commission-employe>
+        </div>
+    </div>
+</tc-card>
+<app-access-denied *ngIf="!(commissionSrv.resourceName|showable)"></app-access-denied>

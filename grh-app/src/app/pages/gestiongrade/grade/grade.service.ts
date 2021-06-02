@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { GClasse } from '../gclasse/gclasse';
 import { first } from 'rxjs/operators';
+import { Grade } from './grade';
+import { TypeEmploye } from '../../parametrage/typeemploye/typeemploye';
 
 @Injectable({
   providedIn: 'root'
@@ -24,4 +26,9 @@ export class GradeService extends BamboAbstractService {
     return this.httpSrv.get(this.routePrefix + 'map/' + classe.id + '/classe');
   }
 
+  findByTypeEmploye(typeEmploye: TypeEmploye){
+    return this.httpSrv.get(this.routePrefix  + typeEmploye.id+ '/typeemploye');
+
+  }
+ 
 }

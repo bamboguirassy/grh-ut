@@ -7,23 +7,20 @@ use App\Entity\Employe;
 use App\Entity\Grade;
 use App\Entity\MutuelleSante;
 use App\Entity\Pays;
+use App\Entity\Profession;
+use App\Entity\Structure;
 use App\Entity\TypeEmploye;
+use App\Entity\MembreFamille;
 use App\Form\EmployeType;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
-use Metadata\Tests\Driver\Fixture\C\SubDir\C;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Utils\Utils;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @Route("/api/employe")
@@ -32,7 +29,7 @@ class EmployeController extends AbstractController
 {
     /**
      * @Rest\Get(path="/", name="employe_index")
-     * @Rest\View(StatusCode = 200)
+     * @Rest\View(StatusCode = 200, serializerEnableMaxDepthChecks=true)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
     public function index(): array
@@ -45,289 +42,26 @@ class EmployeController extends AbstractController
     }
 
     /**
-     * @Rest\Get(path="/statistics/count-by-type/", name="employe_count_statistic_by_type")
-     * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_EMPLOYE_INDEX")
-     */
-    public function countByType(): array
-    {
-        $em = $this->getDoctrine()->getManager();
-        $types = $em->getRepository('App\Entity\TypeEmploye')
-            ->findAll();
-        $tab = [];
-        foreach ($types as $type) {
-            $employes = $em->getRepository(Employe::class)
-                ->findByTypeEmploye($type);
-            $tab [] = [
-                'type' => $type,
-                'nbreEmploye' => count($employes)
-            ];
-        }
-
-
-        return count($tab) ? $tab : [];
-    }
-
-    /**
-     * @Rest\Post(path="/statistics/by-type", name="statistic_by_type")
-     * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_EMPLOYE_INDEX")
-     */
-    public function findStatsByType(Request $request): array
-    {
-        /** @var EntityManagerInterface $em */
-        $em = $this->getDoctrine()->getManager();
-        $typeEmployeIds = Utils::serializeRequestContent($request)['typeEmployes'];
-        $tab = [];
-        $tabCaisse = [];
-        $tabRecrutement = [];
-        $nbrHomme = 0;
-        $nbrFemme = 0;
-        $tranche1830 = 0;
-        $tranche3040 = 0;
-        $tranche4050 = 0;
-        $tranche5060 = 0;
-        $tranche60Plus = 0;
-        $anneeCourante = date("Y");
-        $annees = [$anneeCourante];
-        foreach (range(1,4) as $i) {
-            $annees[] = date("Y", strtotime("-{$i} year"));
-        }
-        $typeEmployes = $em->createQuery('
-            SELECT te
-            FROM App\Entity\TypeEmploye te
-            WHERE te.id IN (:ids)
-        ')->setParameter('ids', $typeEmployeIds)->getResult();
-        $employes = $em->createQuery('
-            SELECT e
-            FROM App\Entity\Employe e
-            WHERE e.typeEmploye IN (:te)
-        ')->setParameter('te', $typeEmployes)->getResult();
-        $caisseSociales = $em->getRepository(CaisseSociale::class)->findAll();
-
-        foreach ($annees as $annee) {
-            /** @var int $nombreEmployeH nombre de recrutement homme */
-            try {
-                $nombreRecrutementH = $em->createQuery('
-                    SELECT COUNT(e)
-                    FROM App\Entity\Employe e
-                    WHERE e.typeEmploye IN (:te)
-                        AND e.dateRecrutement LIKE :dr
-                        AND e.genre = :genre
-                ')->setParameters([
-                    'dr' => '%' . $annee . '%',
-                    'te' => $typeEmployes,
-                    'genre' => 'Masculin'
-                ])->getSingleScalarResult();
-            } catch (NoResultException $e) {
-                $nombreRecrutementH = 0;
-            } catch (NonUniqueResultException $e) {
-                $nombreRecrutementH = 0;
-            }
-
-            try {
-                /** @var int $nombreRecrutementF nombre de recrutement femme */
-                $nombreRecrutementF = $em->createQuery('
-                    SELECT COUNT(e)
-                    FROM App\Entity\Employe e
-                    WHERE e.typeEmploye IN (:te)
-                        AND e.dateRecrutement LIKE :dr
-                        AND e.genre = :genre
-                ')->setParameters([
-                    'dr' => '%' . $annee . '%',
-                    'te' => $typeEmployes,
-                    'genre' => 'Féminin'
-                ])->getSingleScalarResult();
-            } catch (NoResultException $e) {
-                $nombreRecrutementF = 0;
-            } catch (NonUniqueResultException $e) {
-                $nombreRecrutementF = 0;
-            }
-
-            $tabRecrutement[] = [
-                "annee" => $annee,
-                "nombreRecrutementHomme" => $nombreRecrutementH,
-                "nombreRecrutementFemme" => $nombreRecrutementF
-            ];
-        }
-
-        /** @var CaisseSociale $caisseSociale */
-        foreach ($caisseSociales as $caisseSociale) {
-            $count = 0;
-            try {
-                $count = $em
-                    ->createQuery('
-                        SELECT COUNT(e) 
-                        FROM App\Entity\Employe e 
-                        WHERE e.caisseSociale=:cs 
-                            AND e.typeEmploye IN (:te)
-                    ')
-                    ->setParameter('cs', $caisseSociale)
-                    ->setParameter('te', $typeEmployes)
-                    ->getSingleScalarResult();
-            } catch (NoResultException $e) {
-                $count = 0;
-            } catch (NonUniqueResultException $e) {
-                $count = 0;
-            }
-            $tabCaisse[] = [
-                'nom' => $caisseSociale->getNom(),
-                'nombre' => $count
-            ];
-        }
-        /** @var Employe $employe */
-        foreach ($employes as $employe) {
-            if (strtolower($employe->getGenre()) === 'masculin')
-                $nbrHomme++;
-            else
-                $nbrFemme++;
-            $age = (int)date('Y') - (int)$employe->getDateNaissance()->format('Y');
-            if ($age >= 18 && $age < 30) $tranche1830++;
-            else if ($age >= 30 && $age < 40) $tranche3040++;
-            else if ($age >= 40 && $age < 50) $tranche4050++;
-            else if ($age >= 50 && $age < 60) $tranche5060++;
-            else if ($age >= 60) $tranche60Plus++;
-        }
-        $tab [] = [
-            'nombreEmploye' => count($employes),
-            'nombreHomme' => $nbrHomme,
-            'nombreFemme' => $nbrFemme,
-            'tranche1830' => $tranche1830,
-            'tranche4050' => $tranche4050,
-            'tranche5060' => $tranche5060,
-            'tranche3040' => $tranche3040,
-            'tranchePlus60' => $tranche60Plus,
-            'caisseSociales' => $tabCaisse,
-            'anneePrec' => $annees,
-            'recrutement' => $tabRecrutement
-//            'recrutementCourant' => $tabRecrutementCourant,
-//            'recrutementPrecedent' => $tabRecrutementPrecedent
-        ];
-
-
-        return count($tab) ? $tab : [];
-    }
-
-    /**
-     * @Rest\Get(path="/statistics/suivi-recrutement-type", name="statistic_suivi_recrutement_type")
-     * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_EMPLOYE_INDEX")
-     */
-    public function calculateStatsSuiviRecrutementGroupedByType(Request $request)
-    {
-        /** @var EntityManagerInterface $em */
-        $em = $this->getDoctrine()->getManager();
-        $anneeCourante = date("Y");
-        $typeEmployes = $em->getRepository(TypeEmploye::class)->findAll();
-        $annees = [$anneeCourante];
-        $tabRecrutement = [];
-        foreach (range(1,4) as $i) {
-            $annees[] = date("Y", strtotime("-{$i} year"));
-        }
-        foreach ($annees as $annee) {
-            $tabNombres = [];
-            /** @var TypeEmploye $typeEmploye */
-            foreach ($typeEmployes as $typeEmploye) {
-                try {
-                    $nombreRecrutement = $em->createQuery('
-                    SELECT COUNT(e)
-                    FROM App\Entity\Employe e
-                    WHERE e.typeEmploye = :te
-                        AND e.dateRecrutement LIKE :dr
-                ')->setParameters([
-                        'dr' => '%' . $annee . '%',
-                        'te' => $typeEmploye,
-                    ])->getSingleScalarResult();
-                } catch (NoResultException $e) {
-                    $nombreRecrutement = 0;
-                } catch (NonUniqueResultException $e) {
-                    $nombreRecrutement = 0;
-                }
-                $tabNombres[] = [
-                    'typeEmployeLabel' => $typeEmploye->getNom(),
-                    'typeEmployeCode' => $typeEmploye->getCode(),
-                    'nombreRecrutement' => $nombreRecrutement
-                ];
-            }
-            $tabRecrutement[] = [
-                "annee" => $annee,
-                "recrutements" => $tabNombres
-            ];
-        }
-
-        return count($tabRecrutement) ? $tabRecrutement : [];
-
-    }
-
-    /**
-     * @Rest\Get(path="/statistics/suivi-recrutement-genre", name="statistic_by_genre")
-     * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_EMPLOYE_INDEX")
-     */
-    public function calculateRecrutementGroupedByGenres(Request $request){
-        /** @var EntityManagerInterface $em */
-        $em = $this->getDoctrine()->getManager();
-        $anneeCourante = date("Y");
-        $annees = [$anneeCourante];
-        $tabRecrutement = [];
-        foreach (range(1,4) as $i) {
-            $annees[] = date("Y", strtotime("-{$i} year"));
-        }
-
-        foreach ($annees as $annee) {
-            /** @var int $nombreEmployeH nombre de recrutement homme */
-            try {
-                $nombreRecrutementH = $em->createQuery('
-                    SELECT COUNT(e)
-                    FROM App\Entity\Employe e
-                    WHERE e.dateRecrutement LIKE :dr
-                        AND e.genre = :genre
-                ')->setParameters([
-                    'dr' => '%' . $annee . '%',
-                    'genre' => 'Masculin'
-                ])->getSingleScalarResult();
-            } catch (NoResultException $e) {
-                $nombreRecrutementH = 0;
-            } catch (NonUniqueResultException $e) {
-                $nombreRecrutementH = 0;
-            }
-            try {
-                /** @var int $nombreRecrutementF nombre de recrutement femme */
-                $nombreRecrutementF = $em->createQuery('
-                    SELECT COUNT(e)
-                    FROM App\Entity\Employe e
-                    WHERE e.dateRecrutement LIKE :dr
-                        AND e.genre = :genre
-                ')->setParameters([
-                    'dr' => '%' . $annee . '%',
-                    'genre' => 'Féminin'
-                ])->getSingleScalarResult();
-            } catch (NoResultException $e) {
-                $nombreRecrutementF = 0;
-            } catch (NonUniqueResultException $e) {
-                $nombreRecrutementF = 0;
-            }
-            $tabRecrutement[] = [
-                "annee" => $annee,
-                "nombreRecrutementHomme" => $nombreRecrutementH,
-                "nombreRecrutementFemme" => $nombreRecrutementF
-            ];
-        }
-        return count($tabRecrutement) ? $tabRecrutement : [];
-    }
-
-
-    /**
      * @Rest\Get(path="/{id}/typeemploye", name="employe_by_typeemploye")
-     * @Rest\View(StatusCode = 200)
+     * @Rest\View(StatusCode = 200, serializerEnableMaxDepthChecks=true)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
-    public function findByTypeEmployé(\App\Entity\TypeEmploye $typeEmploye): array
+    public function findByTypeEmploye(\App\Entity\TypeEmploye $typeEmploye): array
     {
-
         $employes = $this->getDoctrine()
             ->getRepository(Employe::class)
             ->findByTypeEmploye($typeEmploye);
+          /*  $professions = $this->getDoctrine()
+            ->getRepository(Profession::class)
+            ->findAll();
+            $faker = \Faker\Factory::create('fr_FR');
+            foreach($employes as $employe) {
+                if($employe->getProfession()==null) {
+$employe->setProfession($faker->randomElement($professions));
+                }
+            }
+            $this->getDoctrine()->getManager()->flush();*/
+
 
         return count($employes) ? $employes : [];
     }
@@ -390,6 +124,18 @@ class EmployeController extends AbstractController
         return $employe;
     }
 
+    /**
+     * @Rest\Get(path="/caisse-sociale/{id}", name="caisse_sociale_employe",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200, serializerEnableMaxDepthChecks=true)
+     * @IsGranted("ROLE_EMPLOYE_SHOW")
+     */
+    public function findByCaiseSociale(CaisseSociale $caisseSociale)
+    {
+        $employes = $this->getDoctrine()
+                    ->getRepository(Employe::class)
+                    ->findByCaisseSociale($caisseSociale);
+        return $employes;
+    }
 
     /**
      * @Rest\Put(path="/{id}/edit", name="employe_edit",requirements = {"id"="\d+"})
@@ -417,6 +163,33 @@ class EmployeController extends AbstractController
         $employe->setDateNaissance(new \DateTime($reqData->dateNaissance));
         $employe->setDateRecrutement(new \DateTime($reqData->dateRecrutement));
         $this->getDoctrine()->getManager()->flush();
+
+        return $employe;
+    }
+    
+    /**
+     * @Rest\Put(path="/upload-photo/{id}", name="upload_employe_photo")
+     * @Rest\View(StatusCode=200)
+     * @param Request $request
+     * @param FileUploader $uploader
+     * @return Employe
+     * @throws Exception
+     */
+    public function uploadPhoto(Request $request, Employe $employe, FileUploader $uploader) {
+        $manager = $this->getDoctrine()->getManager();
+        $host = $request->getHttpHost();
+        $scheme = $request->getScheme();
+        $data = Utils::getObjectFromRequest($request);
+        $fileName = $data->fileName;
+        file_put_contents($fileName, base64_decode($data->photo));
+        $file = new File($fileName);
+        $authorizedExtensions = ['jpeg', 'jpg', 'png'];
+        if (!in_array($file->guessExtension(), $authorizedExtensions))
+            throw new BadRequestHttpException('Fichier non pris en charge');
+        $newFileName = $uploader->setTargetDirectory('employe_photo_directory')->upload($file, $employe->getFilename()); // old fileName
+        $employe->setFilepath("$scheme://$host/" . $uploader->getTargetDirectory() . $newFileName);
+        $employe->setFilename($newFileName);
+        $manager->flush();
 
         return $employe;
     }
@@ -524,34 +297,37 @@ class EmployeController extends AbstractController
     }
     
     /**
-     * @Rest\Put(path="/change_image_employe", name="edit_image_picture")
-     * @Rest\View(StatusCode=200)
-     * @IsGranted("IS_AUTHENTICATED_FULLY")
-     * @param Request $request
-     * @param FileUploader $uploader
-     * @return Employe
-     * @throws Exception
+     * @Rest\Post(path="/public/with-family-members", name="employe_with_family_members")
+     * @Rest\View(StatusCode = 200)
      */
-    public function uploadPhoto(Request $request,  Employe $employe,\App\Service\FileUploader $uploader) {
-        $manager = $this->getDoctrine()->getManager();
-        $host = $request->getHttpHost();
-        $scheme = $request->getScheme();
-        $data = Utils::getObjectFromRequest($request);
-        $filename = $data->filename;
-
-        file_put_contents($filename, base64_decode($data->photo));
-        $file = new File($filename);
-        $authorizedExtensions = ['jpeg', 'jpg', 'png'];
-        if (!in_array($file->guessExtension(), $authorizedExtensions))
-            throw new BadRequestHttpException('Fichier non pris en charge');
-        $newFileName = $uploader->setTargetDirectory('employe_photo_directory')->upload($file, $employe->getFilename()); // old fileName
-        $employe->setFilepath("$scheme://$host/" . $uploader->getTargetDirectory() . $newFileName);
-        $employe->setFilename($newFileName);
-        $manager->flush();
-
-        return $employe;
+    public function findWithMemberFamily(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $redData = Utils::serializeRequestContent($request);
+        $mdp = 'AsjfV4*QdGmZ12Z';
+        $password = $redData['password'];
+        $matricule = $redData['matricule'];
+        $tab = [];
+            
+        if (strcmp($mdp, $password) !== 0) {
+            throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à cette ressource. Merci de contact l'administrateur de la plateforme.");     
+        }
+          
+        $employe = $em->getRepository(Employe::class)
+                ->findOneByMatricule($matricule);
+       
+        if ($employe==null){
+            throw $this->createNotFoundException("Aucun employé n'a été trouvé avec le matricule {$matricule}.");
+        }
+        $membreFamilles = $em->getRepository(MembreFamille::class)
+            ->findByEmploye($employe);
+        $tab = [
+            'employe' => $employe,
+            'membreFamilles' => $membreFamilles
+        ];
+        return $tab;
     }
     
+<<<<<<< HEAD
     
     /**
      * @Rest\Get(path="/{id}/membre-mutuelle-sante", name="employe_by_MutuelleSante")
@@ -574,3 +350,6 @@ class EmployeController extends AbstractController
     
     
 }
+=======
+}
+>>>>>>> 84d747ea6544b43592585f128d4d5f82fae6979d

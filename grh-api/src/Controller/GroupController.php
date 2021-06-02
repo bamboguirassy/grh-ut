@@ -152,6 +152,7 @@ class GroupController extends AbstractController {
                 new AccessModel('PROFESSION', "Profession"),
                 new AccessModel('DIPLOME', "Diplome"),
                 new AccessModel('STRUCTUREFONCTION', "Structure Fonction"),
+                new AccessModel('COMMISSION', "Commission"),
                     ]
             ),
             new AccessGroup("Gestion des grades", [
@@ -171,7 +172,8 @@ class GroupController extends AbstractController {
                 new AccessModel('FONCTIONEMPLOYE', "Fonctions occupées"),
                 new AccessModel('DIPLOMEEMPLOYE', "Diplomes obtenus"),
                 new AccessModel('CONTRAT', "Contrats signés"),
-                new AccessModel('Affectation', "Affectations"),
+                new AccessModel('AFFECTATION', "Affectations"),
+                new AccessModel('MEMBRECOMMISSION', "Membre Commission"),
                     ]
             ),
         ];

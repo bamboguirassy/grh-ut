@@ -12,7 +12,9 @@ import Swal from 'sweetalert2';
 })
 export class DiplomeEmployeListComponent implements OnInit {
   @Input() employe: Employe;
+  entity: DiplomeEmploye;
   items: DiplomeEmploye[] = [];
+  @Input() displayTimeline: boolean = true;
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];
   selectedDiplome: DiplomeEmploye;

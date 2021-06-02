@@ -10,8 +10,6 @@ import { HttpService } from '../../services/http/http.service';
 import { IAppSettings } from '../../interfaces/settings';
 import { IMenuItem } from '../../interfaces/main-menu';
 import * as SettingsActions from '../../store/actions/app-settings.actions';
-import * as PatientsActions from '../../store/actions/patients.actions';
-import { IPatient } from '../../interfaces/patient';
 
 @Component({
   selector: 'base-layout',
@@ -25,7 +23,6 @@ export class BaseLayoutComponent implements OnInit {
   searchForm: FormGroup;
   searchData: any[];
   scrolled: boolean;
-  patients: IPatient[];
 
   constructor(
     public store: Store<IAppState>,
@@ -36,7 +33,6 @@ export class BaseLayoutComponent implements OnInit {
   ) {
     this.searchData = [];
     this.scrolled = false;
-    this.patients = [];
   }
 
   ngOnInit() {
@@ -50,7 +46,6 @@ export class BaseLayoutComponent implements OnInit {
       settings ? this.appSettings = settings : null;
     });
 
-   // this.getData('assets/data/patients.json', 'patients', 'setPatients');
     this.initSearchForm();
     this.scrollToTop();
   }
@@ -140,8 +135,4 @@ export class BaseLayoutComponent implements OnInit {
     });
   }
 
-  // set patients to store
-  setPatients() {
-    this.store.dispatch(new PatientsActions.Set(this.patients));
-  }
 }

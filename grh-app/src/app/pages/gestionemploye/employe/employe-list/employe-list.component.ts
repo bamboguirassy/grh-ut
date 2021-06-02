@@ -14,7 +14,7 @@ import { TypeEmployeService } from 'src/app/pages/parametrage/typeemploye/typeem
 })
 export class EmployeListComponent extends BasePageComponent<Employe> implements OnInit, OnDestroy {
 
-  typeEmployes: TypeEmploye[] = [];
+  typeEmployes: TypeEmploye[] = []; 
   selectedIndex = 0;
 
   constructor(store: Store<IAppState>,

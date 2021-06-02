@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import { EChartOption } from 'echarts';
 import { BasePageComponent } from '../../base-page';
 import { IAppState } from '../../../interfaces/app-state';
 import { HttpService } from '../../../services/http/http.service';
@@ -9,6 +8,7 @@ import { EmployeService } from '../../gestionemploye/employe/employe.service';
 import { TypeEmploye } from '../../parametrage/typeemploye/typeemploye';
 import { TypeEmployeService } from '../../parametrage/typeemploye/typeemploye.service';
 import { finalize } from 'rxjs/operators';
+import { DashboardService } from '../dashboard.service';
 
 @Component({
   selector: 'page-dashboard',
@@ -20,7 +20,10 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
   selectedTypeEmploye: TypeEmploye[] = [];
   fetching = false;
   statTypes: { code: string, title: string }[] = [
-    { code: 'SR', title: 'Suivi des recrutements' }
+    { code: 'SR', title: 'Suivi des entrée-sortie ' },
+    { code: 'GR', title: 'Répartition des employés selon les grades' },
+    { code: 'EM', title: 'Suivi de la répartition des employés' },
+    { code: 'SSDF', title: 'Suivi des statistiques sur les diplomes/formations' },
   ];
   selectedStatType: { code: string, title: string };
 
@@ -35,7 +38,7 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
   constructor(
     store: Store<IAppState>,
     httpSv: HttpService,
-    public employeSrv: EmployeService,
+    public dashboardSrv: DashboardService,
     public typeEmployeSrv: TypeEmployeService,
   ) {
     super(store, httpSv);
@@ -83,12 +86,12 @@ export class PageDashboardComponent extends BasePageComponent<any> implements On
 
 
   getEmployeCountStatistics() {
-    this.employeSrv.countByType()
+    this.dashboardSrv.countByType()
       .subscribe((data: any) => {
         this.tabCountEmploye = data;
         this.setLoaded();
       }, error => {
-        this.employeSrv.httpSrv.catchError(error);
+        this.dashboardSrv.httpSrv.catchError(error);
       });
   }
 

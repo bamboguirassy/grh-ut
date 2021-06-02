@@ -43,3 +43,40 @@
   <app-profession-new (creation)="onCreate($event)"></app-profession-new>
 </tc-card>
 <app-access-denied *ngIf="!(professionSrv.resourceName|listable)"></app-access-denied>
+
+<!-- Modal window -->
+<nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Attention les employés ci-dessous sont déjà rattachés à cette profession. Etes-vous sur de vouloir supprimer?'"
+  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+  <ng-template #modalBody>
+    <tc-table [itemsPerPage]="10" [rows]="itemDeletes.employes" [hovered]="true" [pagination]="true">
+      <tc-table-col [columnTitle]="'Matricule'" [columnName]="'matricule'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <span class="nowrap" *ngIf="value">{{ value }}</span>
+          <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Prénom'" [columnName]="'prenoms'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <span class="nowrap" *ngIf="value">{{ value }}</span>
+          <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <span class="nowrap" *ngIf="value">{{ value }}</span>
+          <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+        </ng-template>
+      </tc-table-col>
+    </tc-table>
+  </ng-template>
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+        <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+            (click)="closeModal()">Fermer</button>
+        <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="forceRemove(selectedForceDelete)" [afterIcon]="'icofont-delete'"
+            tc-button [view]="'accent'">
+            Supprimer
+        </button>
+    </div>
+</ng-template>
+</nz-modal>

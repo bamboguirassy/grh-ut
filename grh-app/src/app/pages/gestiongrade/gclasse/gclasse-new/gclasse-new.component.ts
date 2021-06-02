@@ -60,7 +60,7 @@ export class GClasseNewComponent implements OnInit {
   }
 
    findClasses() {
-    this.gClasseSrv.findAll()
+    this.gClasseSrv.findByTypeEmploye(this.typeEmploye)
       .subscribe((data: any) => {
         this.classes = data;
       }, err => this.gClasseSrv.httpSrv.catchError(err));

@@ -39,6 +39,10 @@ import { typeDocumentRoutes } from '../pages/parametrage/typedocument/typedocume
 import { typeEmployeRoutes } from '../pages/parametrage/typeemploye/typeemploye.routes';
 import { typeEntiteRoutes } from '../pages/parametrage/typeentite/typeentite.routes';
 import { userRoutes } from '../pages/parametrage/user/user.routes';
+import { TestComponent } from '../pages/tests/test/test.component';
+import { contratRoutes } from '../pages/gestionemploye/contrat/contrat.routes';
+import { commissionRoutes } from '../pages/parametrage/commission/commission.routes';
+import { membreCommissionRoutes } from '../pages/gestionemploye/membrecommission/membrecommission.routes';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -46,7 +50,9 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'user-profile', component: PageUserProfileComponent },
   { path: 'edit-account', component: PageEditAccountComponent },
   { path: 'settings', component: PageSettingsComponent },
+  { path: 'test', component: TestComponent },
   userRoutes,
+  contratRoutes,
   groupRoutes,
   typeEntiteRoutes,
   typeContratRoutes,
@@ -68,10 +74,12 @@ const VERTICAL_ROUTES: Routes = [
   membreSyndicatRoutes,
   documentRoutes,
   fonctionEmployeRoutes,
+  membreCommissionRoutes,
   gClasseRoutes,
   professionRoutes,
   gCategorieRoutes,
-  organigrammeRoutes
+  organigrammeRoutes,
+  commissionRoutes
 ];
 
 const PUBLIC_ROUTES: Routes = [

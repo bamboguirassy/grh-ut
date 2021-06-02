@@ -3,12 +3,21 @@ import { BamboAbstractService } from '../../../shared/services/bambo-abstract.se
 import { BamboHttpService } from './../../../shared/services/bambo-http.service';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+<<<<<<< HEAD
 import { MutuelleSante } from '../../parametrage/mutuellesante/mutuellesante';
+=======
+import { BehaviorSubject } from 'rxjs';
+import { Employe } from './employe';
+import { CaisseSociale } from '../../parametrage/caissesociale/caissesociale';
+>>>>>>> 84d747ea6544b43592585f128d4d5f82fae6979d
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeService extends BamboAbstractService {
+
+  private employesManager: BehaviorSubject<Employe[]> = new BehaviorSubject([]);
+  public employesProvider = this.employesManager.asObservable();
 
   public situationMatrimoniales: any[] = [
     { label: 'Célibataire', value: 'Célibataire' },
@@ -21,6 +30,13 @@ export class EmployeService extends BamboAbstractService {
     { label: 'Masculin', value: 'Masculin' },
     { label: 'Féminin', value: 'Féminin' },
   ];
+  public motifSorties: any[] = [
+    { label: 'Démission', value: 'Démission' },
+    { label: 'Retraite', value: 'Retraite' },
+    { label: 'Retraite Anticipé', value: 'Retraite Anticipé' },
+    { label: 'Mis à pied', value: 'Mis à pied' },
+    { label: 'Expiration Contrat', value: 'Expiration Contrat' },
+  ]
 
   constructor(public httpSrv: BamboHttpService, public toastr: ToastrService) {
     super(httpSrv, toastr);
@@ -32,29 +48,37 @@ export class EmployeService extends BamboAbstractService {
     return this.httpSrv.get(this.routePrefix + typeEmploye.id + '/typeemploye')
   }
 
-  countByType() {
-    return this.httpSrv.get(this.routePrefix + 'statistics/count-by-type/');
+  uploadPhoto(employe: Employe, photo: any, fileName: any) {
+    return this.httpSrv.put(this.routePrefix + 'upload-photo/' + employe.id, { photo, fileName });
   }
-  uploadPhoto(photo: any, fileName: any) {
-    return this.httpSrv.put(this.routePrefix+ 'change_image_employe', {photo, fileName});
-}
+
+  realtimeSearch(searchTerm: any) {
+    return this.httpSrv.post(this.routePrefix+ 'realtime-search',{'searchTerm': searchTerm})
+  }
+
   
-
-  findStatsByType(typeEmployes: TypeEmploye[]) {
-    return this.httpSrv.post(this.routePrefix + 'statistics/by-type', { 'typeEmployes': typeEmployes.map(te => te.id) });
+  findAll(): any {
+    this
+      .httpSrv
+      .get(this.routePrefix)
+      .subscribe((employes: any) => {
+        this.employesManager.next(employes);
+      }, err => {
+        this.httpSrv.handleError(err);
+      })
   }
 
-  calculateStatsSuiviRecrutementGroupedByType() {
-    return this.httpSrv.get(this.routePrefix  + 'statistics/suivi-recrutement-type');
+  findByCaisseSociale(caissesociale: CaisseSociale) {
+    return this.httpSrv.get(this.routePrefix + "caisse-sociale/" + caissesociale.id);
   }
 
-  calculateRecrutementGroupedByGenres() {
-    return this.httpSrv.get(this.routePrefix  + 'statistics/suivi-recrutement-genre');
-  }
-
+<<<<<<< HEAD
   findEmployeByMutuelleSante(membremutuelle:MutuelleSante)
   {
     return this.httpSrv.get(this.routePrefix +membremutuelle.id+'/membre-mutuelle-sante');
   }
+=======
+
+>>>>>>> 84d747ea6544b43592585f128d4d5f82fae6979d
 
 }

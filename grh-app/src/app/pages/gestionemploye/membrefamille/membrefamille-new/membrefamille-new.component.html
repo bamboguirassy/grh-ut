@@ -1,4 +1,4 @@
-<button tc-button [afterIcon]="'icofont-plus'" [view]="'accent'" [square]="true" (click)="openModal()"></button>
+<button size="sm" class="ml-1 mr-2" tc-button [afterIcon]="'icofont-plus'" [view]="'accent'" [square]="true" (click)="openModal()"></button>
 <app-access-denied *ngIf="!(membreFamilleSrv.resourceName|creable)"></app-access-denied>
 
 <!-- Modal window -->
@@ -76,6 +76,17 @@
                         </tc-radio>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="lienParente">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6" *ngIf="entity?.lienParente=='époux' || entity?.lienParente=='épouse'">
+                    <tc-form-group>
+                        <tc-form-label>Date du mariage</tc-form-label>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateMariage"
+                            name="dateMariage" id="dateMariage" #dateMariage="ngModel"></nz-date-picker>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="dateMariage">
                             </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>

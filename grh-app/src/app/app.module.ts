@@ -4,9 +4,8 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe, HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
-
 import { StoreModule } from '@ngrx/store';
-import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { NZ_I18N, fr_FR } from 'ng-zorro-antd/i18n';
 
 import { AppComponent } from './app.component';
 import { ROUTES, RoutingModule } from './routing/routing.module';
@@ -15,11 +14,11 @@ import { UIModule } from './ui/ui.module';
 import { PagesModule } from './pages/pages.module';
 import { pageDataReducer } from './store/reducers/page-data.reducer';
 import { appSettingsReducer } from './store/reducers/app-settings.reducer';
-import { patientsReducer } from './store/reducers/patients.reducer';
 import fr from '@angular/common/locales/fr';
 import { BamboAuthService } from './shared/services/bambo-auth.service';
 import { ToastrModule } from 'ngx-toastr';
 import { NgHttpLoaderModule } from 'ng-http-loader';
+
 registerLocaleData(fr);
 
 declare module '@angular/core' {
@@ -35,7 +34,7 @@ export function currentUserProviderFactory(authSrv: BamboAuthService) {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +44,6 @@ export function currentUserProviderFactory(authSrv: BamboAuthService) {
     StoreModule.forRoot({
       pageData: pageDataReducer,
       appSettings: appSettingsReducer,
-      patients: patientsReducer
     }),
     RoutingModule,
     LayoutModule,
@@ -54,7 +52,7 @@ export function currentUserProviderFactory(authSrv: BamboAuthService) {
 
     ToastrModule.forRoot(),
     NgHttpLoaderModule.forRoot()
-  ],
+    ],
   providers: [
     BamboAuthService,
     DatePipe,
@@ -63,7 +61,7 @@ export function currentUserProviderFactory(authSrv: BamboAuthService) {
       useFactory: currentUserProviderFactory, deps: [BamboAuthService], multi: true
     },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: NZ_I18N, useValue: en_US }
+    { provide: NZ_I18N, useValue: fr_FR }
   ],
   bootstrap: [AppComponent]
 })

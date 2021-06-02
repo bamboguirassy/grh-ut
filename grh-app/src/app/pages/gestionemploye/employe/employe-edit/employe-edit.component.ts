@@ -37,7 +37,6 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
   isModalVisible = false;
   currentAvatar: any;
   fileModel: UploadFileModel = new UploadFileModel();
-  @Input() typeEmploye: TypeEmploye;
   nationalites: Pays[] = [];
   selectedNationaliteId: any;
   caisseSociales: CaisseSociale[] = [];
@@ -46,10 +45,11 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
   structures: Structure[]= [];
   selectedStructureId: any;
   selectedMutuelleSanteId: any;
-  grades: Grade[] = [];
-  selectedGradeId: any;
+  indices: Grade[] = [];
+  selectedIndiceId: any;
   professions: Profession[] = [];
-  selectedProfession: Profession;
+  selectedProfessionId: Profession;
+  selectedTypeEmploye: TypeEmploye;
 
 
   constructor(store: Store<IAppState>,
@@ -129,10 +129,10 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
       }, err => this.caisseSocialeSrv.httpSrv.catchError(err));
   }
 
-  findGrades() {
-    this.gradeSrv.findAll()
+  findIndices() {
+    this.gradeSrv.findByTypeEmploye(this.entity.typeEmploye)
       .subscribe((data: any) => {
-        this.grades = data;
+        this.indices = data;
       }, err => this.gradeSrv.httpSrv.catchError(err));
   }
 
@@ -150,20 +150,23 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
   handlePostLoad() {
     this.selectedMutuelleSanteId = this.entity?.mutuelleSante?.id;
     this.selectedCaisseSocialeId = this.entity?.caisseSociale?.id;
-    this.selectedGradeId = this.entity?.grade?.id;
+    this.selectedIndiceId = this.entity?.indice?.id;
+    this.selectedTypeEmploye = this.entity.typeEmploye;
     this.selectedStructureId = this.entity?.structure?.id;
     this.selectedNationaliteId = this.entity.nationalite?.id;
-    this.selectedProfession = this.entity?.profession?.id;
+    this.selectedProfessionId = this.entity?.profession?.id;
     this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
     this.entity.dateRecrutement = this.datePipe.transform(this.entity.dateRecrutement, 'yyyy-MM-dd');
     this.entity.datePriseService = this.datePipe.transform(this.entity.datePriseService, 'yyyy-MM-dd');
     this.entity.dateSortie = this.datePipe.transform(this.entity.dateSortie, 'yyyy-MM-dd');
     this.entity.filename = this.fileModel.fileName;
     this.entity.filepath = this.fileModel.fileContent;
+    this.entity.profession!=null && this.professions.push(this.entity.profession);
+    this.entity.indice!=null && this.indices.push(this.entity.indice);
     this.findCaisseSociales();
     this.findMutuelleSantes();
     this.findNationalites();
-    this.findGrades();
+    this.findIndices();
     this.findStructures();
   }
 
@@ -171,15 +174,17 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
     if (this.entity.etat) {
       this.entity.dateSortie = null;
       this.entity.motifSortie = null;
+      this.entity.commentaireSortie = null;
     }
+    this.entity.typeEmploye = this.selectedTypeEmploye.id;
     this.entity.caisseSociale = this.selectedCaisseSocialeId;
-    this.entity.grade = this.selectedGradeId;
+    this.entity.indice = this.selectedIndiceId;
     this.entity.nationalite = this.selectedNationaliteId;
     this.entity.mutuelleSante = this.selectedMutuelleSanteId;
     if(this.selectedStructureId) {
       this.entity.structure = this.selectedStructureId;
     }
-    this.entity.profession = this.selectedProfession.id;
+    this.entity.profession = this.selectedProfessionId;
   }
 
   handlePostUpdate() {

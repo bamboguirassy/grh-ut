@@ -1,24 +1,23 @@
 const employeColumns = [
-            { header: 'Prenoms', field: 'prenoms', dataKey: 'prenoms' },
-            { header: 'Nom', field: 'nom', dataKey: 'nom' },
-            { header: 'DateNaissance', field: 'dateNaissance', dataKey: 'dateNaissance' },
-            { header: 'LieuNaissance', field: 'lieuNaissance', dataKey: 'lieuNaissance' },
-            { header: 'Cni', field: 'cni', dataKey: 'cni' },
-            { header: 'Matricule', field: 'matricule', dataKey: 'matricule' },
-            { header: 'MatriculeCaisseSociale', field: 'matriculeCaisseSociale', dataKey: 'matriculeCaisseSociale' },
-            { header: 'DateRecrutement', field: 'dateRecrutement', dataKey: 'dateRecrutement' },
-            { header: 'SitutationMatrimoniale', field: 'situtationMatrimoniale', dataKey: 'situtationMatrimoniale' },
-            { header: 'Retraite', field: 'retraite', dataKey: 'retraite' },
-            { header: 'Genre', field: 'genre', dataKey: 'genre' },
-            { header: 'Etat', field: 'etat', dataKey: 'etat' },
-            { header: 'EmailUniv', field: 'emailUniv', dataKey: 'emailUniv' },
-            { header: 'Email', field: 'email', dataKey: 'email' },
-            { header: 'Filename', field: 'filename', dataKey: 'filename' },
-            { header: 'Filepath', field: 'filepath', dataKey: 'filepath' },
-            { header: 'TelephonePrimaire', field: 'telephonePrimaire', dataKey: 'telephonePrimaire' },
-            { header: 'TelephoneSecondaire', field: 'telephoneSecondaire', dataKey: 'telephoneSecondaire' },
-        ];
-
+    { header: 'Prenoms', field: 'prenoms', dataKey: 'prenoms' },
+    { header: 'Nom', field: 'nom', dataKey: 'nom' },
+    { header: 'DateNaissance', field: 'dateNaissance', dataKey: 'dateNaissance' },
+    { header: 'LieuNaissance', field: 'lieuNaissance', dataKey: 'lieuNaissance' },
+    { header: 'Cni', field: 'cni', dataKey: 'cni' },
+    { header: 'Matricule', field: 'matricule', dataKey: 'matricule' },
+    { header: 'MatriculeCaisseSociale', field: 'matriculeCaisseSociale', dataKey: 'matriculeCaisseSociale' },
+    { header: 'DateRecrutement', field: 'dateRecrutement', dataKey: 'dateRecrutement' },
+    { header: 'SitutationMatrimoniale', field: 'situtationMatrimoniale', dataKey: 'situtationMatrimoniale' },
+    { header: 'Genre', field: 'genre', dataKey: 'genre' },
+    { header: 'Etat', field: 'etat', dataKey: 'etat' },
+    { header: 'EmailUniv', field: 'emailUniv', dataKey: 'emailUniv' },
+    { header: 'Email', field: 'email', dataKey: 'email' },
+    { header: 'Filename', field: 'filename', dataKey: 'filename' },
+    { header: 'Filepath', field: 'filepath', dataKey: 'filepath' },
+    { header: 'TelephonePrimaire', field: 'telephonePrimaire', dataKey: 'telephonePrimaire' },
+    { header: 'TelephoneSecondaire', field: 'telephoneSecondaire', dataKey: 'telephoneSecondaire' },
+];
+​
 const allowedEmployeFieldsForFilter = [
     'prenoms',
     'nom',
@@ -29,7 +28,6 @@ const allowedEmployeFieldsForFilter = [
     'matriculeCaisseSociale',
     'dateRecrutement',
     'situtationMatrimoniale',
-    'retraite',
     'genre',
     'etat',
     'emailUniv',
@@ -39,5 +37,5 @@ const allowedEmployeFieldsForFilter = [
     'telephonePrimaire',
     'telephoneSecondaire',
 ];
-
-export { employeColumns,allowedEmployeFieldsForFilter };
+​
+export { employeColumns, allowedEmployeFieldsForFilter };

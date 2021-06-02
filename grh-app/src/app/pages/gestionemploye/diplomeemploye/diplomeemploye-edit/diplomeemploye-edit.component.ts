@@ -1,3 +1,4 @@
+import { IOption } from './../../../../ui/interfaces/option';
 import { DiplomeService } from './../../../parametrage/diplome/diplome.service';
 import { Diplome } from './../../../parametrage/diplome/diplome';
 import { Component, OnInit, OnDestroy, Output, EventEmitter, Input, ViewChild, ElementRef } from '@angular/core';
@@ -9,7 +10,6 @@ import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { BasePageComponent } from 'src/app/pages/base-page';
 import { Location } from '@angular/common';
-import { IOption } from 'src/app/ui/interfaces/option';
 
 @Component({
   selector: 'app-diplomeemploye-edit',
@@ -24,22 +24,22 @@ export class DiplomeEmployeEditComponent implements OnInit, OnDestroy {
   @Output() modification: EventEmitter<DiplomeEmploye> = new EventEmitter();
   @Output() onClose: EventEmitter<any> = new EventEmitter();
   diplomes: Diplome[] = [];
-  @Input() set selectedDiplome(value) {
+  statutFormations: IOption[] = [];
+  @Input() set selectedDiplome(value){
     this.entity = value;
     this.handlePostLoad();
     this.openModal();
   }
   selectedDiplomeId: any;
-  statutFormations: IOption[] = [];
-
-  constructor(public diplomeEmployeSrv: DiplomeEmployeService,
-    public router: Router, public diplomeServ: DiplomeService,
-    private activatedRoute: ActivatedRoute,
-    public location: Location) {
-    diplomeEmployeSrv.statutFormations.forEach(statut => {
-      this.statutFormations.push({value: statut.label, label: statut.label, color: statut.color});
-    });
-
+  
+  constructor(store: Store<IAppState>,
+              public diplomeEmployeSrv: DiplomeEmployeService,
+              public router: Router, public diplomeServ: DiplomeService,
+              private activatedRoute: ActivatedRoute,
+              public location: Location) {
+                diplomeEmployeSrv.statutFormations.forEach(statut => {
+                  this.statutFormations.push({value: statut.label, label: statut.label, color: statut.color});
+                });
   }
 
   ngOnDestroy(): void {
@@ -51,15 +51,15 @@ export class DiplomeEmployeEditComponent implements OnInit, OnDestroy {
 
   handlePostLoad() {
     this.selectedDiplomeId = this.entity?.diplome.id;
-
+    
   }
 
   handlePostUpdate() {
     this.location.back();
   }
 
-  // open modal window
-  openModal() {
+   // open modal window
+   openModal() {
     this.isModalVisible = true;
   }
 
@@ -75,7 +75,7 @@ export class DiplomeEmployeEditComponent implements OnInit, OnDestroy {
       .subscribe((resp: any) => {
         this.closeModal();
         this.modification.emit(resp);
-      }, (err) => {
+      },(err)=>{
         this.diplomeEmployeSrv.httpSrv.catchError(err);
       });
   }

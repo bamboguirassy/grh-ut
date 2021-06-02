@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Syndicat } from '../syndicat';
 import { SyndicatService } from '../syndicat.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { BasePageComponent } from 'src/app/pages/base-page';
@@ -16,10 +15,10 @@ import { Location } from '@angular/common';
 export class SyndicatEditComponent extends BasePageComponent<Syndicat> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public syndicatSrv: SyndicatService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
+    public syndicatSrv: SyndicatService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location) {
     super(store, syndicatSrv);
     this.pageData = {
       title: 'Modification - Syndicat',
@@ -30,7 +29,7 @@ export class SyndicatEditComponent extends BasePageComponent<Syndicat> implement
         },
         {
           title: 'Liste des syndicats',
-          route: '/'+this.orientation+'/syndicat'
+          route: '/' + this.orientation + '/syndicat'
         },
         {
           title: 'Modification'

@@ -6,6 +6,8 @@ import { Employe } from '../../employe/employe';
 import { TypeContrat } from 'src/app/pages/parametrage/typecontrat/typecontrat';
 import { TypeContratService } from 'src/app/pages/parametrage/typecontrat/typecontrat.service';
 import { DatePipe } from '@angular/common';
+import { EmployeService } from '../../employe/employe.service';
+import { IAppState } from 'src/app/interfaces/app-state';
 
 @Component({
   selector: 'app-contrat-new',
@@ -22,40 +24,36 @@ export class ContratNewComponent implements OnInit {
   isModalVisible = false;
 
   @Input() employe: Employe;
+
   typeContrats: TypeContrat[] = [];
+  contrats: Contrat[] = [];
   selectedTypeContrat: any;
+  motifFinContrats: any = [];
+  contratActif: Contrat;
 
   constructor(public contratSrv: ContratService,
-    public typeContratSrv: TypeContratService, public datePipe: DatePipe,
+    public typeContratSrv: TypeContratService,
+    public employeSrv: EmployeService, public datePipe: DatePipe,
     public router: Router) {
-    this.entity = new Contrat();
+    this.initNewContrat();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.motifFinContrats = this.employeSrv.motifSorties;
+    this.findByEmploye();
+  }
 
   save() {
     this.entity.employe = this.employe.id;
     if (this.selectedTypeContrat) {
       this.entity.typeContrat = this.selectedTypeContrat.id;
     }
-    if (!this.entity.rompu){
-      this.entity.motifRupture=null;
-      this.entity.dateRupture=null;
+    if (this.entity.typeContrat.code == 'CDI') {
+      this.entity.dureeEnMois = null;
+      this.entity.dateFinPrevue = null;
     }
-    if (this.entity.dateDebut && this.entity.dureeEnMois){
-      const dateDeb= new Date(this.entity.dateDebut);
-      let dateFin =  dateDeb.setMonth(dateDeb.getMonth() + this.entity.dureeEnMois);
-      this.entity.dateFin =dateFin;
-      
-    }
-    if(this.entity.typeContrat.code=='CDI'){
-      this.entity.dureeEnMois=null;
-    }
-    if(this.entity.typeContrat.code=='CDI'){
-      this.entity.dateFin=null;
-    }
-    if (this.entity.dateRupture) {
-      this.entity.dateRupture = this.datePipe.transform(this.entity.dateRupture, 'yyyy-MM-dd');
+    if (this.entity.dateFinEffective) {
+      this.entity.dateFinEffective = this.datePipe.transform(this.entity.dateFinEffective, 'yyyy-MM-dd');
     }
     if (this.entity.dateSignature) {
       this.entity.dateSignature = this.datePipe.transform(this.entity.dateSignature, 'yyyy-MM-dd');
@@ -63,21 +61,33 @@ export class ContratNewComponent implements OnInit {
     if (this.entity.dateDebut) {
       this.entity.dateDebut = this.datePipe.transform(this.entity.dateDebut, 'yyyy-MM-dd');
     }
-    if (this.entity.dateFin) {
-      this.entity.dateFin = this.datePipe.transform(this.entity.dateFin, 'yyyy-MM-dd');
+    if (this.entity.dateFinPrevue) {
+      this.entity.dateFinPrevue = this.datePipe.transform(this.entity.dateFinPrevue, 'yyyy-MM-dd');
     }
+    if (this.entity.etat) {
+      this.entity.motifFin = null;
+      this.entity.dateFinEffective = null;
+      this.entity.commentaireSurFinContrat = null;
+      this.createContrat();
+    }
+    else if (this.entity.motifFin && this.entity.dateFinEffective) {
+      this.createContrat();
+    }
+  }
+
+  createContrat() {
     this.contratSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
         this.creation.emit(data);
-        this.selectedTypeContrat=null;
-        this.entity = new Contrat();
+        this.selectedTypeContrat = null;
+        this.initNewContrat();
       }, error => this.contratSrv.httpSrv.catchError(error));
-    
   }
-
+  
   initNewContrat() {
     this.entity = new Contrat();
+    this.entity.etat = true;
   }
 
   // open modal window
@@ -96,6 +106,37 @@ export class ContratNewComponent implements OnInit {
         this.typeContrats = data;
       }, err => this.typeContratSrv.httpSrv.catchError(err));
   }
+
+  handleDureeChange(dureeValue) {
+    if (dureeValue && this.selectedTypeContrat?.code != 'CDI' && this.entity.dateDebut) {
+      let dateDeb = new Date(this.entity.dateDebut);
+      const duree = +dureeValue;
+      let dateFin = dateDeb.setMonth(dateDeb.getMonth() + duree);
+      this.entity.dateFinPrevue = dateFin;
+    } else {
+      this.entity.dateFinPrevue = null;
+    }
+  }
+
+  handleDateDebutChange(newDate) {
+    if (newDate && this.selectedTypeContrat?.code != 'CDI' && this.entity.dureeEnMois) {
+      let dateDeb = new Date(newDate);
+      let duree = +this.entity.dureeEnMois;
+      let dateFin = dateDeb.setMonth(dateDeb.getMonth() + duree);
+      this.entity.dateFinPrevue = dateFin;
+    } else {
+      this.entity.dateFinPrevue = null;
+    }
+  }
+
+  findByEmploye() {
+    this.contratSrv.findByEmploye(this.employe)
+      .subscribe((data: any) => {
+        this.contrats = data;
+        this.contratActif = this.contrats.find(contrat => contrat.etat);
+      }, err => this.contratSrv.httpSrv.catchError(err));
+  }
+
 
 
 }

@@ -1,0 +1,99 @@
+<!-- Modal window -->
+
+<nz-modal nzWidth="70%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Modification'"
+    [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+    <ng-template #modalBody>
+        <form #form="ngForm" novalidate>
+            <div class="row">
+                
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Commission</tc-form-label>
+                        <nz-select [required]="true" style="width: 100%" nzPlaceHolder="Sélectionner la commission" nzAllowClear
+                            nzShowSearch [(ngModel)]="selectedCommissionId" name="commission" id="commission"
+                            #commission="ngModel">
+                            <ng-container *ngFor="let commissionItem of commissions">
+                                <nz-option [nzValue]="commissionItem.id" [nzLabel]="commissionItem.nom"></nz-option>
+                            </ng-container>
+                        </nz-select>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="commission">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Fonction</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.fonction" name="fonction" id="fonction"
+                            #fonction="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="fonction">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Date intégration</tc-form-label>
+                        <nz-date-picker required="required" [nzFormat]="'dd/MM/yyyy'" type="Date"
+                            [(ngModel)]="entity.dateIntegration" name="dateIntegration" id="dateIntegration"
+                            #dateIntegration="ngModel">
+                        </nz-date-picker>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="dateIntegration">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Statut</tc-form-label>
+                        <tc-switcher [(ngModel)]="entity.statut" name="statut" id="statut" #statut="ngModel">
+                        </tc-switcher>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="statut"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6" *ngIf="!entity.statut">
+                    <tc-form-group>
+                        <tc-form-label>Date de sortie</tc-form-label>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" type="Date" [(ngModel)]="entity.dateSortie"
+                            name="dateSortie" id="dateSortie" #dateSortie="ngModel">
+                        </nz-date-picker>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="dateSortie">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6" *ngIf="!entity.statut">
+                    <tc-form-group>
+                        <tc-form-label>Motif de sortie</tc-form-label>
+                        <tc-input [(ngModel)]="entity.motifSortie" name="motifSortie" id="motifSortie"
+                            #motifSortie="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="motifSortie">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="actions justify-content-between">
+            <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'"
+                (click)="closeModal()">Fermer</button>
+            <button type="button" class="float-right" (click)="update()" beforeIcon="icofont-save" tc-button
+                view="warning">
+                Mettre à jour
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
+<!-- end Modal window -->
+<app-access-denied *ngIf="!(membreCommissionSrv.resourceName|editable)"></app-access-denied>

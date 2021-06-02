@@ -19,14 +19,14 @@ import { Profession } from 'src/app/pages/parametrage/profession/profession';
 import { ProfessionService } from 'src/app/pages/parametrage/profession/profession.service';
 
 @Component({
-  selector: 'app-employe-new',
+  selector: 'app-employe-new, nz-demo-steps-step-next',
   templateUrl: './employe-new.component.html',
   styleUrls: ['./employe-new.component.scss']
+ 
 })
 export class EmployeNewComponent implements OnInit {
 
   @ViewChild('modalBody', { static: true }) modalBody: ElementRef<any>;
-  @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
   @ViewChildren('form') form;
   entity: Employe;
   @Output() creation: EventEmitter<Employe> = new EventEmitter();
@@ -40,16 +40,22 @@ export class EmployeNewComponent implements OnInit {
   selectedCaisseSociale: CaisseSociale;
   mutuelleSantes: MutuelleSante[] = [];
   selectedMutuelleSante: MutuelleSante;
-  grades: Grade[] = [];
+  indices: Grade[] = [];
   structures: Structure[] = [];
   selectedStructure: Structure;
-  selectedGrade: Grade;
+  selectedIndice: Grade;
   professions: Profession[] = [];
   selectedProfession: Profession;
-
   areDataLoaded = false;
 
-
+  current = 0;
+  pre(): void {
+    this.current -= 1;
+  }
+  next(): void {
+    this.current += 1;
+  }
+  
   constructor(public employeSrv: EmployeService,
     public router: Router, public paysSrv: PaysService,
     public mutuelleSanteSrv: MutuelleSanteService,
@@ -74,19 +80,14 @@ export class EmployeNewComponent implements OnInit {
     if (this.selectedMutuelleSante) {
       this.entity.mutuelleSante = this.selectedMutuelleSante.id;
     }
-    if (this.selectedGrade) {
-      this.entity.grade = this.selectedGrade.id;
+    if (this.selectedIndice) {
+      this.entity.indice = this.selectedIndice.id;
     }
-    this.entity.nationalite = this.selectedNationalite.id;
-    this.entity.typeEmploye = this.typeEmploye.id;
     if(this.selectedStructure) {
       this.entity.structure = this.selectedStructure.id;
     }
+    if(this.selectedProfession) {
     this.entity.profession = this.selectedProfession.id;
-
-
-    if (this.selectedGrade) {
-      this.entity.grade = this.selectedGrade.id;
     }
     if (this.selectedNationalite) {
       this.entity.nationalite = this.selectedNationalite.id;
@@ -100,6 +101,11 @@ export class EmployeNewComponent implements OnInit {
     if (this.entity.dateSortie) {
       this.entity.dateSortie = this.datePipe.transform(this.entity.dateSortie, 'yyyy-MM-dd');
     }
+    if (this.entity.etat) {
+      this.entity.dateSortie = null;
+      this.entity.motifSortie = null;
+      this.entity.commentaireSortie = null;
+    }
     this.entity.filename = this.fileModel.fileName;
     this.entity.filepath = this.fileModel.fileContent;
     this.employeSrv.create(this.entity)
@@ -110,6 +116,7 @@ export class EmployeNewComponent implements OnInit {
       }, error => this.employeSrv.httpSrv.catchError(error));
   }
 
+
   // open modal window
   openModal() {
     this.isModalVisible = true;
@@ -117,7 +124,7 @@ export class EmployeNewComponent implements OnInit {
       this.findNationalites();
       this.findCaisseSociales();
       this.findMutuelleSantes();
-      this.findGrades();
+      this.findIndices();
       this.findStructures();
       this.areDataLoaded = true;
     }
@@ -161,10 +168,10 @@ export class EmployeNewComponent implements OnInit {
       }, err => this.caisseSocialeSrv.httpSrv.catchError(err));
   }
 
-  findGrades() {
-    this.gradeSrv.findAll()
+  findIndices() {
+    this.gradeSrv.findByTypeEmploye(this.typeEmploye)
       .subscribe((data: any) => {
-        this.grades = data;
+        this.indices = data;
       }, err => this.gradeSrv.httpSrv.catchError(err));
   }
 
@@ -182,6 +189,8 @@ export class EmployeNewComponent implements OnInit {
         this.professions = data;
       }, err => this.professionSrv.httpSrv.catchError(err));
   }
+
+  
 
 }
 

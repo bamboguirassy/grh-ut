@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ChartDataset } from 'chart.js';
 import { EmployeService } from 'src/app/pages/gestionemploye/employe/employe.service';
 import { DashboardBaseComponent } from 'src/app/shared/components/dashboard-base/dashboard-base.component';
+import { DashboardService } from '../../dashboard.service';
 import { RecrutementTypeCM } from '../recrutement-type-cm';
 
 @Component({
@@ -17,9 +18,9 @@ export class RecrutementTypeComponent extends DashboardBaseComponent<Recrutement
   ];
 
   constructor(
-    public employeSrv: EmployeService
+    public dashboardSrv: DashboardService
   ) {
-    super(employeSrv);
+    super(dashboardSrv);
     this.methodName = 'calculateStatsSuiviRecrutementGroupedByType';
   }
 
@@ -40,7 +41,34 @@ export class RecrutementTypeComponent extends DashboardBaseComponent<Recrutement
         }
       }
       chartData.push({ data: arr, label: te.label });
-    }    
+    }
+
+    this.chartOptions = {
+      responsive: true,
+      scales: {
+        yAxes: {
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Nombres'
+          }
+        },
+        xAxes: {
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Années'
+          }
+        },
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Évolution des recrutements pour les 5 dernières années'
+        }
+      }
+
+    };
 
     this.chartLabels = this.rawChartData.map((data) => data.annee);
     this.chartType = 'bar';

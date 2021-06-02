@@ -16,8 +16,8 @@ export class StructureFonctionService extends BamboAbstractService {
     this.resourceName = 'STRUCTUREFONCTION';
   }
 
-  createMultiple(structureFonctions: StructureFonction[]) {
-    return this.httpSrv.post(this.routePrefix + 'create-multiple', { structureFonctions });
+  createMultiple(structureFonctions: StructureFonction[], structure: Structure) {
+    return this.httpSrv.post(this.routePrefix + 'create-multiple/' + structure.id, { structureFonctions });
   }
 
   findByStructure(structure: Structure) {

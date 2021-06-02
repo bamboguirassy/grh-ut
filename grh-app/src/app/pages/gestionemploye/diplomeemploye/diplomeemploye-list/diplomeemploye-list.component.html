@@ -1,65 +1,75 @@
-<tc-card *ngIf="diplomeEmployeSrv.resourceName|listable" [tcGradient]="lightGradient">
-  <tc-card [view]="secondViewBorder" [outline]="true">
-    <div class="row">
-      <div class="col-12">
-        <app-diplomeemploye-new [employe]="employe" *ngIf="employe" (creation)="onCreate($event)">
-        </app-diplomeemploye-new>
-        <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findByEmploye()">Rafraichir</button>
-      </div>
-    </div>
-  </tc-card>
-  <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-      <ng-template #tableTDTemplate let-row="row">
-        <div class="actions">
-          <button *ngIf="diplomeEmployeSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" (click)="setSelectedDiplome(row)"></button>
-          <button *ngIf="diplomeEmployeSrv.resourceName|deletable" (click)="remove(row)" tc-button
-            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+<div class="row" *ngIf="diplomeEmployeSrv.resourceName|listable">
+  <div class="col-12 col-md-4">
+    <app-diplomeemploye-timeline *ngIf=" this.items?.length" [setItems]="items">
+    </app-diplomeemploye-timeline>
+  </div>
+  <div class="col-12 col-md-8">
+    <tc-card>
+      <div class="row">
+        <div class="col-12">
+          <app-diplomeemploye-new [employe]="employe" *ngIf="employe" (creation)="onCreate($event)">
+          </app-diplomeemploye-new>
+          <button class="float-right" tc-button afterIcon="icofont-refresh"
+            (click)="findByEmploye()">Rafraichir</button>
         </div>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Diplome'" [columnName]="'diplome'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value?.nom }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Formation'" [columnName]="'formation'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Statut'" [columnName]="'statutFormation'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <ng-container *ngIf="value">
-          <span class="nowrap badge" [ngClass]="{'badge-warning': value=='En cours', 'badge-danger':value=='Suspendue','badge-success':value=='Terminée'}">{{ value }}</span>
-        </ng-container>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Annee Obtention'" [columnName]="'anneeObtention'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Etablissement'" [columnName]="'etablissement'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Commentaire'" [columnName]="'commentaire'">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-  </tc-table>
+      </div>
+    </tc-card>
+    <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true">
+      <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+        <ng-template #tableTDTemplate let-row="row">
+          <div class="actions">
+            <button *ngIf="diplomeEmployeSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+              [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"
+              (click)="setSelectedDiplome(row)"></button>
+            <button *ngIf="diplomeEmployeSrv.resourceName|deletable" (click)="remove(row)" tc-button
+              [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+          </div>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Diplome'" [columnName]="'diplome'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <span class="nowrap" *ngIf="value">{{ value?.nom }}</span>
+          <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Spécialité'" [columnName]="'formation'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <span class="nowrap" *ngIf="value">{{ value }}</span>
+          <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Statut'" [columnName]="'statutFormation'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <ng-container *ngIf="value">
+            <span class="nowrap badge"
+              [ngClass]="{'badge-warning': value=='En cours', 'badge-danger':value=='Suspendue','badge-success':value=='Terminée'}">{{
+              value }}</span>
+          </ng-container>
+          <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Annee Obtention'" [columnName]="'anneeObtention'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <span class="nowrap" *ngIf="value">{{ value }}</span>
+          <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Etablissement'" [columnName]="'etablissement'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <span class="nowrap" *ngIf="value">{{ value }}</span>
+          <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Commentaire'" [columnName]="'commentaire'">
+        <ng-template #tableTDTemplate let-value>
+          <span class="nowrap" *ngIf="value">{{ value }}</span>
+          <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+        </ng-template>
+      </tc-table-col>
+    </tc-table>
+  </div>
   <app-diplomeemploye-edit *ngIf="selectedDiplome" [selectedDiplome]="selectedDiplome" (modification)="findByEmploye()"
     (onClose)="onClose()"></app-diplomeemploye-edit>
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
-</tc-card>
+</div>
 <app-access-denied *ngIf="!(diplomeEmployeSrv.resourceName|listable)"></app-access-denied>

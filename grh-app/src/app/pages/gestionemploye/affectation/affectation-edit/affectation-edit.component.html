@@ -1,0 +1,67 @@
+<nz-modal nzWidth="70%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Modification'"
+    [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+    <ng-template #modalBody>
+        <app-access-denied *ngIf="!(affectationSrv.resourceName|editable)"></app-access-denied>
+        <form #form="ngForm" novalidate>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Structure</tc-form-label>
+                        <nz-select [required]="true" style="width: 100%" nzPlaceHolder="Sélectionner la structure"
+                            nzAllowClear nzShowSearch [(ngModel)]="selectedStructureId" name="structure" id="structure"
+                            #structure="ngModel">
+                            <ng-container *ngFor="let structureItem of structures">
+                                <nz-option [nzValue]="structureItem.id" [nzLabel]="structureItem.nom"></nz-option>
+                            </ng-container>
+                        </nz-select>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="structure">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Date</tc-form-label>
+                        <nz-date-picker [required]="true" [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.date"
+                            name="date" id="date" #date="ngModel"></nz-date-picker>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="date"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Motif</tc-form-label>
+                        <tc-input [(ngModel)]="entity.motif" name="motif" id="motif" #motif="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="motif"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Poste</tc-form-label>
+                        <tc-input [required]="true" [(ngModel)]="entity.poste" name="poste" id="poste" #poste="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="poste"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="actions justify-content-between">
+            <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'"
+                (click)="closeModal()">Fermer</button>
+            <button type="button" class="float-right" (click)="update()" beforeIcon="icofont-save" tc-button
+                view="warning">
+                Mettre à jour
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
+<app-access-denied *ngIf="!(affectationSrv.resourceName|editable)"></app-access-denied>

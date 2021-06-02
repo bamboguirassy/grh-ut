@@ -1,75 +1,43 @@
-<tc-card *ngIf="membreFamilleSrv.resourceName|listable" [tcGradient]="lightGradient">
-  <tc-card [view]="secondViewBorder" [outline]="true">
-    <div class="row">
-      <div class="col-12">
-        <app-membrefamille-new [employe]="employe" (creation)="onCreate($event)"></app-membrefamille-new>
-        <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findByEmploye()">Rafraichir</button>
+<div class="row" *ngIf="membreFamilleSrv.resourceName|listable" [ngStyle]="{'background': '#DADCE3'}">
+  <div class="col-12 title">
+    <h4>Liste des membres de la famille</h4>
+  </div>
+  <div class="col-12 col-md-4 col-lg-3">
+    <div class="famille-card m-1">
+      <div class="info-box">
+        <div class="social">
+          <button size="sm" class="ml-2 mr-2" tc-button afterIcon="icofont-refresh" (click)="findByEmploye()"></button>
+          <app-membrefamille-new [employe]="employe" (creation)="onCreate($event)"></app-membrefamille-new>
+        </div>
       </div>
     </div>
-  </tc-card>
-  <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true">
-    <tc-table-col [columnTitle]="'#'" [columnName]="'#'">
-      <ng-template #tableTDTemplate let-row="row">
-        <i class="icofont-data icofont-2x"></i>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Prénoms'" [columnName]="'prenoms'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Date Naissance'" [columnName]="'dateNaissance'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Lieu Naissance'" [columnName]="'lieuNaissance'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Genre'" [columnName]="'genre'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Lien Parenté'" [columnName]="'lienParente'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Téléphone'" [columnName]="'telephone'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-      <ng-template #tableTDTemplate let-row="row">
-        <div class="actions">
-          <button *ngIf="membreFamilleSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-          <!-- <button *ngIf="membreFamilleSrv.resourceName|clonable" [outline]="true" tc-button [afterIcon]="'icofont-copy'"
-            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'clone']"></button> -->
-          <button *ngIf="membreFamilleSrv.resourceName|deletable" (click)="remove(row)" tc-button
-            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-          <!-- <button *ngIf="membreFamilleSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"
-            [view]="'accent'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id]"></button> -->
+  </div>s
+  <div class="col-12 col-md-4 col-lg-3" *ngFor="let item of items">
+    <div class="famille-card m-1">
+      <div class="info-box">
+        <h4 class="name">{{ item.prenoms+' '+item.nom }}</h4>
+        <div class="role">
+          {{ item.lienParente }}
+          <span *ngIf="item?.lienParente=='époux' || item?.lienParente=='épouse'">
+              depuis le {{ item.dateMariage|date:'dd/MM/yyyy' }}
+            <tc-badge size="xs" view="error" *ngIf="!item.dateMariage">Indéfinie</tc-badge>
+          </span>
         </div>
-      </ng-template>
-    </tc-table-col>
-  </tc-table>
-  <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
-</tc-card>
-<app-access-denied *ngIf="!(membreFamilleSrv.resourceName|listable)"></app-access-denied>
+        <p class="address">Né le {{ item.dateNaissance|date:'dd/MM/yyyy' }} à {{item.lieuNaissance}}</p>
+        <p class="phone">
+          <span>
+            <a href="tel:{{item.telephone}}">{{item.telephone}}</a>
+          </span>
+          <tc-badge size="xs" view="error" *ngIf="!item.telephone">tél non précisé</tc-badge>
+        </p>
+        <div class="social">
+          <button *ngIf="membreFamilleSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+          <button class="ml-1" *ngIf="membreFamilleSrv.resourceName|deletable" (click)="remove(item)" tc-button
+            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-access-denied *ngIf="!(membreFamilleSrv.resourceName|showable)"></app-access-denied>

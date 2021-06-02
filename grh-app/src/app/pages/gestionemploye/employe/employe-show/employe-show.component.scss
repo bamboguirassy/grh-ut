@@ -1,17 +1,26 @@
 @import "~src/assets/scss/variables";
 
-.det-item {
-    margin: 15px;
-    margin-bottom: 20px;
-   // padding: 15px;
-    font-size: 17px;
-    display: inline;
-    //border-right: 2px solid #dadce3;
-    .det-label {
-        font-weight: bold;
-        margin-right: 2px;
-        // text-decoration: underline;
+.personal-info {
+    list-style-type: none;
+    .info-line {
+        margin: 2px;
+        padding: 2px;
+        .title {
+            font-weight: bold;
+        }
+        .content {
+            align-items: left;
+        }
     }
-    .det-content {
-    }
+}
+
+.employe-status-card {
+    margin-top: 3px;
+    justify-content: center;
+}
+
+.table-scrollable{
+    display: block;
+overflow-x: auto;
+white-space: nowrap;
 }

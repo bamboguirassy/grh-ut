@@ -17,7 +17,6 @@ export class Employe extends BamboAbstractObject {
     matriculeCaisseSociale: string;
     dateRecrutement: string;
     situtationMatrimoniale: string;
-    retraite: boolean;
     genre: string;
     etat: boolean;
     emailUniv: string;
@@ -30,7 +29,7 @@ export class Employe extends BamboAbstractObject {
     nationalite: Pays;
     caisseSociale: CaisseSociale;
     mutuelleSante: MutuelleSante;
-    grade: Grade;
+    indice: Grade;
     structure: Structure;
     datePriseService: string;
     dateSortie: string;
@@ -38,4 +37,11 @@ export class Employe extends BamboAbstractObject {
     numeroMainOeuvre: string;
     numeroAffiliationIpres: string;
     profession: Profession;
+    commentaireSortie: string;
+    grade: string;
+    diplomeAcademique: string;
+
+
+    // Champ temporaire
+    globalFilter: string;
 }
