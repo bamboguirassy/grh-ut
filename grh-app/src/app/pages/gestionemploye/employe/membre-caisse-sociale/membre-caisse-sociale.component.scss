@@ -1,0 +1,16 @@
+  div table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 2px solid #ddd;
+    overflow-x:auto;
+    height:300px;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 5px;
+    width:80px;
+  }
+  
+  tr:nth-child(even){background-color: #f2f2f2}

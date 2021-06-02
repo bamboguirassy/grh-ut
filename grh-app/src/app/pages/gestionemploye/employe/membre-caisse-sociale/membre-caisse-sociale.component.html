@@ -1,29 +1,63 @@
-<div class="card" style="width: 18rem;">
+<tc-card [outline]="true">
   <div class="card-header">
-    Membres caisse sociale
+   <h4> Membres du caisse sociale {{caisseSociale.code}}</h4>
   </div>
-  <table class="card-table table">
-    <thead>
-      <tr>
-        <th scope="col">Prenom</th>
-        <th scope="col">Nom</th>
-        <th scope="col">Date Naissance</th>
-        <th scope="col">Lieu Naissance</th>
-        <th scope="col">CNI /Passeport </th>
-        <th scope="col">Matricule</th>
-        <th scope="col">Profession</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let employe of employes" >
-        <td>employe.prenoms</td>
-        <td>employe.nom</td>
-        <td>employe.dateNaissance</td>
-        <td>employe.lieuNaissance</td>
-        <td>employe.cni</td>
-        <td>employe.matricule</td>
-        <td>employe.profession</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  <div style="overflow-x:auto; width:100%; height:300px;">
+      <table class="card-table table">
+        <thead>
+          <tr>
+            <th scope="col">Prenom</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Date Naissance</th>
+            <th scope="col">Lieu Naissance</th>
+            <th scope="col">CNI /Passeport </th>
+            <th scope="col">Matricule</th>
+            <th scope="col">Profession</th>
+            <th scope="col">Matricule Caisse Sociale</th>
+            <th scope="col">Date Recrutement</th>
+            <th scope="col">Situtation Matrimoniale</th>
+            <th scope="col">Email Instutitionnel</th>
+            <th scope="col">Email Personnel</th>
+            <th scope="col">Téléphone Primaire</th>
+            <th scope="col">Téléphone Secondaire</th>
+            <th scope="col">Nationalité</th>
+            <th scope="col">Diplome académique</th>
+            <th scope="col">Structure</th>
+            <th scope="col">Mutuelle de Santé</th>
+            <th scope="col">Date Prise Service</th>
+            <th scope="col">Date Sortie</th>
+            <th scope="col">Motif Sortie</th>
+            <th scope="col">Numero Main d\'Oeuvre</th>
+            <th scope="col">Numero Affiliation Ipres</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employe of employes" >
+            <td>{{employe.prenoms}}</td>
+            <td>{{employe.nom}}</td>
+            <td>{{employe.dateNaissance}}</td>
+            <td>{{employe.lieuNaissance}}</td>
+            <td>{{employe.cni}}</td>
+            <td>{{employe.matricule}}</td>
+            <td>{{employe.profession}}</td>
+            <td>{{employe.matricule_caisse_sociale}}</td>
+            <td>{{employe.date_recrutement}}</td>
+            <td>{{employe.situation_matrimoniale}}</td>
+            <td>{{employe.email_univ}}</td>
+            <td>{{employe.email}}</td>
+            <td>{{employe.telephone_primaire}}</td>
+            <td>{{employe.telephone_secondaire}}</td>
+            <td>{{employe.nationalite}}</td>
+            <td>{{employe.diplome_academique}}</td>
+            <td>{{employe.structure}}</td>
+            <td>{{employe.mutuelle_sante}}</td>
+            <td>{{employe.date_prise_service}}</td>
+            <td>{{employe.date_sortie}}</td>
+            <td>{{employe.motif_sortie}}</td>
+            <td>{{employe.numero_main_oeuvre}}</td>
+            <td>{{employe.numero_affiliation_ipres}}</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</tc-card>

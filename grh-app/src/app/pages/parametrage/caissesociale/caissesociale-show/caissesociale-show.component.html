@@ -14,7 +14,7 @@
         </div>
     </tc-card>
     <div class="row">
-        <div class="col-12 col-md-5 mx-auto">
+        <div class="col-12 col-md-5" style="height:300px;">
             <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
                 <table class="table">
                     <tr>
@@ -67,7 +67,9 @@
                 </table>
             </tc-card>
         </div>
+        <div class="col-12 col-md-7">
+            <app-membre-caisse-sociale *ngIf="entity" [caisseSociale]=entity></app-membre-caisse-sociale>
+        </div>
     </div>
 </tc-card>
-<app-membre-caisse-sociale *ngIf="entity" [caisseSociale]=entity></app-membre-caisse-sociale>
 <app-access-denied *ngIf="!(caisseSocialeSrv.resourceName|showable)"></app-access-denied>
