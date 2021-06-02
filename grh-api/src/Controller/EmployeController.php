@@ -74,8 +74,6 @@ class EmployeController extends AbstractController
         return $employes;
     }
 
-}
-
     /**
      * @Rest\Get(path="/{id}/typeemploye", name="employe_by_typeemploye")
      * @Rest\View(StatusCode = 200, serializerEnableMaxDepthChecks=true)
