@@ -18,11 +18,13 @@ export class AffectationListComponent implements OnInit, OnDestroy {
   selectedAffectation: Affectation;
   @Input() employe: Employe;
   items: Affectation[]=[];
+  affectations: Affectation[]=[];
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];
 
   constructor(store: Store<IAppState>,
               public affectationSrv: AffectationService) {
+               
     }
    
   
@@ -75,8 +77,7 @@ export class AffectationListComponent implements OnInit, OnDestroy {
   findByEmploye() {
     this.affectationSrv.findByEmploye(this.employe)
     .subscribe((data: any)=>{
-      this.items = data;
-            
+      this.items = data;        
     },err=>this.affectationSrv.httpSrv.catchError(err));
   }
 

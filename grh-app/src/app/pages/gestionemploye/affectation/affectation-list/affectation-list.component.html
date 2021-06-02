@@ -1,6 +1,6 @@
 <div class="row" *ngIf="affectationSrv.resourceName|listable">
   <div class="col-12 col-md-4">
-    <app-affectation-timeline *ngIf=" this.items?.length" [affectations]="items"></app-affectation-timeline>
+    <app-affectation-timeline  *ngIf=" this.items?.length" [setItem]="items"></app-affectation-timeline>
   </div>
   <div class="col-12 col-md-8">
     <div class="row">

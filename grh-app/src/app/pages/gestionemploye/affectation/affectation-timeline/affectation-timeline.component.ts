@@ -42,6 +42,8 @@ export class AffectationTimelineComponent implements OnInit {
         "sectionData": sectionData
       },
     ];
+  
+    
   }
 
 
