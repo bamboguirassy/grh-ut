@@ -77,6 +77,8 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="col-12 justify-content-center">
+                                <button size="sm" tc-button class="float-right ml-1" (click)="openModal()"
+                                    beforeIcon="icofont-email" tc-button view="secondary"></button>   
                                 <button size="sm" *ngIf="employeSrv.resourceName|editable"
                                     [routerLink]="['/'+orientation,employeSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
                                     class="float-right ml-1" tc-button view="warning"
@@ -88,6 +90,7 @@
                                     view="accent" beforeIcon="icofont-refresh"></button>
                                 <button size="sm" tc-button class="float-right" (click)="location.back()"
                                     beforeIcon="icofont-reply"></button>
+                                
                             </div>
                         </div>
                         <div class="col-12">
@@ -217,3 +220,61 @@
     </div>
 </div>
 <app-access-denied *ngIf="!(employeSrv.resourceName|showable)"></app-access-denied>
+<!-- Modal window -->
+<nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Nouveau Message'"
+  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+  <ng-template #modalBody>
+    <form #form="ngForm" ngNativeValidate>
+      <div class="row">
+        <div class="col-12">
+          <tc-form-group>
+            <!--tc-form-label>Type</tc-form-label-->
+            <!--nz-select [required]="true" name="typeDocument" id="typeDocument" #typeDocument="ngModel" nzPlaceHolder="Selectionner le type de document"
+              nzAllowClear nzShowSearch [(ngModel)]="selectedTypeDocument">
+              <ng-container *ngFor="let typeDocument of typeDocuments">
+                <nz-option [nzValue]="typeDocument" [nzLabel]="typeDocument.nom"></nz-option>
+              </ng-container>
+            </nz-select-->
+            <tc-form-label>A</tc-form-label>
+            <tc-input required="required" [(ngModel)]="entity.email" name="email" id="email" #email="ngModel">
+            </tc-input>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="email"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Nom</tc-form-label>
+            <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
+            </tc-input>
+        <tc-form-description>
+          <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
+        </tc-form-description>
+      </tc-form-group>
+         <tc-form-group>
+            <tc-form-label>Message</tc-form-label>
+            <tc-textarea required="required">
+                
+            </tc-textarea>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+        (click)="closeModal()">Fermer</button>
+      <button [disabled]="form.invalid" [disabled]="form.invalid"  [afterIcon]="'icofont-save'"
+        tc-button [view]="'accent'">
+        Envoyer
+      </button>
+    </div>
+  </ng-template>
+</nz-modal>
+<!-- end Modal window -->

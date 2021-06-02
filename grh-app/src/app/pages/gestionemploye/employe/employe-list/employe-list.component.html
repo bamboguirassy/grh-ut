@@ -7,11 +7,11 @@
             </div>
         </div>
     </tc-card>
-    <tc-card [view]="secondViewBorder" [outline]="true">
-        <nz-tabset [(nzSelectedIndex)]="selectedIndex" (nzSelectChange)="handleTabChange($event)">
-            <nz-tab *ngFor="let typeEmploye of typeEmployes" [nzTitle]="typeEmploye.code">
+    <tc-card [view]="secondViewBorder" [outline]="true" >
+        <nz-tabset  [(nzSelectedIndex)]="selectedIndex" (nzSelectChange)="handleTabChange($event)">
+            <nz-tab  *ngFor="let typeEmploye of typeEmployes" [nzTitle]="typeEmploye.code" >
                 <h3>Liste des employés - {{typeEmploye?.code}} </h3>
-                <tc-table [itemsPerPage]="15" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
+                <tc-table   [itemsPerPage]="15" [rows]="items" [hovered]="true"  [pagination]="true" [search]="true">
                     <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
                         <ng-template #tableTDTemplate let-row="row">
                             <div class="actions">

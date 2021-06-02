@@ -40,9 +40,7 @@ class DashboardController extends AbstractController
         foreach ($types as $type) {
             $employes = $em->getRepository(Employe::class)
                 ->findByTypeEmploye($type);
-            $total = $em->getRepository(Employe::class);
             $tab[] = [
-                'total' => count($total),
                 'type' => $type,
                 'nbreEmploye' => count($employes),
 
