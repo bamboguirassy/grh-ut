@@ -255,13 +255,13 @@ class DashboardController extends AbstractController
             WHERE g IN (
                     SELECT eg
                     FROM App\Entity\Employe e
-                    JOIN e.grade eg
+                    JOIN e.indice eg
             )           
         ')->getResult();
         $tab = [];
         foreach ($grades as $grade) {
             $employes = $entityManager->getRepository(Employe::class)
-                ->findByGrade($grade);
+                ->findByIndice($grade);
             $tab[] = [
                 'grade' => $grade,
                 'nombreEmploye' => count($employes)
