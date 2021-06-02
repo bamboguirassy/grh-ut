@@ -2,9 +2,9 @@
 -- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 11 mai 2021 à 10:50
--- Version du serveur :  10.4.10-MariaDB
+-- Hôte : 127.0.0.1:3308
+-- Généré le :  lun. 17 mai 2021 à 15:32
+-- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -32,8 +32,8 @@ DROP TABLE IF EXISTS `adresse`;
 CREATE TABLE IF NOT EXISTS `adresse` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employe` int(11) DEFAULT NULL,
-  `ville` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `quartier` varchar(145) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ville` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quartier` varchar(145) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `etat` tinyint(1) DEFAULT NULL COMMENT 'plusieurs adresses peuvent être actives en meme temps et les adresses non valables peuvent être désactivées',
   PRIMARY KEY (`id`),
   KEY `fk_adresse_employe1_idx` (`employe`)
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `caisse_sociale` (
   `nom` varchar(245) NOT NULL,
   `code` varchar(45) NOT NULL,
   `filename` varchar(145) DEFAULT NULL,
-  `filepath` text DEFAULT NULL,
+  `filepath` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
@@ -95,15 +95,25 @@ CREATE TABLE IF NOT EXISTS `contrat` (
   `type_contrat_id` int(11) NOT NULL,
   `employe_id` int(11) NOT NULL,
   `duree_en_mois` int(11) DEFAULT NULL,
-  `etat` tinyint(1) NOT NULL,
   `date_rupture` date DEFAULT NULL,
-  `motif_rupture` longtext DEFAULT NULL,
+  `motif_rupture` longtext COLLATE utf8mb4_unicode_ci,
   `expire` tinyint(1) DEFAULT NULL,
   `rompu` tinyint(1) DEFAULT NULL,
+  `date_creation` date NOT NULL,
+  `date_signature` date DEFAULT NULL,
+  `date_debut` date DEFAULT NULL,
+  `date_fin` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_60349993520D03A` (`type_contrat_id`),
   KEY `IDX_603499931B65292` (`employe_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `contrat`
+--
+
+INSERT INTO `contrat` (`id`, `type_contrat_id`, `employe_id`, `duree_en_mois`, `date_rupture`, `motif_rupture`, `expire`, `rompu`, `date_creation`, `date_signature`, `date_debut`, `date_fin`) VALUES
+(46, 3, 1, 4, '2021-05-19', 'yrtyr', 0, 1, '2021-05-17', '2021-05-21', '2021-05-11', '2024-07-11');
 
 -- --------------------------------------------------------
 
@@ -123,8 +133,8 @@ CREATE TABLE IF NOT EXISTS `diplome` (
 --
 
 INSERT INTO `diplome` (`id`, `nom`) VALUES
-(1, 'LICENCE'),
-(2, 'MASTER');
+(1, 'Licence'),
+(2, 'Master');
 
 -- --------------------------------------------------------
 
@@ -137,20 +147,22 @@ CREATE TABLE IF NOT EXISTS `diplome_employe` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employe_id` int(11) NOT NULL,
   `diplome_id` int(11) NOT NULL,
-  `annee_obtention` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `annee_obtention` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `etablissement` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `formation` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `statut_formation` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `commentaire` longtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `IDX_B219CA7B1B65292` (`employe_id`),
   KEY `IDX_B219CA7B26F859E2` (`diplome_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `diplome_employe`
 --
 
-INSERT INTO `diplome_employe` (`id`, `employe_id`, `diplome_id`, `annee_obtention`, `etablissement`) VALUES
-(1, 1, 1, '2015', 'UIDT'),
-(2, 1, 1, '2015', 'UCAD');
+INSERT INTO `diplome_employe` (`id`, `employe_id`, `diplome_id`, `annee_obtention`, `etablissement`, `formation`, `statut_formation`, `commentaire`) VALUES
+(1, 1, 1, '2017', 'UIDT', 'Informatique', 'Terminée', NULL);
 
 -- --------------------------------------------------------
 
@@ -163,9 +175,9 @@ CREATE TABLE IF NOT EXISTS `document` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employe` int(11) DEFAULT NULL,
   `type_document` int(11) DEFAULT NULL,
-  `nom` varchar(145) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `filename` varchar(145) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `filepath` varchar(245) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nom` varchar(145) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `filename` varchar(145) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `filepath` varchar(245) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_document_employe1_idx` (`employe`),
   KEY `fk_document_type_document1_idx` (`type_document`)
@@ -192,46 +204,48 @@ CREATE TABLE IF NOT EXISTS `employe` (
   `mutuelle_sante` int(11) DEFAULT NULL,
   `nationalite` int(11) DEFAULT NULL,
   `type_employe` int(11) DEFAULT NULL,
-  `prenoms` varchar(145) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nom` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prenoms` varchar(145) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nom` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_naissance` date NOT NULL,
-  `lieu_naissance` varchar(65) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cni` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `matricule` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `matricule_caisse_sociale` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lieu_naissance` varchar(65) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cni` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `matricule` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `matricule_caisse_sociale` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date_recrutement` date NOT NULL,
-  `situtation_matrimoniale` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `situtation_matrimoniale` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `retraite` tinyint(1) DEFAULT NULL COMMENT 'true ou false, false par defaut',
-  `genre` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Homme ou Femme',
+  `genre` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Homme ou Femme',
   `etat` tinyint(1) DEFAULT NULL COMMENT 'true ou false pur indiquer si l''employé est toujours actif',
-  `email_univ` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `filename` varchar(145) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `filepath` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telephone_primaire` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telephone_secondaire` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_univ` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `filename` varchar(145) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `filepath` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `telephone_primaire` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telephone_secondaire` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `profession_id` int(11) DEFAULT NULL,
   `date_prise_service` date DEFAULT NULL,
   `date_sortie` date DEFAULT NULL,
-  `motif_sortie` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `motif_sortie` longtext COLLATE utf8mb4_unicode_ci,
   `numero_main_oeuvre` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `structure_id` int(11) DEFAULT NULL,
+  `numero_affiliation_ipres` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_employe_mutuelle_sante1_idx` (`mutuelle_sante`),
   KEY `fk_employe_pays1_idx` (`nationalite`),
   KEY `fk_employe_caisse_sociale1_idx` (`caisse_sociale`),
   KEY `fk_employe_grade1_idx` (`grade`),
   KEY `fk_employe_type_employe1_idx` (`type_employe`),
-  KEY `IDX_F804D3B9FDEF8996` (`profession_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `IDX_F804D3B9FDEF8996` (`profession_id`),
+  KEY `IDX_F804D3B99C2214AD` (`structure_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `employe`
 --
 
-INSERT INTO `employe` (`id`, `caisse_sociale`, `grade`, `mutuelle_sante`, `nationalite`, `type_employe`, `prenoms`, `nom`, `date_naissance`, `lieu_naissance`, `cni`, `matricule`, `matricule_caisse_sociale`, `date_recrutement`, `situtation_matrimoniale`, `retraite`, `genre`, `etat`, `email_univ`, `email`, `filename`, `filepath`, `telephone_primaire`, `telephone_secondaire`, `profession_id`, `date_prise_service`, `date_sortie`, `motif_sortie`, `numero_main_oeuvre`) VALUES
-(1, 5, NULL, 1, 193, 2, 'Moussa', 'FOFANA', '1993-06-03', 'Didé Gassama', '1916200200225', '120254/B', NULL, '2018-05-02', 'Marié(e)', 0, 'Masculin', 1, 'moussa.fofana@univ-thies.sn', 'didegassama@gmail.com', NULL, NULL, '+221780165026', '+221762339081', NULL, '2020-04-27', NULL, NULL, '123598669'),
-(2, 1, NULL, 1, 193, 1, 'Moussa Déthié', 'Sarr', '1983-10-10', 'Mékhé', '1916198300220', '112154/C', NULL, '2016-08-16', 'Marié(e)', 0, 'Masculin', 1, 'mdsarr@univ-thies.sn', NULL, NULL, NULL, '775762332', NULL, NULL, NULL, NULL, NULL, NULL),
-(4, 1, NULL, 1, 193, 2, 'Madiba', 'DIAKITE', '1989-05-01', 'Touba', '4558999', '256669', '235668', '2019-05-01', 'Célibataire', 0, 'Masculin', 1, 'oumourouen@gmail.com', 'oumourouen@gmail.com', NULL, NULL, '0613892385', NULL, NULL, '2019-05-10', NULL, NULL, '458899');
+INSERT INTO `employe` (`id`, `caisse_sociale`, `grade`, `mutuelle_sante`, `nationalite`, `type_employe`, `prenoms`, `nom`, `date_naissance`, `lieu_naissance`, `cni`, `matricule`, `matricule_caisse_sociale`, `date_recrutement`, `situtation_matrimoniale`, `retraite`, `genre`, `etat`, `email_univ`, `email`, `filename`, `filepath`, `telephone_primaire`, `telephone_secondaire`, `profession_id`, `date_prise_service`, `date_sortie`, `motif_sortie`, `numero_main_oeuvre`, `structure_id`, `numero_affiliation_ipres`) VALUES
+(1, 5, NULL, 1, 193, 2, 'Moussa', 'FOFANA', '1993-06-03', 'Didé Gassama', '1916200200225', '120254/B', NULL, '2018-05-02', 'Marié(e)', 0, 'Masculin', 1, 'moussa.fofana@univ-thies.sn', 'didegassama@gmail.com', '60337ba47b089.jpeg', 'http://127.0.0.1:8000/uploads/employe/photo/60337ba47b089.jpeg', '+221780165026', '+221762339081', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 1, NULL, 1, 193, 1, 'Moussa Déthié', 'Sarr', '1983-10-10', 'Mékhé', '1916198300220', '112154/C', NULL, '2016-08-16', 'Marié(e)', 0, 'Masculin', 1, 'mdsarr@univ-thies.sn', NULL, NULL, NULL, '775762332', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -361,28 +375,28 @@ DROP TABLE IF EXISTS `fonction_employe`;
 CREATE TABLE IF NOT EXISTS `fonction_employe` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employe` int(11) DEFAULT NULL,
-  `fonction` int(11) DEFAULT NULL,
-  `structure` int(11) DEFAULT NULL,
   `date_prise_fonction` date NOT NULL,
   `etat` tinyint(1) DEFAULT NULL COMMENT 'true ou false pour savoir si la fonction est toujours d''actualité Donner la possibilité de définir une fonction comme étant la courante',
   `date_fin` date DEFAULT NULL,
+  `responsabilite` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_fonction_employe_employe1_idx` (`employe`),
-  KEY `fk_fonction_employe_fonction1_idx` (`fonction`),
-  KEY `fk_fonction_employe_structure1_idx` (`structure`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `fk_fonction_employe_responsabilite_idx` (`responsabilite`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `fonction_employe`
 --
 
-INSERT INTO `fonction_employe` (`id`, `employe`, `fonction`, `structure`, `date_prise_fonction`, `etat`, `date_fin`) VALUES
-(1, 1, 87, 3, '2018-05-02', 1, NULL),
-(3, 1, 91, 3, '2020-04-01', 1, NULL),
-(4, 1, 88, 3, '2020-05-01', 0, '2021-05-08'),
-(5, 1, 87, 3, '2020-05-01', 1, NULL),
-(6, 1, 1, 1, '2021-05-01', 1, NULL),
-(8, 1, 3, 2, '2021-04-25', 1, NULL);
+INSERT INTO `fonction_employe` (`id`, `employe`, `date_prise_fonction`, `etat`, `date_fin`, `responsabilite`) VALUES
+(8, 1, '2021-05-18', 0, NULL, 1),
+(9, 1, '2021-05-28', 0, NULL, 1),
+(10, 1, '2021-05-28', 0, NULL, 1),
+(11, 1, '2021-05-18', 0, NULL, 1),
+(13, 1, '2021-05-30', 0, NULL, 1),
+(14, 1, '2021-05-24', 0, '2021-05-16', 1),
+(15, 1, '2021-05-17', 0, NULL, 1),
+(16, 1, '2021-05-17', 0, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -393,9 +407,9 @@ INSERT INTO `fonction_employe` (`id`, `employe`, `fonction`, `structure`, `date_
 DROP TABLE IF EXISTS `fos_group`;
 CREATE TABLE IF NOT EXISTS `fos_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `roles` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
-  `code` varchar(145) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `roles` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
+  `code` varchar(145) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_4B019DDB5E237E06` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -405,7 +419,7 @@ CREATE TABLE IF NOT EXISTS `fos_group` (
 --
 
 INSERT INTO `fos_group` (`id`, `name`, `roles`, `code`) VALUES
-(1, 'Super Administrateur', 'a:156:{i:0;s:17:\"ROLE_GROUP_CREATE\";i:1;s:16:\"ROLE_GROUP_INDEX\";i:2;s:15:\"ROLE_GROUP_SHOW\";i:3;s:16:\"ROLE_GROUP_CLONE\";i:4;s:17:\"ROLE_GROUP_DELETE\";i:5;s:15:\"ROLE_GROUP_EDIT\";i:6;s:16:\"ROLE_USER_CREATE\";i:7;s:15:\"ROLE_USER_INDEX\";i:8;s:14:\"ROLE_USER_SHOW\";i:9;s:15:\"ROLE_USER_CLONE\";i:10;s:16:\"ROLE_USER_DELETE\";i:11;s:14:\"ROLE_USER_EDIT\";i:12;s:22:\"ROLE_TYPEENTITE_CREATE\";i:13;s:21:\"ROLE_TYPEENTITE_INDEX\";i:14;s:20:\"ROLE_TYPEENTITE_SHOW\";i:15;s:21:\"ROLE_TYPEENTITE_CLONE\";i:16;s:22:\"ROLE_TYPEENTITE_DELETE\";i:17;s:20:\"ROLE_TYPEENTITE_EDIT\";i:18;s:24:\"ROLE_TYPEDOCUMENT_CREATE\";i:19;s:23:\"ROLE_TYPEDOCUMENT_INDEX\";i:20;s:22:\"ROLE_TYPEDOCUMENT_SHOW\";i:21;s:23:\"ROLE_TYPEDOCUMENT_CLONE\";i:22;s:24:\"ROLE_TYPEDOCUMENT_DELETE\";i:23;s:22:\"ROLE_TYPEDOCUMENT_EDIT\";i:24;s:23:\"ROLE_TYPECONTRAT_CREATE\";i:25;s:22:\"ROLE_TYPECONTRAT_INDEX\";i:26;s:21:\"ROLE_TYPECONTRAT_SHOW\";i:27;s:22:\"ROLE_TYPECONTRAT_CLONE\";i:28;s:23:\"ROLE_TYPECONTRAT_DELETE\";i:29;s:21:\"ROLE_TYPECONTRAT_EDIT\";i:30;s:20:\"ROLE_FONCTION_CREATE\";i:31;s:19:\"ROLE_FONCTION_INDEX\";i:32;s:18:\"ROLE_FONCTION_SHOW\";i:33;s:19:\"ROLE_FONCTION_CLONE\";i:34;s:20:\"ROLE_FONCTION_DELETE\";i:35;s:18:\"ROLE_FONCTION_EDIT\";i:36;s:16:\"ROLE_PAYS_CREATE\";i:37;s:15:\"ROLE_PAYS_INDEX\";i:38;s:14:\"ROLE_PAYS_SHOW\";i:39;s:15:\"ROLE_PAYS_CLONE\";i:40;s:16:\"ROLE_PAYS_DELETE\";i:41;s:14:\"ROLE_PAYS_EDIT\";i:42;s:25:\"ROLE_CAISSESOCIALE_CREATE\";i:43;s:24:\"ROLE_CAISSESOCIALE_INDEX\";i:44;s:23:\"ROLE_CAISSESOCIALE_SHOW\";i:45;s:24:\"ROLE_CAISSESOCIALE_CLONE\";i:46;s:25:\"ROLE_CAISSESOCIALE_DELETE\";i:47;s:23:\"ROLE_CAISSESOCIALE_EDIT\";i:48;s:25:\"ROLE_MUTUELLESANTE_CREATE\";i:49;s:24:\"ROLE_MUTUELLESANTE_INDEX\";i:50;s:23:\"ROLE_MUTUELLESANTE_SHOW\";i:51;s:24:\"ROLE_MUTUELLESANTE_CLONE\";i:52;s:25:\"ROLE_MUTUELLESANTE_DELETE\";i:53;s:23:\"ROLE_MUTUELLESANTE_EDIT\";i:54;s:23:\"ROLE_TYPEEMPLOYE_CREATE\";i:55;s:22:\"ROLE_TYPEEMPLOYE_INDEX\";i:56;s:21:\"ROLE_TYPEEMPLOYE_SHOW\";i:57;s:22:\"ROLE_TYPEEMPLOYE_CLONE\";i:58;s:23:\"ROLE_TYPEEMPLOYE_DELETE\";i:59;s:21:\"ROLE_TYPEEMPLOYE_EDIT\";i:60;s:21:\"ROLE_STRUCTURE_CREATE\";i:61;s:20:\"ROLE_STRUCTURE_INDEX\";i:62;s:19:\"ROLE_STRUCTURE_SHOW\";i:63;s:20:\"ROLE_STRUCTURE_CLONE\";i:64;s:21:\"ROLE_STRUCTURE_DELETE\";i:65;s:19:\"ROLE_STRUCTURE_EDIT\";i:66;s:20:\"ROLE_SYNDICAT_CREATE\";i:67;s:19:\"ROLE_SYNDICAT_INDEX\";i:68;s:18:\"ROLE_SYNDICAT_SHOW\";i:69;s:19:\"ROLE_SYNDICAT_CLONE\";i:70;s:20:\"ROLE_SYNDICAT_DELETE\";i:71;s:18:\"ROLE_SYNDICAT_EDIT\";i:72;s:22:\"ROLE_PROFESSION_CREATE\";i:73;s:21:\"ROLE_PROFESSION_INDEX\";i:74;s:20:\"ROLE_PROFESSION_SHOW\";i:75;s:22:\"ROLE_PROFESSION_DELETE\";i:76;s:20:\"ROLE_PROFESSION_EDIT\";i:77;s:19:\"ROLE_DIPLOME_CREATE\";i:78;s:18:\"ROLE_DIPLOME_INDEX\";i:79;s:17:\"ROLE_DIPLOME_SHOW\";i:80;s:18:\"ROLE_DIPLOME_CLONE\";i:81;s:19:\"ROLE_DIPLOME_DELETE\";i:82;s:17:\"ROLE_DIPLOME_EDIT\";i:83;s:17:\"ROLE_GRADE_CREATE\";i:84;s:16:\"ROLE_GRADE_INDEX\";i:85;s:15:\"ROLE_GRADE_SHOW\";i:86;s:16:\"ROLE_GRADE_CLONE\";i:87;s:17:\"ROLE_GRADE_DELETE\";i:88;s:15:\"ROLE_GRADE_EDIT\";i:89;s:19:\"ROLE_GCLASSE_CREATE\";i:90;s:18:\"ROLE_GCLASSE_INDEX\";i:91;s:17:\"ROLE_GCLASSE_SHOW\";i:92;s:19:\"ROLE_GCLASSE_DELETE\";i:93;s:17:\"ROLE_GCLASSE_EDIT\";i:94;s:22:\"ROLE_GCATEGORIE_CREATE\";i:95;s:21:\"ROLE_GCATEGORIE_INDEX\";i:96;s:20:\"ROLE_GCATEGORIE_SHOW\";i:97;s:22:\"ROLE_GCATEGORIE_DELETE\";i:98;s:20:\"ROLE_GCATEGORIE_EDIT\";i:99;s:19:\"ROLE_GNIVEAU_CREATE\";i:100;s:18:\"ROLE_GNIVEAU_INDEX\";i:101;s:17:\"ROLE_GNIVEAU_SHOW\";i:102;s:19:\"ROLE_GNIVEAU_DELETE\";i:103;s:17:\"ROLE_GNIVEAU_EDIT\";i:104;s:20:\"ROLE_GECHELON_CREATE\";i:105;s:19:\"ROLE_GECHELON_INDEX\";i:106;s:18:\"ROLE_GECHELON_SHOW\";i:107;s:20:\"ROLE_GECHELON_DELETE\";i:108;s:18:\"ROLE_GECHELON_EDIT\";i:109;s:25:\"ROLE_ECHELONCLASSE_CREATE\";i:110;s:24:\"ROLE_ECHELONCLASSE_INDEX\";i:111;s:23:\"ROLE_ECHELONCLASSE_SHOW\";i:112;s:25:\"ROLE_ECHELONCLASSE_DELETE\";i:113;s:23:\"ROLE_ECHELONCLASSE_EDIT\";i:114;s:19:\"ROLE_EMPLOYE_CREATE\";i:115;s:18:\"ROLE_EMPLOYE_INDEX\";i:116;s:17:\"ROLE_EMPLOYE_SHOW\";i:117;s:18:\"ROLE_EMPLOYE_CLONE\";i:118;s:19:\"ROLE_EMPLOYE_DELETE\";i:119;s:17:\"ROLE_EMPLOYE_EDIT\";i:120;s:19:\"ROLE_ADRESSE_CREATE\";i:121;s:18:\"ROLE_ADRESSE_INDEX\";i:122;s:17:\"ROLE_ADRESSE_SHOW\";i:123;s:18:\"ROLE_ADRESSE_CLONE\";i:124;s:19:\"ROLE_ADRESSE_DELETE\";i:125;s:17:\"ROLE_ADRESSE_EDIT\";i:126;s:25:\"ROLE_MEMBREFAMILLE_CREATE\";i:127;s:24:\"ROLE_MEMBREFAMILLE_INDEX\";i:128;s:23:\"ROLE_MEMBREFAMILLE_SHOW\";i:129;s:24:\"ROLE_MEMBREFAMILLE_CLONE\";i:130;s:25:\"ROLE_MEMBREFAMILLE_DELETE\";i:131;s:23:\"ROLE_MEMBREFAMILLE_EDIT\";i:132;s:26:\"ROLE_MEMBRESYNDICAT_CREATE\";i:133;s:25:\"ROLE_MEMBRESYNDICAT_INDEX\";i:134;s:24:\"ROLE_MEMBRESYNDICAT_SHOW\";i:135;s:25:\"ROLE_MEMBRESYNDICAT_CLONE\";i:136;s:26:\"ROLE_MEMBRESYNDICAT_DELETE\";i:137;s:24:\"ROLE_MEMBRESYNDICAT_EDIT\";i:138;s:20:\"ROLE_DOCUMENT_CREATE\";i:139;s:19:\"ROLE_DOCUMENT_INDEX\";i:140;s:18:\"ROLE_DOCUMENT_SHOW\";i:141;s:19:\"ROLE_DOCUMENT_CLONE\";i:142;s:20:\"ROLE_DOCUMENT_DELETE\";i:143;s:18:\"ROLE_DOCUMENT_EDIT\";i:144;s:27:\"ROLE_FONCTIONEMPLOYE_CREATE\";i:145;s:26:\"ROLE_FONCTIONEMPLOYE_INDEX\";i:146;s:25:\"ROLE_FONCTIONEMPLOYE_SHOW\";i:147;s:26:\"ROLE_FONCTIONEMPLOYE_CLONE\";i:148;s:27:\"ROLE_FONCTIONEMPLOYE_DELETE\";i:149;s:25:\"ROLE_FONCTIONEMPLOYE_EDIT\";i:150;s:26:\"ROLE_DIPLOMEEMPLOYE_CREATE\";i:151;s:25:\"ROLE_DIPLOMEEMPLOYE_INDEX\";i:152;s:24:\"ROLE_DIPLOMEEMPLOYE_SHOW\";i:153;s:25:\"ROLE_DIPLOMEEMPLOYE_CLONE\";i:154;s:26:\"ROLE_DIPLOMEEMPLOYE_DELETE\";i:155;s:24:\"ROLE_DIPLOMEEMPLOYE_EDIT\";}', 'SA'),
+(1, 'Super Administrateur', 'a:174:{i:0;s:17:\"ROLE_GROUP_CREATE\";i:1;s:16:\"ROLE_GROUP_INDEX\";i:2;s:15:\"ROLE_GROUP_SHOW\";i:3;s:16:\"ROLE_GROUP_CLONE\";i:4;s:17:\"ROLE_GROUP_DELETE\";i:5;s:15:\"ROLE_GROUP_EDIT\";i:6;s:16:\"ROLE_USER_CREATE\";i:7;s:15:\"ROLE_USER_INDEX\";i:8;s:14:\"ROLE_USER_SHOW\";i:9;s:15:\"ROLE_USER_CLONE\";i:10;s:16:\"ROLE_USER_DELETE\";i:11;s:14:\"ROLE_USER_EDIT\";i:12;s:22:\"ROLE_TYPEENTITE_CREATE\";i:13;s:21:\"ROLE_TYPEENTITE_INDEX\";i:14;s:20:\"ROLE_TYPEENTITE_SHOW\";i:15;s:21:\"ROLE_TYPEENTITE_CLONE\";i:16;s:22:\"ROLE_TYPEENTITE_DELETE\";i:17;s:20:\"ROLE_TYPEENTITE_EDIT\";i:18;s:24:\"ROLE_TYPEDOCUMENT_CREATE\";i:19;s:23:\"ROLE_TYPEDOCUMENT_INDEX\";i:20;s:22:\"ROLE_TYPEDOCUMENT_SHOW\";i:21;s:23:\"ROLE_TYPEDOCUMENT_CLONE\";i:22;s:24:\"ROLE_TYPEDOCUMENT_DELETE\";i:23;s:22:\"ROLE_TYPEDOCUMENT_EDIT\";i:24;s:23:\"ROLE_TYPECONTRAT_CREATE\";i:25;s:22:\"ROLE_TYPECONTRAT_INDEX\";i:26;s:21:\"ROLE_TYPECONTRAT_SHOW\";i:27;s:22:\"ROLE_TYPECONTRAT_CLONE\";i:28;s:23:\"ROLE_TYPECONTRAT_DELETE\";i:29;s:21:\"ROLE_TYPECONTRAT_EDIT\";i:30;s:20:\"ROLE_FONCTION_CREATE\";i:31;s:19:\"ROLE_FONCTION_INDEX\";i:32;s:18:\"ROLE_FONCTION_SHOW\";i:33;s:19:\"ROLE_FONCTION_CLONE\";i:34;s:20:\"ROLE_FONCTION_DELETE\";i:35;s:18:\"ROLE_FONCTION_EDIT\";i:36;s:16:\"ROLE_PAYS_CREATE\";i:37;s:15:\"ROLE_PAYS_INDEX\";i:38;s:14:\"ROLE_PAYS_SHOW\";i:39;s:15:\"ROLE_PAYS_CLONE\";i:40;s:16:\"ROLE_PAYS_DELETE\";i:41;s:14:\"ROLE_PAYS_EDIT\";i:42;s:25:\"ROLE_CAISSESOCIALE_CREATE\";i:43;s:24:\"ROLE_CAISSESOCIALE_INDEX\";i:44;s:23:\"ROLE_CAISSESOCIALE_SHOW\";i:45;s:24:\"ROLE_CAISSESOCIALE_CLONE\";i:46;s:25:\"ROLE_CAISSESOCIALE_DELETE\";i:47;s:23:\"ROLE_CAISSESOCIALE_EDIT\";i:48;s:25:\"ROLE_MUTUELLESANTE_CREATE\";i:49;s:24:\"ROLE_MUTUELLESANTE_INDEX\";i:50;s:23:\"ROLE_MUTUELLESANTE_SHOW\";i:51;s:24:\"ROLE_MUTUELLESANTE_CLONE\";i:52;s:25:\"ROLE_MUTUELLESANTE_DELETE\";i:53;s:23:\"ROLE_MUTUELLESANTE_EDIT\";i:54;s:23:\"ROLE_TYPEEMPLOYE_CREATE\";i:55;s:22:\"ROLE_TYPEEMPLOYE_INDEX\";i:56;s:21:\"ROLE_TYPEEMPLOYE_SHOW\";i:57;s:22:\"ROLE_TYPEEMPLOYE_CLONE\";i:58;s:23:\"ROLE_TYPEEMPLOYE_DELETE\";i:59;s:21:\"ROLE_TYPEEMPLOYE_EDIT\";i:60;s:21:\"ROLE_STRUCTURE_CREATE\";i:61;s:20:\"ROLE_STRUCTURE_INDEX\";i:62;s:19:\"ROLE_STRUCTURE_SHOW\";i:63;s:20:\"ROLE_STRUCTURE_CLONE\";i:64;s:21:\"ROLE_STRUCTURE_DELETE\";i:65;s:19:\"ROLE_STRUCTURE_EDIT\";i:66;s:20:\"ROLE_SYNDICAT_CREATE\";i:67;s:19:\"ROLE_SYNDICAT_INDEX\";i:68;s:18:\"ROLE_SYNDICAT_SHOW\";i:69;s:19:\"ROLE_SYNDICAT_CLONE\";i:70;s:20:\"ROLE_SYNDICAT_DELETE\";i:71;s:18:\"ROLE_SYNDICAT_EDIT\";i:72;s:22:\"ROLE_PROFESSION_CREATE\";i:73;s:21:\"ROLE_PROFESSION_INDEX\";i:74;s:20:\"ROLE_PROFESSION_SHOW\";i:75;s:21:\"ROLE_PROFESSION_CLONE\";i:76;s:22:\"ROLE_PROFESSION_DELETE\";i:77;s:20:\"ROLE_PROFESSION_EDIT\";i:78;s:19:\"ROLE_DIPLOME_CREATE\";i:79;s:18:\"ROLE_DIPLOME_INDEX\";i:80;s:17:\"ROLE_DIPLOME_SHOW\";i:81;s:18:\"ROLE_DIPLOME_CLONE\";i:82;s:19:\"ROLE_DIPLOME_DELETE\";i:83;s:17:\"ROLE_DIPLOME_EDIT\";i:84;s:29:\"ROLE_STRUCTUREFONCTION_CREATE\";i:85;s:28:\"ROLE_STRUCTUREFONCTION_INDEX\";i:86;s:27:\"ROLE_STRUCTUREFONCTION_SHOW\";i:87;s:28:\"ROLE_STRUCTUREFONCTION_CLONE\";i:88;s:29:\"ROLE_STRUCTUREFONCTION_DELETE\";i:89;s:27:\"ROLE_STRUCTUREFONCTION_EDIT\";i:90;s:19:\"ROLE_GCLASSE_CREATE\";i:91;s:18:\"ROLE_GCLASSE_INDEX\";i:92;s:17:\"ROLE_GCLASSE_SHOW\";i:93;s:18:\"ROLE_GCLASSE_CLONE\";i:94;s:19:\"ROLE_GCLASSE_DELETE\";i:95;s:17:\"ROLE_GCLASSE_EDIT\";i:96;s:22:\"ROLE_GCATEGORIE_CREATE\";i:97;s:21:\"ROLE_GCATEGORIE_INDEX\";i:98;s:20:\"ROLE_GCATEGORIE_SHOW\";i:99;s:21:\"ROLE_GCATEGORIE_CLONE\";i:100;s:22:\"ROLE_GCATEGORIE_DELETE\";i:101;s:20:\"ROLE_GCATEGORIE_EDIT\";i:102;s:19:\"ROLE_GNIVEAU_CREATE\";i:103;s:18:\"ROLE_GNIVEAU_INDEX\";i:104;s:17:\"ROLE_GNIVEAU_SHOW\";i:105;s:18:\"ROLE_GNIVEAU_CLONE\";i:106;s:19:\"ROLE_GNIVEAU_DELETE\";i:107;s:17:\"ROLE_GNIVEAU_EDIT\";i:108;s:20:\"ROLE_GECHELON_CREATE\";i:109;s:19:\"ROLE_GECHELON_INDEX\";i:110;s:18:\"ROLE_GECHELON_SHOW\";i:111;s:19:\"ROLE_GECHELON_CLONE\";i:112;s:20:\"ROLE_GECHELON_DELETE\";i:113;s:18:\"ROLE_GECHELON_EDIT\";i:114;s:17:\"ROLE_GRADE_CREATE\";i:115;s:16:\"ROLE_GRADE_INDEX\";i:116;s:15:\"ROLE_GRADE_SHOW\";i:117;s:16:\"ROLE_GRADE_CLONE\";i:118;s:17:\"ROLE_GRADE_DELETE\";i:119;s:15:\"ROLE_GRADE_EDIT\";i:120;s:19:\"ROLE_EMPLOYE_CREATE\";i:121;s:18:\"ROLE_EMPLOYE_INDEX\";i:122;s:17:\"ROLE_EMPLOYE_SHOW\";i:123;s:18:\"ROLE_EMPLOYE_CLONE\";i:124;s:19:\"ROLE_EMPLOYE_DELETE\";i:125;s:17:\"ROLE_EMPLOYE_EDIT\";i:126;s:19:\"ROLE_ADRESSE_CREATE\";i:127;s:18:\"ROLE_ADRESSE_INDEX\";i:128;s:17:\"ROLE_ADRESSE_SHOW\";i:129;s:18:\"ROLE_ADRESSE_CLONE\";i:130;s:19:\"ROLE_ADRESSE_DELETE\";i:131;s:17:\"ROLE_ADRESSE_EDIT\";i:132;s:25:\"ROLE_MEMBREFAMILLE_CREATE\";i:133;s:24:\"ROLE_MEMBREFAMILLE_INDEX\";i:134;s:23:\"ROLE_MEMBREFAMILLE_SHOW\";i:135;s:24:\"ROLE_MEMBREFAMILLE_CLONE\";i:136;s:25:\"ROLE_MEMBREFAMILLE_DELETE\";i:137;s:23:\"ROLE_MEMBREFAMILLE_EDIT\";i:138;s:26:\"ROLE_MEMBRESYNDICAT_CREATE\";i:139;s:25:\"ROLE_MEMBRESYNDICAT_INDEX\";i:140;s:24:\"ROLE_MEMBRESYNDICAT_SHOW\";i:141;s:25:\"ROLE_MEMBRESYNDICAT_CLONE\";i:142;s:26:\"ROLE_MEMBRESYNDICAT_DELETE\";i:143;s:24:\"ROLE_MEMBRESYNDICAT_EDIT\";i:144;s:20:\"ROLE_DOCUMENT_CREATE\";i:145;s:19:\"ROLE_DOCUMENT_INDEX\";i:146;s:18:\"ROLE_DOCUMENT_SHOW\";i:147;s:19:\"ROLE_DOCUMENT_CLONE\";i:148;s:20:\"ROLE_DOCUMENT_DELETE\";i:149;s:18:\"ROLE_DOCUMENT_EDIT\";i:150;s:27:\"ROLE_FONCTIONEMPLOYE_CREATE\";i:151;s:26:\"ROLE_FONCTIONEMPLOYE_INDEX\";i:152;s:25:\"ROLE_FONCTIONEMPLOYE_SHOW\";i:153;s:26:\"ROLE_FONCTIONEMPLOYE_CLONE\";i:154;s:27:\"ROLE_FONCTIONEMPLOYE_DELETE\";i:155;s:25:\"ROLE_FONCTIONEMPLOYE_EDIT\";i:156;s:26:\"ROLE_DIPLOMEEMPLOYE_CREATE\";i:157;s:25:\"ROLE_DIPLOMEEMPLOYE_INDEX\";i:158;s:24:\"ROLE_DIPLOMEEMPLOYE_SHOW\";i:159;s:25:\"ROLE_DIPLOMEEMPLOYE_CLONE\";i:160;s:26:\"ROLE_DIPLOMEEMPLOYE_DELETE\";i:161;s:24:\"ROLE_DIPLOMEEMPLOYE_EDIT\";i:162;s:19:\"ROLE_CONTRAT_CREATE\";i:163;s:18:\"ROLE_CONTRAT_INDEX\";i:164;s:17:\"ROLE_CONTRAT_SHOW\";i:165;s:18:\"ROLE_CONTRAT_CLONE\";i:166;s:19:\"ROLE_CONTRAT_DELETE\";i:167;s:17:\"ROLE_CONTRAT_EDIT\";i:168;s:23:\"ROLE_Affectation_CREATE\";i:169;s:22:\"ROLE_Affectation_INDEX\";i:170;s:21:\"ROLE_Affectation_SHOW\";i:171;s:22:\"ROLE_Affectation_CLONE\";i:172;s:23:\"ROLE_Affectation_DELETE\";i:173;s:21:\"ROLE_Affectation_EDIT\";}', 'SA'),
 (2, 'Directrice des Ressources Humaines', 'a:60:{i:0;s:17:\"ROLE_GROUP_CREATE\";i:1;s:16:\"ROLE_GROUP_INDEX\";i:2;s:15:\"ROLE_GROUP_SHOW\";i:3;s:16:\"ROLE_USER_CREATE\";i:4;s:15:\"ROLE_USER_INDEX\";i:5;s:14:\"ROLE_USER_SHOW\";i:6;s:25:\"ROLE_CAISSESOCIALE_CREATE\";i:7;s:24:\"ROLE_CAISSESOCIALE_INDEX\";i:8;s:23:\"ROLE_CAISSESOCIALE_SHOW\";i:9;s:25:\"ROLE_CAISSESOCIALE_DELETE\";i:10;s:23:\"ROLE_CAISSESOCIALE_EDIT\";i:11;s:25:\"ROLE_MUTUELLESANTE_CREATE\";i:12;s:24:\"ROLE_MUTUELLESANTE_INDEX\";i:13;s:23:\"ROLE_MUTUELLESANTE_SHOW\";i:14;s:25:\"ROLE_MUTUELLESANTE_DELETE\";i:15;s:23:\"ROLE_MUTUELLESANTE_EDIT\";i:16;s:21:\"ROLE_STRUCTURE_CREATE\";i:17;s:20:\"ROLE_STRUCTURE_INDEX\";i:18;s:19:\"ROLE_STRUCTURE_SHOW\";i:19;s:21:\"ROLE_STRUCTURE_DELETE\";i:20;s:19:\"ROLE_STRUCTURE_EDIT\";i:21;s:20:\"ROLE_SYNDICAT_CREATE\";i:22;s:19:\"ROLE_SYNDICAT_INDEX\";i:23;s:18:\"ROLE_SYNDICAT_SHOW\";i:24;s:18:\"ROLE_SYNDICAT_EDIT\";i:25;s:17:\"ROLE_GRADE_CREATE\";i:26;s:16:\"ROLE_GRADE_INDEX\";i:27;s:15:\"ROLE_GRADE_SHOW\";i:28;s:17:\"ROLE_GRADE_DELETE\";i:29;s:15:\"ROLE_GRADE_EDIT\";i:30;s:19:\"ROLE_EMPLOYE_CREATE\";i:31;s:18:\"ROLE_EMPLOYE_INDEX\";i:32;s:17:\"ROLE_EMPLOYE_SHOW\";i:33;s:19:\"ROLE_EMPLOYE_DELETE\";i:34;s:17:\"ROLE_EMPLOYE_EDIT\";i:35;s:19:\"ROLE_ADRESSE_CREATE\";i:36;s:18:\"ROLE_ADRESSE_INDEX\";i:37;s:17:\"ROLE_ADRESSE_SHOW\";i:38;s:19:\"ROLE_ADRESSE_DELETE\";i:39;s:17:\"ROLE_ADRESSE_EDIT\";i:40;s:25:\"ROLE_MEMBREFAMILLE_CREATE\";i:41;s:24:\"ROLE_MEMBREFAMILLE_INDEX\";i:42;s:23:\"ROLE_MEMBREFAMILLE_SHOW\";i:43;s:25:\"ROLE_MEMBREFAMILLE_DELETE\";i:44;s:23:\"ROLE_MEMBREFAMILLE_EDIT\";i:45;s:26:\"ROLE_MEMBRESYNDICAT_CREATE\";i:46;s:25:\"ROLE_MEMBRESYNDICAT_INDEX\";i:47;s:24:\"ROLE_MEMBRESYNDICAT_SHOW\";i:48;s:26:\"ROLE_MEMBRESYNDICAT_DELETE\";i:49;s:24:\"ROLE_MEMBRESYNDICAT_EDIT\";i:50;s:20:\"ROLE_DOCUMENT_CREATE\";i:51;s:19:\"ROLE_DOCUMENT_INDEX\";i:52;s:18:\"ROLE_DOCUMENT_SHOW\";i:53;s:20:\"ROLE_DOCUMENT_DELETE\";i:54;s:18:\"ROLE_DOCUMENT_EDIT\";i:55;s:27:\"ROLE_FONCTIONEMPLOYE_CREATE\";i:56;s:26:\"ROLE_FONCTIONEMPLOYE_INDEX\";i:57;s:25:\"ROLE_FONCTIONEMPLOYE_SHOW\";i:58;s:27:\"ROLE_FONCTIONEMPLOYE_DELETE\";i:59;s:25:\"ROLE_FONCTIONEMPLOYE_EDIT\";}', 'DRH');
 
 -- --------------------------------------------------------
@@ -417,24 +431,24 @@ INSERT INTO `fos_group` (`id`, `name`, `roles`, `code`) VALUES
 DROP TABLE IF EXISTS `fos_user`;
 CREATE TABLE IF NOT EXISTS `fos_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username_canonical` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email_canonical` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username_canonical` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_canonical` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `enabled` tinyint(1) NOT NULL,
-  `salt` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `salt` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_login` datetime DEFAULT NULL,
-  `confirmation_token` varchar(180) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `confirmation_token` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password_requested_at` datetime DEFAULT NULL,
-  `roles` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
-  `prenom` varchar(145) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nom` varchar(145) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telephone` varchar(145) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `source` varchar(145) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `path_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `file_name` varchar(145) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fonction` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `roles` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
+  `prenom` varchar(145) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nom` varchar(145) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telephone` varchar(145) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `source` varchar(145) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `path_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `file_name` varchar(145) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fonction` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_957A647992FC23A8` (`username_canonical`),
   UNIQUE KEY `UNIQ_957A6479A0D96FBF` (`email_canonical`),
@@ -446,9 +460,9 @@ CREATE TABLE IF NOT EXISTS `fos_user` (
 --
 
 INSERT INTO `fos_user` (`id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `confirmation_token`, `password_requested_at`, `roles`, `prenom`, `nom`, `telephone`, `source`, `path_image`, `file_name`, `fonction`) VALUES
-(1, 'bamboguirassy', 'bamboguirassy', 'didegassama@gmail.com', 'didegassama@gmail.com', 1, 'Z/gyBaBwxhKdslRLxGEGISo2d1Ri9rQZV2rRXUJrFk4', '$2y$13$NtjJGxfgCmKZg92USbU1DezMcJJ/QQG1Pu3t.gRdhT2TI72Dfcg3m', '2021-02-24 12:21:39', NULL, NULL, 'a:0:{}', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 'moussa.fofana@univ-thies.sn', 'moussa.fofana@univ-thies.sn', 'moussa.fofana@univ-thies.sn', 'moussa.fofana@univ-thies.sn', 1, 'xiAQMhJrdX/dcHEd8UHmhDYCWZSdydnTofkyJm316TM', '$2y$13$tLQYO6efpj1AEeGkUVbkbO1/UWJebSAp8KVMcm98Sfy17cs8XQFfO', '2021-05-02 13:39:09', 'f474311a869aa7697c690125d85b9ecd', '2020-09-13 13:37:57', 'a:0:{}', 'Moussa', 'Fofana', '780165026', 'sm', 'http://127.0.0.1:8000/uploads/user/profil/5f5e20b5d03fc.jpeg', '5f5e20b5d03fc.jpeg', 'Chef de Projet - CDD'),
-(3, 'codend', 'codend', 'elhadjicode.ndiaye@univ-thies.sn', 'elhadjicode.ndiaye@univ-thies.sn', 1, 'aok2akB/jXOPsEtdmxkxtlauzqayHRxhdVEXGwpnOPo', '$2y$13$tLQYO6efpj1AEeGkUVbkbO1/UWJebSAp8KVMcm98Sfy17cs8XQFfO', '2021-05-11 10:46:14', NULL, NULL, 'a:2:{i:0;s:16:\"ROLE_GROUP_INDEX\";i:1;s:17:\"ROLE_GROUP_CREATE\";}', 'El Hadji', 'NDIAYE', '774093789', 'sm', 'http://127.0.0.1:8000/uploads/user/profil/608eabdd36614.png', '608eabdd36614.png', 'FD');
+(1, 'bamboguirassy', 'bamboguirassy', 'didegassama@gmail.com', 'didegassama@gmail.com', 1, 'KpIYER.RcKmWSDCiwKAnNSvcJxDIOCg8EZ7H5nM2nCs', '$2y$13$R04XxI29Cw3S5HoKXqHeKuEXU1JO7orWek/UoLOLYG.ocGOGgQhZ6', '2021-05-17 13:10:42', NULL, NULL, 'a:0:{}', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'moussa.fofana@univ-thies.sn', 'moussa.fofana@univ-thies.sn', 'moussa.fofana@univ-thies.sn', 'moussa.fofana@univ-thies.sn', 1, 'xiAQMhJrdX/dcHEd8UHmhDYCWZSdydnTofkyJm316TM', '$2y$13$I7YYxxJCYjrfuwTuPaq9LuvbCmOf5CaHLr9ekaI3yozkjEfoyeaQy', '2020-09-15 17:27:03', 'f474311a869aa7697c690125d85b9ecd', '2020-09-13 13:37:57', 'a:0:{}', 'Moussa', 'Fofana', '780165026', 'sm', 'http://127.0.0.1:8000/uploads/user/profil/5f5e20b5d03fc.jpeg', '5f5e20b5d03fc.jpeg', 'Chef de Projet - CDD'),
+(3, 'aminata.samb@univ-thies.sn', 'aminata.samb@univ-thies.sn', 'aminata.samb@univ-thies.sn', 'aminata.samb@univ-thies.sn', 1, NULL, '$2y$13$b93owv6K.C/3Trqn3KRc7u9YdZo9TTBF0ZjmGMnuRJGwjOOiyoU8W', '2021-05-04 11:58:09', '0e8d2419812f164e94da02d216e88aa7', '2021-05-03 14:18:16', 'a:0:{}', 'Aminata', 'Samb', '773509313', 'sm', NULL, NULL, 'developpeur');
 
 -- --------------------------------------------------------
 
@@ -472,7 +486,6 @@ CREATE TABLE IF NOT EXISTS `fos_user_group` (
 INSERT INTO `fos_user_group` (`user_id`, `group_id`) VALUES
 (1, 1),
 (2, 1),
-(3, 1),
 (3, 2);
 
 -- --------------------------------------------------------
@@ -490,7 +503,20 @@ CREATE TABLE IF NOT EXISTS `gcategorie` (
   `ordre` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_7FC5B5E59C2BB0CC` (`suivant_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `gcategorie`
+--
+
+INSERT INTO `gcategorie` (`id`, `suivant_id`, `nom`, `indice`, `ordre`) VALUES
+(1, 7, 'catégorie 1', 'z', 2),
+(2, 1, 'eaz', 'azee', 1),
+(3, NULL, 'a', 'eed', 1),
+(4, 2, 'dd', 'd', 1),
+(5, NULL, 's', 'sdqs', 1),
+(6, NULL, 'ere', 'er', 1),
+(7, NULL, 'gjehgzkfzel', 'z', 1);
 
 -- --------------------------------------------------------
 
@@ -505,11 +531,27 @@ CREATE TABLE IF NOT EXISTS `gclasse` (
   `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `indice` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ordre` int(11) NOT NULL,
-  `type_employe` int(11) DEFAULT NULL,
+  `type_employe` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_ED38B3209C2BB0CC` (`suivant_id`),
   KEY `IDX_ED38B320D025BC4C` (`type_employe`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `gclasse`
+--
+
+INSERT INTO `gclasse` (`id`, `suivant_id`, `nom`, `indice`, `ordre`, `type_employe`) VALUES
+(1, 40, 'Classe 1', '2', 1, 2),
+(2, 41, 'Classe 2', '2', 3, 1),
+(32, 36, 'Classe 3', 'aze', 1, 4),
+(33, 42, 'classe 4', '2', 1, 1),
+(34, NULL, 'Classe 5', 'AEA', 1, 4),
+(35, NULL, 'Classe 7', 'AZEZA', 1, 3),
+(36, 32, 'Classe 6', 'ERFE', 1, 2),
+(40, NULL, 'ClasseZ', '2', 2, 2),
+(41, NULL, 'Classe 8', '2', 4, 3),
+(42, NULL, 'Classe 9', 'indice 2', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -588,7 +630,12 @@ CREATE TABLE IF NOT EXISTS `grade` (
   `echelon_id` int(11) NOT NULL,
   `niveau_id` int(11) NOT NULL,
   `categorie_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  `classe_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_595AAE344D8771C0` (`echelon_id`),
+  KEY `IDX_595AAE34B3E9C81` (`niveau_id`),
+  KEY `IDX_595AAE34BCF5E72D` (`categorie_id`),
+  KEY `IDX_595AAE348F5EA509` (`classe_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -601,13 +648,13 @@ DROP TABLE IF EXISTS `membre_famille`;
 CREATE TABLE IF NOT EXISTS `membre_famille` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employe` int(11) DEFAULT NULL,
-  `prenoms` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nom` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prenoms` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nom` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_naissance` date NOT NULL,
-  `lieu_naissance` varchar(145) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `genre` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Homme ou Femme',
-  `lien_parente` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'enfant, epoux',
-  `telephone` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lieu_naissance` varchar(145) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `genre` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Homme ou Femme',
+  `lien_parente` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'enfant, epoux',
+  `telephone` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_membre_famille_employe1_idx` (`employe`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -632,7 +679,7 @@ CREATE TABLE IF NOT EXISTS `membre_syndicat` (
   `employe` int(11) DEFAULT NULL,
   `syndicat` int(11) DEFAULT NULL,
   `date_enregistrement` date NOT NULL,
-  `etat` tinyint(1) DEFAULT NULL COMMENT 'true si c''est le syndicat actuel du travailleur\r\n        un employé peut être dans plusieurs syndicats',
+  `etat` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_membre_syndicat_syndicat1_idx` (`syndicat`),
   KEY `fk_membre_syndicat_employe1_idx` (`employe`)
@@ -653,7 +700,7 @@ INSERT INTO `membre_syndicat` (`id`, `employe`, `syndicat`, `date_enregistrement
 
 DROP TABLE IF EXISTS `migration_versions`;
 CREATE TABLE IF NOT EXISTS `migration_versions` (
-  `version` varchar(14) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `version` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `executed_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
   PRIMARY KEY (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -666,24 +713,38 @@ INSERT INTO `migration_versions` (`version`, `executed_at`) VALUES
 ('20200913161247', '2020-09-13 16:12:55'),
 ('20200913162947', '2020-09-13 16:30:11'),
 ('20210222092238', '2021-02-22 09:23:23'),
-('20210505110513', '2021-05-06 12:53:55'),
-('20210505142059', '2021-05-06 12:53:56'),
+('20210505110513', '2021-05-05 11:10:24'),
+('20210505142059', '2021-05-05 14:21:48'),
 ('20210505234143', '2021-05-06 00:00:00'),
-('20210507081856', '2021-05-06 00:00:00'),
-('20210507091025', '2021-05-07 09:10:39'),
-('20210507100246', '2021-05-07 10:04:48'),
-('20210507120628', '2021-05-08 21:59:02'),
-('20210507124006', '2021-05-08 21:59:03'),
-('20210507130404', '2021-05-07 00:00:00'),
-('20210509140901', '2021-05-09 14:09:18'),
-('20210510085457', '2021-05-09 00:00:00'),
-('20210510141347', '2021-05-09 00:00:00'),
-('20210510143616', '2021-05-10 16:29:30'),
-('20210510143722', '2021-05-10 16:31:00'),
-('20210510144259', '2021-05-10 16:31:03'),
-('20210510155714', '2021-05-10 00:00:00'),
-('20210511001047', '2021-05-11 00:11:03'),
-('20210511083043', '2021-05-11 10:20:18');
+('20210506213614', '2021-05-07 08:40:21'),
+('20210506222727', '2021-05-07 08:40:36'),
+('20210506234347', '2021-05-07 08:40:42'),
+('20210507000225', '2021-05-07 08:40:43'),
+('20210507081856', '0000-00-00 00:00:00'),
+('20210507100246', '2021-05-10 09:40:27'),
+('20210507120628', '2021-05-10 09:40:28'),
+('20210507124006', '2021-05-10 09:40:30'),
+('20210507130404', '0000-00-00 00:00:00'),
+('20210509140901', '2021-05-10 09:41:04'),
+('20210510085457', '0000-00-00 00:00:00'),
+('20210510141347', '0000-00-00 00:00:00'),
+('20210510143616', '2021-05-11 08:45:16'),
+('20210510143722', '2021-05-11 08:45:17'),
+('20210510144259', '2021-05-11 08:45:21'),
+('20210510155714', '0000-00-00 00:00:00'),
+('20210511001047', '0000-00-00 00:00:00'),
+('20210511083043', '2021-05-14 16:05:19'),
+('20210511104920', '0000-00-00 00:00:00'),
+('20210512002832', '0000-00-00 00:00:00'),
+('20210512122625', '0000-00-00 00:00:00'),
+('20210513014837', '2021-05-14 16:07:26'),
+('20210514221306', '2021-05-14 22:14:57'),
+('20210515164218', '2021-05-16 16:10:39'),
+('20210516120600', '2021-05-16 16:10:39'),
+('20210516121459', '2021-05-16 16:10:41'),
+('20210516130237', '2021-05-16 16:10:41'),
+('20210516160950', '0000-00-00 00:00:00'),
+('20210517140553', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -987,7 +1048,17 @@ CREATE TABLE IF NOT EXISTS `profession` (
   `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_BA930D698F5EA509` (`classe_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `profession`
+--
+
+INSERT INTO `profession` (`id`, `classe_id`, `nom`) VALUES
+(1, NULL, 'Assistante'),
+(2, 1, 'zz'),
+(3, 2, 'dfdf'),
+(4, NULL, 'ff');
 
 -- --------------------------------------------------------
 
@@ -1016,21 +1087,21 @@ CREATE TABLE IF NOT EXISTS `structure` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(145) NOT NULL,
   `code` varchar(45) NOT NULL,
-  `adresse` text DEFAULT NULL,
+  `adresse` text,
   `telephone` varchar(45) DEFAULT NULL,
   `type_entite` int(11) DEFAULT NULL,
   `structure_parente` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_structure_typeentite_idx` (`type_entite`),
   KEY `fk_structure_structure1_idx` (`structure_parente`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `structure`
 --
 
 INSERT INTO `structure` (`id`, `nom`, `code`, `adresse`, `telephone`, `type_entite`, `structure_parente`) VALUES
-(1, 'Université de Thiès', 'UT', 'Cité Malick SY, 2 voix prison MAC THIES', NULL, 1, NULL),
+(1, 'Université de Thiès', 'UT', 'Cité Malick SY, 2 voix prison MAC THIES', '339518569', 1, NULL),
 (2, 'Rectorat', 'RECT', NULL, '338856985', 2, 1),
 (3, 'Direction des Systèmes d\'Informations', 'DSI', NULL, '339875869', 6, 2),
 (4, 'Direction de la Scolarité, de l\'Orientation et des Statisques', 'DSOS', NULL, '339875896', 6, 2),
@@ -1043,8 +1114,7 @@ INSERT INTO `structure` (`id`, `nom`, `code`, `adresse`, `telephone`, `type_enti
 (11, 'Bibliothèque Centrale', 'BU', NULL, '339215896', 7, 2),
 (12, 'Direction des Finances et de la Comptabilité', 'DFC', NULL, '339854785', 6, 2),
 (13, 'Direction des Ressources Humaines', 'DRH', NULL, '339854785', 6, 2),
-(14, 'Agence Comptable Principale', 'ACP', NULL, '339854774', 8, 2),
-(15, 'UFR SET', 'SET', 'VCN', NULL, 3, 1);
+(14, 'Agence Comptable Principale', 'ACP', NULL, '339854774', 8, 2);
 
 -- --------------------------------------------------------
 
@@ -1061,7 +1131,14 @@ CREATE TABLE IF NOT EXISTS `structure_fonction` (
   PRIMARY KEY (`id`),
   KEY `IDX_580577F72534008B` (`structure_id`),
   KEY `IDX_580577F757889920` (`fonction_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `structure_fonction`
+--
+
+INSERT INTO `structure_fonction` (`id`, `structure_id`, `fonction_id`, `etat`) VALUES
+(1, 14, 25, 23);
 
 -- --------------------------------------------------------
 
@@ -1076,7 +1153,7 @@ CREATE TABLE IF NOT EXISTS `syndicat` (
   `code` varchar(45) NOT NULL,
   `type_employe` int(11) DEFAULT NULL,
   `filename` varchar(145) DEFAULT NULL,
-  `filepath` text DEFAULT NULL,
+  `filepath` text,
   `montant_cotisation_mensuelle` int(5) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_syndicat_type_employe1_idx` (`type_employe`)
@@ -1102,15 +1179,20 @@ CREATE TABLE IF NOT EXISTS `type_contrat` (
   `nom` varchar(45) NOT NULL,
   `code` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `type_contrat`
 --
 
 INSERT INTO `type_contrat` (`id`, `nom`, `code`) VALUES
-(1, 'Contrat à Durée Determinée', 'CDD'),
-(2, 'Contrat à Durée Indéterminée', 'CDI');
+(1, 'CDD - Contrat à Durée Déterminée', 'CDD'),
+(2, 'CDI - Contrat à Durée Indéterminée', 'CDI'),
+(3, 'CTT - Contrat de travail temporaire ou Intéri', 'CTT'),
+(4, 'Contrat d’apprentissage (alternance)', 'CA'),
+(5, 'Contrat de professionnalisation (alternance)', 'CP'),
+(6, 'CUI - Contrat unique d’insertion', 'CUI'),
+(7, 'CAE - Contrat d’accompagnement dans l’emploi', 'CAE');
 
 -- --------------------------------------------------------
 
@@ -1206,6 +1288,13 @@ ALTER TABLE `affectation`
   ADD CONSTRAINT `FK_F4DD61D32534008B` FOREIGN KEY (`structure_id`) REFERENCES `structure` (`id`);
 
 --
+-- Contraintes pour la table `contrat`
+--
+ALTER TABLE `contrat`
+  ADD CONSTRAINT `FK_603499931B65292` FOREIGN KEY (`employe_id`) REFERENCES `employe` (`id`),
+  ADD CONSTRAINT `FK_60349993520D03A` FOREIGN KEY (`type_contrat_id`) REFERENCES `type_contrat` (`id`);
+
+--
 -- Contraintes pour la table `diplome_employe`
 --
 ALTER TABLE `diplome_employe`
@@ -1223,6 +1312,7 @@ ALTER TABLE `document`
 -- Contraintes pour la table `employe`
 --
 ALTER TABLE `employe`
+  ADD CONSTRAINT `FK_F804D3B92534008B` FOREIGN KEY (`structure_id`) REFERENCES `structure` (`id`),
   ADD CONSTRAINT `FK_F804D3B9595AAE34` FOREIGN KEY (`grade`) REFERENCES `grade` (`id`),
   ADD CONSTRAINT `FK_F804D3B99EC4D73F` FOREIGN KEY (`nationalite`) REFERENCES `pays` (`id`),
   ADD CONSTRAINT `FK_F804D3B9A6CE7BD9` FOREIGN KEY (`caisse_sociale`) REFERENCES `caisse_sociale` (`id`),
@@ -1234,8 +1324,7 @@ ALTER TABLE `employe`
 -- Contraintes pour la table `fonction_employe`
 --
 ALTER TABLE `fonction_employe`
-  ADD CONSTRAINT `FK_3554BF216F0137EA` FOREIGN KEY (`structure`) REFERENCES `structure` (`id`),
-  ADD CONSTRAINT `FK_3554BF21900D5BD` FOREIGN KEY (`fonction`) REFERENCES `fonction` (`id`),
+  ADD CONSTRAINT `FK_3554BF214EA09820` FOREIGN KEY (`responsabilite`) REFERENCES `structure_fonction` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `FK_3554BF21F804D3B9` FOREIGN KEY (`employe`) REFERENCES `employe` (`id`);
 
 --
@@ -1256,7 +1345,7 @@ ALTER TABLE `gcategorie`
 --
 ALTER TABLE `gclasse`
   ADD CONSTRAINT `FK_ED38B3209C2BB0CC` FOREIGN KEY (`suivant_id`) REFERENCES `gclasse` (`id`),
-  ADD CONSTRAINT `FK_ED38B320D025BC4C` FOREIGN KEY (`type_employe`) REFERENCES `type_employe` (`id`);
+  ADD CONSTRAINT `gclasse_ibfk_1` FOREIGN KEY (`type_employe`) REFERENCES `type_employe` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Contraintes pour la table `gclasse_gcategorie`
@@ -1283,6 +1372,15 @@ ALTER TABLE `gechelon`
 --
 ALTER TABLE `gniveau`
   ADD CONSTRAINT `FK_2960FFDD9C2BB0CC` FOREIGN KEY (`suivant_id`) REFERENCES `gniveau` (`id`);
+
+--
+-- Contraintes pour la table `grade`
+--
+ALTER TABLE `grade`
+  ADD CONSTRAINT `FK_595AAE344D8771C0` FOREIGN KEY (`echelon_id`) REFERENCES `gechelon` (`id`),
+  ADD CONSTRAINT `FK_595AAE348F5EA509` FOREIGN KEY (`classe_id`) REFERENCES `gclasse` (`id`),
+  ADD CONSTRAINT `FK_595AAE34B3E9C81` FOREIGN KEY (`niveau_id`) REFERENCES `gniveau` (`id`),
+  ADD CONSTRAINT `FK_595AAE34BCF5E72D` FOREIGN KEY (`categorie_id`) REFERENCES `gcategorie` (`id`);
 
 --
 -- Contraintes pour la table `membre_famille`
@@ -1314,8 +1412,8 @@ ALTER TABLE `responsabilite`
 -- Contraintes pour la table `structure`
 --
 ALTER TABLE `structure`
-  ADD CONSTRAINT `fk_structure_structure1` FOREIGN KEY (`structure_parente`) REFERENCES `structure` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_structure_typeentite` FOREIGN KEY (`type_entite`) REFERENCES `type_entite` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_structure_structure1` FOREIGN KEY (`structure_parente`) REFERENCES `structure` (`id`),
+  ADD CONSTRAINT `fk_structure_typeentite` FOREIGN KEY (`type_entite`) REFERENCES `type_entite` (`id`);
 
 --
 -- Contraintes pour la table `structure_fonction`
@@ -1328,7 +1426,7 @@ ALTER TABLE `structure_fonction`
 -- Contraintes pour la table `syndicat`
 --
 ALTER TABLE `syndicat`
-  ADD CONSTRAINT `fk_syndicat_type_employe1` FOREIGN KEY (`type_employe`) REFERENCES `type_employe` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_syndicat_type_employe1` FOREIGN KEY (`type_employe`) REFERENCES `type_employe` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

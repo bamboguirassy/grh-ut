@@ -3,6 +3,7 @@ import { BamboAbstractService } from '../../../shared/services/bambo-abstract.se
 import { BamboHttpService } from './../../../shared/services/bambo-http.service';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { MutuelleSante } from '../../parametrage/mutuellesante/mutuellesante';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,11 @@ export class EmployeService extends BamboAbstractService {
 
   calculateRecrutementGroupedByGenres() {
     return this.httpSrv.get(this.routePrefix  + 'statistics/suivi-recrutement-genre');
+  }
+
+  findEmployeByMutuelleSante(membremutuelle:MutuelleSante)
+  {
+    return this.httpSrv.get(this.routePrefix +membremutuelle.id+'/membre-mutuelle-sante');
   }
 
 }

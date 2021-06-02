@@ -551,4 +551,26 @@ class EmployeController extends AbstractController
 
         return $employe;
     }
+    
+    
+    /**
+     * @Rest\Get(path="/{id}/membre-mutuelle-sante", name="employe_by_MutuelleSante")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function findByEmployeMutuelleSante(MutuelleSante $mutuellesante)
+    {
+        $employes = $this->getDoctrine()
+         ->getRepository(Employe::class)
+         ->findByMutuelleSante($mutuellesante);
+        
+          return $employes;
+    }
+    
+    
+    
+    
+    
+    
+    
 }
