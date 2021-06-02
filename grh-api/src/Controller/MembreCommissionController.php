@@ -157,4 +157,19 @@ class MembreCommissionController extends AbstractController
 
         return $membreCommissions;
     }
+
+	/**
+     * @Rest\Get(path="/{id}/membres-commission", name="membres_commission")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_MEMBRECOMMISSION_INDEX")
+     */
+    public function findMembresCommission(\App\Entity\Commission $commission): array
+    {
+        $membreCommissions = $this->getDoctrine()
+            ->getRepository(MembreCommission::class)
+            ->findByCommission($commission);
+
+        return $membreCommissions;
+    }
+
 }
