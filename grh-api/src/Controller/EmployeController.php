@@ -133,7 +133,7 @@ $employe->setProfession($faker->randomElement($professions));
     {
         $employes = $this->getDoctrine()
                     ->getRepository(Employe::class)
-                    ->findByCaiseSociale($caisseSociale);
+                    ->findByCaisseSociale($caisseSociale);
         return $employes;
     }
 
