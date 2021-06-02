@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StructureFonctionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -33,6 +35,21 @@ class StructureFonction
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $etat;
+
+    /**
+     * @ORM\OneToMany(targetEntity=FonctionEmploye::class, mappedBy="responsabilite")
+     */
+    private $fonctionEmployes;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $duree;
+
+    public function __construct()
+    {
+        $this->fonctionEmployes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,4 +91,47 @@ class StructureFonction
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFonctionEmployes()
+    {
+        return $this->fonctionEmployes;
+    }
+
+    public function addFonctionEmploye(FonctionEmploye $fonctionEmploye): self
+    {
+        if (!$this->fonctionEmployes->contains($fonctionEmploye)) {
+            $this->fonctionEmployes[] = $fonctionEmploye;
+            $fonctionEmploye->setResponsabilite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFonctionEmploye(FonctionEmploye $fonctionEmploye): self
+    {
+        if ($this->fonctionEmployes->removeElement($fonctionEmploye)) {
+            // set the owning side to null (unless already changed)
+            if ($fonctionEmploye->getResponsabilite() === $this) {
+                $fonctionEmploye->setResponsabilite(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDuree(): ?int
+    {
+        return $this->duree;
+    }
+
+    public function setDuree(?int $duree): self
+    {
+        $this->duree = $duree;
+
+        return $this;
+    }
+
 }

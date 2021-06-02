@@ -3,12 +3,12 @@ import { FonctionEmployeListComponent } from './fonctionemploye-list/fonctionemp
 import { FonctionEmployeShowComponent } from './fonctionemploye-show/fonctionemploye-show.component';
 import { FonctionEmployeEditComponent } from './fonctionemploye-edit/fonctionemploye-edit.component';
 import { FonctionEmployeCloneComponent } from './fonctionemploye-clone/fonctionemploye-clone.component';
+import { FonctionEnExpirationComponent } from './fonction-en-expiration/fonction-en-expiration.component';
 
-export const fonctionEmployeRoutes: Route = {
-    path: 'fonctionemploye', children: [
-        { path: '', component: FonctionEmployeListComponent },
-        { path: ':id/edit', component: FonctionEmployeEditComponent },
-        { path: ':id/clone', component: FonctionEmployeCloneComponent },
-        { path: ':id', component: FonctionEmployeShowComponent }
-    ]
+export const fonctionEmployeRoutes: Route =
+ {
+    path: 'fonction-en-expiration', children: [
+        { path: '', component: FonctionEnExpirationComponent }
+    ],
+     
 };

@@ -1,0 +1,59 @@
+import { DatePipe } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { IAppState } from 'src/app/interfaces/app-state';
+import { BasePageComponent } from 'src/app/pages/base-page';
+import { SETTINGS } from 'src/environments/settings';
+import { EmployeService } from '../../employe/employe.service';
+import { FonctionEmploye } from '../fonctionemploye';
+import { FonctionEmployeService } from '../fonctionemploye.service';
+
+@Component({
+  selector: 'app-fonction-en-expiration',
+  templateUrl: './fonction-en-expiration.component.html',
+  styleUrls: ['./fonction-en-expiration.component.scss']
+})
+export class FonctionEnExpirationComponent extends BasePageComponent<FonctionEmploye> implements OnInit,OnDestroy {
+
+  items: FonctionEmploye[] = [];
+  secondViewBorder = 'warning';
+  lightGradient = ['#fff', SETTINGS.topbarBg];
+
+  constructor(store: Store<IAppState>,
+    public fonctionEmployeSrv: FonctionEmployeService,
+    public employeSrv: EmployeService,
+    public datePipe: DatePipe) {
+      super(store, fonctionEmployeSrv);
+      this.setLoaded(); 
+    this.pageData = {
+      title: 'Liste des fonctions actives à durée limitée',
+      breadcrumbs: [
+        {
+          title: 'Accueil',
+          route: ''
+        },
+        {
+          title: 'Liste des fonctions actives'
+        }
+      ]
+    };
+  }
+
+  ngOnInit(): void {
+    super.ngOnInit();
+    this.findAll();
+  }
+  
+  ngOnDestroy() {
+    super.ngOnDestroy();
+  }
+
+  findAll() {
+    this.fonctionEmployeSrv.findNonExpiree()
+    .subscribe((data: any)=>{
+      this.items = data;                
+    },err=>this.fonctionEmployeSrv.httpSrv.catchError(err));
+  }
+  
+
+}

@@ -200,6 +200,9 @@ import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/
 import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
 
 
+import { MembreCommissionEmployeComponent } from './gestionemploye/membrecommission/membre-commission-employe/membre-commission-employe.component';
+import { FonctionemployeTimelineComponent } from './gestionemploye/fonctionemploye/fonctionemploye-timeline/fonctionemploye-timeline.component';
+import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/fonction-en-expiration/fonction-en-expiration.component';
 
 @NgModule({
   imports: [
@@ -453,6 +456,9 @@ import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-ca
     ContratEnExpirationComponent,
     DiplomeMainDashboardComponent,
     MembreCaisseSocialeComponent,
+    MembreCommissionEmployeComponent,
+    FonctionemployeTimelineComponent,
+    FonctionEnExpirationComponent,
 
   ],
   exports: [],

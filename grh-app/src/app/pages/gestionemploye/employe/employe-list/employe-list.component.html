@@ -157,10 +157,26 @@
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                    <tc-table-col [columnTitle]="'Grade'" [columnName]="'grade'" [enableSorting]="true">
+                    <tc-table-col [columnTitle]="'Indice'" [columnName]="'indice'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">
                                 {{value?.classification}}
+                            </span>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
+                        </ng-template>
+                    </tc-table-col>
+                    <tc-table-col [columnTitle]="'Grade'" [columnName]="'grade'" [enableSorting]="true">
+                        <ng-template #tableTDTemplate let-value>
+                            <span class="nowrap" *ngIf="value">
+                                {{value}}
+                            </span>
+                            <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
+                        </ng-template>
+                    </tc-table-col>
+                    <tc-table-col [columnTitle]="'Diplome académique'" [columnName]="'diplomeAcademique'" [enableSorting]="true">
+                        <ng-template #tableTDTemplate let-value>
+                            <span class="nowrap" *ngIf="value">
+                                {{value}}
                             </span>
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>

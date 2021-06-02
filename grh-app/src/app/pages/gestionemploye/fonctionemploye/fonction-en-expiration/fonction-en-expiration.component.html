@@ -1,0 +1,68 @@
+<tc-card *ngIf="fonctionEmployeSrv.resourceName|listable" [tcGradient]="lightGradient">
+    <tc-card [view]="secondViewBorder" [outline]="true">
+      <div class="row">
+        <div class="col-12">
+          <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
+        </div>
+      </div>
+    </tc-card>
+    <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
+        <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+          <ng-template #tableTDTemplate let-row="row">
+            <button *ngIf="employeSrv.resourceName|showable" tc-button
+            [afterIcon]="'icofont-eye-open'" [view]="'accent'" [square]="true" [tcShape]="500"
+            [size]="'sm'" [routerLink]="['/'+orientation,employeSrv.getRoutePrefixWithoutSlash(),row?.id]"></button>
+          </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Matricule'" [columnName]="'employe'" [enableSorting]="true">
+          <ng-template #tableTDTemplate let-value>
+            <span class="nowrap" *ngIf="value">{{ value?.matricule }}</span>
+            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+          </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Prénoms'" [columnName]="'employe'" [enableSorting]="true">
+          <ng-template #tableTDTemplate let-value>
+            <span class="nowrap" *ngIf="value">{{ value?.prenoms }}</span>
+            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+          </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Nom'" [columnName]="'employe'" [enableSorting]="true">
+          <ng-template #tableTDTemplate let-value>
+            <span class="nowrap" *ngIf="value">{{ value?.nom }}</span>
+            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+          </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Date de Naissance'" [columnName]="'employe'" [enableSorting]="true">
+          <ng-template #tableTDTemplate let-value>
+            <span class="nowrap" *ngIf="value">{{ value?.dateNaissance|date:'dd/MM/yyyy'  }}</span>
+            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+          </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Fonction occupée'" [columnName]="'responsabilite'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <span class="nowrap" *ngIf="value">{{ value?.fonction?.nom }}</span>
+              <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+          </tc-table-col>
+        <tc-table-col [columnTitle]="'Structure'" [columnName]="'responsabilite'" [enableSorting]="true">
+          <ng-template #tableTDTemplate let-value>
+            <span class="nowrap" *ngIf="value" [title]="value?.structure?.nom">{{value?.structure?.code}}</span>
+            <tc-badge view="error" *ngIf="!value">Aucune</tc-badge>
+          </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Date prise fonction'" [columnName]="'datePriseFonction'" [enableSorting]="true">
+          <ng-template #tableTDTemplate let-value>
+            <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
+            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+          </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Date fin prévue'" [columnName]="'dateFin'" [enableSorting]="true">
+          <ng-template #tableTDTemplate let-value>
+            <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
+            <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+          </ng-template>
+        </tc-table-col>
+      </tc-table>
+    <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
+  </tc-card>
+  <app-access-denied *ngIf="!(fonctionEmployeSrv.resourceName|listable)"></app-access-denied>

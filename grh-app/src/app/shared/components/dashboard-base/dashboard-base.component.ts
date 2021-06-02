@@ -51,7 +51,7 @@ export class DashboardBaseComponent<T extends BamboAbstractChartModel> implement
       .subscribe((data: any) => {
         this.handlePostFetch(data as T[]);
       }, err => {
-        this.httpSrv.httpSrv.handleError(err);
+        this.httpSrv.httpSrv.catchError(err);
       });
   }
 

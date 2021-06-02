@@ -211,7 +211,7 @@ class ContratController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $toDay = new \DateTime();
-        $toDay = $toDay->format('Ymd');
+        $toDay = $toDay->format('Y-m-d');
         $newDate = strtotime($toDay . "+ 3 months");
         $date = date("Y-m-d", $newDate);
         $contratEnExpirations = $em->createQuery('select c from App\Entity\Contrat c 

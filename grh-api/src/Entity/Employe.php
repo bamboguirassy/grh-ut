@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * Employe
  *
- * @ORM\Table(name="employe", indexes={@ORM\Index(name="fk_employe_mutuelle_sante1_idx", columns={"mutuelle_sante"}),@ORM\Index(name="IDX_F804D3B99C2214AD", columns={"structure_id"}), @ORM\Index(name="fk_employe_pays1_idx", columns={"nationalite"}), @ORM\Index(name="fk_employe_caisse_sociale1_idx", columns={"caisse_sociale"}), @ORM\Index(name="fk_employe_grade1_idx", columns={"grade"}), @ORM\Index(name="fk_employe_type_employe1_idx", columns={"type_employe"})})
+ * @ORM\Table(name="employe", indexes={@ORM\Index(name="fk_employe_mutuelle_sante1_idx", columns={"mutuelle_sante"}),@ORM\Index(name="IDX_F804D3B99C2214AD", columns={"structure_id"}), @ORM\Index(name="fk_employe_pays1_idx", columns={"nationalite"}), @ORM\Index(name="fk_employe_caisse_sociale1_idx", columns={"caisse_sociale"}), @ORM\Index(name="fk_employe_indice1_idx", columns={"indice"}), @ORM\Index(name="fk_employe_type_employe1_idx", columns={"type_employe"})})
  * @ORM\Entity
  */
 class Employe
@@ -52,14 +53,14 @@ class Employe
     /**
      * @var string
      *
-     * @ORM\Column(name="cni", type="string", length=45, nullable=false)
+     * @ORM\Column(name="cni", type="string", length=45, nullable=true)
      */
     private $cni;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="matricule", type="string", length=45, nullable=false)
+     * @ORM\Column(name="matricule", type="string", length=45, nullable=true)
      */
     private $matricule;
 
@@ -73,7 +74,7 @@ class Employe
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_recrutement", type="date", nullable=false)
+     * @ORM\Column(name="date_recrutement", type="date", nullable=true)
      */
     private $dateRecrutement;
 
@@ -129,7 +130,7 @@ class Employe
     /**
      * @var string
      *
-     * @ORM\Column(name="telephone_primaire", type="string", length=45, nullable=false)
+     * @ORM\Column(name="telephone_primaire", type="string", length=45, nullable=true)
      */
     private $telephonePrimaire;
 
@@ -151,14 +152,15 @@ class Employe
     private $caisseSociale;
 
     /**
-     * @var \Grade
+     * @var \Indice
      *
      * @ORM\ManyToOne(targetEntity="Grade")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="grade", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="indice", referencedColumnName="id")
      * })
+     * @MaxDepth(1)
      */
-    private $grade;
+    private $indice;
 
     /**
      * @var \MutuelleSante
@@ -167,6 +169,7 @@ class Employe
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="mutuelle_sante", referencedColumnName="id")
      * })
+     * @MaxDepth(1)
      */
     private $mutuelleSante;
 
@@ -192,6 +195,7 @@ class Employe
 
     /**
      * @ORM\ManyToOne(targetEntity=Profession::class)
+     * @MaxDepth(1)
      */
     private $profession;
 
@@ -225,6 +229,7 @@ class Employe
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="structure_id", referencedColumnName="id",nullable=true)
      * })
+     * @MaxDepth(1)
      */
     private $structure;
 
@@ -232,6 +237,16 @@ class Employe
      * @ORM\Column(type="text", nullable=true)
      */
     private $commentaireSortie;
+
+    /**
+     * @ORM\Column(type="string", length=80, nullable=true)
+     */
+    private $grade;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $diplomeAcademique;
 
     public function getId()
     {
@@ -454,14 +469,14 @@ class Employe
         return $this;
     }
 
-    public function getGrade()
+    public function getIndice()
     {
-        return $this->grade;
+        return $this->indice;
     }
 
-    public function setGrade($grade): self
+    public function setIndice($indice): self
     {
-        $this->grade = $grade;
+        $this->indice = $indice;
 
         return $this;
     }
@@ -595,6 +610,30 @@ class Employe
     public function setCommentaireSortie(?string $commentaireSortie): self
     {
         $this->commentaireSortie = $commentaireSortie;
+
+        return $this;
+    }
+
+    public function getGrade(): ?string
+    {
+        return $this->grade;
+    }
+
+    public function setGrade(?string $grade): self
+    {
+        $this->grade = $grade;
+
+        return $this;
+    }
+
+    public function getDiplomeAcademique(): ?string
+    {
+        return $this->diplomeAcademique;
+    }
+
+    public function setDiplomeAcademique(?string $diplomeAcademique): self
+    {
+        $this->diplomeAcademique = $diplomeAcademique;
 
         return $this;
     }

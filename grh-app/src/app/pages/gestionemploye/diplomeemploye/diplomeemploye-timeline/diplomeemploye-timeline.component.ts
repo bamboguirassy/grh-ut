@@ -11,25 +11,19 @@ import { EmployeService } from '../../employe/employe.service';
 })
 export class DiplomeEmployeTimelineComponent implements OnInit {
   @Input() employe: Employe
+  @Input() dimplomeEmployes: any;
   items:  Document[] = [];
   lightGradient = ['#fff', SETTINGS.topbarBg];
   tab = [];
     constructor(public employeSrv: EmployeService ,public diplomeEmployeSrv: DiplomeEmployeService) { }
   
     ngOnInit(): void {
-      this.findByEmploye();
+      this.setTimeline();
     }
 
-    findByEmploye() {
-      this.diplomeEmployeSrv.findByEmploye(this.employe)
-      .subscribe((data: any)=>{
-        this.items = data;  
-        this.setTimeline();
-      },err=>this.diplomeEmployeSrv.httpSrv.catchError(err));
-    }
-
+    
     setTimeline() {
-      const sectionData = this.items.map((i: any) => ({
+      const sectionData = this.dimplomeEmployes.map((i: any) => ({
        date: i.anneeObtention?i.anneeObtention:"encours",
         title: i.diplome.nom,
         content: i.formation,
