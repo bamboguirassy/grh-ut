@@ -57,7 +57,7 @@ export class EmployeService extends BamboAbstractService {
         this.employesManager.next(employes);
       }, err => {
         this.httpSrv.handleError(err);
-      });
+      })
   }
 
   findByCaisseSociale(caissesociale: CaisseSociale) {
