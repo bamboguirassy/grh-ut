@@ -39,7 +39,6 @@ export function currentUserProviderFactory(authSrv: BamboAuthService) {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    
     HttpClientModule,
     RouterModule.forRoot(ROUTES, { relativeLinkResolution: 'legacy' }),
     StoreModule.forRoot({

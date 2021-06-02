@@ -12,8 +12,11 @@ import { Employe } from '../../employe/employe';
 })
 export class ContratTimelineComponent implements OnInit {
   @Input() employe: Employe;
-  @Input() contrats: any;
   items:Contrat[]=[];
+  @Input() set setItems(values){
+    this.items = values;
+    this.setTimeline();
+  }
   tab = [];
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];
@@ -26,7 +29,7 @@ export class ContratTimelineComponent implements OnInit {
 
   
   setTimeline() {
-    const sectionData = this.contrats.map((i: any) => ({
+    const sectionData = this.items.map((i: any) => ({
       date: `${i.dateDebut?`${this.datePipe.
         transform(`${i.dateDebut}` , 'dd/MM/yyyy')}`
         :'Indefini'} - ${i.boolean?'En Cours'
