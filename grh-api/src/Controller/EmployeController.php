@@ -133,7 +133,7 @@ $employe->setProfession($faker->randomElement($professions));
             $file = new \Symfony\Component\HttpFoundation\File\File($employe->getFilename());
             $authorizedExtensions = ['jpeg', 'jpg', 'png'];
             if (!in_array($file->guessExtension(), $authorizedExtensions)) {
-                throw new BadRequestHttpException('Fichier non pris en charge');
+                throw $this->createAccessDeniedException('Fichier non pris en charge');
             }
             $newFileName = $uploader->setTargetDirectory('employe_photo_directory')->upload($file, null); // old fileName
             $employe->setFilepath("$scheme://$host/" . $uploader->getTargetDirectory() . $newFileName);
