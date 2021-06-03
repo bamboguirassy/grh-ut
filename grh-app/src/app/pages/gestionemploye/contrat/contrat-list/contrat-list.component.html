@@ -90,7 +90,7 @@
     </div>
   </nz-collapse-panel>
   <nz-collapse-panel nzHeader="Chronologie" [nzActive]="false">
-    <app-contrat-timeline *ngIf="this.items?.length" [contrats]="items"></app-contrat-timeline>
+    <app-contrat-timeline *ngIf="this.items?.length && displayTimeline" [setItems]="items"></app-contrat-timeline>
   </nz-collapse-panel>
 </nz-collapse>
 <app-contrat-edit *ngIf="selectedContrat" [selectedContrat]="selectedContrat" (modification)="findByEmploye()"

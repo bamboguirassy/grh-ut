@@ -1,0 +1,29 @@
+<div class="card" style="width: 18rem;">
+  <div class="card-header">
+    Membres caisse sociale
+  </div>
+  <table class="card-table table">
+    <thead>
+      <tr>
+        <th scope="col">Prenom</th>
+        <th scope="col">Nom</th>
+        <th scope="col">Date Naissance</th>
+        <th scope="col">Lieu Naissance</th>
+        <th scope="col">CNI /Passeport </th>
+        <th scope="col">Matricule</th>
+        <th scope="col">Profession</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employe of employes" >
+        <td>employe.prenoms</td>
+        <td>employe.nom</td>
+        <td>employe.dateNaissance</td>
+        <td>employe.lieuNaissance</td>
+        <td>employe.cni</td>
+        <td>employe.matricule</td>
+        <td>employe.profession</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

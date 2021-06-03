@@ -42,6 +42,39 @@ class EmployeController extends AbstractController
     }
 
     /**
+     * @Rest\Post(path="/realtime-search", name="employe_realtime_search")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function realtimeSearch(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $redData = Utils::serializeRequestContent($request);
+        $employes = [];
+        if(isset($redData['searchTerm'])){
+            $names = explode(' ',$redData['searchTerm']);
+            if(count($names)>1){
+                $employes = $em->createQuery('SELECT e
+                    FROM App\Entity\Employe e
+                    WHERE CONCAT(e.prenoms,\' \',e.nom) LIKE :term')
+                ->setParameter('term', '%'.$redData['searchTerm'].'%')
+                ->getResult();
+            }else{
+                $employes = $em->createQuery('SELECT e
+                    FROM App\Entity\Employe e
+                    WHERE e.prenoms LIKE :term OR
+                    e.nom LIKE :term OR 
+                    e.matricule LIKE :term OR 
+                    e.emailUniv LIKE :term OR 
+                    e.cni LIKE :term')
+                ->setParameter('term', '%'.$redData['searchTerm'].'%')
+                ->getResult();
+            }
+        }
+
+        return $employes;
+    }
+
+    /**
      * @Rest\Get(path="/{id}/typeemploye", name="employe_by_typeemploye")
      * @Rest\View(StatusCode = 200, serializerEnableMaxDepthChecks=true)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
@@ -124,6 +157,18 @@ $employe->setProfession($faker->randomElement($professions));
         return $employe;
     }
 
+    /**
+     * @Rest\Get(path="/caisse-sociale/{id}", name="caisse_sociale_employe",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200, serializerEnableMaxDepthChecks=true)
+     * @IsGranted("ROLE_EMPLOYE_SHOW")
+     */
+    public function findByCaiseSociale(CaisseSociale $caisseSociale)
+    {
+        $employes = $this->getDoctrine()
+                    ->getRepository(Employe::class)
+                    ->findByCaisseSociale($caisseSociale);
+        return $employes;
+    }
 
     /**
      * @Rest\Put(path="/{id}/edit", name="employe_edit",requirements = {"id"="\d+"})
@@ -313,39 +358,6 @@ $employe->setProfession($faker->randomElement($professions));
             'membreFamilles' => $membreFamilles
         ];
         return $tab;
-    }
-    
-    /**
-     * @Rest\Post(path="/realtime-search", name="employe_realtime_search")
-     * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_EMPLOYE_INDEX")
-     */
-    public function realtimeSearch(Request $request) {
-        $em = $this->getDoctrine()->getManager();
-        $redData = Utils::serializeRequestContent($request);
-        $employes = [];
-        if(isset($redData['searchTerm'])){
-            $names = explode(' ',$redData['searchTerm']);
-            if(count($names)>1){
-                $employes = $em->createQuery('SELECT e
-                    FROM App\Entity\Employe e
-                    WHERE CONCAT(e.prenoms,\' \',e.nom) LIKE :term')
-                ->setParameter('term', '%'.$redData['searchTerm'].'%')
-                ->getResult();
-            }else{
-                $employes = $em->createQuery('SELECT e
-                    FROM App\Entity\Employe e
-                    WHERE e.prenoms LIKE :term OR
-                    e.nom LIKE :term OR 
-                    e.matricule LIKE :term OR 
-                    e.emailUniv LIKE :term OR 
-                    e.cni LIKE :term')
-                ->setParameter('term', '%'.$redData['searchTerm'].'%')
-                ->getResult();
-            }
-        }
-        
-        return $employes;
     }
     
 }

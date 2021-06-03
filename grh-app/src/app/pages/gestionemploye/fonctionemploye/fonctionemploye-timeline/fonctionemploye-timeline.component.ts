@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { SETTINGS } from 'src/environments/settings';
 import { Employe } from '../../employe/employe';
 import { EmployeService } from '../../employe/employe.service';
+import { FonctionEmploye } from '../fonctionemploye';
 
 @Component({
   selector: 'app-fonctionemploye-timeline',
@@ -11,20 +12,23 @@ import { EmployeService } from '../../employe/employe.service';
 })
 export class FonctionemployeTimelineComponent implements OnInit {
   @Input() employe: Employe;
-  @Input() fonctionEmployes: any;
-  items:  Document[] = [];
+  items: FonctionEmploye[]=[];
+  @Input() set setItems(values){
+    this.items = values;
+    this.setTimeline();
+  }
 
   lightGradient = ['#fff', SETTINGS.topbarBg];
   tab = [];
     constructor(public employeSrv: EmployeService, public datePipe: DatePipe) { }
   
     ngOnInit(): void {
-       this.setTimeline();
+      this.setTimeline();
    
     }
   
     setTimeline() {
-      const sectionData = this.fonctionEmployes.map((i: any) => ({
+      const sectionData = this.items.map((i: any) => ({
        date: `${i.datePriseFonction?`${this.datePipe.
         transform(`${i.datePriseFonction}` , 'dd/MM/yyyy')}`
         :'Indefini'} - ${i.etat?'En Cours'

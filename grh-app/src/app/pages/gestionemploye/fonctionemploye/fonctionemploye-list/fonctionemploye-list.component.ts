@@ -13,14 +13,13 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./fonctionemploye-list.component.scss']
 })
 export class FonctionEmployeListComponent implements OnInit {
-  @Input() fonctionEmploiyes: FonctionEmploye[] = [];
   @Input() employe: Employe;
   tab =  [];
   selectedFonction: FonctionEmploye;
   items: FonctionEmploye[] = [];
-  
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];
+  @Input() displayTimeline: boolean = true;
 
   constructor(public fonctionEmployeSrv: FonctionEmployeService,  private activatedRoute: ActivatedRoute,) {}
 

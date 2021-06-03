@@ -15,6 +15,7 @@ class MembreFamilleType extends AbstractType
             ->add('prenoms')
             ->add('nom')
             ->add('dateNaissance')
+            ->add('dateMariage')
             ->add('lieuNaissance')
             ->add('genre')
             ->add('lienParente')

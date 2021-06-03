@@ -36,7 +36,7 @@
               <tc-badge [outline]="true" view="error" *ngIf="!value">Indéfinie</tc-badge>
             </ng-template>
           </tc-table-col>
-          <tc-table-col [columnTitle]="'Date intégration'" [columnName]="'dateIntegration'" [enableSorting]="true">
+          <tc-table-col [columnTitle]="'Date d\'intégration'" [columnName]="'dateIntegration'" [enableSorting]="true">
             <ng-template #tableTDTemplate let-value>
               <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
               <tc-badge [outline]="true" view="error" *ngIf="!value">Indéfinie</tc-badge>
