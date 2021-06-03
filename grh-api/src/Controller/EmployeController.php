@@ -360,4 +360,25 @@ $employe->setProfession($faker->randomElement($professions));
         return $tab;
     }
     
+    
+    /**
+     * @Rest\Get(path="/{id}/membre-mutuelle-sante", name="employe_by_mutuellesante",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode = 200, serializerEnableMaxDepthChecks=true)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function findByMutuelleSante(MutuelleSante $mutuellesante)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $employes =$em->getRepository(Employe::class)
+                ->findByMutuelleSante($mutuellesante);
+        
+          return $employes;
+    }
+    
+    
+    
+    
+    
+    
+    
 }
