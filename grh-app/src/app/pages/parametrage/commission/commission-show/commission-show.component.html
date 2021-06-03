@@ -1,3 +1,7 @@
+<div class="add-action-box">
+    <button tc-button [afterIcon]="'icofont-plus'" [view]="'accent'" [square]="true" [tcShape]="300"
+        (click)="openModal()"></button>
+</div>
 <tc-card *ngIf="commissionSrv.resourceName|showable" [tcGradient]="lightGradient">
     <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.4">
         <div class="d-flex justify-content-between align-items-center">

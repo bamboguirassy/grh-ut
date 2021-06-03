@@ -3,6 +3,7 @@ import { BamboAbstractService } from '../../../shared/services/bambo-abstract.se
 import { BamboHttpService } from './../../../shared/services/bambo-http.service';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { MutuelleSante } from '../../parametrage/mutuellesante/mutuellesante';
 import { BehaviorSubject } from 'rxjs';
 import { Employe } from './employe';
 import { CaisseSociale } from '../../parametrage/caissesociale/caissesociale';
@@ -79,6 +80,9 @@ export class EmployeService extends BamboAbstractService {
     return this.httpSrv.get(this.routePrefix + "caisse-sociale/" + caissesociale.id);
   }
 
-
+  findByMutuelleSante(membremutuelle:MutuelleSante)
+  {
+    return this.httpSrv.get(this.routePrefix +membremutuelle.id+'/membre-mutuelle-sante');
+  }
 
 }
