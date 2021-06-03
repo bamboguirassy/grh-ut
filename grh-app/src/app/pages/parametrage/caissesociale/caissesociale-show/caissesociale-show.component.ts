@@ -28,7 +28,7 @@ export class CaisseSocialeShowComponent extends BasePageComponent<CaisseSociale>
           route: ''
         },
         {
-          title: 'CaisseSociales',
+          title: 'Caisse Sociales',
           route: '/'+this.orientation+'/caissesociale'
         },
         {
@@ -48,7 +48,7 @@ export class CaisseSocialeShowComponent extends BasePageComponent<CaisseSociale>
   }
 
   handlePostLoad() {
-    this.title = 'CaisseSociale - ' + this.entity?.id;
+    this.title = 'Caisse Sociale ' + this.entity?.code;
   }
 
   handlePostDelete() {

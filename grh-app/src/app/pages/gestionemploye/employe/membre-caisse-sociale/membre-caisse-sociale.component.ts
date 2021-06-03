@@ -12,8 +12,8 @@ import { EmployeService } from '../employe.service';
 export class MembreCaisseSocialeComponent implements OnInit {
 
   @Input() caisseSociale?: CaisseSociale;
+  @Input() orientation='';
   employes: Employe[] = [];
-
   constructor(
     public employeSrv: EmployeService
   ) { }

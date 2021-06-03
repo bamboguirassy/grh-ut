@@ -14,7 +14,7 @@
         </div>
     </tc-card>
     <div class="row">
-        <div class="col-12 col-md-5" style="height:300px;">
+        <div class="col-12 col-md-4" style="height:300px;">
             <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
                 <table class="table">
                     <tr>
@@ -47,7 +47,7 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <div class="col-12 col-md-8 mx-auto">
+                            <div class="col-12 col-md-10">
                                 <button *ngIf="caisseSocialeSrv.resourceName|editable"
                                     [routerLink]="['/'+orientation,caisseSocialeSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
                                     class="float-right ml-1" tc-button view="warning"
@@ -67,8 +67,8 @@
                 </table>
             </tc-card>
         </div>
-        <div class="col-12 col-md-7">
-            <app-membre-caisse-sociale *ngIf="entity" [caisseSociale]=entity></app-membre-caisse-sociale>
+        <div class="col-12 col-md-8">
+            <app-membre-caisse-sociale *ngIf="entity" [caisseSociale]=entity [orientation]=orientation></app-membre-caisse-sociale>
         </div>
     </div>
 </tc-card>
