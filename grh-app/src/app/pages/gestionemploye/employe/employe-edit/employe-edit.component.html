@@ -280,11 +280,23 @@
                             </tc-form-description>
                         </tc-form-group>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-4">
+                    <div class="col-12 col-md-6 col-lg-4" *ngIf="selectedTypeEmploye?.code=='PER'">
                         <tc-form-group>
                             <tc-form-label>Grade</tc-form-label>
-                            <tc-input [(ngModel)]="entity.grade"
-                                name="grade" id="grade" #grade="ngModel">
+                            <tc-select [(ngModel)]="entity.grade" name="grade" id="grade"
+                                #grade="ngModel" [placeholder]="'Selectionner le grade du PER'"
+                                [options]="employeSrv.gradesPER | orderBy:'label'">
+                            </tc-select>
+                            <tc-form-description>
+                                <app-form-field-validation-message [formField]="grade">
+                                </app-form-field-validation-message>
+                            </tc-form-description>
+                        </tc-form-group>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4" *ngIf="selectedTypeEmploye?.code=='PATS'">
+                        <tc-form-group>
+                            <tc-form-label>Grade</tc-form-label>
+                            <tc-input [(ngModel)]="entity.grade" name="grade" id="grade" #grade="ngModel">
                             </tc-input>
                             <tc-form-description>
                                 <app-form-field-validation-message [formField]="grade">
