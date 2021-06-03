@@ -113,8 +113,8 @@ $employe->setProfession($faker->randomElement($professions));
         if (!isset($reqData->dateNaissance)) {
             throw $this->createNotFoundException("La date de naissance est introuvable !");
         }
-        if (!isset($reqData->dateRecrutement)) {
-            throw $this->createNotFoundException("La date de recrutement est introuvable !");
+        if (isset($reqData->dateRecrutement)) {
+            $employe->setDateRecrutement(new \DateTime($reqData->dateRecrutement));
         }
         if (isset($reqData->dateSortie)) {
             $employe->setDateSortie(new \DateTime($reqData->dateSortie));
@@ -123,7 +123,6 @@ $employe->setProfession($faker->randomElement($professions));
             $employe->setDatePriseService(new \DateTime($reqData->datePriseService));
         }
         $employe->setDateNaissance(new \DateTime($reqData->dateNaissance));
-        $employe->setDateRecrutement(new \DateTime($reqData->dateRecrutement));
         
         //check if file provided
         if ($employe->getFilepath()) {
@@ -183,8 +182,8 @@ $employe->setProfession($faker->randomElement($professions));
         if (!isset($reqData->dateNaissance)) {
             throw $this->createNotFoundException("La date de naissance est introuvable !");
         }
-        if (!isset($reqData->dateRecrutement)) {
-            throw $this->createNotFoundException("La date de recrutement est introuvable !");
+        if (isset($reqData->dateRecrutement)) {
+            $employe->setDateRecrutement(new \DateTime($reqData->dateRecrutement));
         }
         if (isset($reqData->dateSortie)) {
             $employe->setDateSortie(new \DateTime($reqData->dateSortie));
@@ -194,7 +193,6 @@ $employe->setProfession($faker->randomElement($professions));
         }
        
         $employe->setDateNaissance(new \DateTime($reqData->dateNaissance));
-        $employe->setDateRecrutement(new \DateTime($reqData->dateRecrutement));
         $this->getDoctrine()->getManager()->flush();
 
         return $employe;
