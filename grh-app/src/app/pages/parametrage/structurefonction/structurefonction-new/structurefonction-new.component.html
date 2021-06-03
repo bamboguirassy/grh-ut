@@ -41,21 +41,18 @@
       </tc-switcher>
     </ng-template>
   </tc-table-col>
-  <tc-table-col [columnTitle]="'Durée limité'" [columnName]="'dl'" [enableSorting]="true">
-    <ng-template #tableTDTemplate let-value let-row>
-      <nz-radio-group [(ngModel)]="isLimited">
+  <tc-table-col [columnTitle]="'Durée limitée'" [columnName]="'dl'" style="white-space: nowrap;" [enableSorting]="true">
+    <ng-template #tableTDTemplate let-value let-row >
+      <nz-radio-group [(ngModel)]="isLimited" class="mb-2">
         <label nz-radio [nzValue]="true">Oui</label>
         <label nz-radio [nzValue]="false">Non</label>
       </nz-radio-group>
-    </ng-template>
-  </tc-table-col>
-  <tc-table-col *ngIf="isLimited" [columnTitle]="'Durrée en mois'" [columnName]="'duree'" [enableSorting]="true">
-    <ng-template #tableTDTemplate let-value let-row>
-      <tc-input type="number" [(ngModel)]="duree" name="dureeEnMois" id="dureeEnMois" #dureeEnMois="ngModel">
+      <tc-input *ngIf="isLimited" type="number" style="width: 50%;" [(ngModel)]="duree"  name="dureeEnMois"
+        aria-placeholder="Durée en nombre de mois" id="dureeEnMois" #dureeEnMois="ngModel">
       </tc-input>
+      <small *ngIf="isLimited">Saisir le nombre de mois</small>
     </ng-template>
   </tc-table-col>
-
 </tc-table>
 
 

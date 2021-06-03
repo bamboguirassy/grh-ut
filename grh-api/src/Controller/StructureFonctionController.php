@@ -36,7 +36,8 @@ class StructureFonctionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_STRUCTUREFONCTION_CREATE")
      */
-    public function create(Request $request): StructureFonction    {
+    public function create(Request $request): StructureFonction
+    {
         $structureFonction = new StructureFonction();
         $form = $this->createForm(StructureFonctionType::class, $structureFonction);
         $form->submit(Utils::serializeRequestContent($request));
@@ -70,13 +71,12 @@ class StructureFonctionController extends AbstractController
 
         $isSomeActive = false;
         foreach ($structureFonctions as $structureFonction)
-            if($structureFonction['etat'] == true)
+            if ($structureFonction['etat'] == true)
                 $isSomeActive = true;
 
-        if(count($associatedStructureFonctions) && $isSomeActive)
+        if (count($associatedStructureFonctions) && $isSomeActive)
             throw new BadRequestHttpException("Vous ne pouvez pas paramétrer plus d'une fonction active.");
-        foreach ($structureFonctions as $deserializedStructureFonction)
-        {
+        foreach ($structureFonctions as $deserializedStructureFonction) {
             $structureFonction = new StructureFonction();
             $form = $this->createForm(StructureFonctionType::class, $structureFonction);
             $form->submit($deserializedStructureFonction);
@@ -94,7 +94,8 @@ class StructureFonctionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_STRUCTUREFONCTION_SHOW")
      */
-    public function show(StructureFonction $structureFonction): StructureFonction    {
+    public function show(StructureFonction $structureFonction): StructureFonction
+    {
         return $structureFonction;
     }
 
@@ -103,7 +104,8 @@ class StructureFonctionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_STRUCTUREFONCTION_SHOW")
      */
-    public function findByStructure(Structure $structure, EntityManagerInterface $entityManager)   {
+    public function findByStructure(Structure $structure, EntityManagerInterface $entityManager)
+    {
         return $entityManager->createQuery('
             SELECT sf
             FROM App\Entity\StructureFonction sf
@@ -111,29 +113,45 @@ class StructureFonctionController extends AbstractController
         ')->setParameter('structure', $structure)->getResult();
     }
 
-    
+
     /**
      * @Rest\Put(path="/{id}/edit", name="structure_fonction_edit",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_STRUCTUREFONCTION_EDIT")
      */
-    public function edit(Request $request, StructureFonction $structureFonction): StructureFonction    {
+    public function edit(Request $request, StructureFonction $structureFonction, EntityManagerInterface $entityManager): StructureFonction
+    {
         $form = $this->createForm(StructureFonctionType::class, $structureFonction);
         $form->submit(Utils::serializeRequestContent($request));
+
+        if ($structureFonction->getEtat()) {
+            $structureFonctions = $entityManager->createQuery('
+                SELECT sf
+                FROM App\Entity\StructureFonction sf
+                WHERE sf.etat = :etat
+                AND sf.structure = :structure
+            ')->setParameters([
+                'etat' => true,
+                'structure' => $structureFonction->getStructure()
+            ])->getResult();
+
+            if(count($structureFonctions)) throw new BadRequestHttpException("Cette structure posséde déja une fonction active.");
+        }
 
         $this->getDoctrine()->getManager()->flush();
 
         return $structureFonction;
     }
-    
+
     /**
      * @Rest\Put(path="/{id}/clone", name="structure_fonction_clone",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_STRUCTUREFONCTION_CLONE")
      */
-    public function cloner(Request $request, StructureFonction $structureFonction):  StructureFonction {
-        $em=$this->getDoctrine()->getManager();
-        $structureFonctionNew=new StructureFonction();
+    public function cloner(Request $request, StructureFonction $structureFonction): StructureFonction
+    {
+        $em = $this->getDoctrine()->getManager();
+        $structureFonctionNew = new StructureFonction();
         $form = $this->createForm(StructureFonctionType::class, $structureFonctionNew);
         $form->submit(Utils::serializeRequestContent($request));
         $em->persist($structureFonctionNew);
@@ -148,20 +166,22 @@ class StructureFonctionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_STRUCTUREFONCTION_EDIT")
      */
-    public function delete(StructureFonction $structureFonction): StructureFonction    {
+    public function delete(StructureFonction $structureFonction): StructureFonction
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($structureFonction);
         $entityManager->flush();
 
         return $structureFonction;
     }
-    
+
     /**
      * @Rest\Post("/delete-selection/", name="structure_fonction_selection_delete")
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_STRUCTUREFONCTION_DELETE")
      */
-    public function deleteMultiple(Request $request): array {
+    public function deleteMultiple(Request $request): array
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $structureFonctions = Utils::getObjectFromRequest($request);
         if (!count($structureFonctions)) {
