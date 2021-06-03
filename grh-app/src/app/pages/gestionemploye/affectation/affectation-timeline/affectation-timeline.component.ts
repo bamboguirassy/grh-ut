@@ -16,20 +16,18 @@ export class AffectationTimelineComponent implements OnInit {
   tab = [];
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];
+  @Input() set setItems(values) {
+    this.items = values;
+    this.setTimeline();
+  }
+
   constructor( public affectationSrv: AffectationService, public datePipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.findByEmploye();
+    this.setTimeline();
   }
 
-  findByEmploye() {
-    this.affectationSrv.findByEmploye(this.employe)
-    .subscribe((data: any)=>{
-      this.items = data;
-      this.setTimeline();
-            
-    },err=>this.affectationSrv.httpSrv.catchError(err));
-  }
+ 
   setTimeline() {
     const sectionData = this.items.map((i: any) => ({
     date: `${i.date?`${this.datePipe.transform(`${i.date}`,'dd/MM/yyyy')}` :'Indefini'}`,
@@ -48,6 +46,8 @@ export class AffectationTimelineComponent implements OnInit {
         "sectionData": sectionData
       },
     ];
+  
+    
   }
 
 

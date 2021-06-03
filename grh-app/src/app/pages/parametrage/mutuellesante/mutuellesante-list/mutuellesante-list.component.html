@@ -9,8 +9,10 @@
 	<tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
 		<tc-table-col [columnTitle]="'#'" [columnName]="'filepath'">
 			<ng-template #tableTDTemplate let-value let-row="row">
+				<a [routerLink]="[row.id]" routerLinkActive="router-link-active">
 				<i *ngIf="!value"class="icofont-data icofont-2x"></i>
 				<tc-avatar *ngIf="value" [src]="value"></tc-avatar>
+				</a>
 			</ng-template>
 		</tc-table-col>
 		<tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">

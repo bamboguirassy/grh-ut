@@ -60,7 +60,9 @@ class MembreFamilleController extends AbstractController
             throw $this->createNotFoundException("La date de naissance est obligatoire !");
         }
         $membreFamille->setDateNaissance(new \DateTime($requestData->dateNaissance));
-
+        if (isset($requestData->dateMariage)) {
+            $membreFamille->setDateMariage(new \DateTime($requestData->dateMariage));
+        }
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($membreFamille);
         $entityManager->flush();

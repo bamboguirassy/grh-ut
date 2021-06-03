@@ -48,6 +48,25 @@
               {{ currentFonctionEmploye?.employe?.matricule }}
             </span>
           </p>
+          <p>
+            <span>
+              <a href="javascript:void(0)" (click)="canChooseDateFin = !canChooseDateFin">
+                {{ canChooseDateFin ? 'Annuler l\'opération' : 'Désactiver cette fonction'}}
+              </a>
+            </span>
+          </p>
+          <div class="col-12 pl-4 pr-4" *ngIf="canChooseDateFin">
+            <tc-form-group>
+              <tc-form-label>Date de Fin</tc-form-label>
+              <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required [(ngModel)]="fonctionEmploye.dateFin" name="dateFin"
+                id="dateFin" #dateFin="ngModel">
+              </nz-date-picker>
+            </tc-form-group>
+            <button class="ml-3" [disabled]="dateFin?.invalid" tc-button afterIcon="icofont-check-circled"
+              [view]="'accent'" [size]="'sm'" (click)="disableCurrentFonctionEmploye()">
+              Valider
+            </button>
+          </div>
           <!-- <p>lorem ipsum dolor</p>-->
           <!--<div class="social" *ngIf="!currentFonctionEmploye">
             <button tc-button [afterIcon]="canChooseEmploye ? 'icofont-minus-circle' : 'icofont-plus'"
@@ -67,11 +86,12 @@
             <div class="col-12">
               <tc-form-group>
                 <tc-form-label>Employé</tc-form-label>
-                <nz-select required="required" nzMode="default" style="width: 100%"
-                  nzPlaceHolder="Sélectionner l'employé'" nzAllowClear nzShowSearch [(ngModel)]="selectedEmploye"
-                  name="classe" id="classe" #classe="ngModel">
+                <nz-select (nzOnSearch)="searchEmployes($event)" required="required" nzMode="default"
+                  style="width: 100%" nzPlaceHolder="Tapez pour rechercher l'employé'" nzAllowClear nzShowSearch
+                  [(ngModel)]="selectedEmploye" name="classe" id="classe" #classe="ngModel">
                   <ng-container *ngFor="let employe of employes">
-                    <nz-option [nzValue]="employe" [nzLabel]="employe?.prenoms + ' ' + employe?.nom"></nz-option>
+                    <nz-option [nzValue]="employe"
+                      [nzLabel]="employe?.prenoms + ' ' + employe?.nom + ' - ' + employe?.matricule"></nz-option>
                   </ng-container>
                 </nz-select>
                 <tc-form-description>
@@ -96,8 +116,8 @@
               </tc-form-group>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-6">
-              <button tc-button [afterIcon]="'icofont-minus-circle'" (click)="assignFunction()"
-                [disabled]="form?.invalid" [view]="'accent'" [square]="true" [tcShape]="300" [size]="'sm'">
+              <button tc-button [afterIcon]="'icofont-check-circled'" (click)="assignFunction()"
+                [disabled]="form?.invalid" [view]="'accent'" [square]="false" [tcShape]="800" [size]="'sm'">
                 Assigner
               </button>
             </div>

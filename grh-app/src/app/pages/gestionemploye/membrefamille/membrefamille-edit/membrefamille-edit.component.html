@@ -10,77 +10,88 @@
         </tc-card>
         <tc-card title="Détails" [outline]="true" [view]="secondViewBorder" [tcGradient]="secondGradient">
             <div class="row">
-                                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>Prenoms</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.prenoms" name="prenoms" id="prenoms" #prenoms="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="prenoms"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>Nom</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>DateNaissance</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.dateNaissance" name="dateNaissance" id="dateNaissance" #dateNaissance="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="dateNaissance"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>LieuNaissance</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.lieuNaissance" name="lieuNaissance" id="lieuNaissance" #lieuNaissance="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="lieuNaissance"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>Genre</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.genre" name="genre" id="genre" #genre="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="genre"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>LienParente</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.lienParente" name="lienParente" id="lienParente" #lienParente="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="lienParente"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>Telephone</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.telephone" name="telephone" id="telephone" #telephone="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="telephone"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Prenoms</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.prenoms" name="prenoms" id="prenoms"
+                            #prenoms="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="prenoms">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Nom</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>DateNaissance</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.dateNaissance" name="dateNaissance"
+                            id="dateNaissance" #dateNaissance="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="dateNaissance">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>LieuNaissance</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.lieuNaissance" name="lieuNaissance"
+                            id="lieuNaissance" #lieuNaissance="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="lieuNaissance">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Genre</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.genre" name="genre" id="genre"
+                            #genre="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="genre"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>LienParente</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.lienParente" name="lienParente"
+                            id="lienParente" #lienParente="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="lienParente">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Telephone</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.telephone" name="telephone" id="telephone"
+                            #telephone="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="telephone">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+            </div>
         </tc-card>
         <tc-card [view]="secondViewBorder" [outline]="true">
             <div class="actions">
@@ -90,8 +101,8 @@
                     beforeIcon="icofont-save" tc-button view="warning">
                     Mettre à jour
                 </button>
-                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh"
-                    tc-button type="button" view="success">Rafraichir</button>
+                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button
+                    type="button" view="success">Rafraichir</button>
             </div>
         </tc-card>
     </form>

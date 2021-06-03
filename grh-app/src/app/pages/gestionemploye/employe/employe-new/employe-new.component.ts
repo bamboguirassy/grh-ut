@@ -27,7 +27,6 @@ import { ProfessionService } from 'src/app/pages/parametrage/profession/professi
 export class EmployeNewComponent implements OnInit {
 
   @ViewChild('modalBody', { static: true }) modalBody: ElementRef<any>;
-  @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
   @ViewChildren('form') form;
   entity: Employe;
   @Output() creation: EventEmitter<Employe> = new EventEmitter();
@@ -41,10 +40,10 @@ export class EmployeNewComponent implements OnInit {
   selectedCaisseSociale: CaisseSociale;
   mutuelleSantes: MutuelleSante[] = [];
   selectedMutuelleSante: MutuelleSante;
-  grades: Grade[] = [];
+  indices: Grade[] = [];
   structures: Structure[] = [];
   selectedStructure: Structure;
-  selectedGrade: Grade;
+  selectedIndice: Grade;
   professions: Profession[] = [];
   selectedProfession: Profession;
   areDataLoaded = false;
@@ -81,19 +80,14 @@ export class EmployeNewComponent implements OnInit {
     if (this.selectedMutuelleSante) {
       this.entity.mutuelleSante = this.selectedMutuelleSante.id;
     }
-    if (this.selectedGrade) {
-      this.entity.grade = this.selectedGrade.id;
+    if (this.selectedIndice) {
+      this.entity.indice = this.selectedIndice.id;
     }
-    this.entity.nationalite = this.selectedNationalite.id;
-    this.entity.typeEmploye = this.typeEmploye.id;
     if(this.selectedStructure) {
       this.entity.structure = this.selectedStructure.id;
     }
+    if(this.selectedProfession) {
     this.entity.profession = this.selectedProfession.id;
-
-
-    if (this.selectedGrade) {
-      this.entity.grade = this.selectedGrade.id;
     }
     if (this.selectedNationalite) {
       this.entity.nationalite = this.selectedNationalite.id;
@@ -130,7 +124,7 @@ export class EmployeNewComponent implements OnInit {
       this.findNationalites();
       this.findCaisseSociales();
       this.findMutuelleSantes();
-      this.findGrades();
+      this.findIndices();
       this.findStructures();
       this.areDataLoaded = true;
     }
@@ -174,10 +168,10 @@ export class EmployeNewComponent implements OnInit {
       }, err => this.caisseSocialeSrv.httpSrv.catchError(err));
   }
 
-  findGrades() {
+  findIndices() {
     this.gradeSrv.findByTypeEmploye(this.typeEmploye)
       .subscribe((data: any) => {
-        this.grades = data;
+        this.indices = data;
       }, err => this.gradeSrv.httpSrv.catchError(err));
   }
 

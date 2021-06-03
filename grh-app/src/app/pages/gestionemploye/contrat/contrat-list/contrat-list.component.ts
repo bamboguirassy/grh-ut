@@ -15,6 +15,7 @@ import { SETTINGS } from 'src/environments/settings';
 })
 export class ContratListComponent implements OnInit, OnDestroy {
   @Input() employe: Employe;
+  @Input() displayTimeline: boolean = true; 
   items:Contrat[]=[];
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];

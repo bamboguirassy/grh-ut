@@ -21,14 +21,14 @@ export class CaisseSocialeShowComponent extends BasePageComponent<CaisseSociale>
     public location: Location) {
     super(store, caisseSocialeSrv);
     this.pageData = {
-      title: 'Détails - CaisseSociale',
+      title: 'Détails - Caisse Sociale',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'CaisseSociales',
+          title: 'Caisse Sociales',
           route: '/'+this.orientation+'/caissesociale'
         },
         {
@@ -48,7 +48,7 @@ export class CaisseSocialeShowComponent extends BasePageComponent<CaisseSociale>
   }
 
   handlePostLoad() {
-    this.title = 'CaisseSociale - ' + this.entity?.id;
+    this.title = 'Caisse Sociale ' + this.entity?.code;
   }
 
   handlePostDelete() {

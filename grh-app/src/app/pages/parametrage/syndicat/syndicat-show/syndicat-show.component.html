@@ -14,12 +14,11 @@
                 <button *ngIf="syndicatSrv.resourceName|editable"
                     [routerLink]="['/'+orientation,syndicatSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
                     class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
-                <button (click)="remove(entity)" *ngIf="syndicatSrv.resourceName|deletable" tc-button
-                    view="error" beforeIcon="icofont-trash" class=" float-right ml-1"></button>
+                <button (click)="remove(entity)" *ngIf="syndicatSrv.resourceName|deletable" tc-button view="error"
+                    beforeIcon="icofont-trash" class=" float-right ml-1"></button>
                 <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
                     beforeIcon="icofont-refresh"></button>
-                <button tc-button class="float-right" (click)="location.back()"
-                    beforeIcon="icofont-reply"></button>
+                <button tc-button class="float-right" (click)="location.back()" beforeIcon="icofont-reply"></button>
             </div>
         </div>
     </tc-card>
@@ -27,42 +26,43 @@
         <div class="col-12 col-md-4">
             <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
                 <table class="table">
-                                                                                                <tr>
-                            <th>Nom</th>
-                            <td>
-                                <span *ngIf="entity?.nom">{{ entity?.nom }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.nom">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Code</th>
-                            <td>
-                                <span *ngIf="entity?.code">{{ entity?.code }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.code">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Filename</th>
-                            <td>
-                                <span *ngIf="entity?.filename">{{ entity?.filename }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.filename">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Filepath</th>
-                            <td>
-                                <span *ngIf="entity?.filepath">{{ entity?.filepath }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.filepath">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>MontantCotisationMensuelle</th>
-                            <td>
-                                <span *ngIf="entity?.montantCotisationMensuelle">{{ entity?.montantCotisationMensuelle }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.montantCotisationMensuelle">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                    </table>
+                    <tr>
+                        <th>Nom</th>
+                        <td>
+                            <span *ngIf="entity?.nom">{{ entity?.nom }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.nom">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Code</th>
+                        <td>
+                            <span *ngIf="entity?.code">{{ entity?.code }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.code">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Filename</th>
+                        <td>
+                            <span *ngIf="entity?.filename">{{ entity?.filename }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.filename">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Filepath</th>
+                        <td>
+                            <span *ngIf="entity?.filepath">{{ entity?.filepath }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.filepath">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>MontantCotisationMensuelle</th>
+                        <td>
+                            <span *ngIf="entity?.montantCotisationMensuelle">{{ entity?.montantCotisationMensuelle
+                                }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.montantCotisationMensuelle">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                </table>
             </tc-card>
         </div>
     </div>

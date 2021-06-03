@@ -14,36 +14,27 @@ export class EmployeSearchComponent implements OnInit {
   filteredOptions: Employe[] = [];
   @Input() layout = 'horizontal';
   inputValue: string;
+  searchTerm: any;
+  datas: any;
 
   constructor(public employeSrv: EmployeService, public router: Router) {
   }
 
   ngOnInit(): void {
-    this.getEmployes();
   }
 
   selectEvent(item) {
-    // do something with selected item
-    this.router.navigate(['/'+this.layout+'/' + this.employeSrv.getRoutePrefix() + item.id]);
+    this.router.navigate(['/' + this.layout + '/' + this.employeSrv.getRoutePrefix() + item.id]);
     item = null;
   }
 
-  onChange(value: string): void {
-    if(value.length>3) {
-      this.filteredOptions = this.items.filter(item => item.globalFilter.toLowerCase().indexOf(value.toLowerCase()) !== -1);
-    } else {
-      this.filteredOptions = [];
-    }
-  }
-
   getEmployes() {
-    this.employeSrv.employesProvider
-      .subscribe((data: any) => {
-        this.items = data;
-        this.items.forEach(element => {
-          element.globalFilter = `${element.prenoms}` + ' ' + `${element.nom}` + ' ' + `${element.matricule}` + ' ' + `${element.cni}` + ' ' + `${element.email}`;
-        });
-      }, err => this.employeSrv.httpSrv.catchError(err));
+    if (this.searchTerm.length > 3) {
+      this.employeSrv.realtimeSearch(this.searchTerm)
+        .subscribe((data: any) => {
+          this.filteredOptions = data;
+        }, err => this.employeSrv.httpSrv.catchError(err));
+    }
   }
 
 }

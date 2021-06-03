@@ -14,12 +14,11 @@
                 <button *ngIf="membreFamilleSrv.resourceName|editable"
                     [routerLink]="['/'+orientation,membreFamilleSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
                     class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
-                <button (click)="remove(entity)" *ngIf="membreFamilleSrv.resourceName|deletable" tc-button
-                    view="error" beforeIcon="icofont-trash" class=" float-right ml-1"></button>
+                <button (click)="remove(entity)" *ngIf="membreFamilleSrv.resourceName|deletable" tc-button view="error"
+                    beforeIcon="icofont-trash" class=" float-right ml-1"></button>
                 <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
                     beforeIcon="icofont-refresh"></button>
-                <button tc-button class="float-right" (click)="location.back()"
-                    beforeIcon="icofont-reply"></button>
+                <button tc-button class="float-right" (click)="location.back()" beforeIcon="icofont-reply"></button>
             </div>
         </div>
     </tc-card>
@@ -27,56 +26,63 @@
         <div class="col-12 col-md-4">
             <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
                 <table class="table">
-                                                                                                <tr>
-                            <th>Prenoms</th>
-                            <td>
-                                <span *ngIf="entity?.prenoms">{{ entity?.prenoms }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.prenoms">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Nom</th>
-                            <td>
-                                <span *ngIf="entity?.nom">{{ entity?.nom }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.nom">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>DateNaissance</th>
-                            <td>
-                                <span *ngIf="entity?.dateNaissance">{{ entity?.dateNaissance }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.dateNaissance">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>LieuNaissance</th>
-                            <td>
-                                <span *ngIf="entity?.lieuNaissance">{{ entity?.lieuNaissance }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.lieuNaissance">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Genre</th>
-                            <td>
-                                <span *ngIf="entity?.genre">{{ entity?.genre }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.genre">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>LienParente</th>
-                            <td>
-                                <span *ngIf="entity?.lienParente">{{ entity?.lienParente }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.lienParente">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Telephone</th>
-                            <td>
-                                <span *ngIf="entity?.telephone">{{ entity?.telephone }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.telephone">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                    </table>
+                    <tr>
+                        <th>Prenoms</th>
+                        <td>
+                            <span *ngIf="entity?.prenoms">{{ entity?.prenoms }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.prenoms">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Nom</th>
+                        <td>
+                            <span *ngIf="entity?.nom">{{ entity?.nom }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.nom">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>DateNaissance</th>
+                        <td>
+                            <span *ngIf="entity?.dateNaissance">{{ entity?.dateNaissance }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.dateNaissance">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>LieuNaissance</th>
+                        <td>
+                            <span *ngIf="entity?.lieuNaissance">{{ entity?.lieuNaissance }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.lieuNaissance">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Date mariage</th>
+                        <td>
+                            <span *ngIf="entity?.dateMariage">{{ entity?.dateMariage }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.dateMariage">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Genre</th>
+                        <td>
+                            <span *ngIf="entity?.genre">{{ entity?.genre }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.genre">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>LienParente</th>
+                        <td>
+                            <span *ngIf="entity?.lienParente">{{ entity?.lienParente }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.lienParente">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Telephone</th>
+                        <td>
+                            <span *ngIf="entity?.telephone">{{ entity?.telephone }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.telephone">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                </table>
             </tc-card>
         </div>
     </div>

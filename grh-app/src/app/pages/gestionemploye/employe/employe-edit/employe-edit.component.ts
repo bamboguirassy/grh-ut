@@ -45,8 +45,8 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
   structures: Structure[]= [];
   selectedStructureId: any;
   selectedMutuelleSanteId: any;
-  grades: Grade[] = [];
-  selectedGradeId: any;
+  indices: Grade[] = [];
+  selectedIndiceId: any;
   professions: Profession[] = [];
   selectedProfessionId: Profession;
   selectedTypeEmploye: TypeEmploye;
@@ -129,10 +129,10 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
       }, err => this.caisseSocialeSrv.httpSrv.catchError(err));
   }
 
-  findGrades() {
+  findIndices() {
     this.gradeSrv.findByTypeEmploye(this.entity.typeEmploye)
       .subscribe((data: any) => {
-        this.grades = data;
+        this.indices = data;
       }, err => this.gradeSrv.httpSrv.catchError(err));
   }
 
@@ -150,7 +150,7 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
   handlePostLoad() {
     this.selectedMutuelleSanteId = this.entity?.mutuelleSante?.id;
     this.selectedCaisseSocialeId = this.entity?.caisseSociale?.id;
-    this.selectedGradeId = this.entity?.grade?.id;
+    this.selectedIndiceId = this.entity?.indice?.id;
     this.selectedTypeEmploye = this.entity.typeEmploye;
     this.selectedStructureId = this.entity?.structure?.id;
     this.selectedNationaliteId = this.entity.nationalite?.id;
@@ -162,11 +162,11 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
     this.entity.filename = this.fileModel.fileName;
     this.entity.filepath = this.fileModel.fileContent;
     this.entity.profession!=null && this.professions.push(this.entity.profession);
-    this.entity.grade!=null && this.grades.push(this.entity.grade);
+    this.entity.indice!=null && this.indices.push(this.entity.indice);
     this.findCaisseSociales();
     this.findMutuelleSantes();
     this.findNationalites();
-    this.findGrades();
+    this.findIndices();
     this.findStructures();
   }
 
@@ -178,7 +178,7 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
     }
     this.entity.typeEmploye = this.selectedTypeEmploye.id;
     this.entity.caisseSociale = this.selectedCaisseSocialeId;
-    this.entity.grade = this.selectedGradeId;
+    this.entity.indice = this.selectedIndiceId;
     this.entity.nationalite = this.selectedNationaliteId;
     this.entity.mutuelleSante = this.selectedMutuelleSanteId;
     if(this.selectedStructureId) {

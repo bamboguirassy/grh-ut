@@ -7,5 +7,5 @@ export class FonctionEmploye extends BamboAbstractObject {
     etat: boolean;
     responsabilite: StructureFonction;
     employe: Employe;
-    dateFin: string;
+    dateFin: any;
 }

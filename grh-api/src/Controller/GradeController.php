@@ -233,8 +233,8 @@ class GradeController extends AbstractController
     }
 
     public function generateClassificationCode(Grade $grade) {
-        return $grade->getClasse()->getIndice().$grade->getCategorie()->getIndice()
-        .$grade->getNiveau()->getIndice().$grade->getEchelon()->getIndice();
+        return $grade->getClasse()->getIndice().$grade->getNiveau()->getIndice().$grade->getCategorie()->getIndice()
+        .$grade->getEchelon()->getIndice();
     }
     
     

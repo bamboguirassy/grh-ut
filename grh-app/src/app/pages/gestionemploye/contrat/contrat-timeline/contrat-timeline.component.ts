@@ -13,23 +13,21 @@ import { Employe } from '../../employe/employe';
 export class ContratTimelineComponent implements OnInit {
   @Input() employe: Employe;
   items:Contrat[]=[];
+  @Input() set setItems(values){
+    this.items = values;
+    this.setTimeline();
+  }
   tab = [];
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];
   constructor(public contratSrv: ContratService, public datePipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.findByEmploye();
+    
+    this.setTimeline();
   }
 
-  findByEmploye() {
-    this.contratSrv.findByEmploye(this.employe)
-    .subscribe((data: any)=>{
-      this.items = data;
-      this.setTimeline();
-            
-    },err=>this.contratSrv.httpSrv.catchError(err));
-  }
+  
   setTimeline() {
     const sectionData = this.items.map((i: any) => ({
       date: `${i.dateDebut?`${this.datePipe.
