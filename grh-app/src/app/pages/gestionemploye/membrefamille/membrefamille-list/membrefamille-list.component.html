@@ -11,18 +11,24 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>s
   <div class="col-12 col-md-4 col-lg-3" *ngFor="let item of items">
     <div class="famille-card m-1">
       <div class="info-box">
         <h4 class="name">{{ item.prenoms+' '+item.nom }}</h4>
-        <p class="role">{{ item.lienParente }}</p>
+        <div class="role">
+          {{ item.lienParente }}
+          <span *ngIf="item?.lienParente=='époux' || item?.lienParente=='épouse'">
+              depuis le {{ item.dateMariage|date:'dd/MM/yyyy' }}
+            <tc-badge size="xs" view="error" *ngIf="!item.dateMariage">Indéfinie</tc-badge>
+          </span>
+        </div>
         <p class="address">Né le {{ item.dateNaissance|date:'dd/MM/yyyy' }} à {{item.lieuNaissance}}</p>
         <p class="phone">
           <span>
             <a href="tel:{{item.telephone}}">{{item.telephone}}</a>
           </span>
-          <tc-badge size="xs" view="error" *ngIf="!item.telephone">Non précisé</tc-badge>
+          <tc-badge size="xs" view="error" *ngIf="!item.telephone">tél non précisé</tc-badge>
         </p>
         <div class="social">
           <button *ngIf="membreFamilleSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"

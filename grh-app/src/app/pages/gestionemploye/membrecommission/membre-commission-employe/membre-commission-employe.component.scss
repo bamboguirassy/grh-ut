@@ -1,0 +1,23 @@
+@import '~src/assets/scss/variables';
+
+:host {
+    .add-action-box {
+        bottom  : $module-rem * 8;
+        position: fixed;
+        right   : $module-rem * 2;
+        z-index : 9997;
+
+        .tc-btn {
+            font-size: 30px;
+        }
+    }
+}
+
+.rounded-border{
+    border-radius: 10px;
+}
+
+.size-3{
+    font-size: 40px;
+    color: #000;
+}

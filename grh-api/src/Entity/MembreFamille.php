@@ -80,6 +80,12 @@ class MembreFamille
      */
     private $employe;
 
+    /**
+    
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateMariage;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -177,6 +183,18 @@ class MembreFamille
     public function setEmploye(?Employe $employe): self
     {
         $this->employe = $employe;
+
+        return $this;
+    }
+
+    public function getDateMariage(): ?\DateTimeInterface
+    {
+        return $this->dateMariage;
+    }
+
+    public function setDateMariage(?\DateTimeInterface $dateMariage): self
+    {
+        $this->dateMariage = $dateMariage;
 
         return $this;
     }

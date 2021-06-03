@@ -1,16 +1,12 @@
 <tc-card *ngIf="commissionSrv.resourceName|showable" [tcGradient]="lightGradient">
-    <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
-        <div class="row">
-            <div class="d-none d-md-block col-md-1">
-                <i class="icofont icofont-data icofont-4x"></i>
-            </div>
-            <div class="col-12 col-md-7">
+    <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="align-self-start">
                 <blockquote class="blockquote">
-                    <p class="mb-0">{{title}}</p>
-                    <footer class="blockquote-footer"> <cite title="Source Title">sous titre</cite></footer>
+                    <p class="h4">{{entity?.nom}}</p>
                 </blockquote>
             </div>
-            <div class="col-12 col-md-4">
+            <div class="align-self-end">
                 <button *ngIf="commissionSrv.resourceName|editable"
                     [routerLink]="['/'+orientation,commissionSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
                     class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
@@ -24,45 +20,74 @@
     </tc-card>
     <div class="row">
         <div class="col-12 col-md-4">
-            <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
-                <table class="table">
-                    <tr>
-                        <th>Nom</th>
-                        <td>
-                            <span *ngIf="entity?.nom">{{ entity?.nom }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.nom">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Missions</th>
-                        <td>
-                            <span *ngIf="entity?.missions">{{ entity?.missions }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.missions">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Etat</th>
-                        <td>
-                            <span *ngIf="entity?.etat">{{ entity?.etat }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.etat">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Description</th>
-                        <td>
-                            <span *ngIf="entity?.description">{{ entity?.description }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.description">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>DateCreation</th>
-                        <td>
-                            <span *ngIf="entity?.dateCreation">{{ entity?.dateCreation }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.dateCreation">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                </table>
+            <tc-card [outline]="true" *ngIf="entity" [view]="secondViewBorder" title="Plus d'informations"
+                [tcGradient]="secondGradient">
+                <nz-list nzItemLayout="horizontal" nzSize="small">
+                    <nz-list-item class="list-group-plus">
+                        <nz-list-item-meta>
+                            <nz-list-item-meta-title>
+                                Mission
+                            </nz-list-item-meta-title>
+                            <nz-list-item-meta-description>
+                                <ng-container *ngIf="entity.missions; else undefinedMisssion">
+                                    {{ entity.missions }}
+                                </ng-container>
+                                <ng-template #undefinedMisssion>
+                                    <tc-badge [outline]="true" view="error">Indéfinie</tc-badge>
+                                </ng-template>
+                            </nz-list-item-meta-description>
+                        </nz-list-item-meta>
+                    </nz-list-item>
+                    <nz-list-item class="list-group-plus">
+                        <nz-list-item-meta>
+                            <nz-list-item-meta-title>
+                                Description
+                            </nz-list-item-meta-title>
+                            <nz-list-item-meta-description>
+                                <ng-container *ngIf="entity.description; else undefinedDesc">
+                                    {{ entity.description}}
+                                </ng-container>
+                                <ng-template #undefinedDesc>
+                                    <tc-badge [outline]="true" view="error">Indéfinie</tc-badge>
+                                </ng-template>
+                            </nz-list-item-meta-description>
+                        </nz-list-item-meta>
+                    </nz-list-item>
+                    <nz-list-item class="list-group-plus">
+                        <nz-list-item-meta>
+                            <nz-list-item-meta-title>
+                                État
+                            </nz-list-item-meta-title>
+                            <nz-list-item-meta-description>
+                                <ng-container *ngIf="entity.etat; else undefinedStatus">
+                                    <tc-badge [outline]="true" view="success">Activé</tc-badge>
+                                </ng-container>
+                                <ng-template #undefinedStatus>
+                                    <tc-badge [outline]="true" view="error">Désactivé</tc-badge>
+                                </ng-template>
+                            </nz-list-item-meta-description>
+                        </nz-list-item-meta>
+                    </nz-list-item>
+                    <nz-list-item class="list-group-plus">
+                        <nz-list-item-meta>
+                            <nz-list-item-meta-title>
+                                Date de création
+                            </nz-list-item-meta-title>
+                            <nz-list-item-meta-description>
+                                <ng-container *ngIf="entity.dateCreation; else undefinedDateCreation">
+                                    {{ entity.dateCreation | date:"dd/MM/YYYY"}}
+                                </ng-container>
+                                <ng-template #undefinedDateCreation>
+                                    <tc-badge [outline]="true" view="error">Indéfinie</tc-badge>
+                                </ng-template>
+                            </nz-list-item-meta-description>
+                        </nz-list-item-meta>
+                    </nz-list-item>
+                </nz-list>
             </tc-card>
+        </div>
+        <div class="col-12 col-md-8">
+            <app-membre-commission-employe *ngIf="entity" [commission]="entity"></app-membre-commission-employe>
         </div>
     </div>
 </tc-card>

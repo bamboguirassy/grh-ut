@@ -3,6 +3,7 @@ import { SETTINGS } from 'src/environments/settings';
 import { DiplomeEmployeService } from '../diplomeemploye.service';
 import { Employe } from '../../employe/employe';
 import { EmployeService } from '../../employe/employe.service';
+import { DiplomeEmploye } from '../diplomeemploye';
 
 @Component({
   selector: 'app-diplomeemploye-timeline',
@@ -11,23 +12,28 @@ import { EmployeService } from '../../employe/employe.service';
 })
 export class DiplomeEmployeTimelineComponent implements OnInit {
   @Input() employe: Employe
-  items:  Document[] = [];
+  items:DiplomeEmploye[]=[];
+  @Input() set setItems(values){
+    this.items = values;
+    this.setTimeline();
+  }
+  /*
+  @Input() employe: Employe;
+  items:Contrat[]=[];
+  @Input() set setItems(values){
+    this.items = values;
+    this.setTimeline();
+  }
+  */
   lightGradient = ['#fff', SETTINGS.topbarBg];
   tab = [];
     constructor(public employeSrv: EmployeService ,public diplomeEmployeSrv: DiplomeEmployeService) { }
   
     ngOnInit(): void {
-      this.findByEmploye();
+      this.setTimeline();
     }
 
-    findByEmploye() {
-      this.diplomeEmployeSrv.findByEmploye(this.employe)
-      .subscribe((data: any)=>{
-        this.items = data;  
-        this.setTimeline();
-      },err=>this.diplomeEmployeSrv.httpSrv.catchError(err));
-    }
-
+    
     setTimeline() {
       const sectionData = this.items.map((i: any) => ({
        date: i.anneeObtention?i.anneeObtention:"encours",

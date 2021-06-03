@@ -62,7 +62,7 @@
                     <div class="col-12 col-md-6 col-lg-4">
                         <tc-form-group>
                             <tc-form-label>CNI/Passeport</tc-form-label>
-                            <tc-input prefixIcon="icofont-id" required="required" [(ngModel)]="entity.cni" name="cni"
+                            <tc-input prefixIcon="icofont-id" [(ngModel)]="entity.cni" name="cni"
                                 id="cni" #cni="ngModel">
                             </tc-input>
                             <tc-form-description>
@@ -133,7 +133,7 @@
                     <div class="col-12 col-md-6 col-lg-4">
                         <tc-form-group>
                             <tc-form-label>Téléphone Primaire</tc-form-label>
-                            <tc-input prefixIcon="icofont-phone" required="required"
+                            <tc-input prefixIcon="icofont-phone"
                                 [(ngModel)]="entity.telephonePrimaire" name="telephonePrimaire" id="telephonePrimaire"
                                 #telephonePrimaire="ngModel">
                             </tc-input>
@@ -177,7 +177,7 @@
                     <div class="col-12 col-md-6 col-lg-4">
                         <tc-form-group>
                             <tc-form-label>Situtation Matrimoniale</tc-form-label>
-                            <tc-select required="required" [(ngModel)]="entity.situtationMatrimoniale"
+                            <tc-select [(ngModel)]="entity.situtationMatrimoniale"
                                 name="situtationMatrimoniale" id="situtationMatrimoniale"
                                 #situtationMatrimoniale="ngModel"
                                 [placeholder]="'Selectionner la situation matrimoniale'"
@@ -226,7 +226,7 @@
                     <div class="col-12 col-md-6 col-lg-4">
                         <tc-form-group>
                             <tc-form-label>Matricule</tc-form-label>
-                            <tc-input prefixIcon="icofont-key" required="required" [(ngModel)]="entity.matricule"
+                            <tc-input prefixIcon="icofont-key" [(ngModel)]="entity.matricule"
                                 name="matricule" id="matricule" #matricule="ngModel">
                             </tc-input>
                             <tc-form-description>
@@ -238,7 +238,7 @@
                     <div class="col-12 col-md-6 col-lg-4">
                         <tc-form-group>
                             <tc-form-label>Date Recrutement</tc-form-label>
-                            <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required="required"
+                            <nz-date-picker [nzFormat]="'dd/MM/yyyy'" 
                                 [(ngModel)]="entity.dateRecrutement" name="dateRecrutement" id="dateRecrutement"
                                 #dateRecrutement="ngModel"></nz-date-picker>
                             <tc-form-description>
@@ -250,7 +250,7 @@
                     <div class="col-12 col-md-6 col-lg-4">
                         <tc-form-group>
                             <tc-form-label>Profession</tc-form-label>
-                            <nz-select required="required" (nzOpenChange)="findProfessions()" style="width: 100%"
+                            <nz-select (nzOpenChange)="findProfessions()" style="width: 100%"
                                 nzPlaceHolder="Sélectionner profession" nzAllowClear nzShowSearch
                                 [(ngModel)]="selectedProfessionId" name="profession" id="profession"
                                 #professionModel="ngModel">
@@ -266,15 +266,52 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
                         <tc-form-group>
-                            <tc-form-label>Grade</tc-form-label>
-                            <nz-select style="width: 100%" nzPlaceHolder="Sélectionner grade" nzAllowClear nzShowSearch
-                                [(ngModel)]="selectedGradeId" name="grade" id="grade" #grade="ngModel">
-                                <ng-container *ngFor="let grade of grades">
-                                    <nz-option [nzValue]="grade.id" [nzLabel]="grade.classification"></nz-option>
+                            <tc-form-label>Indice</tc-form-label>
+                            <nz-select style="width: 100%" nzPlaceHolder="Sélectionner l'indice courant" nzAllowClear
+                                nzShowSearch [(ngModel)]="selectedIndiceId" name="indice" id="indice"
+                                #indice="ngModel">
+                                <ng-container *ngFor="let indice of indices">
+                                    <nz-option [nzValue]="indice.id" [nzLabel]="indice.classification"></nz-option>
                                 </ng-container>
                             </nz-select>
                             <tc-form-description>
+                                <app-form-field-validation-message [formField]="indice">
+                                </app-form-field-validation-message>
+                            </tc-form-description>
+                        </tc-form-group>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4" *ngIf="selectedTypeEmploye?.code=='PER'">
+                        <tc-form-group>
+                            <tc-form-label>Grade</tc-form-label>
+                            <tc-select [(ngModel)]="entity.grade" name="grade" id="grade"
+                                #grade="ngModel" [placeholder]="'Selectionner le grade du PER'"
+                                [options]="employeSrv.gradesPER | orderBy:'label'">
+                            </tc-select>
+                            <tc-form-description>
                                 <app-form-field-validation-message [formField]="grade">
+                                </app-form-field-validation-message>
+                            </tc-form-description>
+                        </tc-form-group>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4" *ngIf="selectedTypeEmploye?.code=='PATS'">
+                        <tc-form-group>
+                            <tc-form-label>Grade</tc-form-label>
+                            <tc-input [(ngModel)]="entity.grade" name="grade" id="grade" #grade="ngModel">
+                            </tc-input>
+                            <tc-form-description>
+                                <app-form-field-validation-message [formField]="grade">
+                                </app-form-field-validation-message>
+                            </tc-form-description>
+                        </tc-form-group>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <tc-form-group>
+                            <tc-form-label>Diplome académique</tc-form-label>
+                            <tc-input [(ngModel)]="entity.diplomeAcademique"
+                                name="diplomeAcademique" id="diplomeAcademique" #diplomeAcademique="ngModel">
+                            </tc-input>
+                            <tc-form-description>
+                                <app-form-field-validation-message [formField]="diplomeAcademique">
                                 </app-form-field-validation-message>
                             </tc-form-description>
                         </tc-form-group>

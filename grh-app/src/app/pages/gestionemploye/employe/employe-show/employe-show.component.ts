@@ -1,5 +1,5 @@
 import { split } from 'ts-node';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy,ViewChild, ElementRef, Output, EventEmitter, ViewChildren, Input } from '@angular/core';
 import { BasePageComponent } from 'src/app/pages/base-page';
 import { EmployeService } from '../employe.service';
 import { Store } from '@ngrx/store';
@@ -14,12 +14,17 @@ import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
 import { FormGroup } from '@angular/forms';
 import { SETTINGS } from 'src/environments/settings';
 
+
 @Component({
   selector: 'app-employe-show',
   templateUrl: './employe-show.component.html',
   styleUrls: ['./employe-show.component.scss']
 })
 export class EmployeShowComponent extends BasePageComponent<Employe> implements OnInit, OnDestroy {
+  @ViewChild('modalBody', { static: true }) modalBody: ElementRef<any>;
+  @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
+  @ViewChildren('form') form;
+  isModalVisible = false;
   entity: Employe;
   employeForm: FormGroup;
   latestFonction: FonctionEmploye;
@@ -181,5 +186,16 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   loadCommissionsTab() {
     this.isCommissionsLoaded = true;
   }
+
+ // open modal window
+  openModal() {
+    this.isModalVisible = true;
+  }
+
+  // close modal window
+  closeModal() {
+    this.isModalVisible = false;
+  }
+
 
 }

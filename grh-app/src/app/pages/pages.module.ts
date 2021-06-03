@@ -162,6 +162,7 @@ import { UserShowComponent } from './parametrage/user/user-show/user-show.compon
 import { NgPipesModule } from 'ng-pipes';
 import { GradeManagerComponent } from './gestiongrade/grade/grade-manager/grade-manager.component';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { MembresMutuellesanteComponent } from './gestionemploye/employe/membres-mutuellesante/membres-mutuellesante.component';
 import { DiplomeEmployeTimelineComponent } from './gestionemploye/diplomeemploye/diplomeemploye-timeline/diplomeemploye-timeline.component';
 import { AffectationListComponent } from './gestionemploye/affectation/affectation-list/affectation-list.component';
 import { AffectationEditComponent } from './gestionemploye/affectation/affectation-edit/affectation-edit.component';
@@ -196,9 +197,16 @@ import { MembreCommissionListComponent } from './gestionemploye/membrecommission
 import { MembreCommissionEditComponent } from './gestionemploye/membrecommission/membrecommission-edit/membrecommission-edit.component';
 import { MembreCommissionShowComponent } from './gestionemploye/membrecommission/membrecommission-show/membrecommission-show.component';
 import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/membrecommission-new/membrecommission-new.component';
+<<<<<<< HEAD
 import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sortie-stats.component';
+=======
+import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
+>>>>>>> d36c54f8766e86d5a8437c305923609057c547a5
 
 
+import { MembreCommissionEmployeComponent } from './gestionemploye/membrecommission/membre-commission-employe/membre-commission-employe.component';
+import { FonctionemployeTimelineComponent } from './gestionemploye/fonctionemploye/fonctionemploye-timeline/fonctionemploye-timeline.component';
+import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/fonction-en-expiration/fonction-en-expiration.component';
 
 @NgModule({
   imports: [
@@ -424,6 +432,7 @@ import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sort
     StructureFonctionListComponent,
     StructureFonctionNewComponent,
     GradeManagerComponent,
+    MembresMutuellesanteComponent,
     DiplomeEmployeTimelineComponent,
 
     // affectation components
@@ -450,7 +459,14 @@ import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sort
     EmployeGlobalComponent,
     ContratEnExpirationComponent,
     DiplomeMainDashboardComponent,
+<<<<<<< HEAD
     SortieStatsComponent,
+=======
+    MembreCaisseSocialeComponent,
+    MembreCommissionEmployeComponent,
+    FonctionemployeTimelineComponent,
+    FonctionEnExpirationComponent,
+>>>>>>> d36c54f8766e86d5a8437c305923609057c547a5
 
   ],
   exports: [],

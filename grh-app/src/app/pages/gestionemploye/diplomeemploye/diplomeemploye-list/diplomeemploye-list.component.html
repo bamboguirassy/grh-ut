@@ -1,6 +1,6 @@
 <div class="row" *ngIf="diplomeEmployeSrv.resourceName|listable">
   <div class="col-12 col-md-4">
-    <app-diplomeemploye-timeline *ngIf="employe" [employe]="employe">
+    <app-diplomeemploye-timeline *ngIf=" this.items?.length" [setItems]="items">
     </app-diplomeemploye-timeline>
   </div>
   <div class="col-12 col-md-8">
