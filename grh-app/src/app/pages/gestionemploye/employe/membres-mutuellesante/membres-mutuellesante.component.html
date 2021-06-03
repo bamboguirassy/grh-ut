@@ -1,6 +1,6 @@
 
       
-<tc-card *ngIf="employeSrv.resourceName|listable" [tcGradient]="lightGradient">
+<tc-card  *ngIf="employeSrv.resourceName|listable" [tcGradient]="lightGradient">
   <tc-card [view]="secondViewBorder" [outline]="true">
       <div class="row">
           <div class="col-12">
@@ -10,7 +10,7 @@
       </div>
    
   </tc-card>
-  <tc-card [view]="secondViewBorder" [outline]="true">
+  <tc-card  [view]="secondViewBorder" [outline]="true">
       
     <h3>Liste des Membres</h3>
               <tc-table   [itemsPerPage]="15" [rows]="items" [hovered]="true"  [pagination]="true" [search]="true">
