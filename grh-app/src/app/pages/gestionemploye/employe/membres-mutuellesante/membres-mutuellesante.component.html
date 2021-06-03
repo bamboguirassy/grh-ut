@@ -10,10 +10,10 @@
       </div>
    
   </tc-card>
-  <tc-card [view]="secondViewBorder" [outline]="true" >
+  <tc-card [view]="secondViewBorder" [outline]="true">
       
     <h3>Liste des Membres</h3>
-              <tc-table   [itemsPerPage]="15" [rows]="employes" [hovered]="true"  [pagination]="true" [search]="true">
+              <tc-table   [itemsPerPage]="15" [rows]="items" [hovered]="true"  [pagination]="true" [search]="true">
                 
                   <tc-table-col [columnTitle]="'#'" [columnName]="'filepath'">
                       <ng-template #tableTDTemplate let-row="row" let-value>

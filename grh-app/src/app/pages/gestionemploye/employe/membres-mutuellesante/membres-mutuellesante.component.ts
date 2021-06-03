@@ -34,7 +34,7 @@ export class MembresMutuellesanteComponent extends BasePageComponent<Employe> im
     
     this.employeSrv.findByMutuelleSante(this.membremutuelle).subscribe((data:any) => {
   
-      this.employes = data;
+      this.items = data;
       
     }, err => this.employeSrv.httpSrv.catchError(err));
     
