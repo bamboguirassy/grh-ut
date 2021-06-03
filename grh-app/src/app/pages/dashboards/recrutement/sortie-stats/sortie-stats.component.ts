@@ -61,7 +61,7 @@ export class SortieStatsComponent extends DashboardBaseComponent<any> implements
       plugins: {
         title: {
           display: true,
-          text: 'Évolution des entrée-sortie pour les 7 dernières années'
+          text: 'Évolution des sorties pour les 7 dernières années'
         }
       }
 
