@@ -16,7 +16,8 @@ export class MembresMutuellesanteComponent extends BasePageComponent<Employe> im
   titre='Liste des Membres ';
 
  @Input() membremutuelle:MutuelleSante;
-
+@Input() orientation='';
+ employes:any[];
   constructor(store: Store<IAppState>,
     public employeSrv: EmployeService,
     ) {
@@ -24,15 +25,17 @@ export class MembresMutuellesanteComponent extends BasePageComponent<Employe> im
   }
 
   ngOnInit(): void {
-    this.findEmployeByMutuelleSante();
+    this.findByMutuelleSante();
   }
 
 
-  findEmployeByMutuelleSante()
+  findByMutuelleSante()
   {
-    this.items = [];
-    this.employeSrv.findEmployeByMutuelleSante(this.membremutuelle).subscribe((data:any) => {
-      this.items = data;
+    
+    this.employeSrv.findByMutuelleSante(this.membremutuelle).subscribe((data:any) => {
+  
+      this.employes = data;
+      
     }, err => this.employeSrv.httpSrv.catchError(err));
     
   }

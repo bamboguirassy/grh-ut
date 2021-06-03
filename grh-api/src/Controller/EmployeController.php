@@ -360,18 +360,17 @@ $employe->setProfession($faker->randomElement($professions));
         return $tab;
     }
     
-<<<<<<< HEAD
     
     /**
-     * @Rest\Get(path="/{id}/membre-mutuelle-sante", name="employe_by_MutuelleSante")
-     * @Rest\View(StatusCode = 200)
+     * @Rest\Get(path="/{id}/membre-mutuelle-sante", name="employe_by_MutuelleSante",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode = 200, serializerEnableMaxDepthChecks=true)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
-    public function findByEmployeMutuelleSante(MutuelleSante $mutuellesante)
+    public function findByMutuelleSante(MutuelleSante $mutuellesante)
     {
-        $employes = $this->getDoctrine()
-         ->getRepository(Employe::class)
-         ->findByMutuelleSante($mutuellesante);
+        $em = $this->getDoctrine()->getManager();
+        $employes =$em->getRepository(Employe::class)
+                ->findByMutuelleSante($mutuellesante);
         
           return $employes;
     }
@@ -383,6 +382,3 @@ $employe->setProfession($faker->randomElement($professions));
     
     
 }
-=======
-}
->>>>>>> 84d747ea6544b43592585f128d4d5f82fae6979d

@@ -162,9 +162,7 @@ import { UserShowComponent } from './parametrage/user/user-show/user-show.compon
 import { NgPipesModule } from 'ng-pipes';
 import { GradeManagerComponent } from './gestiongrade/grade/grade-manager/grade-manager.component';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
-<<<<<<< HEAD
 import { MembresMutuellesanteComponent } from './gestionemploye/employe/membres-mutuellesante/membres-mutuellesante.component';
-=======
 import { DiplomeEmployeTimelineComponent } from './gestionemploye/diplomeemploye/diplomeemploye-timeline/diplomeemploye-timeline.component';
 import { AffectationListComponent } from './gestionemploye/affectation/affectation-list/affectation-list.component';
 import { AffectationEditComponent } from './gestionemploye/affectation/affectation-edit/affectation-edit.component';
@@ -201,7 +199,6 @@ import { MembreCommissionEditComponent } from './gestionemploye/membrecommission
 import { MembreCommissionShowComponent } from './gestionemploye/membrecommission/membrecommission-show/membrecommission-show.component';
 import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/membrecommission-new/membrecommission-new.component';
 import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
->>>>>>> 84d747ea6544b43592585f128d4d5f82fae6979d
 
 
 import { MembreCommissionEmployeComponent } from './gestionemploye/membrecommission/membre-commission-employe/membre-commission-employe.component';
@@ -432,9 +429,7 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
     StructureFonctionListComponent,
     StructureFonctionNewComponent,
     GradeManagerComponent,
-<<<<<<< HEAD
-    MembresMutuellesanteComponent
-=======
+    MembresMutuellesanteComponent,
     DiplomeEmployeTimelineComponent,
 
     // affectation components
@@ -467,7 +462,6 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
     FonctionemployeTimelineComponent,
     FonctionEnExpirationComponent,
 
->>>>>>> 84d747ea6544b43592585f128d4d5f82fae6979d
   ],
   exports: [],
   entryComponents: []
