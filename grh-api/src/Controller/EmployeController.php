@@ -362,7 +362,7 @@ $employe->setProfession($faker->randomElement($professions));
     
     
     /**
-     * @Rest\Get(path="/{id}/membre-mutuelle-sante", name="employe_by_MutuelleSante",requirements = {"id"="\d+"})
+     * @Rest\Get(path="/{id}/membre-mutuelle-sante", name="employe_by_mutuellesante",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode = 200, serializerEnableMaxDepthChecks=true)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
