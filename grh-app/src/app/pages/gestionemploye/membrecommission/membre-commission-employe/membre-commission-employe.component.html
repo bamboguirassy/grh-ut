@@ -5,7 +5,9 @@
                 [search]="false">
                 <tc-table-col [columnTitle]="'Matricule'" [columnName]="'employe'" [enableSorting]="true">
                     <ng-template #tableTDTemplate let-value let-row="row">
-                        <b>{{ value.matricule | uppercase}}</b>
+                        <a [routerLink]="employeRoute(value)" routerLinkActive="router-link-active">
+                            <b>{{ value.matricule | uppercase}}</b>
+                        </a>
                         <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                     </ng-template>
                 </tc-table-col>

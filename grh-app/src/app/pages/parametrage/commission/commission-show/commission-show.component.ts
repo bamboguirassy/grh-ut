@@ -4,7 +4,7 @@ import { CommissionService } from '../commission.service';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { Commission } from '../commission';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
@@ -38,15 +38,6 @@ export class CommissionShowComponent extends BasePageComponent<Commission> imple
     };
   }
 
-  nzStatus(etat: any){
-    return etat == true ? "finish" : "error";
-  }
-
-
-  nzDescription(etat: any){
-    return etat == true ? "Activé" : "Désactivé";
-  }
-
   ngOnInit(): void {
     super.ngOnInit();
     this.findEntity(this.activatedRoute.snapshot.params.id);
@@ -63,5 +54,4 @@ export class CommissionShowComponent extends BasePageComponent<Commission> imple
   handlePostDelete() {
     this.location.back();
   }
-
 }
