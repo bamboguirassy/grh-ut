@@ -173,7 +173,6 @@ import { ProfessionStatsComponent } from './dashboards/profession/profession-sta
 import { StructureStatsComponent } from './dashboards/structure/structure-stats/structure-stats.component';
 import { TypeEmployeStatsComponent } from './dashboards/typeemploye/type-employe-stats/type-employe-stats.component';
 import { RecrutementRangeStatsComponent } from './dashboards/recrutement/recrutement-range/recrutement-range-stats/recrutement-range-stats.component';
-import { EntreeSortieStatsComponent } from './dashboards/recrutement/entree-sortie-stats/entree-sortie-stats.component';
 import { DemissionEmployeProfessionAnneeStatsComponent } from './dashboards/recrutement/demission-employe-profession-annee-stats/demission-employe-profession-annee-stats.component';
 import { DemissionEmployeStructureAnneeStatsComponent } from './dashboards/recrutement/demission-employe-structure-annee-stats/demission-employe-structure-annee-stats.component';
 import { TypeContratStatsComponent } from './dashboards/typecontrat/type-contrat-stats/type-contrat-stats.component';
@@ -197,6 +196,7 @@ import { MembreCommissionListComponent } from './gestionemploye/membrecommission
 import { MembreCommissionEditComponent } from './gestionemploye/membrecommission/membrecommission-edit/membrecommission-edit.component';
 import { MembreCommissionShowComponent } from './gestionemploye/membrecommission/membrecommission-show/membrecommission-show.component';
 import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/membrecommission-new/membrecommission-new.component';
+import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sortie-stats.component';
 
 
 
@@ -436,7 +436,6 @@ import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/
     StructureStatsComponent,
     TypeEmployeStatsComponent,
     RecrutementRangeStatsComponent,
-    EntreeSortieStatsComponent,
     DemissionEmployeProfessionAnneeStatsComponent,
     DemissionEmployeStructureAnneeStatsComponent,
     RecrutementPeriodStatsComponent,
@@ -451,6 +450,7 @@ import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/
     EmployeGlobalComponent,
     ContratEnExpirationComponent,
     DiplomeMainDashboardComponent,
+    SortieStatsComponent,
 
   ],
   exports: [],

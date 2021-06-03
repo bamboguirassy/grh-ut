@@ -1,24 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ChartDataset } from 'chart.js';
 import { DashboardBaseComponent } from 'src/app/shared/components/dashboard-base/dashboard-base.component';
 import { DashboardService } from '../../dashboard.service';
 
 @Component({
-  selector: 'app-entree-sortie-stats',
-  templateUrl: './entree-sortie-stats.component.html',
-  styleUrls: ['./entree-sortie-stats.component.scss']
+  selector: 'app-sortie-stats',
+  templateUrl: './sortie-stats.component.html',
+  styleUrls: ['./sortie-stats.component.scss']
 })
-export class EntreeSortieStatsComponent extends DashboardBaseComponent<any> implements OnInit {
-
+export class SortieStatsComponent extends DashboardBaseComponent<any> implements OnInit {
   @Input() canSwitchDiagramType: boolean = true;
   typeDiagrams: { value: string, title: string }[] = [
     { value: 'bar', title: 'Barre verticale' },
-    { value: 'line', title: 'Courbe' },
+    { value: 'line', title: 'Courbe' }, 
   ];
-
-  constructor(
-    public dashboardSrv: DashboardService
-  ) {
+  constructor(public dashboardSrv: DashboardService) {
     super(dashboardSrv);
     this.methodName = 'countEmployeByEntreeSortie';
   }
