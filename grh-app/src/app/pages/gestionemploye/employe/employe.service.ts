@@ -26,6 +26,17 @@ export class EmployeService extends BamboAbstractService {
     { label: 'Masculin', value: 'Masculin' },
     { label: 'Féminin', value: 'Féminin' },
   ];
+  public gradesPER: any[] = [
+    { label: 'Professeur Titulaire', value: 'Professeur Titulaire' },
+    { label: 'Professeur assimilé', value: 'Professeur assimilé' },
+    { label: 'Maitre de Conférences titulaire', value: 'Maitre de Conférences titulaire' },
+    { label: 'Maitre de Conférences assimilé', value: 'Maitre de Conférences assimilé' },
+    { label: 'Assistant', value: 'Assistant' },
+    { label: 'Professeur assimilé', value: 'Professeur assimilé' },
+    { label: 'Assistant titulaire', value: 'Assistant titulaire' },
+    { label: 'Assistant stagiaire', value: 'Assistant stagiaire' },
+    { label: 'Professeur technique', value: 'Professeur technique' },
+  ];
   public motifSorties: any[] = [
     { label: 'Démission', value: 'Démission' },
     { label: 'Retraite', value: 'Retraite' },
