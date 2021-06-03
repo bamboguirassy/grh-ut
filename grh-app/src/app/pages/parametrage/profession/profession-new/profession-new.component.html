@@ -12,16 +12,6 @@
       <div class="row">
         <div class="col-12">
           <tc-form-group>
-            <tc-form-label>Nom</tc-form-label>
-            <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
-            </tc-input>
-            <tc-form-description>
-              <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
-            </tc-form-description>
-          </tc-form-group>
-        </div>
-        <div class="col-12">
-          <tc-form-group>
             <tc-form-label>Classe</tc-form-label>
             <nz-select required="required" style="width: 100%" nzPlaceHolder="Sélectionner la classe" nzAllowClear nzShowSearch
               [(ngModel)]="selectedClasse" name="classe" id="classe" #classe="ngModel">
@@ -35,6 +25,17 @@
             </tc-form-description>
           </tc-form-group>
         </div>
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Nom</tc-form-label>
+            <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
+            </tc-input>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        
       </div>
     </form>
   </ng-template>
