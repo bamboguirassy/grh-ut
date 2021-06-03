@@ -55,18 +55,21 @@ OnDestroy {
     this.entity.commission = this.commission;
   }
 
-  searchEmploye() {
-    if (this.searchTerm.length > 3) {
-      this.membreCommissionSrv.searchEmploye(this.searchTerm)
+  searchEmploye(data: String) {
+    this.activeLoad = false;
+    if (data.length > 3) {
+      this.membreCommissionSrv.searchEmploye(data)
         .subscribe((data: any) => {
+          this.activeLoad = true;
           this.employes = data;
+          console.log(data);
         }, err => this.membreCommissionSrv.httpSrv.catchError(err));
     }
   }
 
   onInput(event: Event){
     const value = (event.target as HTMLInputElement).value;
-    console.log("ONINPUR::::::::::::", value);
+    this.searchEmploye(value);
   }
 
   save() {

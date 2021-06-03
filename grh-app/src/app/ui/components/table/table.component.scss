@@ -175,10 +175,12 @@ $_shadow: 0 0 10px rgba(#000,.12);
   }
 
   .table-scrollable{
-    display: block;
     overflow-x: auto;
     white-space: nowrap;
-    scrollbar-width: auto;
+    scrollbar-color:#346bfa;
+    scrollbar-shadow-color: red;
+    scrollbar-base-color: orange;
+    scrollbar-face-color: green;
   }
 
   /* width */
