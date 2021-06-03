@@ -173,4 +173,10 @@ $_shadow: 0 0 10px rgba(#000,.12);
       }
     }
   }
+
+  .table-scrollable{
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }

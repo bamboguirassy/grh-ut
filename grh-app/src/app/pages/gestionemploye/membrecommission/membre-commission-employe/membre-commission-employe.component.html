@@ -1,11 +1,13 @@
 <div *ngIf="isShowable" class="container-fluid">
     <tc-card [outline]="true" [view]="secondViewBorder" title="Membres de la commission" [tcGradient]="secondGradient">
         <ng-container *ngIf="items.length != 0; else elseTemplate">
-            <tc-table class="table-scrollable" [itemsPerPage]="15" [rows]="items" [hovered]="true" [pagination]="true"
+            <tc-table [itemsPerPage]="15" [rows]="items" [hovered]="true" [pagination]="true"
                 [search]="false">
                 <tc-table-col [columnTitle]="'Matricule'" [columnName]="'employe'" [enableSorting]="true">
                     <ng-template #tableTDTemplate let-value let-row="row">
-                        <b>{{ value.matricule | uppercase}}</b>
+                        <a [routerLink]="employeRoute(value)" routerLinkActive="router-link-active">
+                            <b>{{ value.matricule | uppercase}}</b>
+                        </a>
                         <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                     </ng-template>
                 </tc-table-col>

@@ -3,7 +3,7 @@ import { BamboAbstractObject } from './../../../shared/classes/bambo-abstract-ob
 export class Commission extends BamboAbstractObject {
     nom: string;
     missions: string;
-    etat: string;
+    etat: boolean;
     description: string;
     dateCreation: string;
 }
