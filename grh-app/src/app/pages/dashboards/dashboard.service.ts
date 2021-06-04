@@ -1,6 +1,7 @@
+import { TypeEmploye } from 'src/app/pages/parametrage/typeemploye/typeemploye';
 import { Injectable } from '@angular/core';
 import { BamboHttpService } from 'src/app/shared/services/bambo-http.service';
-import { TypeEmploye } from '../parametrage/typeemploye/typeemploye';
+//import { TypeEmploye } from '../parametrage/typeemploye/typeemploye';
 
 @Injectable({
   providedIn: 'root'
@@ -78,8 +79,8 @@ export class DashboardService {
     return this.httpSrv.get(this.routePrefix + 'employe/count-by-diplome');
   }
 
-  getEmployeByPerStats() {
-    return this.httpSrv.get(this.routePrefix + 'employe/count-employe-by-per');
+  countAncienneteByTypeEmploye(typeEmploye: TypeEmploye) {
+    return this.httpSrv.get(this.routePrefix + 'employe/count-employe-by-per/type-employe/'+typeEmploye.id);
   }
 
 

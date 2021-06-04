@@ -2,13 +2,13 @@
 
 :host {
     .add-action-box {
-        bottom  : $module-rem * 8;
+        bottom  : 6rem;
         position: fixed;
-        right   : $module-rem * 2;
-        z-index : 9997;
+        right   : 2.5rem;
+        z-index : 10;
 
         .tc-btn {
-            font-size: 30px;
+            font-size: 20px;
         }
     }
 }
@@ -20,4 +20,8 @@
 .size-3{
     font-size: 40px;
     color: #000;
+}
+
+.input-padding{
+    padding: 10px;
 }

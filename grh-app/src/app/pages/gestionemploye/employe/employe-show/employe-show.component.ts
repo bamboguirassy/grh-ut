@@ -205,7 +205,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     this.isModalVisible = false;
   }
   sendSingleEmail(){
-    if(this.model.object.length==0 && this.model.message.length==0){
+    if(this.model.object.length==0 || this.model.message.length==0){
       this.employeSrv.toastr.error('Verifier vos champs');
       return;
     }

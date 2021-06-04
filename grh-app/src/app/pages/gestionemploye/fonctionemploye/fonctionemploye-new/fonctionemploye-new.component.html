@@ -26,10 +26,12 @@
         <div class="col-12 col-md-6">
           <tc-form-group>
             <tc-form-label>Fonction</tc-form-label>
-            <nz-select [required]="true" name="structureFonction" id="structureFonction" [(ngModel)]="selectedStructureFonction"
-              #structureFonctionModel="ngModel" nzPlaceHolder="Selectionner" nzAllowClear nzShowSearch>
+            <nz-select [required]="true" name="structureFonction" id="structureFonction"
+              [(ngModel)]="selectedStructureFonction" #structureFonctionModel="ngModel" nzPlaceHolder="Selectionner"
+              nzAllowClear nzShowSearch>
               <ng-container *ngFor="let structureFonction of structureFonctions">
-                <nz-option *ngIf="structureFonction.etat" [nzValue]="structureFonction" [nzLabel]="structureFonction.fonction.nom">
+                <nz-option *ngIf="structureFonction.etat" [nzValue]="structureFonction"
+                  [nzLabel]="structureFonction.fonction.nom">
                 </nz-option>
               </ng-container>
             </nz-select>
@@ -42,9 +44,9 @@
         <div class="col-12 col-md-6">
           <tc-form-group>
             <tc-form-label>Date Prise Fonction</tc-form-label>
-            <nz-date-picker [required]="true" [nzFormat]="'dd/MM/yyyy'" required="required"
-              [(ngModel)]="entity.datePriseFonction" name="datePriseFonction" id="datePriseFonction"
-              #datePriseFonction="ngModel"></nz-date-picker>
+            <nz-date-picker (ngModelChange)="handleDatePriseFonctionChange($event)" [required]="true"
+              [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="entity.datePriseFonction"
+              name="datePriseFonction" id="datePriseFonction" #datePriseFonction="ngModel"></nz-date-picker>
             <tc-form-description>
               <app-form-field-validation-message [formField]="datePriseFonction"></app-form-field-validation-message>
             </tc-form-description>
@@ -62,7 +64,7 @@
             </tc-form-description>
           </tc-form-group>
         </div>
-        <div [hidden]="entity.etat" class="col-12 col-md-6">
+        <div class="col-12 col-md-6" *ngIf="(!selectedStructureFonction?.duree && !entity.etat) || selectedStructureFonction?.duree>0 ">
           <tc-form-group>
             <tc-form-label>Date Fin fonction</tc-form-label>
             <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateFin" name="dateFin" id="dateFin"

@@ -28,5 +28,13 @@ export class MembreCommissionService extends BamboAbstractService {
   searchEmploye(data: any){
     return this.employe.realtimeSearch(data);
   }
+
+  toastError(message: string){
+    this.toastr.error(message);
+  }
+
+  toastSuccess(message: string){
+    this.toastr.success(message);
+  }
   
 }
