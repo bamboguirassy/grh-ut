@@ -23,10 +23,10 @@
         <div class="col-12 col-md-6">
           <tc-form-group>
             <tc-form-label>Missions</tc-form-label>
-            <tc-input [(ngModel)]="entity.missions" name="missions" id="missions" #missions="ngModel">
-            </tc-input>
+            <ckeditor [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor>
+            <!--<textarea ng-model="htmlcontent" style="width: 100%"  [(ngModel)]="entity.missions" name="missions" id="missions" #missions="ngModel"></textarea>-->
             <tc-form-description>
-              <app-form-field-validation-message [formField]="missions"></app-form-field-validation-message>
+              <app-form-field-validation-message ></app-form-field-validation-message>
             </tc-form-description>
           </tc-form-group>
         </div>
@@ -53,8 +53,8 @@
         <div class="col-12 col-md-6">
           <tc-form-group>
             <tc-form-label>Description</tc-form-label>
-            <tc-textarea [(ngModel)]="entity.description" name="description"
-            id="description" #description="ngModel"> </tc-textarea>
+            <textarea ng-model="htmlcontent" style="width: 100%" [(ngModel)]="entity.description" name="description"
+            id="description" #description="ngModel"></textarea>
             <tc-form-description>
               <app-form-field-validation-message [formField]="description"></app-form-field-validation-message>
             </tc-form-description>
