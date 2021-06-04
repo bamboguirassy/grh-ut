@@ -331,13 +331,12 @@ class DashboardController extends AbstractController
     }
     
      /**
-     * @Rest\Get(path="/employe/count-employe-by-per", name="statistic_count_employe_by_per")
+     * @Rest\Get(path="/employe/count-employe-by-per/type-employe/{id}", name="statistic_count_employe_by_per")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
-    public function getEmployeStatsByPer(EntityManagerInterface $em)
+    public function countAncienneteByTypeEmploye(TypeEmploye $typeEmploye,EntityManagerInterface $em)
     {
-        $typeEmploye = $em->getRepository(TypeEmploye::class)->findOneByCode('PER');
         $borneSup = 55;
         $tab = [];
         for ($anciennete = 0; $anciennete < $borneSup; $anciennete += 5) {
@@ -820,7 +819,7 @@ class DashboardController extends AbstractController
             ->getResult();
         $tab = [];
         foreach ($typeContrats as $typeContrat) {
-            $nbreEmploye = 0;
+           
             $employes = $em->createQuery('SELECT count(e) FROM App\Entity\Employe e '
                 . 'WHERE e IN(select ec FROM App\Entity\Contrat c JOIN 
                           c.employe ec where c.typeContrat=?1 and c.etat=?2) 
@@ -872,4 +871,58 @@ class DashboardController extends AbstractController
         ];
         return $tab;
     }
+     /**
+     * @Rest\Get(path="/employe/count-pers-by-grade", name="pers_count_statistic_by_grade")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function countPersByGradeGroupByGenre(EntityManagerInterface $entityManager):array {
+        $em = $this->getDoctrine()->getManager();
+        
+        $grades = $em->createQuery('Select distinct e.grade FROM App\Entity\Employe e')
+             ->getResult();
+     $typeEmploye = $em->getRepository(TypeEmploye::class)->findOneByCode('PER');
+     foreach ($grades as $grade){
+       $nbrHomme = $em->createQuery('
+            SELECT count(e)
+            FROM App\Entity\Employe e
+            WHERE  e.typeEmploye=:typeEmploye and e.grade=:grade and e.genre=:genre
+            
+        ')
+            ->setParameter('typeEmploye', $typeEmploye)
+            ->setParameter('grade',$grade )
+            ->setParameter('genre','Masculin' )
+            ->getResult();
+       $nbrFemme = $em->createQuery('
+            SELECT count(e)
+            FROM App\Entity\Employe e
+            WHERE  e.typeEmploye=:typeEmploye and e.grade=:grade and e.genre=:genre
+            
+        ')
+            ->setParameter('typeEmploye', $typeEmploye)
+            ->setParameter('grade',$grade )
+            ->setParameter('genre','Féminin' )
+            ->getResult();
+
+       $tab[] = [
+                'typeEmploye' => $grade,
+                'nbrHomme' => $nbrHomme,
+                'nbrFemme' => $nbrFemme
+            ];
+        }
+
+
+        return $tab;
+          
+  }
+       
+       
+         
+                
+                
+      
+        
+    
+    
+    
 }

@@ -81,10 +81,6 @@ export class EmployeService extends BamboAbstractService {
   }
   sendEmail(email:any,object:any,message:any){
     const data ={emailDestinataires: email, object: object, message: message};
-    
-    console.log(data);
-    
-
     return this.httpSrv.post(this.routePrefix + "public/send-email" ,data);
   }
 

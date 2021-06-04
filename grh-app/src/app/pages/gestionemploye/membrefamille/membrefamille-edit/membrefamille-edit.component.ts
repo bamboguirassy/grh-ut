@@ -62,8 +62,6 @@ export class MembreFamilleEditComponent implements OnInit, OnDestroy {
   update() {
 
     this.entity.genre = this.selectedGenre;
-    console.log(this.entity.genre );
-
     if (this.entity.dateMariage) {
       this.entity.dateMariage = this.datePipe.transform(this.entity.dateMariage, 'yyyy-MM-dd');
     }
