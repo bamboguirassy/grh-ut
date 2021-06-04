@@ -21,6 +21,8 @@ use Symfony\Component\HttpFoundation\File\File;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Swift_Mailer;
+use Swift_Message;
 
 /**
  * @Route("/api/employe")
@@ -84,7 +86,7 @@ class EmployeController extends AbstractController
         $employes = $this->getDoctrine()
             ->getRepository(Employe::class)
             ->findByTypeEmploye($typeEmploye);
-          /*  $professions = $this->getDoctrine()
+        /*  $professions = $this->getDoctrine()
             ->getRepository(Profession::class)
             ->findAll();
             $faker = \Faker\Factory::create('fr_FR');
@@ -123,10 +125,9 @@ $employe->setProfession($faker->randomElement($professions));
             $employe->setDatePriseService(new \DateTime($reqData->datePriseService));
         }
         $employe->setDateNaissance(new \DateTime($reqData->dateNaissance));
+
         
-        //check if file provided
         if ($employe->getFilepath()) {
-            $host = $request->getHttpHost();
             $scheme = $request->getScheme();
             file_put_contents($employe->getFilename(), base64_decode($employe->getFilepath()));
             $file = new \Symfony\Component\HttpFoundation\File\File($employe->getFilename());
@@ -164,8 +165,8 @@ $employe->setProfession($faker->randomElement($professions));
     public function findByCaiseSociale(CaisseSociale $caisseSociale)
     {
         $employes = $this->getDoctrine()
-                    ->getRepository(Employe::class)
-                    ->findByCaisseSociale($caisseSociale);
+            ->getRepository(Employe::class)
+            ->findByCaisseSociale($caisseSociale);
         return $employes;
     }
 
@@ -174,7 +175,7 @@ $employe->setProfession($faker->randomElement($professions));
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_EMPLOYE_EDIT")
      */
-    public function edit(Request $request, Employe $employe,\App\Service\FileUploader $uploader): Employe
+    public function edit(Request $request, Employe $employe, \App\Service\FileUploader $uploader): Employe
     {
         $form = $this->createForm(EmployeType::class, $employe);
         $form->submit(Utils::serializeRequestContent($request));
@@ -191,13 +192,13 @@ $employe->setProfession($faker->randomElement($professions));
         if (isset($reqData->datePriseService)) {
             $employe->setDatePriseService(new \DateTime($reqData->datePriseService));
         }
-       
+
         $employe->setDateNaissance(new \DateTime($reqData->dateNaissance));
         $this->getDoctrine()->getManager()->flush();
 
         return $employe;
     }
-    
+
     /**
      * @Rest\Put(path="/upload-photo/{id}", name="upload_employe_photo")
      * @Rest\View(StatusCode=200)
@@ -206,7 +207,8 @@ $employe->setProfession($faker->randomElement($professions));
      * @return Employe
      * @throws Exception
      */
-    public function uploadPhoto(Request $request, Employe $employe, FileUploader $uploader) {
+    public function uploadPhoto(Request $request, Employe $employe, FileUploader $uploader)
+    {
         $manager = $this->getDoctrine()->getManager();
         $host = $request->getHttpHost();
         $scheme = $request->getScheme();
@@ -326,27 +328,28 @@ $employe->setProfession($faker->randomElement($professions));
         }
         $em->flush();
     }
-    
+
     /**
      * @Rest\Post(path="/public/with-family-members", name="employe_with_family_members")
      * @Rest\View(StatusCode = 200)
      */
-    public function findWithMemberFamily(Request $request) {
+    public function findWithMemberFamily(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
         $redData = Utils::serializeRequestContent($request);
         $mdp = 'AsjfV4*QdGmZ12Z';
         $password = $redData['password'];
         $matricule = $redData['matricule'];
         $tab = [];
-            
+
         if (strcmp($mdp, $password) !== 0) {
-            throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à cette ressource. Merci de contact l'administrateur de la plateforme.");     
+            throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à cette ressource. Merci de contact l'administrateur de la plateforme.");
         }
-          
+
         $employe = $em->getRepository(Employe::class)
-                ->findOneByMatricule($matricule);
-       
-        if ($employe==null){
+            ->findOneByMatricule($matricule);
+
+        if ($employe == null) {
             throw $this->createNotFoundException("Aucun employé n'a été trouvé avec le matricule {$matricule}.");
         }
         $membreFamilles = $em->getRepository(MembreFamille::class)
@@ -357,8 +360,33 @@ $employe->setProfession($faker->randomElement($professions));
         ];
         return $tab;
     }
-    
-    
+
+    /**
+     * @Rest\Post(path="/public/send-email", name="employe_send-email")
+     * @Rest\View(StatusCode=200)
+     * @param Request $request
+     * @param Swift_Mailer $mailer
+     * @return array
+     * @throws Exception
+     */
+    public function sendSingleEmail(Request $request, Swift_Mailer $mailer): array
+    {
+
+        $email_destinatires = Utils::serializeRequestContent($request)['emailDestinataires'];
+        $object = Utils::serializeRequestContent($request)['object'];
+        $messaye_body = Utils::serializeRequestContent($request)['message'];
+        $result = []; // confirmation link
+        foreach ($email_destinatires as $dest) {
+            $message = (new Swift_Message($object))
+                ->setFrom(Utils::$sender)
+                ->setTo($dest)
+                ->setBody($messaye_body, 'text/html');
+
+            array_push($result,  [$dest => $mailer->send($message)]); // 0 => failure
+
+        }
+        return $result;
+    }
     /**
      * @Rest\Get(path="/{id}/membre-mutuelle-sante", name="employe_by_mutuellesante",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode = 200, serializerEnableMaxDepthChecks=true)
@@ -372,11 +400,4 @@ $employe->setProfession($faker->randomElement($professions));
         
           return $employes;
     }
-    
-    
-    
-    
-    
-    
-    
 }

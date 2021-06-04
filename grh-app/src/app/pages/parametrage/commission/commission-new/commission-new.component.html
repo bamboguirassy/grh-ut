@@ -5,7 +5,7 @@
 <app-access-denied *ngIf="!(commissionSrv.resourceName|creable)"></app-access-denied>
 
 <!-- Modal window -->
-<nz-modal nzWidth="80%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
+<nz-modal nzWidth="80%" style="z-index: 5000;" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
   [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
   <ng-template #modalBody>
     <form #form="ngForm" ngNativeValidate>
@@ -23,8 +23,8 @@
         <div class="col-12 col-md-6">
           <tc-form-group>
             <tc-form-label>Missions</tc-form-label>
-            <tc-input [(ngModel)]="entity.missions" name="missions" id="missions" #missions="ngModel">
-            </tc-input>
+            <ckeditor nz-input [required]="true" [(ngModel)]="entity.missions" name="missions" id="missions" #missions="ngModel" [editor]="Editor">
+            </ckeditor>
             <tc-form-description>
               <app-form-field-validation-message [formField]="missions"></app-form-field-validation-message>
             </tc-form-description>
@@ -53,8 +53,9 @@
         <div class="col-12 col-md-6">
           <tc-form-group>
             <tc-form-label>Description</tc-form-label>
-            <tc-textarea [(ngModel)]="entity.description" name="description"
-            id="description" #description="ngModel"> </tc-textarea>
+            <ckeditor nz-input [required]="true" [(ngModel)]="entity.description" name="description"
+            id="description" #description="ngModel" [editor]="Editor">
+            </ckeditor>
             <tc-form-description>
               <app-form-field-validation-message [formField]="description"></app-form-field-validation-message>
             </tc-form-description>

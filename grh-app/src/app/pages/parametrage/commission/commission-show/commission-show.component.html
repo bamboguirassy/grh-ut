@@ -30,7 +30,7 @@
                             </nz-list-item-meta-title>
                             <nz-list-item-meta-description>
                                 <ng-container *ngIf="entity.missions; else undefinedMisssion">
-                                    {{ entity.missions }}
+                                    <p [innerHTML]="entity.missions"></p>
                                 </ng-container>
                                 <ng-template #undefinedMisssion>
                                     <tc-badge [outline]="true" view="error">Indéfinie</tc-badge>
@@ -45,7 +45,7 @@
                             </nz-list-item-meta-title>
                             <nz-list-item-meta-description>
                                 <ng-container *ngIf="entity.description; else undefinedDesc">
-                                    {{ entity.description}}
+                                    <p [innerHTML]="entity.description"></p>
                                 </ng-container>
                                 <ng-template #undefinedDesc>
                                     <tc-badge [outline]="true" view="error">Indéfinie</tc-badge>

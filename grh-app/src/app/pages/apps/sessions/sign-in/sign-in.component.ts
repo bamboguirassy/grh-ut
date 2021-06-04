@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
+import { Content } from 'src/app/ui/interfaces/modal';
+import { TCModalService } from 'src/app/ui/services/modal/modal.service';
+
 
 @Component({
   selector: 'page-sign-in',
@@ -6,7 +10,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sign-in.component.scss']
 })
 export class PageSignInComponent implements OnInit {
-  constructor() { }
+  constructor(
+    public authSrv: BamboAuthService,
+    private modal: TCModalService,
+  ) { }
 
   ngOnInit() { }
+
+
+  sendResetPasswordLink(){
+    this.authSrv.sendPasswordRequest('');
+  }
+
+  toogleResetPasswordModal<T>(body: Content<T>, header: Content<T> = null, footer: Content<T> = null, options: any = null){
+    this.modal.open({
+      body,
+      header,
+      footer,
+      options
+    });
+    //
+  }
+
+  closeModal() {
+    this.modal.close();
+  }
 }

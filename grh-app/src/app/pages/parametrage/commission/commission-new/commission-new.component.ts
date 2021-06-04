@@ -3,6 +3,7 @@ import { CommissionService } from '../commission.service';
 import { Commission } from '../commission';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-commission-new',
@@ -17,7 +18,7 @@ export class CommissionNewComponent implements OnInit {
   entity: Commission;
   @Output() creation: EventEmitter<Commission> = new EventEmitter();
   isModalVisible = false;
-
+  public Editor = ClassicEditor;
   constructor(public commissionSrv: CommissionService,
     public router: Router, public datePipe: DatePipe) {
     this.entity = new Commission();
