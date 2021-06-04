@@ -66,7 +66,8 @@ export class ContratListComponent implements OnInit, OnDestroy {
   }
   
   onCreate(item: Contrat) {
-    this.items = [item, ...this.items];
+   this.items = [item, ...this.items];
+
   }
 
   onClose(){
