@@ -197,13 +197,15 @@ import { MembreCommissionListComponent } from './gestionemploye/membrecommission
 import { MembreCommissionEditComponent } from './gestionemploye/membrecommission/membrecommission-edit/membrecommission-edit.component';
 import { MembreCommissionShowComponent } from './gestionemploye/membrecommission/membrecommission-show/membrecommission-show.component';
 import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/membrecommission-new/membrecommission-new.component';
-import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sortie-stats.component';
-import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
-
-
 import { MembreCommissionEmployeComponent } from './gestionemploye/membrecommission/membre-commission-employe/membre-commission-employe.component';
 import { FonctionemployeTimelineComponent } from './gestionemploye/fonctionemploye/fonctionemploye-timeline/fonctionemploye-timeline.component';
 import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/fonction-en-expiration/fonction-en-expiration.component';
+import { PyramideEncienneteGenreComponent } from './dashboards/pyramide/pyramide-enciennete-genre/pyramide-enciennete-genre.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
+import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sortie-stats.component';
+
+
 
 @NgModule({
   imports: [
@@ -211,7 +213,7 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-
+    CKEditorModule,
     ChartsModule,
     AgmCoreModule.forRoot({
       apiKey: environment.googleMapApiKey
@@ -345,6 +347,8 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
     AdresseShowComponent,
     AdresseCloneComponent,
     AdresseNewComponent,
+    // membresCaisseSociale components
+    MembreCaisseSocialeComponent,
     // membrefamille components
     MembreFamilleListComponent,
     MembreFamilleEditComponent,
@@ -461,6 +465,7 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
     MembreCommissionEmployeComponent,
     FonctionemployeTimelineComponent,
     FonctionEnExpirationComponent,
+    PyramideEncienneteGenreComponent,
 
   ],
   exports: [],

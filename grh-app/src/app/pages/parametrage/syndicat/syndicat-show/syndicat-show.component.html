@@ -25,6 +25,7 @@
     <div class="row">
         
         <div class="col-12 col-md-4">
+        <div class="table-responsive">
             <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
                 <div class="container-fluid">
 
@@ -66,5 +67,5 @@
             </tc-card>
         </div>
     </div>
-</tc-card>
+
 <app-access-denied *ngIf="!(syndicatSrv.resourceName|showable)"></app-access-denied>
