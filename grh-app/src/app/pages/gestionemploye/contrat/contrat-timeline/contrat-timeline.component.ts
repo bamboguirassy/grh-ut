@@ -23,7 +23,6 @@ export class ContratTimelineComponent implements OnInit {
   constructor(public contratSrv: ContratService, public datePipe: DatePipe) { }
 
   ngOnInit(): void {
-    
     this.setTimeline();
   }
 
