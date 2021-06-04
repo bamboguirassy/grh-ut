@@ -50,6 +50,7 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
   professions: Profession[] = [];
   selectedProfessionId: Profession;
   selectedTypeEmploye: TypeEmploye;
+  layout = 'horizontal';
 
 
   constructor(store: Store<IAppState>,
@@ -185,10 +186,12 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
       this.entity.structure = this.selectedStructureId;
     }
     this.entity.profession = this.selectedProfessionId;
+
   }
 
   handlePostUpdate() {
-    this.location.back();
+    //this.location.back();
+    this.router.navigate(['/' + this.layout + '/' + this.employeSrv.getRoutePrefix() + this.entity.id])
   }
 
   findProfessions() {
@@ -197,6 +200,8 @@ export class EmployeEditComponent extends BasePageComponent<Employe> implements 
         this.professions = data;
       }, err => this.professionSrv.httpSrv.catchError(err));
   }
+
+
 
 
 }

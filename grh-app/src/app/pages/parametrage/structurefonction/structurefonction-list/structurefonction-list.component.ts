@@ -85,7 +85,7 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
   }
 
   searchEmployes(term: any) {
-    if (term.length) {
+    if (term.length >= 4) {
       this
         .employeSrv
         .realtimeSearch(term)
@@ -94,6 +94,8 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
         }, err => {
           this.employeSrv.httpSrv.catchError(err);
         });
+    } else {
+      this.employes = [];
     }
   }
 
@@ -142,11 +144,11 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
   disableCurrentFonctionEmploye() {
     this.currentFonctionEmploye.etat = false;
     Swal.fire({
-      title: event ? 'Êtes-vous sûr de vouloir activer la fonction de cet employé ?' : 'Êtes-vous sûr de vouloir désactiver la fonction de cet employé ?',
+      title: 'Êtes-vous sûr de vouloir désactiver la fonction de cet employé ?',
       showCancelButton: true,
-      confirmButtonText: event ? 'Activer' : 'Désactiver ?',
+      confirmButtonText: 'Désactiver ?',
       cancelButtonText: 'Annuler',
-      confirmButtonColor: event ? '#68d487' : '#d33',
+      confirmButtonColor: '#d33',
       showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve, reject) => {
