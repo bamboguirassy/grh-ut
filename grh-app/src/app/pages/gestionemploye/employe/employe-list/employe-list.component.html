@@ -251,13 +251,12 @@
     <ng-template #modalBody>
         <ckeditor [config]="config" [(ngModel)]="emailEditorModle" [editor]="emailEditor"></ckeditor>
 
-        <!-- <tc-input [placeholder]="'Subscribe'"></tc-input> -->
     </ng-template>
 
     <ng-template #modalFooter>
         <div class="actions justify-content-between">
             <button tc-button [view]="'error'" (click)="closeModal()">Fermer</button>
-            <button tc-button [view]="'success'">Soumetre</button>
+            <button tc-button [view]="'success'" (click)="sendEmaillToSelectedEmployes">Soumetre</button>
         </div>
     </ng-template>
 </ng-container>

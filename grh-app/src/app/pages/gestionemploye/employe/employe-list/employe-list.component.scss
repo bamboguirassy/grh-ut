@@ -1,4 +1,9 @@
 @import '~src/assets/scss/variables';
+.ck-editor__editable_inline {
+    min-height: 500px !important;
+    min-width: 1000px !important;
+}
+
 :host {
     .actions {
         display: flex;
@@ -7,8 +12,4 @@
             margin: $module-rem / 4;
         }
     }
-}
-
-:host ::ng-deep .ck-editor__editable_inline {
-    min-height: 500px;
 }

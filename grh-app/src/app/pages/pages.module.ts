@@ -203,10 +203,8 @@ import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-ca
 import { MembreCommissionEmployeComponent } from './gestionemploye/membrecommission/membre-commission-employe/membre-commission-employe.component';
 import { FonctionemployeTimelineComponent } from './gestionemploye/fonctionemploye/fonctionemploye-timeline/fonctionemploye-timeline.component';
 import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/fonction-en-expiration/fonction-en-expiration.component';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 @NgModule({
   imports: [
-    CKEditorModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
