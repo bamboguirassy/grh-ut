@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 import { TCModalService } from '../../../../ui/services/modal/modal.service';
 import { Content } from '../../../../ui/interfaces/modal';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import '@ckeditor/ckeditor5-build-classic/build/translations/fr';
+// import '@ckeditor/ckeditor5-build-classic/build/translations/fr';
 @Component({
   selector: 'app-employe-list',
   templateUrl: './employe-list.component.html',
