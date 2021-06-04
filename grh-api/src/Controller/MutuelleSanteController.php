@@ -127,7 +127,7 @@ class MutuelleSanteController extends AbstractController
         $authorizedExtensions = ['jpeg', 'jpg', 'png'];
         if (!in_array($file->guessExtension(), $authorizedExtensions))
             throw new BadRequestHttpException('Fichier non pris en charge');
-        $newFileName = $uploader->setTargetDirectory('employe_photo_directory')->upload($file, $mutuelleSante->getFilename()); // old fileName
+        $newFileName = $uploader->setTargetDirectory('mutuellesante_image_directory')->upload($file, $mutuelleSante->getFilename()); // old fileName
         $mutuelleSante->setFilepath("$scheme://$host/" . $uploader->getTargetDirectory() . $newFileName);
         $mutuelleSante->setFilename($newFileName);
         $manager->flush();
