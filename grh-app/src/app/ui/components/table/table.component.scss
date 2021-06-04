@@ -175,8 +175,31 @@ $_shadow: 0 0 10px rgba(#000,.12);
   }
 
   .table-scrollable{
-    display: block;
     overflow-x: auto;
     white-space: nowrap;
+    scrollbar-color:#346bfa;
+    scrollbar-shadow-color: red;
+    scrollbar-base-color: orange;
+    scrollbar-face-color: green;
+  }
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 15px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #346bfa;
+    border-radius: 10px;
   }
 }
+
+

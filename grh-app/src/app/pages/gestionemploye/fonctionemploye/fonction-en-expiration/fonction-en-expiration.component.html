@@ -7,13 +7,7 @@
     </div>
   </tc-card>
   <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-      <ng-template #tableTDTemplate let-row="row">
-        <div class="actions">
-         
-        </div>
-      </ng-template>
-    </tc-table-col>
+    
     <tc-table-col [columnTitle]="'Matricule'" [columnName]="'employe'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <a [routerLink]="employeRoute(value)" routerLinkActive="router-link-active">

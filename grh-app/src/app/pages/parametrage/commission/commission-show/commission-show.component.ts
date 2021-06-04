@@ -43,10 +43,6 @@ export class CommissionShowComponent extends BasePageComponent<Commission> imple
     this.findEntity(this.activatedRoute.snapshot.params.id);
   }
 
-  openModal(){
-    
-  }
-
   ngOnDestroy() {
     super.ngOnDestroy();
   }

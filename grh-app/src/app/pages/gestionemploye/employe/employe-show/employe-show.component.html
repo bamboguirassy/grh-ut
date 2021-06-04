@@ -78,7 +78,7 @@
                         <div class="col-12">
                             <div class="col-12 justify-content-center">
                                 <button size="sm" tc-button class="float-right ml-1" (click)="openModal()"
-                                    beforeIcon="icofont-email" tc-button view="secondary"></button>   
+                                    beforeIcon="icofont-email" view="accent" [outline]="true"> Contacter</button>   
                                 <button size="sm" *ngIf="employeSrv.resourceName|editable"
                                     [routerLink]="['/'+orientation,employeSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
                                     class="float-right ml-1" tc-button view="warning"
