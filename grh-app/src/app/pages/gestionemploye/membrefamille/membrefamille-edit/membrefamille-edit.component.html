@@ -53,7 +53,7 @@
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Genre</tc-form-label>
-                        <tc-radio [direction]="'horizontal'" required="required" [(ngModel)]="entity.genre" name="genre"
+                        <tc-radio [direction]="'horizontal'" required="required" [(ngModel)]="entity.genre" [value]="entity.genre" name="genre"
                             id="genre" #genre="ngModel">
                             <tc-radio-option [value]="'Homme'">Homme</tc-radio-option>
                             <tc-radio-option [value]="'Femme'">Femme</tc-radio-option>
@@ -67,7 +67,7 @@
                 <div class="col-12 col-md-6" *ngIf="entity?.genre">
                     <tc-form-group>
                         <tc-form-label>Lien Parenté</tc-form-label>
-                        <tc-radio required="required" [(ngModel)]="entity.lienParente" name="lienParente"
+                        <tc-radio required="required" [value]="entity.lienParente" [(ngModel)]="entity.lienParente" name="lienParente"
                             id="lienParente" #lienParente="ngModel" [direction]="'horizontal'">
                             <tc-radio-option [hidden]="entity?.genre!='Homme'" [value]="'époux'">Epoux</tc-radio-option>
                             <tc-radio-option [hidden]="entity?.genre!='Femme'" [value]="'épouse'">Epouse
