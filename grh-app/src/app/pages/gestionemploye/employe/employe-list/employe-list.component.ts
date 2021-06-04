@@ -119,9 +119,12 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
         this.employeSrv.toastr.success('Email Envoyé avec succès');
         this.closeModal();
         this.emailEditionModel = {body: '', object: ''};
+        this.changeAllSelectionState(false);
+        this.isAllSelected = false;
+        this.isPartialSelection = false;
+
       },
       error => this.employeSrv.httpSrv.catchError(error));
-    this.changeAllSelectionState();
   }
   closeModal() {
     this.modal.close();
@@ -131,7 +134,6 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
   changeAllSelectionStateLink(){
 
     this.isAllSelected = !this.isAllCheckt();
-    console.log(this.isAllSelected);
     this.changeAllSelectionState(this.isAllSelected);
     this.isPartialSelection = false;
   }
