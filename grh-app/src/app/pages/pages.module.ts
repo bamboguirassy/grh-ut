@@ -461,7 +461,6 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
     MembreCommissionEmployeComponent,
     FonctionemployeTimelineComponent,
     FonctionEnExpirationComponent,
-
   ],
   exports: [],
   entryComponents: []
