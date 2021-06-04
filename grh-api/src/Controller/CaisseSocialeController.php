@@ -11,6 +11,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Utils\Utils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\File\File;
+use App\Service\FileUploader;
 
 /**
  * @Route("/api/caissesociale")
@@ -136,4 +138,33 @@ class CaisseSocialeController extends AbstractController
 
         return $caisseSociales;
     }
+/**
+     * @Rest\Put(path="/upload-photo-caisseSociale/{id}", name="upload_caisseSociale_photo")
+     * @Rest\View(StatusCode=200)
+     * @param Request $request
+     * @param FileUploader $uploader
+     * @return CaisseSociale
+     * @throws Exception
+     */
+    public function uploadPhotoCaisseSociale(Request $request, CaisseSociale $caisseSociale, FileUploader $uploader)
+    {
+        $manager = $this->getDoctrine()->getManager();
+        $host = $request->getHttpHost();
+        $scheme = $request->getScheme();
+        $data = Utils::getObjectFromRequest($request);
+        $fileName = $data->fileName;
+        file_put_contents($fileName, base64_decode($data->photo));
+        $file = new File($fileName);
+        $authorizedExtensions = ['jpeg', 'jpg', 'png'];
+        if (!in_array($file->guessExtension(), $authorizedExtensions))
+            throw new BadRequestHttpException('Fichier non pris en charge');
+        $newFileName = $uploader->setTargetDirectory('employe_photo_directory')->upload($file, $caisseSociale->getFilename()); // old fileName
+        $caisseSociale->setFilepath("$scheme://$host/" . $uploader->getTargetDirectory() . $newFileName);
+        $caisseSociale->setFilename($newFileName);
+        $manager->flush();
+
+        return $caisseSociale;
+    }
+
+
 }

@@ -11,7 +11,17 @@
 <hr class="m-2" *ngIf="selectedClasse">
 <tc-card view="accent" [outline]="true" *ngIf="selectedClasse && gClasseSrv.resourceName|creable">
     <a (click)="startClasseEdit()">Paramétrer les categories et niveaux de <b>{{selectedClasse.nom}}</b></a>
-    <div class="row" *ngIf="isClasseEditing">
+    <div class="row" *ngIf="isClasseEditing">    
+        <div class="col-4">
+            <tc-form-group>
+                <tc-form-label>Niveaux</tc-form-label>
+                <nz-select (ngModelChange)="updateClasseModel($event)" style="width: 100%;"
+                    (nzOpenChange)="findNiveaux()" nzMode="multiple" nzPlaceHolder="Niveaux"
+                    [(ngModel)]="selectedNiveauIds">
+                    <nz-option *ngFor="let niveau of niveaux" [nzLabel]="niveau.nom" [nzValue]="niveau.id"></nz-option>
+                </nz-select>
+            </tc-form-group>
+        </div>
         <div class="col-4">
             <tc-form-group>
                 <tc-form-label>Categories</tc-form-label>
@@ -20,16 +30,6 @@
                     [(ngModel)]="selectedCategorieIds">
                     <nz-option *ngFor="let categorie of categories" [nzLabel]="categorie.nom" [nzValue]="categorie.id">
                     </nz-option>
-                </nz-select>
-            </tc-form-group>
-        </div>
-        <div class="col-4">
-            <tc-form-group>
-                <tc-form-label>Niveaux</tc-form-label>
-                <nz-select (ngModelChange)="updateClasseModel($event)" style="width: 100%;"
-                    (nzOpenChange)="findNiveaux()" nzMode="multiple" nzPlaceHolder="Niveaux"
-                    [(ngModel)]="selectedNiveauIds">
-                    <nz-option *ngFor="let niveau of niveaux" [nzLabel]="niveau.nom" [nzValue]="niveau.id"></nz-option>
                 </nz-select>
             </tc-form-group>
         </div>

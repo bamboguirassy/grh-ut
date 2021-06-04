@@ -45,7 +45,6 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
   ngOnInit(): void {
     super.ngOnInit();
     this.findAll();
-    this.fetchEmployes();
   }
 
   ngOnDestroy() {
@@ -85,15 +84,19 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
     );
   }
 
-  fetchEmployes() {
-    this
-      .employeSrv
-      .employesProvider
-      .subscribe((employes: Employe[]) => {
-        this.employes = employes;
-      }, err => {
-        this.employeSrv.httpSrv.catchError(err);
-      })
+  searchEmployes(term: any) {
+    if (term.length >= 4) {
+      this
+        .employeSrv
+        .realtimeSearch(term)
+        .subscribe((employes: any) => {
+          this.employes = employes;
+        }, err => {
+          this.employeSrv.httpSrv.catchError(err);
+        });
+    } else {
+      this.employes = [];
+    }
   }
 
 
@@ -122,6 +125,7 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
           Swal.close();
         }).catch(err => {
           this.structureFonctionSrv.httpSrv.catchError(err);
+          structureFonction.etat = !event;
           Swal.fire(
             'Erreur!',
             'Une erreur est survenue lors de la modification.',
@@ -140,11 +144,11 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
   disableCurrentFonctionEmploye() {
     this.currentFonctionEmploye.etat = false;
     Swal.fire({
-      title: event ? 'Êtes-vous sûr de vouloir activer la fonction de cet employé ?' : 'Êtes-vous sûr de vouloir désactiver la fonction de cet employé ?',
+      title: 'Êtes-vous sûr de vouloir désactiver la fonction de cet employé ?',
       showCancelButton: true,
-      confirmButtonText: event ? 'Activer' : 'Désactiver ?',
+      confirmButtonText: 'Désactiver ?',
       cancelButtonText: 'Annuler',
-      confirmButtonColor: event ? '#68d487' : '#d33',
+      confirmButtonColor: '#d33',
       showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve, reject) => {
@@ -184,10 +188,10 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
     this.fonctionEmploye.employe = this.selectedEmploye.id;
     this.fonctionEmploye.responsabilite = this.structureFonctionActive.id;
     this.fonctionEmploye.etat = true;
-    if(this.structureFonctionActive.duree > 0) {
+    if (this.structureFonctionActive.duree > 0) {
       let dateDeb = new Date(this.fonctionEmploye.datePriseFonction);
       const duree = +this.structureFonctionActive.duree;
-      let dateFin = new Date(dateDeb.setMonth(dateDeb.getMonth() + duree)) ;
+      let dateFin = new Date(dateDeb.setMonth(dateDeb.getMonth() + duree));
       this.fonctionEmploye.dateFin = dateFin as any;
     }
     this

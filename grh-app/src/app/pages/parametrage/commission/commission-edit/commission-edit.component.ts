@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { BasePageComponent } from 'src/app/pages/base-page';
 import { DatePipe, Location } from '@angular/common';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-commission-edit',
@@ -15,6 +16,7 @@ import { DatePipe, Location } from '@angular/common';
 })
 export class CommissionEditComponent extends BasePageComponent<Commission> implements OnInit, OnDestroy {
 
+  public Editor = ClassicEditor;
   constructor(store: Store<IAppState>,
     public commissionSrv: CommissionService,
     public router: Router,

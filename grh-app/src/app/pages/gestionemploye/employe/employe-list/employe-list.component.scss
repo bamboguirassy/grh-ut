@@ -1,16 +1,15 @@
-
 @import '~src/assets/scss/variables';
-
-:host {
-  .actions {
-    display: flex;
-    margin: -$module-rem / 4;
-    
-
-    .tc-btn {
-      margin: $module-rem / 4;
-    }
-  }
+.ck-editor__editable_inline {
+    min-height: 500px !important;
+    min-width: 1000px !important;
 }
 
-
+:host {
+    .actions {
+        display: flex;
+        margin: -$module-rem / 4;
+        .tc-btn {
+            margin: $module-rem / 4;
+        }
+    }
+}

@@ -13,6 +13,8 @@ import { FonctionEmploye } from '../../fonctionemploye/fonctionemploye';
 import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
 import { FormGroup } from '@angular/forms';
 import { SETTINGS } from 'src/environments/settings';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -23,8 +25,13 @@ import { SETTINGS } from 'src/environments/settings';
 export class EmployeShowComponent extends BasePageComponent<Employe> implements OnInit, OnDestroy {
   @ViewChild('modalBody', { static: true }) modalBody: ElementRef<any>;
   @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
-  @ViewChildren('form') form;
+ @ViewChildren('form') form;
   isModalVisible = false;
+  editor = ClassicEditor;
+  public model = {
+      object: '',
+      message: ''
+    };
   entity: Employe;
   employeForm: FormGroup;
   latestFonction: FonctionEmploye;
@@ -51,7 +58,8 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     public employeSrv: EmployeService, public fonctionEmployeSrv: FonctionEmployeService,
     private activatedRoute: ActivatedRoute,
     public authSrv: BamboAuthService,
-    public location: Location) {
+    public location: Location,
+   publicappEmail: HttpClient) {
     super(store, employeSrv);
     this.pageData = {
       title: '',
@@ -196,6 +204,24 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   closeModal() {
     this.isModalVisible = false;
   }
+  sendSingleEmail(){
+    if(this.model.object.length==0 || this.model.message.length==0){
+      this.employeSrv.toastr.error('Verifier vos champs');
+      return;
+    }
+    this.employeSrv.sendEmail([this.entity.email],this.model.object,this.model.message)
+    .subscribe(
+      (data: any) => {
+        console.log(data);
+        this.handlePostLoad();
+        this.employeSrv.toastr.success('Email Envoyé avec succès')
+        this.closeModal(); 
+      },
+      error => this.employeSrv.httpSrv.catchError(error))
 
+  }
+    
+      
+    
 
 }
