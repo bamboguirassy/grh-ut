@@ -14,7 +14,9 @@ import { Location } from '@angular/common';
 })
 export class MutuelleSanteShowComponent extends BasePageComponent<MutuelleSante> implements OnInit, OnDestroy {
   entity: MutuelleSante;
-
+  titre='Informations';
+  MembresMutuelleSante: MutuelleSante[] = [];
+  selectedIndex = 0;
   constructor(store: Store<IAppState>,
     public mutuelleSanteSrv: MutuelleSanteService,
     private activatedRoute: ActivatedRoute,
@@ -28,7 +30,7 @@ export class MutuelleSanteShowComponent extends BasePageComponent<MutuelleSante>
           route: ''
         },
         {
-          title: 'MutuelleSantes',
+          title: 'MutuelleSante',
           route: '/'+this.orientation+'/mutuellesante'
         },
         {
@@ -48,7 +50,7 @@ export class MutuelleSanteShowComponent extends BasePageComponent<MutuelleSante>
   }
 
   handlePostLoad() {
-    this.title = 'MutuelleSante - ' + this.entity?.id;
+    this.title = 'MutuelleSante - ' + this.entity?.nom;
   }
 
   handlePostDelete() {

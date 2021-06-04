@@ -35,8 +35,7 @@ export class MembreFamilleNewComponent implements OnInit {
     if (this.entity.dateMariage) {
       this.entity.dateMariage = this.datePipe.transform(this.entity.dateMariage, 'yyyy-MM-dd');
     }
-    console.log(this.entity.dateMariage);
-    
+        
     this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
     this.membreFamilleSrv.create(this.entity)
       .subscribe((data: any) => {

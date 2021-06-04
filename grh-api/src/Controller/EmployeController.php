@@ -44,6 +44,39 @@ class EmployeController extends AbstractController
     }
 
     /**
+     * @Rest\Post(path="/realtime-search", name="employe_realtime_search")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function realtimeSearch(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $redData = Utils::serializeRequestContent($request);
+        $employes = [];
+        if(isset($redData['searchTerm'])){
+            $names = explode(' ',$redData['searchTerm']);
+            if(count($names)>1){
+                $employes = $em->createQuery('SELECT e
+                    FROM App\Entity\Employe e
+                    WHERE CONCAT(e.prenoms,\' \',e.nom) LIKE :term')
+                ->setParameter('term', '%'.$redData['searchTerm'].'%')
+                ->getResult();
+            }else{
+                $employes = $em->createQuery('SELECT e
+                    FROM App\Entity\Employe e
+                    WHERE e.prenoms LIKE :term OR
+                    e.nom LIKE :term OR 
+                    e.matricule LIKE :term OR 
+                    e.emailUniv LIKE :term OR 
+                    e.cni LIKE :term')
+                ->setParameter('term', '%'.$redData['searchTerm'].'%')
+                ->getResult();
+            }
+        }
+
+        return $employes;
+    }
+
+    /**
      * @Rest\Get(path="/{id}/typeemploye", name="employe_by_typeemploye")
      * @Rest\View(StatusCode = 200, serializerEnableMaxDepthChecks=true)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
@@ -82,8 +115,8 @@ $employe->setProfession($faker->randomElement($professions));
         if (!isset($reqData->dateNaissance)) {
             throw $this->createNotFoundException("La date de naissance est introuvable !");
         }
-        if (!isset($reqData->dateRecrutement)) {
-            throw $this->createNotFoundException("La date de recrutement est introuvable !");
+        if (isset($reqData->dateRecrutement)) {
+            $employe->setDateRecrutement(new \DateTime($reqData->dateRecrutement));
         }
         if (isset($reqData->dateSortie)) {
             $employe->setDateSortie(new \DateTime($reqData->dateSortie));
@@ -92,17 +125,15 @@ $employe->setProfession($faker->randomElement($professions));
             $employe->setDatePriseService(new \DateTime($reqData->datePriseService));
         }
         $employe->setDateNaissance(new \DateTime($reqData->dateNaissance));
-        $employe->setDateRecrutement(new \DateTime($reqData->dateRecrutement));
 
-        //check if file provided
+        
         if ($employe->getFilepath()) {
-            $host = $request->getHttpHost();
             $scheme = $request->getScheme();
             file_put_contents($employe->getFilename(), base64_decode($employe->getFilepath()));
             $file = new \Symfony\Component\HttpFoundation\File\File($employe->getFilename());
             $authorizedExtensions = ['jpeg', 'jpg', 'png'];
             if (!in_array($file->guessExtension(), $authorizedExtensions)) {
-                throw new BadRequestHttpException('Fichier non pris en charge');
+                throw $this->createAccessDeniedException('Fichier non pris en charge');
             }
             $newFileName = $uploader->setTargetDirectory('employe_photo_directory')->upload($file, null); // old fileName
             $employe->setFilepath("$scheme://$host/" . $uploader->getTargetDirectory() . $newFileName);
@@ -152,8 +183,8 @@ $employe->setProfession($faker->randomElement($professions));
         if (!isset($reqData->dateNaissance)) {
             throw $this->createNotFoundException("La date de naissance est introuvable !");
         }
-        if (!isset($reqData->dateRecrutement)) {
-            throw $this->createNotFoundException("La date de recrutement est introuvable !");
+        if (isset($reqData->dateRecrutement)) {
+            $employe->setDateRecrutement(new \DateTime($reqData->dateRecrutement));
         }
         if (isset($reqData->dateSortie)) {
             $employe->setDateSortie(new \DateTime($reqData->dateSortie));
@@ -163,7 +194,6 @@ $employe->setProfession($faker->randomElement($professions));
         }
 
         $employe->setDateNaissance(new \DateTime($reqData->dateNaissance));
-        $employe->setDateRecrutement(new \DateTime($reqData->dateRecrutement));
         $this->getDoctrine()->getManager()->flush();
 
         return $employe;
@@ -356,5 +386,18 @@ $employe->setProfession($faker->randomElement($professions));
 
         }
         return $result;
+    }
+    /**
+     * @Rest\Get(path="/{id}/membre-mutuelle-sante", name="employe_by_mutuellesante",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode = 200, serializerEnableMaxDepthChecks=true)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function findByMutuelleSante(MutuelleSante $mutuellesante)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $employes =$em->getRepository(Employe::class)
+                ->findByMutuelleSante($mutuellesante);
+        
+          return $employes;
     }
 }

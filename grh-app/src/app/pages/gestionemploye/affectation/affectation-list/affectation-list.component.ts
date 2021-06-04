@@ -42,6 +42,7 @@ export class AffectationListComponent implements OnInit, OnDestroy {
   }
 
   handlePostLoad() { }
+  
   remove(affectation: Affectation) {
     Swal.fire({
       title: 'Êtes-vous sûr ?',

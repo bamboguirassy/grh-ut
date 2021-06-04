@@ -86,9 +86,14 @@ class MembreFamilleController extends AbstractController
      * @IsGranted("ROLE_MEMBREFAMILLE_EDIT")
      */
     public function edit(Request $request, MembreFamille $membreFamille): MembreFamille    {
+        
         $form = $this->createForm(MembreFamilleType::class, $membreFamille);
         $form->submit(Utils::serializeRequestContent($request));
-
+        $requestData = Utils::getObjectFromRequest($request);
+        $membreFamille->setDateNaissance(new \DateTime($requestData->dateNaissance));
+        if (isset($requestData->dateMariage)) {
+            $membreFamille->setDateMariage(new \DateTime($requestData->dateMariage));
+        }
         $this->getDoctrine()->getManager()->flush();
 
         return $membreFamille;

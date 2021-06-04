@@ -22,50 +22,68 @@
         <div class="col-12 col-md-4">
             <tc-card [outline]="true" *ngIf="entity" [view]="secondViewBorder" title="Plus d'informations"
                 [tcGradient]="secondGradient">
-                <nz-steps [nzCurrent]="4" nzProgressDot nzDirection="vertical">
-                    <nz-step nzTitle="Mission" [nzDescription]="entity.missions"></nz-step>
-                    <nz-step *ngIf="entity.description" nzTitle="Déscription" [nzDescription]="entity.description">
-                    </nz-step>
-                    <nz-step nzTitle="Date de création" [nzDescription]="entity.dateCreation | date:'dd/MM/yyyy'">
-                    </nz-step>
-                    <nz-step nzTitle="Statut" [nzStatus]="nzStatus(entity.etat)"
-                        [nzDescription]="nzDescription(entity.etat)">
-                    </nz-step>
-                </nz-steps>
-
-                <!-- <table class="table">
-                    <tr>
-                        <th>Mission</th>
-                        <td>
-                            <span *ngIf="entity?.missions">{{ entity?.missions }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.missions">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>Déscription</th>
-                        <td>
-                            <span *ngIf="entity?.description">{{ entity?.description }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.description">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>État</th>
-                        <td>
-                            <span *ngIf="entity?.etat">
-                                <tc-badge view="success">Acitvée</tc-badge>
-                            </span>
-                            <tc-badge view="error" *ngIf="!entity?.etat">Désactivée</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Date de création</th>
-                        <td>
-                            <span *ngIf="entity?.dateCreation">{{ }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.dateCreation">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                </table> -->
+                <nz-list nzItemLayout="horizontal" nzSize="small">
+                    <nz-list-item class="list-group-plus">
+                        <nz-list-item-meta>
+                            <nz-list-item-meta-title>
+                                Mission
+                            </nz-list-item-meta-title>
+                            <nz-list-item-meta-description>
+                                <ng-container *ngIf="entity.missions; else undefinedMisssion">
+                                    {{ entity.missions }}
+                                </ng-container>
+                                <ng-template #undefinedMisssion>
+                                    <tc-badge [outline]="true" view="error">Indéfinie</tc-badge>
+                                </ng-template>
+                            </nz-list-item-meta-description>
+                        </nz-list-item-meta>
+                    </nz-list-item>
+                    <nz-list-item class="list-group-plus">
+                        <nz-list-item-meta>
+                            <nz-list-item-meta-title>
+                                Description
+                            </nz-list-item-meta-title>
+                            <nz-list-item-meta-description>
+                                <ng-container *ngIf="entity.description; else undefinedDesc">
+                                    {{ entity.description}}
+                                </ng-container>
+                                <ng-template #undefinedDesc>
+                                    <tc-badge [outline]="true" view="error">Indéfinie</tc-badge>
+                                </ng-template>
+                            </nz-list-item-meta-description>
+                        </nz-list-item-meta>
+                    </nz-list-item>
+                    <nz-list-item class="list-group-plus">
+                        <nz-list-item-meta>
+                            <nz-list-item-meta-title>
+                                État
+                            </nz-list-item-meta-title>
+                            <nz-list-item-meta-description>
+                                <ng-container *ngIf="entity.etat; else undefinedStatus">
+                                    <tc-badge [outline]="true" view="success">Activé</tc-badge>
+                                </ng-container>
+                                <ng-template #undefinedStatus>
+                                    <tc-badge [outline]="true" view="error">Désactivé</tc-badge>
+                                </ng-template>
+                            </nz-list-item-meta-description>
+                        </nz-list-item-meta>
+                    </nz-list-item>
+                    <nz-list-item class="list-group-plus">
+                        <nz-list-item-meta>
+                            <nz-list-item-meta-title>
+                                Date de création
+                            </nz-list-item-meta-title>
+                            <nz-list-item-meta-description>
+                                <ng-container *ngIf="entity.dateCreation; else undefinedDateCreation">
+                                    {{ entity.dateCreation | date:"dd/MM/YYYY"}}
+                                </ng-container>
+                                <ng-template #undefinedDateCreation>
+                                    <tc-badge [outline]="true" view="error">Indéfinie</tc-badge>
+                                </ng-template>
+                            </nz-list-item-meta-description>
+                        </nz-list-item-meta>
+                    </nz-list-item>
+                </nz-list>
             </tc-card>
         </div>
         <div class="col-12 col-md-8">
