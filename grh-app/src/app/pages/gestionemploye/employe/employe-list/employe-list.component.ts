@@ -19,21 +19,22 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export class EmployeListComponent extends BasePageComponent<Employe> implements OnInit, OnDestroy {
   emailEditor = ClassicEditor;
   emailEditionModel = {
-    body: '<p>Hello, world!</p>',
+    body: '',
     object: ''
   };
   config = {
     language: 'fr'
   };
-  slelctedEmployes: Employe[] = [];
+  selectedEmployes: Employe[] = [];
 
 
   typeEmployes: TypeEmploye[] = [];
   selectedIndex = 0;
+  isModalVisible: boolean;
   constructor(
     private modal: TCModalService,
-    store: Store<IAppState>,
     public employeSrv: EmployeService,
+    store: Store<IAppState>,
     public typeEmployeSrv: TypeEmployeService) {
     super(store, employeSrv);
 
@@ -89,9 +90,9 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
   getSelectedEmployes(){
     return this.items.filter(item => item.selected);
   }
-  toogleSendEmailModal<T>(body: Content<T>, header: Content<T> = null, footer: Content<T> = null, options: any = null){
-    this.slelctedEmployes = this.getSelectedEmployes();
-    if (!this.slelctedEmployes.length){
+  toogleSendEmailModal<T>(body: Content<T>, header: Content<T> = null, footer: Content<T> = null, options: any = null) {
+    this.selectedEmployes = this.getSelectedEmployes();
+    if (!this.selectedEmployes.length){
       Swal.fire('Vous devez d\'abord selectionner les employés dont vous voulez envoyer le mail');
       return;
     }
@@ -103,7 +104,21 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
     });
   }
   sendEmaillToSelectedEmployes(){
-    //
+    if (this.emailEditionModel.object.length === 0 || this.emailEditionModel.body.length === 0){
+      this.employeSrv.toastr.error('Verifier si vous averz donnez l\'objet et le contenu');
+      return;
+    }
+
+    const emails = this.selectedEmployes.map(val => val.email);
+    this.employeSrv.sendEmail(emails, this.emailEditionModel.object, this.emailEditionModel.body)
+    .subscribe(
+      (data: any) => {
+        console.log(data);
+        this.handlePostLoad();
+        this.employeSrv.toastr.success('Email Envoyé avec succès');
+        this.closeModal();
+      },
+      error => this.employeSrv.httpSrv.catchError(error));
   }
   closeModal() {
     this.modal.close();
@@ -111,6 +126,6 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
 
 
 
-  
+
 
 }

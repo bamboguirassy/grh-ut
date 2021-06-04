@@ -2,7 +2,7 @@
     <tc-card [view]="secondViewBorder" [outline]="true">
         <div class="row">
             <div class="d-flex justify-content-end col-12">
-                <button tc-button (click)="toogleSendEmailModal(modalBody, 'Edition d\'email', modalFooter, { width: '100%' })" afterIcon="icofont-refresh">
+                <button tc-button (click)="toogleSendEmailModal(modalBody, 'Edition d\'email', modalFooter, { width: '100%' })" afterIcon="icofont-send-mail">
                     Envoyer Email</button>
                 <button class="ml-1" tc-button afterIcon="icofont-refresh" (click)="findByTypeEmploye(typeEmployes[selectedIndex])">Rafraichir</button>
             </div>
@@ -249,16 +249,21 @@
     </ng-template>
 
     <ng-template #modalBody>
-        <ckeditor [config]="config" [(ngModel)]="emailEditionModel.body" [editor]="emailEditor"></ckeditor>
+        <div>
+            <label class="mb-1" for="objet">Objet</label>
+            <tc-input id="objet" class="mb-4" [placeholder]="'Objet'" [(ngModel)]="emailEditionModel.object">
+            </tc-input>
+            <ckeditor [config]="config" [(ngModel)]="emailEditionModel.body" [editor]="emailEditor"></ckeditor>
+        </div>
 
     </ng-template>
 
     <ng-template #modalFooter>
         <div class="actions justify-content-between">
             <button tc-button [view]="'error'" (click)="closeModal()">Fermer</button>
-            <button tc-button [view]="'success'" (click)="sendEmaillToSelectedEmployes()">Soumetre</button>
+            <button tc-button [view]="'success'" (click)="sendEmaillToSelectedEmployes()">Envoyer</button>
         </div>
     </ng-template>
 </ng-container>
 
-<app-access-denied *ngIf="!(employeSrv.resourceName|listable)"></app-access-denied>
+<app-access-denied *ngIf=" !(employeSrv.resourceName|listable) "></app-access-denied>
