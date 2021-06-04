@@ -200,16 +200,11 @@ import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/
 import { MembreCommissionEmployeComponent } from './gestionemploye/membrecommission/membre-commission-employe/membre-commission-employe.component';
 import { FonctionemployeTimelineComponent } from './gestionemploye/fonctionemploye/fonctionemploye-timeline/fonctionemploye-timeline.component';
 import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/fonction-en-expiration/fonction-en-expiration.component';
-<<<<<<< HEAD
-import { PyramideEncienneteGenreComponent } from './dashboards/pyramide/pyramide-enciennete-genre/pyramide-enciennete-genre.component';
-=======
+import { PyramideAncienneteGenreComponent } from './dashboards/pyramide/pyramide-anciennete-genre/pyramide-anciennete-genre.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
 import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sortie-stats.component';
 
-
-import { AnciennetePerGenreComponent } from './dashboards/anciennete/anciennete-per-genre/anciennete-per-genre.component';
->>>>>>> 47a8e4e9acfc7acb9723134bd22c18686a944a5f
 
 @NgModule({
   imports: [
@@ -469,7 +464,7 @@ import { AnciennetePerGenreComponent } from './dashboards/anciennete/anciennete-
     MembreCommissionEmployeComponent,
     FonctionemployeTimelineComponent,
     FonctionEnExpirationComponent,
-    PyramideEncienneteGenreComponent,
+    PyramideAncienneteGenreComponent,
 
   ],
   exports: [],

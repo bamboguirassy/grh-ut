@@ -331,13 +331,12 @@ class DashboardController extends AbstractController
     }
     
      /**
-     * @Rest\Get(path="/employe/count-employe-by-per/{id}", name="statistic_count_employe_by_per")
+     * @Rest\Get(path="/employe/count-employe-by-per/type-employe/{id}", name="statistic_count_employe_by_per")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
-    public function getEmployeStatsByPer(TypeEmploye $typeEmploye,EntityManagerInterface $em)
+    public function countAncienneteByTypeEmploye(TypeEmploye $typeEmploye,EntityManagerInterface $em)
     {
-        //$typeEmploye = $em->getRepository(TypeEmploye::class)->findOneByCode('PER');
         $borneSup = 55;
         $tab = [];
         for ($anciennete = 0; $anciennete < $borneSup; $anciennete += 5) {

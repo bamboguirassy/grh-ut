@@ -4,14 +4,14 @@ import { TypeEmploye } from 'src/app/pages/parametrage/typeemploye/typeemploye';
 import { TypeEmployeService } from 'src/app/pages/parametrage/typeemploye/typeemploye.service';
 import { DashboardBaseComponent } from 'src/app/shared/components/dashboard-base/dashboard-base.component';
 import { DashboardService } from '../../dashboard.service';
-import { PyramideEncienneteGenreCm } from '../pyramide-enciennete-genre-cm';
+import { PyramideAncienneteGenreCm } from '../pyramide-anciennete-genre-cm';
 
 @Component({
-  selector: 'app-pyramide-enciennete-genre',
-  templateUrl: './pyramide-enciennete-genre.component.html',
-  styleUrls: ['./pyramide-enciennete-genre.component.scss']
+  selector: 'app-pyramide-anciennete-genre',
+  templateUrl: './pyramide-anciennete-genre.component.html',
+  styleUrls: ['./pyramide-anciennete-genre.component.scss']
 })
-export class PyramideEncienneteGenreComponent extends DashboardBaseComponent<PyramideEncienneteGenreCm> implements OnInit {
+export class PyramideAncienneteGenreComponent extends DashboardBaseComponent<PyramideAncienneteGenreCm> implements OnInit {
   @Input() canSwitchDiagramType: boolean = true;
   typeDiagrams: { value: string, title: string }[] = [
     { value: 'bar', title: 'Barre verticale' },
@@ -72,7 +72,7 @@ export class PyramideEncienneteGenreComponent extends DashboardBaseComponent<Pyr
   buildDiagram() {
     this.loading = true;
     if(this.selectedTypeEmploye){
-      this.dashboardSrv.getEmployeByPerStats(this.selectedTypeEmploye)
+      this.dashboardSrv.countAncienneteByTypeEmploye(this.selectedTypeEmploye)
         .pipe(finalize(() => this.loading = false))
         .subscribe((data: any) => {
           this.isLoad = true;
