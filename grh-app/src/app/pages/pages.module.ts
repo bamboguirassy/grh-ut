@@ -201,6 +201,7 @@ import { MembreCommissionEmployeComponent } from './gestionemploye/membrecommiss
 import { FonctionemployeTimelineComponent } from './gestionemploye/fonctionemploye/fonctionemploye-timeline/fonctionemploye-timeline.component';
 import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/fonction-en-expiration/fonction-en-expiration.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -341,6 +342,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     AdresseShowComponent,
     AdresseCloneComponent,
     AdresseNewComponent,
+    // membresCaisseSociale components
+    MembreCaisseSocialeComponent,
     // membrefamille components
     MembreFamilleListComponent,
     MembreFamilleEditComponent,
