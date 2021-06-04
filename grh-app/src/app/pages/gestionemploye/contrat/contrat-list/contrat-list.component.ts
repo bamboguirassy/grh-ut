@@ -66,7 +66,7 @@ export class ContratListComponent implements OnInit, OnDestroy {
   }
   
   onCreate(item: Contrat) {
-    this.findByEmploye();
+    this.items = [item, ...this.items];
   }
 
   onClose(){
