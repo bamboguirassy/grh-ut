@@ -11,7 +11,7 @@ import { Employe } from '../../employe/employe';
   styleUrls: ['./membrefamille-list.component.scss']
 })
 export class MembreFamilleListComponent implements OnInit {
-
+  selectedMembreFamille: MembreFamille;
   @Input() employe: Employe;
   items: MembreFamille[] = [];
   secondViewBorder = 'warning';
@@ -22,6 +22,15 @@ export class MembreFamilleListComponent implements OnInit {
   ngOnInit(): void {
     this.findByEmploye();
   }
+  
+  onClose(){
+    this.selectedMembreFamille = null;
+  }
+
+  setSelectedMembreFamille(element: MembreFamille){
+    this.selectedMembreFamille = element;
+  }
+  
 
   handlePostDelete() {
     this.findByEmploye();
