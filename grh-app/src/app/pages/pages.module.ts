@@ -204,10 +204,11 @@ import { PyramideAncienneteGenreComponent } from './dashboards/pyramide/pyramide
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
 import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sortie-stats.component';
-
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 @NgModule({
   imports: [
+    NzCheckboxModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
