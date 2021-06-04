@@ -18,7 +18,10 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 })
 export class EmployeListComponent extends BasePageComponent<Employe> implements OnInit, OnDestroy {
   emailEditor = ClassicEditor;
-  emailEditorModle = '<p>Hello, world!</p>';
+  emailEditionModel = {
+    body: '<p>Hello, world!</p>',
+    object: ''
+  };
   config = {
     language: 'fr'
   };
