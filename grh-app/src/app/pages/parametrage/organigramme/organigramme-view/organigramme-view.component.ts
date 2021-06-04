@@ -97,7 +97,7 @@ export class OrganigrammeViewComponent implements OnInit {
         image: 'assets/img/university.svg',
         title: struct.structureFonctions.length
           ? `${title}`
-          : 'Aucun Poste définie',
+          : 'Aucun Poste défini',
         data: struct,
         nodeType: 'struct',
         childs: this.getChartTreeItem(struct)
@@ -122,7 +122,7 @@ export class OrganigrammeViewComponent implements OnInit {
       image: 'assets/img/university.svg',
       title: rootEntity.structureFonctions.length
         ? `${title}`
-        : 'Aucun Poste définie',
+        : 'Aucun Poste défini',
       data: rootEntity,
       nodeType: 'struct',
       childs: this.getChartTreeItem(rootEntity)

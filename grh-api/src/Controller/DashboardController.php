@@ -404,7 +404,7 @@ class DashboardController extends AbstractController
             FROM App\Entity\Employe e JOIN e.profession pe
             )
         ')
-            ->getResult();
+         ->getResult();
         $tab = [];
         foreach ($professions as $profession) {
             $nombreEmployeHomme = $em->createQuery('select count(e) from 

@@ -47,7 +47,7 @@ export class EmployeNewComponent implements OnInit {
   professions: Profession[] = [];
   selectedProfession: Profession;
   areDataLoaded = false;
-
+  layout='horizontal'
   current = 0;
   pre(): void {
     this.current -= 1;
@@ -71,6 +71,7 @@ export class EmployeNewComponent implements OnInit {
     this.entity = new Employe();
     this.entity.etat = true;
   }
+ 
 
   save() {
 
@@ -113,6 +114,7 @@ export class EmployeNewComponent implements OnInit {
         this.closeModal();
         this.creation.emit(data);
         this.initNewEmploye();
+        this.router.navigate(['/' + this.layout + '/' + this.employeSrv.getRoutePrefix() + data.id]);
       }, error => this.employeSrv.httpSrv.catchError(error));
   }
 
