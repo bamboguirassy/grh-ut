@@ -44,4 +44,5 @@ export class Employe extends BamboAbstractObject {
 
     // Champ temporaire
     globalFilter: string;
+    selected: boolean;
 }
