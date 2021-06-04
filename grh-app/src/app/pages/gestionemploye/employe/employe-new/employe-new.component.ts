@@ -70,12 +70,8 @@ export class EmployeNewComponent implements OnInit {
   initNewEmploye() {
     this.entity = new Employe();
     this.entity.etat = true;
-    // this.handlePost();
   }
-  // handlePost() {
-  //   //this.location.back();
-  //   this.router.navigate(['/' + this.layout + '/' + this.employeSrv.getRoutePrefix() + this.entity.id])
-  // }
+ 
 
   save() {
 
