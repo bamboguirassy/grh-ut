@@ -1,32 +1,40 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { finalize } from 'rxjs/operators';
+import { TypeEmploye } from 'src/app/pages/parametrage/typeemploye/typeemploye';
+import { TypeEmployeService } from 'src/app/pages/parametrage/typeemploye/typeemploye.service';
 import { DashboardBaseComponent } from 'src/app/shared/components/dashboard-base/dashboard-base.component';
 import { DashboardService } from '../../dashboard.service';
-import { AnciennetePerGenreCm } from '../anciennete-per-genre-cm';
+import { PyramideEncienneteGenreCm } from '../pyramide-enciennete-genre-cm';
 
 @Component({
-  selector: 'app-anciennete-per-genre',
-  templateUrl: './anciennete-per-genre.component.html',
-  styleUrls: ['./anciennete-per-genre.component.scss']
+  selector: 'app-pyramide-enciennete-genre',
+  templateUrl: './pyramide-enciennete-genre.component.html',
+  styleUrls: ['./pyramide-enciennete-genre.component.scss']
 })
-export class AnciennetePerGenreComponent extends DashboardBaseComponent<AnciennetePerGenreCm>  implements OnInit {
+export class PyramideEncienneteGenreComponent extends DashboardBaseComponent<PyramideEncienneteGenreCm> implements OnInit {
   @Input() canSwitchDiagramType: boolean = true;
   typeDiagrams: { value: string, title: string }[] = [
     { value: 'bar', title: 'Barre verticale' },
     { value: 'line', title: 'Courbe' },
   ];
-  constructor(public dashboardSrv: DashboardService) {
+
+  selectedTypeEmploye: TypeEmploye;
+  items: any;
+  isLoad: boolean;
+  dataDiagram: any;
+  constructor(public dashboardSrv: DashboardService, public typeEmployeSrv: TypeEmployeService) {
     super(dashboardSrv);
     this.methodName = 'getEmployeByPerStats';
   }
 
   ngOnInit(): void {
-    this.buildDiagram();
+    this.getTypeEmployes();
   }
 
   setDataChart() {
     this.chartOptions = {
       responsive: true,
-        scales: { //you're missing this
+        scales: {
           yAxes: {
             display: true,
             scaleLabel: {
@@ -59,6 +67,28 @@ export class AnciennetePerGenreComponent extends DashboardBaseComponent<Ancienne
       { data: this.rawChartData.map(r => +r.nombreEmployeHomme), label: 'Homme' },
       { data: this.rawChartData.map(r => +r.nombreEmployeFemme), label: 'Femme' }
     ];
+  }
+
+  buildDiagram() {
+    this.loading = true;
+    if(this.selectedTypeEmploye){
+      this.dashboardSrv.getEmployeByPerStats(this.selectedTypeEmploye)
+        .pipe(finalize(() => this.loading = false))
+        .subscribe((data: any) => {
+          this.isLoad = true;
+          this.dataDiagram = data;
+          this.handlePostFetch(this.dataDiagram as []);
+        }, err => {
+          this.httpSrv.httpSrv.catchError(err);
+        });
+    }
+  }
+
+  getTypeEmployes(){
+    this.typeEmployeSrv.findAll().subscribe(
+      (data:any)=>{
+        this.items = data;
+      },(err)=>{ this.httpSrv.httpSrv.catchError(err);});
   }
 
 }
