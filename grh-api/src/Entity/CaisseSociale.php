@@ -54,7 +54,7 @@ class CaisseSociale
 
     public function __construct()
     {
-        $this->employes = new ArrayCollection();
+        //$this->employes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -110,35 +110,8 @@ class CaisseSociale
         return $this;
     }
 
-    /**
-     * @return Collection|Employe[]
-     */
-    public function getEmployes(): Collection
-    {
-        return $this->employes;
-    }
 
-    public function addEmploye(Employe $employe): self
-    {
-        if (!$this->employes->contains($employe)) {
-            $this->employes[] = $employe;
-            $employe->setCaisseSociale($this);
-        }
 
-        return $this;
-    }
-
-    public function removeEmploye(Employe $employe): self
-    {
-        if ($this->employes->removeElement($employe)) {
-            // set the owning side to null (unless already changed)
-            if ($employe->getCaisseSociale() === $this) {
-                $employe->setCaisseSociale(null);
-            }
-        }
-
-        return $this;
-    }
 
 
 }

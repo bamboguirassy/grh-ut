@@ -3,6 +3,7 @@ import { BamboAbstractService } from '../../../shared/services/bambo-abstract.se
 import { BamboHttpService } from './../../../shared/services/bambo-http.service';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { MutuelleSante } from '../../parametrage/mutuellesante/mutuellesante';
 import { BehaviorSubject } from 'rxjs';
 import { Employe } from './employe';
 import { CaisseSociale } from '../../parametrage/caissesociale/caissesociale';
@@ -25,6 +26,17 @@ export class EmployeService extends BamboAbstractService {
   public genres: any[] = [
     { label: 'Masculin', value: 'Masculin' },
     { label: 'Féminin', value: 'Féminin' },
+  ];
+  public gradesPER: any[] = [
+    { label: 'Professeur Titulaire', value: 'Professeur Titulaire' },
+    { label: 'Professeur assimilé', value: 'Professeur assimilé' },
+    { label: 'Maitre de Conférences titulaire', value: 'Maitre de Conférences titulaire' },
+    { label: 'Maitre de Conférences assimilé', value: 'Maitre de Conférences assimilé' },
+    { label: 'Assistant', value: 'Assistant' },
+    { label: 'Professeur assimilé', value: 'Professeur assimilé' },
+    { label: 'Assistant titulaire', value: 'Assistant titulaire' },
+    { label: 'Assistant stagiaire', value: 'Assistant stagiaire' },
+    { label: 'Professeur technique', value: 'Professeur technique' },
   ];
   public motifSorties: any[] = [
     { label: 'Démission', value: 'Démission' },
@@ -61,13 +73,16 @@ export class EmployeService extends BamboAbstractService {
         this.employesManager.next(employes);
       }, err => {
         this.httpSrv.handleError(err);
-      });
+      })
   }
 
   findByCaisseSociale(caissesociale: CaisseSociale) {
     return this.httpSrv.get(this.routePrefix + "caisse-sociale/" + caissesociale.id);
   }
 
-
+  findByMutuelleSante(membremutuelle:MutuelleSante)
+  {
+    return this.httpSrv.get(this.routePrefix +membremutuelle.id+'/membre-mutuelle-sante');
+  }
 
 }

@@ -49,9 +49,11 @@
             </span>
           </p>
           <p>
-            <button class="ml-3" tc-button afterIcon="icofont-close-squared-alt"
-              [view]="canChooseDateFin ? 'error' : 'accent'" [size]="'sm'"
-              (click)="canChooseDateFin = !canChooseDateFin">{{ canChooseDateFin ? 'Annuler' : 'Désactiver'}}</button>
+            <span>
+              <a href="javascript:void(0)" (click)="canChooseDateFin = !canChooseDateFin">
+                {{ canChooseDateFin ? 'Annuler l\'opération' : 'Désactiver cette fonction'}}
+              </a>
+            </span>
           </p>
           <div class="col-12 pl-4 pr-4" *ngIf="canChooseDateFin">
             <tc-form-group>
@@ -61,8 +63,7 @@
               </nz-date-picker>
             </tc-form-group>
             <button class="ml-3" [disabled]="dateFin?.invalid" tc-button afterIcon="icofont-check-circled"
-              [view]="'accent'" [size]="'sm'"
-              (click)="disableCurrentFonctionEmploye()">
+              [view]="'accent'" [size]="'sm'" (click)="disableCurrentFonctionEmploye()">
               Valider
             </button>
           </div>
@@ -85,9 +86,9 @@
             <div class="col-12">
               <tc-form-group>
                 <tc-form-label>Employé</tc-form-label>
-                <nz-select required="required" nzMode="default" style="width: 100%"
-                  nzPlaceHolder="Sélectionner l'employé'" nzAllowClear nzShowSearch [(ngModel)]="selectedEmploye"
-                  name="classe" id="classe" #classe="ngModel">
+                <nz-select (nzOnSearch)="searchEmployes($event)" required="required" nzMode="default"
+                  style="width: 100%" nzPlaceHolder="Tapez pour rechercher l'employé'" nzAllowClear nzShowSearch
+                  [(ngModel)]="selectedEmploye" name="classe" id="classe" #classe="ngModel">
                   <ng-container *ngFor="let employe of employes">
                     <nz-option [nzValue]="employe"
                       [nzLabel]="employe?.prenoms + ' ' + employe?.nom + ' - ' + employe?.matricule"></nz-option>
