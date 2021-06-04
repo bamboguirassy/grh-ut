@@ -9,7 +9,7 @@
 
     ::ng-deep {
       .navbar.horizontal {
-        z-index: 9997;
+        z-index: 999;
 
         navbar-skeleton {
           .sk-logo {
@@ -32,4 +32,9 @@
       }
     }
   }
+  .index-size{
+    z-index: 999
+  }
 }
+
+
