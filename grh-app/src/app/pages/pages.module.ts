@@ -464,11 +464,7 @@ import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sort
     MembreCommissionEmployeComponent,
     FonctionemployeTimelineComponent,
     FonctionEnExpirationComponent,
-<<<<<<< HEAD
-=======
     PyramideAncienneteGenreComponent,
-
->>>>>>> 67e221ab0e30b817b03d97eba20ba52723cec9e3
   ],
   exports: [],
   entryComponents: []
