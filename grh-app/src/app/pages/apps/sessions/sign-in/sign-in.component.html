@@ -3,4 +3,27 @@
 
 <login-form></login-form>
 
-<p class="mt-5 mb-1"><a (click)="$event.preventDefault()" href="#">Mot de passe oublié?</a></p>
+<p class="mt-5 mb-1"><a (click)="toogleResetPasswordModal(modalBody, 'Edition d\'email', modalFooter, { width: '100%' })" href="javascript:void(0)">Mot de passe oublié?</a></p>
+
+<ng-container>
+    <ng-template #modalHeader>
+        <h2 class="title">Modal title</h2>
+        <div class="actions">
+            <tc-badge [view]="'warning'">New</tc-badge>
+        </div>
+    </ng-template>
+
+    <ng-template #modalBody>
+        <div class="d-flex justify-content-center">
+            <p class="text-success">Entrez l'email relié à vortre compte utilisateur</p>
+            <tc-input id="email" class="mb-4" [placeholder]="'Votre email'" [(ngModel)]="email">
+            </tc-input>
+        </div>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="actions justify-content-between">
+            <button tc-button [view]="'error'" (click)="closeModal()">Annuler</button>
+            <button tc-button [view]="'success'" (click)="sendResetPasswordLink()">Soumettre</button>
+        </div>
+    </ng-template>
+</ng-container>
