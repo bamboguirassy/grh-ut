@@ -55,7 +55,8 @@ import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
     LoginFormComponent,
     RegisterFormComponent,
     SettingsComponent,
-    EmployeSearchComponent
+    EmployeSearchComponent,
+    NzAutocompleteModule
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

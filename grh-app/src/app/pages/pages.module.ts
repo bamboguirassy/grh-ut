@@ -162,6 +162,7 @@ import { UserShowComponent } from './parametrage/user/user-show/user-show.compon
 import { NgPipesModule } from 'ng-pipes';
 import { GradeManagerComponent } from './gestiongrade/grade/grade-manager/grade-manager.component';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { MembresMutuellesanteComponent } from './gestionemploye/employe/membres-mutuellesante/membres-mutuellesante.component';
 import { DiplomeEmployeTimelineComponent } from './gestionemploye/diplomeemploye/diplomeemploye-timeline/diplomeemploye-timeline.component';
 import { AffectationListComponent } from './gestionemploye/affectation/affectation-list/affectation-list.component';
 import { AffectationEditComponent } from './gestionemploye/affectation/affectation-edit/affectation-edit.component';
@@ -173,7 +174,6 @@ import { ProfessionStatsComponent } from './dashboards/profession/profession-sta
 import { StructureStatsComponent } from './dashboards/structure/structure-stats/structure-stats.component';
 import { TypeEmployeStatsComponent } from './dashboards/typeemploye/type-employe-stats/type-employe-stats.component';
 import { RecrutementRangeStatsComponent } from './dashboards/recrutement/recrutement-range/recrutement-range-stats/recrutement-range-stats.component';
-import { EntreeSortieStatsComponent } from './dashboards/recrutement/entree-sortie-stats/entree-sortie-stats.component';
 import { DemissionEmployeProfessionAnneeStatsComponent } from './dashboards/recrutement/demission-employe-profession-annee-stats/demission-employe-profession-annee-stats.component';
 import { DemissionEmployeStructureAnneeStatsComponent } from './dashboards/recrutement/demission-employe-structure-annee-stats/demission-employe-structure-annee-stats.component';
 import { TypeContratStatsComponent } from './dashboards/typecontrat/type-contrat-stats/type-contrat-stats.component';
@@ -197,11 +197,16 @@ import { MembreCommissionListComponent } from './gestionemploye/membrecommission
 import { MembreCommissionEditComponent } from './gestionemploye/membrecommission/membrecommission-edit/membrecommission-edit.component';
 import { MembreCommissionShowComponent } from './gestionemploye/membrecommission/membrecommission-show/membrecommission-show.component';
 import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/membrecommission-new/membrecommission-new.component';
-import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
 import { MembreCommissionEmployeComponent } from './gestionemploye/membrecommission/membre-commission-employe/membre-commission-employe.component';
 import { FonctionemployeTimelineComponent } from './gestionemploye/fonctionemploye/fonctionemploye-timeline/fonctionemploye-timeline.component';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/fonction-en-expiration/fonction-en-expiration.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
+import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sortie-stats.component';
+
+
+import { AnciennetePerGenreComponent } from './dashboards/anciennete/anciennete-per-genre/anciennete-per-genre.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -342,6 +347,8 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
     AdresseShowComponent,
     AdresseCloneComponent,
     AdresseNewComponent,
+    // membresCaisseSociale components
+    MembreCaisseSocialeComponent,
     // membrefamille components
     MembreFamilleListComponent,
     MembreFamilleEditComponent,
@@ -426,6 +433,7 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
     StructureFonctionListComponent,
     StructureFonctionNewComponent,
     GradeManagerComponent,
+    MembresMutuellesanteComponent,
     DiplomeEmployeTimelineComponent,
 
     // affectation components
@@ -438,7 +446,6 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
     StructureStatsComponent,
     TypeEmployeStatsComponent,
     RecrutementRangeStatsComponent,
-    EntreeSortieStatsComponent,
     DemissionEmployeProfessionAnneeStatsComponent,
     DemissionEmployeStructureAnneeStatsComponent,
     RecrutementPeriodStatsComponent,
@@ -453,10 +460,12 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
     EmployeGlobalComponent,
     ContratEnExpirationComponent,
     DiplomeMainDashboardComponent,
+    SortieStatsComponent,
     MembreCaisseSocialeComponent,
     MembreCommissionEmployeComponent,
     FonctionemployeTimelineComponent,
     FonctionEnExpirationComponent,
+    AnciennetePerGenreComponent,
 
   ],
   exports: [],

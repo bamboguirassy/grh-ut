@@ -14,7 +14,10 @@ import { Location } from '@angular/common';
 })
 export class MutuelleSanteShowComponent extends BasePageComponent<MutuelleSante> implements OnInit, OnDestroy {
   entity: MutuelleSante;
-
+  titre='Informations';
+  MembresMutuelleSante: MutuelleSante[] = [];
+  selectedIndex = 0;
+  currentAvatar: any;
   constructor(store: Store<IAppState>,
     public mutuelleSanteSrv: MutuelleSanteService,
     private activatedRoute: ActivatedRoute,
@@ -28,7 +31,7 @@ export class MutuelleSanteShowComponent extends BasePageComponent<MutuelleSante>
           route: ''
         },
         {
-          title: 'MutuelleSantes',
+          title: 'MutuelleSante',
           route: '/'+this.orientation+'/mutuellesante'
         },
         {
@@ -48,11 +51,29 @@ export class MutuelleSanteShowComponent extends BasePageComponent<MutuelleSante>
   }
 
   handlePostLoad() {
-    this.title = 'MutuelleSante - ' + this.entity?.id;
+    this.title = 'MutuelleSante - ' + this.entity?.nom;
   }
 
   handlePostDelete() {
     this.location.back();
   }
 
+ // upload new file
+  onFileChanged(inputValue: any) {
+    let file: File = inputValue.target.files[0];
+    let reader: FileReader = new FileReader();
+    reader.onloadend = () => {
+      this.currentAvatar = reader.result;
+      this.mutuelleSanteSrv.uploadPhoto(this.entity, this.currentAvatar.split(',')[1], file.name.split('.')[0])
+        .subscribe(
+          (data: any) => {
+            this.entity = data;
+            this.handlePostLoad();
+            this.mutuelleSanteSrv.toastr.success('Photo mise à jour !')
+          },
+          error => this.mutuelleSanteSrv.httpSrv.catchError(error))
+    };
+    reader.readAsDataURL(file);
+  }
+  
 }

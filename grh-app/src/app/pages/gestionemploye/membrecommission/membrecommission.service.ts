@@ -4,13 +4,14 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Employe } from '../employe/employe';
 import { Commission } from '../../parametrage/commission/commission';
+import { EmployeService } from '../employe/employe.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MembreCommissionService extends BamboAbstractService {
 
-  constructor(public httpSrv: BamboHttpService, public toastr: ToastrService) {
+  constructor(public httpSrv: BamboHttpService, public toastr: ToastrService, private employe: EmployeService) {
     super(httpSrv, toastr);
     this.routePrefix = 'membrecommission/';
     this.resourceName = 'MEMBRECOMMISSION';
@@ -22,6 +23,10 @@ export class MembreCommissionService extends BamboAbstractService {
 
   findMembresOfCommission(commission: Commission){
     return this.httpSrv.get(this.routePrefix + commission.id + '/membres-commission');
+  }
+
+  searchEmploye(data: any){
+    return this.employe.realtimeSearch(data);
   }
   
 }

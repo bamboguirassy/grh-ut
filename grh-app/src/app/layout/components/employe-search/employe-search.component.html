@@ -26,7 +26,7 @@
     </ng-template>
 </div> -->
 
-<input [(ngModel)]="searchTerm" class="form-control" (input)="getEmployes()" placeholder="Rechercher un employé" nz-input [nzAutocomplete]="auto" />
+<input style="min-width: 200px;" [(ngModel)]="searchTerm" class="form-control" (input)="getEmployes()" placeholder="Rechercher un employé" nz-input [nzAutocomplete]="auto" />
 <nz-autocomplete #auto>
     <nz-auto-option *ngFor="let item of filteredOptions" [nzValue]="item.matricule">
         <a (click)="selectEvent(item)" href="javascript:void(0)">

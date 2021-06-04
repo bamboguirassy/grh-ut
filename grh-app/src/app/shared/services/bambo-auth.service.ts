@@ -174,7 +174,7 @@ export class BamboAuthService {
             enabled: this.checkListAccess('structure')
           },
           {
-            title: "Syndicats",
+            title: "Syndicats & Amicales",
             routing: "syndicat",
             enabled: this.checkListAccess('syndicat')
           },

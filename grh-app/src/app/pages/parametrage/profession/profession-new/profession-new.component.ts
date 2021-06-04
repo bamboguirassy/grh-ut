@@ -41,10 +41,8 @@ export class ProfessionNewComponent implements OnInit {
     }
     this.professionSrv.create(this.entity)
       .subscribe((data: any) => {
-        this.closeModal();
         this.creation.emit(data);
         this.entity = new Profession();
-        this.selectedClasse = null;
       }, error => this.professionSrv.httpSrv.catchError(error));
   }
 
@@ -56,6 +54,7 @@ export class ProfessionNewComponent implements OnInit {
   // close modal window
   closeModal() {
     this.isModalVisible = false;
+    this.selectedClasse = null;
   }
   
   findClasses() {

@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { SETTINGS } from 'src/environments/settings';
 import { BamboAbstractService } from 'src/app/shared/services/bambo-abstract.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'base-page',
@@ -34,7 +35,8 @@ export class BasePageComponent<T extends BamboAbstractObject> implements OnInit,
 
   constructor(
     public store: Store<IAppState>,
-    public httpSv: BamboAbstractService
+    public httpSv: BamboAbstractService,
+    
   ) {
     this.sidebarBg = SETTINGS.sidebarBg;
     this.orientation = SETTINGS.layout;

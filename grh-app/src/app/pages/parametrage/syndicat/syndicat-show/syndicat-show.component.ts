@@ -21,14 +21,14 @@ export class SyndicatShowComponent extends BasePageComponent<Syndicat> implement
     public location: Location) {
     super(store, syndicatSrv);
     this.pageData = {
-      title: 'Détails - Syndicat',
+      title: 'Détails - Syndicat/Amicale',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Syndicats',
+          title: 'Syndicats/Amicales',
           route: '/'+this.orientation+'/syndicat'
         },
         {
@@ -48,7 +48,7 @@ export class SyndicatShowComponent extends BasePageComponent<Syndicat> implement
   }
 
   handlePostLoad() {
-    this.title = 'Syndicat - ' + this.entity?.id;
+    this.title = 'Syndicat/Amicale - ' + this.entity?.id;
   }
 
   handlePostDelete() {

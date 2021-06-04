@@ -3,8 +3,8 @@
     (tableChanged)="onChangeTable(config, null, true)" [suffixIcon]="'icofont-search-document'"></tc-input>
 </tc-form-group>
 
-<div class="table-wrap" *ngIf="rows.length" style="overflow: auto;">
-  <table class="table-box">
+<div class="table-wrap" *ngIf="rows.length">
+  <table class="table-box table-scrollable">
     <thead>
       <tr>
         <th *ngFor="let c of columnList" [column]="c.config" [align]="headerAlign" [tcTableSort]="c.config.sort"
