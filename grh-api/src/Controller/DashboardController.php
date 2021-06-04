@@ -329,6 +329,50 @@ class DashboardController extends AbstractController
 
         return $tab;
     }
+    
+     /**
+     * @Rest\Get(path="/employe/count-employe-by-per", name="statistic_count_employe_by_per")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_EMPLOYE_INDEX")
+     */
+    public function getEmployeStatsByPer(EntityManagerInterface $em)
+    {
+        $typeEmploye = $em->getRepository(TypeEmploye::class)->findOneByCode('PER');
+        $borneSup = 55;
+        $tab = [];
+        for ($anciennete = 0; $anciennete < $borneSup; $anciennete += 5) {
+            $ancienneteSuivant = $anciennete + 5;
+            $label = "{$anciennete} à {$ancienneteSuivant} ans";
+            $nombreEmployeHomme = $em->createQuery('select count(e) from 
+            App\Entity\Employe e JOIN e.typeEmploye te
+                    WHERE ((DATE_DIFF(CURRENT_DATE(), e.dateRecrutement)) / 365) >= :anciennete 
+                        AND ((DATE_DIFF(CURRENT_DATE(), e.dateRecrutement)) / 365) < :ancienneteSuivant
+                        AND te = :typeEmploye AND e.genre= :genre')
+                ->setParameter('anciennete', $anciennete)
+                ->setParameter('ancienneteSuivant', ($anciennete + 5))
+                ->setParameter('typeEmploye', $typeEmploye)
+                ->setParameter('genre', 'Masculin')
+                ->getSingleScalarResult();
+            $nombreEmployeFemme = $em->createQuery('select count(e) from 
+            App\Entity\Employe e JOIN e.typeEmploye te
+                    WHERE ((DATE_DIFF(CURRENT_DATE(), e.dateRecrutement)) / 365) >= :anciennete 
+                        AND ((DATE_DIFF(CURRENT_DATE(), e.dateRecrutement)) / 365) < :ancienneteSuivant
+                        AND te = :typeEmploye AND e.genre= :genre')
+                ->setParameter('anciennete', $anciennete)
+                ->setParameter('ancienneteSuivant', ($anciennete + 5))
+                ->setParameter('typeEmploye', $typeEmploye)
+                ->setParameter('genre', 'Féminin')
+                ->getSingleScalarResult();
+            
+                $tab[] = [
+                    'anciennete' => $label,
+                    'nombreEmployeHomme' => $nombreEmployeHomme,
+                    'nombreEmployeFemme' => $nombreEmployeFemme
+                ];
+        
+        }
+        return $tab;
+    }
 
     /**
      * @Rest\Get(path="/employe/suivi-recrutement-genre", name="statistic_by_genre")
