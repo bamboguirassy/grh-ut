@@ -13,6 +13,7 @@ use App\Utils\Utils;
 use Symfony\Component\HttpFoundation\File\File;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @Route("/api/mutuellesante")
