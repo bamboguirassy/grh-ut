@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Utils\Utils;
+use Symfony\Component\HttpFoundation\File\File;
+use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
@@ -151,4 +153,31 @@ class SyndicatController extends AbstractController
 
         return $syndicats;
     }
+     /**
+     * @Rest\Put(path="/upload-photo/{id}", name="upload_syndicat_photo")
+     * @Rest\View(StatusCode=200)
+     * @param Request $request
+     * @param FileUploader $uploader
+     * @return Syndicat
+     * @throws Exception
+     */
+    public function uploadPhoto(Request $request,  Syndicat $syndicat, FileUploader $uploader) {
+        $manager = $this->getDoctrine()->getManager();
+        $host = $request->getHttpHost();
+        $scheme = $request->getScheme();
+        $data = Utils::getObjectFromRequest($request);
+        $fileName = $data->fileName;
+        file_put_contents($fileName, base64_decode($data->photo));
+        $file = new File($fileName);
+        $authorizedExtensions = ['jpeg', 'jpg', 'png'];
+        if (!in_array($file->guessExtension(), $authorizedExtensions))
+            throw new BadRequestHttpException('Fichier non pris en charge');
+        $newFileName = $uploader->setTargetDirectory('syndicat_image_directory')->upload($file, $syndicat->getFilename()); // old fileName
+        $syndicat->setFilepath("$scheme://$host/" . $uploader->getTargetDirectory() . $newFileName);
+        $syndicat->setFilename($newFileName);
+        $manager->flush();
+
+        return $syndicat;
+    }
+    
 }
