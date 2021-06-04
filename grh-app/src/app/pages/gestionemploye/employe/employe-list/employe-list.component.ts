@@ -26,6 +26,8 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
     language: 'fr'
   };
   selectedEmployes: Employe[] = [];
+  isAllSelected = false;
+  isPartialSelection = false;
 
 
   typeEmployes: TypeEmploye[] = [];
@@ -113,16 +115,48 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
     this.employeSrv.sendEmail(emails, this.emailEditionModel.object, this.emailEditionModel.body)
     .subscribe(
       (data: any) => {
-        console.log(data);
         this.handlePostLoad();
         this.employeSrv.toastr.success('Email Envoyé avec succès');
         this.closeModal();
+        this.emailEditionModel = {body: '', object: ''};
       },
       error => this.employeSrv.httpSrv.catchError(error));
+    this.changeAllSelectionState();
   }
   closeModal() {
     this.modal.close();
   }
+
+
+  changeAllSelectionStateLink(){
+
+    this.isAllSelected = !this.isAllCheckt();
+    console.log(this.isAllSelected);
+    this.changeAllSelectionState(this.isAllSelected);
+    this.isPartialSelection = false;
+  }
+
+
+  changeAllSelectionState(state = false){
+    this.items.forEach(element => {
+      element.selected = state;
+    });
+  }
+
+  onItemsSelectionStateChange($event){
+    setTimeout(() => {
+      this.isAllSelected = this.isAllCheckt();
+      this.isPartialSelection = this.items.some(element => element.selected) && this.items.some(element => !(element.selected));
+    }, 1);
+  }
+
+  isAllCheckt(){
+    return this.items.every(element => element.selected);
+  }
+
+
+
+
 
 
 

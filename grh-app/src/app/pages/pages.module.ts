@@ -203,12 +203,13 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
 import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sortie-stats.component';
-
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 import { AnciennetePerGenreComponent } from './dashboards/anciennete/anciennete-per-genre/anciennete-per-genre.component';
 
 @NgModule({
   imports: [
+    NzCheckboxModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

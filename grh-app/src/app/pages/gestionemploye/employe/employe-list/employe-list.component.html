@@ -11,11 +11,14 @@
     <tc-card [view]="secondViewBorder" [outline]="true">
         <nz-tabset [(nzSelectedIndex)]="selectedIndex" (nzSelectChange)="handleTabChange($event)">
             <nz-tab *ngFor="let typeEmploye of typeEmployes" [nzTitle]="typeEmploye.code">
-                <h3>Liste des employés - {{typeEmploye?.code}} </h3>
+                <div class="d-flex vertical-align-top justify-content-between">
+                    <h3 class="mb-1">Liste des employés - {{typeEmploye?.code}} </h3>
+                    <label class="mb-1 h3" nz-checkbox [nzIndeterminate]="isPartialSelection && !isAllSelected " [(ngModel)]="isAllSelected" (ngModelChange)="changeAllSelectionStateLink($event)">Tous sélectionner</label>
+                </div>
                 <tc-table [itemsPerPage]="15" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
                     <tc-table-col [columnTitle]="''" [columnName]="''">
                         <ng-template #tableTDTemplate let-row="row">
-                            <tc-checkbox [(ngModel)]="row.selected"></tc-checkbox>
+                            <label nz-checkbox (ngModelChange)="onItemsSelectionStateChange()" [(ngModel)]="row.selected"></label>
                         </ng-template>
                     </tc-table-col>
                     <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
