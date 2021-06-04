@@ -14,9 +14,14 @@
         </div>
     </tc-card>
     <div class="row">
-        <div class="col-12 col-md-4" style="height:300px;">
+        <div class="col-12 col-md-4" style="height:100px; align-items: center;">
             <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
+                <div class="card" style="width: 18rem;">
+                     <img class="card-img-top" (click)="fileInput.click()" [src]="entity?.filepath ? entity?.filepath:'assets/img/default-profile-picture1.jpg'" alt="Image caisse sociale">
+                     <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
+               </div>
                 <table class="table">
+            
                     <tr>
                         <th>Nom</th>
                         <td>
@@ -31,7 +36,7 @@
                             <tc-badge view="error" *ngIf="!entity?.code">Indéfinie</tc-badge>
                         </td>
                     </tr>
-                    <tr>
+                    <!--tr>
                         <th>Filename</th>
                         <td>
                             <span *ngIf="entity?.filename">{{ entity?.filename }}</span>
@@ -44,7 +49,7 @@
                             <span *ngIf="entity?.filepath">{{ entity?.filepath }}</span>
                             <tc-badge view="error" *ngIf="!entity?.filepath">Indéfinie</tc-badge>
                         </td>
-                    </tr>
+                    </tr-->
                     <tr>
                         <td colspan="2">
                             <div class="col-12 col-md-10">

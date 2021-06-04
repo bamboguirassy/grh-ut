@@ -7,6 +7,7 @@ import { MutuelleSante } from '../../parametrage/mutuellesante/mutuellesante';
 import { BehaviorSubject } from 'rxjs';
 import { Employe } from './employe';
 import { CaisseSociale } from '../../parametrage/caissesociale/caissesociale';
+import { data } from 'jquery';
 
 @Injectable({
   providedIn: 'root'
@@ -77,6 +78,14 @@ export class EmployeService extends BamboAbstractService {
 
   findByCaisseSociale(caissesociale: CaisseSociale) {
     return this.httpSrv.get(this.routePrefix + "caisse-sociale/" + caissesociale.id);
+  }
+  sendEmail(email:any,object:any,message:any){
+    const data ={emailDestinataires: email, object: object, message: message};
+    
+    console.log(data);
+    
+
+    return this.httpSrv.post(this.routePrefix + "public/send-email" ,data);
   }
 
   findByMutuelleSante(membremutuelle:MutuelleSante)
