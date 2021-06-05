@@ -162,6 +162,20 @@
             <div class="row">
                 <div class="col-12 col-md-6">
                     <tc-form-group>
+                        <tc-form-label>Employé</tc-form-label>
+                        <tc-input [contentEditable]="false" [disabled]="true" autocapitalize="words" [value]="selectedMembre.employe.prenoms + ' ' + selectedMembre.employe.nom">
+                        </tc-input>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Statut</tc-form-label>
+                        <tc-switcher [(ngModel)]="selectedMembre.statut" name="editStatut" id="editStatut" #editStatut="ngModel">
+                        </tc-switcher>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
                         <tc-form-label>Fonction</tc-form-label>
                         <tc-input required="required" [(ngModel)]="selectedMembre.fonction" name="editFonction" id="editFonction"
                             #editFonction="ngModel">
@@ -185,7 +199,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6">
+                <div *ngIf="!selectedMembre.statut" class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Date de sortie</tc-form-label>
                         <nz-date-picker required="required" [nzFormat]="'dd/MM/yyyy'"
@@ -209,13 +223,6 @@
                             <app-form-field-validation-message [formField]="editMotifSortie">
                             </app-form-field-validation-message>
                         </tc-form-description>
-                    </tc-form-group>
-                </div>
-                <div class="col-12 col-md-6">
-                    <tc-form-group>
-                        <tc-form-label>Statut</tc-form-label>
-                        <tc-switcher [(ngModel)]="selectedMembre.statut" name="editStatut" id="editStatut" #editStatut="ngModel">
-                        </tc-switcher>
                     </tc-form-group>
                 </div>
             </div>

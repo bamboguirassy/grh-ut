@@ -16,7 +16,7 @@
         <div class="col-12 col-md-6">
           <tc-form-group>
             <tc-form-label>Date Prise Fonction</tc-form-label>
-            <nz-date-picker (ngModelChange)="handleDatePriseFonctionChange($event)" [required]="true"
+            <nz-date-picker [required]="true"
               [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="entity.datePriseFonction"
               name="datePriseFonction" id="datePriseFonction" #datePriseFonction="ngModel"></nz-date-picker>
             <tc-form-description>

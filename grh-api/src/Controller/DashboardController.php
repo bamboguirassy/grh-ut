@@ -897,7 +897,7 @@ class DashboardController extends AbstractController
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
-    public function countPersByGradeGroupByGenre(EntityManagerInterface $entityManager):array {
+     public function countPersByGradeGroupByGenre():array {
         $em = $this->getDoctrine()->getManager();
         
         $grades = $em->createQuery('Select distinct e.grade FROM App\Entity\Employe e')
@@ -936,6 +936,12 @@ class DashboardController extends AbstractController
         return $tab;
           
   }
+       
+       
+  
+    
+
+    
        
        
          

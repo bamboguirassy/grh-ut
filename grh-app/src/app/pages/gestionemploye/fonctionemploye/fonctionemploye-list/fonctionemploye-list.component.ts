@@ -14,12 +14,13 @@ import { DatePipe } from '@angular/common';
 })
 export class FonctionEmployeListComponent implements OnInit {
   @Input() employe: Employe;
+  @Input() displayTimeline: boolean = true;
   tab =  [];
   selectedFonction: FonctionEmploye;
   items: FonctionEmploye[] = [];
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];
-  @Input() displayTimeline: boolean = true;
+ 
 
   constructor(public fonctionEmployeSrv: FonctionEmployeService,  private activatedRoute: ActivatedRoute,) {}
 
@@ -48,7 +49,7 @@ export class FonctionEmployeListComponent implements OnInit {
   
 
   onCreate(item: FonctionEmploye) {
-    this.items = [item, ...this.items];
+   this.findByEmploye();
   }
 
   onClose(){
