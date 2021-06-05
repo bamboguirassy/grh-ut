@@ -1,18 +1,4 @@
 <tc-card *ngIf="caisseSocialeSrv.resourceName|showable" [tcGradient]="lightGradient">
-    <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
-        <div class="row">
-            <!--<div class="d-none d-md-block col-md-1">
-               <i class="icofont icofont-data icofont-4x"></i>
-            </div>-->
-            <div class="col-12 col-md-7">
-                <!-- <blockquote class="blockquote">
-                   <p class="mb-0">{{title}}</p>
-                   <footer class="blockquote-footer"> <cite title="Source Title">sous titre</cite></footer>
-                </blockquote>-->
-            </div>
-
-        </div>
-    </tc-card>
     <div class="row">
         <div class="col-12 col-md-4" style="height:100px; align-items: center;">
             <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
@@ -60,7 +46,7 @@
             </tc-card>
         </div>
         <div class="col-12 col-md-8">
-            <app-membre-caisse-sociale *ngIf="entity" [caisseSociale]=entity [orientation]=orientation></app-membre-caisse-sociale>
+            <app-membre-caisse-sociale *ngIf="entity" [caisseSociale]="entity" [orientation]="orientation"></app-membre-caisse-sociale>
         </div>
     </div>
 </tc-card>

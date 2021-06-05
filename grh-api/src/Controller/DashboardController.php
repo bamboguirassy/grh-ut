@@ -331,7 +331,7 @@ class DashboardController extends AbstractController
     }
     
      /**
-     * @Rest\Get(path="/employe/count-by-type-employe/{id}", name="statistic_count_employe_by_genres")
+     * @Rest\Get(path="/employe/count-age-by-type-employe/{id}", name="statistic_count_employe_by_genres")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */

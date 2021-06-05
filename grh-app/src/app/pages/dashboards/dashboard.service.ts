@@ -80,7 +80,7 @@ export class DashboardService {
   }
 
   countAgeByTypeEmploye(typeEmploye: TypeEmploye) {
-    return this.httpSrv.get(this.routePrefix + 'employe/count-by-type-employe/'+typeEmploye.id);
+    return this.httpSrv.get(this.routePrefix + 'employe/count-age-by-type-employe/'+typeEmploye.id);
   }
 
 
