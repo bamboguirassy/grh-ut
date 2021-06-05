@@ -52,12 +52,12 @@ export class PyramideAgeGenreComponent extends DashboardBaseComponent<PyramideAg
         plugins: {
           title: {
             display: true,
-            text: 'Nombres employé par tranche d\'age'
+            text: 'Nombres employé par tranche d\'âge'
           }
         }
         
     };
-    this.chartLabels = this.rawChartData.map(r => r.dateNaissance);
+    this.chartLabels = this.rawChartData.map(r => r.age);
     this.chartType = 'bar';
     this.chartLegend = true;
     this.chartPlugins = [];
