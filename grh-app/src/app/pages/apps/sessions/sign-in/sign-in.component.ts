@@ -10,6 +10,8 @@ import { TCModalService } from 'src/app/ui/services/modal/modal.service';
   styleUrls: ['./sign-in.component.scss']
 })
 export class PageSignInComponent implements OnInit {
+
+  email = '';
   constructor(
     public authSrv: BamboAuthService,
     private modal: TCModalService,

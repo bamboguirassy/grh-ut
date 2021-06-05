@@ -20,7 +20,7 @@ export class ContratTimelineComponent implements OnInit {
   tab = [];
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];
-  constructor(public contratSrv: ContratService, public datePipe: DatePipe) { }
+  constructor(public datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.setTimeline();

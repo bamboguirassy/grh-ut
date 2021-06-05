@@ -6,6 +6,7 @@ use App\Entity\GCategorie;
 use App\Entity\GClasse;
 use App\Entity\GNiveau;
 use App\Entity\Grade;
+use App\Entity\Employe;
 use App\Form\GradeType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -117,20 +118,30 @@ class GradeController extends AbstractController
         ->setParameter(4,$selectedEchelonIds)
         ->getResult();
         foreach($dropedGrades as $dropedGrade) {
+            $employes = $entityManager->getRepository(Employe::class)
+                    ->findBy(['indice' => $dropedGrade]);
+            if(count($employes)>0){
+                throw $this->createNotFoundException("Attention le grade que vous voulez supprimer est rattaché à des employés !");
+            }
             $entityManager->remove($dropedGrade);
         }
         // if echelons vide (signifie qu'on supprime tout)
         if(!$selectedEchelonIds) {
             // trouver les grades précédement rattachés dont les echelonIds ne sont pas dans selectedEchelonIds
-        $dropedGrades = $entityManager->createQuery('select g from App\Entity\Grade g 
-        JOIN g.echelon e where g.niveau=?1 and g.classe=?2 and g.categorie=?3')
-        ->setParameter(1,$niveau)
-        ->setParameter(2,$classe)
-        ->setParameter(3,$categorie)
-        ->getResult();
-        foreach($dropedGrades as $dropedGrade) {
-            $entityManager->remove($dropedGrade);
-        }
+            $dropedGrades = $entityManager->createQuery('select g from App\Entity\Grade g 
+            JOIN g.echelon e where g.niveau=?1 and g.classe=?2 and g.categorie=?3')
+            ->setParameter(1,$niveau)
+            ->setParameter(2,$classe)
+            ->setParameter(3,$categorie)
+            ->getResult();
+            foreach($dropedGrades as $dropedGrade) {
+                $employes = $entityManager->getRepository(Employe::class)
+                    ->findBy(['indice' => $dropedGrade]);
+                if(count($employes)>0){
+                    throw $this->createNotFoundException("Attention le grade que vous voulez supprimer est rattaché à des employés !");
+                }
+                $entityManager->remove($dropedGrade);
+            }
         }
         $entityManager->flush();
 

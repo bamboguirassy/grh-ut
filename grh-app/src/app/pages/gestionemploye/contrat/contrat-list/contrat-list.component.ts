@@ -66,7 +66,7 @@ export class ContratListComponent implements OnInit, OnDestroy {
   }
   
   onCreate(item: Contrat) {
-   this.items = [item, ...this.items];
+  this.findByEmploye();
 
   }
 
@@ -78,6 +78,8 @@ export class ContratListComponent implements OnInit, OnDestroy {
     this.contratSrv.findByEmploye(this.employe)
     .subscribe((data: any)=>{
       this.items = data;
+      console.log(this.items);
+      
             
     },err=>this.contratSrv.httpSrv.catchError(err));
   }
