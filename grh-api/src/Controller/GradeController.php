@@ -120,8 +120,8 @@ class GradeController extends AbstractController
         foreach($dropedGrades as $dropedGrade) {
             $employes = $entityManager->getRepository(Employe::class)
                     ->findBy(['indice' => $dropedGrade]);
-            if(count($employes)>0){
-                throw $this->createNotFoundException("Attention le grade que vous voulez supprimer est rattaché à des employés !");
+            if(count($employes)){
+                throw $this->createNotFoundException("La suppression de l'indice {$dropedGrade->getClassification()} a échoué car des employés y sont déja associés.");
             }
             $entityManager->remove($dropedGrade);
         }
@@ -138,7 +138,7 @@ class GradeController extends AbstractController
                 $employes = $entityManager->getRepository(Employe::class)
                     ->findBy(['indice' => $dropedGrade]);
                 if(count($employes)>0){
-                    throw $this->createNotFoundException("Attention le grade que vous voulez supprimer est rattaché à des employés !");
+                    throw $this->createNotFoundException("La suppression de l'indice {$dropedGrade->getClassification()} a échoué car des employés y sont déja associés.");
                 }
                 $entityManager->remove($dropedGrade);
             }
