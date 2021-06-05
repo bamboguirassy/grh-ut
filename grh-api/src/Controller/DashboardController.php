@@ -335,36 +335,36 @@ class DashboardController extends AbstractController
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
-    public function countEmployeAgeByGenres(TypeEmploye $typeEmploye,EntityManagerInterface $em)
+    public function countEmployeGroupeAgeByGenres(TypeEmploye $typeEmploye,EntityManagerInterface $em)
     {
         $borneSup = 55;
         $tab = [];
-        for ($dateNaissance = 20; $dateNaissance < $borneSup; $dateNaissance += 5) {
-            $dateNaissanceSuivant = $dateNaissance + 5;
-            $label = "{$dateNaissance} à {$dateNaissanceSuivant} ans";
+        for ($age = 20; $age < $borneSup; $age += 5) {
+            $ageSuivant = $age + 5;
+            $label = "{$age} à {$ageSuivant} ans";
             $nombreEmployeHomme = $em->createQuery('select count(e) from 
             App\Entity\Employe e JOIN e.typeEmploye te
-                    WHERE ((DATE_DIFF(CURRENT_DATE(), e.dateNaissance)) / 365) >= :dateNaissance 
-                        AND ((DATE_DIFF(CURRENT_DATE(), e.dateNaissance)) / 365) < :dateNaissanceSuivant
+                    WHERE ((DATE_DIFF(CURRENT_DATE(), e.dateNaissance)) / 365) >= :age 
+                        AND ((DATE_DIFF(CURRENT_DATE(), e.dateNaissance)) / 365) < :ageSuivant
                         AND te = :typeEmploye AND e.genre= :genre')
-                ->setParameter('dateNaissance', $dateNaissance)
-                ->setParameter('dateNaissanceSuivant', ($dateNaissance + 5))
+                ->setParameter('age', $age)
+                ->setParameter('ageSuivant', ($age + 5))
                 ->setParameter('typeEmploye', $typeEmploye)
                 ->setParameter('genre', 'Masculin')
                 ->getSingleScalarResult();
             $nombreEmployeFemme = $em->createQuery('select count(e) from 
             App\Entity\Employe e JOIN e.typeEmploye te
-                    WHERE ((DATE_DIFF(CURRENT_DATE(), e.dateNaissance)) / 365) >= :dateNaissance 
-                        AND ((DATE_DIFF(CURRENT_DATE(), e.dateNaissance)) / 365) < :dateNaissanceSuivant
+                    WHERE ((DATE_DIFF(CURRENT_DATE(), e.dateNaissance)) / 365) >= :age 
+                        AND ((DATE_DIFF(CURRENT_DATE(), e.dateNaissance)) / 365) < :ageSuivant
                         AND te = :typeEmploye AND e.genre= :genre')
-                ->setParameter('dateNaissance', $dateNaissance)
-                ->setParameter('dateNaissanceSuivant', ($dateNaissance + 5))
+                ->setParameter('age', $age)
+                ->setParameter('ageSuivant', ($age + 5))
                 ->setParameter('typeEmploye', $typeEmploye)
                 ->setParameter('genre', 'Féminin')
                 ->getSingleScalarResult();
             
                 $tab[] = [
-                    'dateNaissance' => $label,
+                    'age' => $label,
                     'nombreEmployeHomme' => $nombreEmployeHomme,
                     'nombreEmployeFemme' => $nombreEmployeFemme
                 ];
@@ -386,7 +386,7 @@ class DashboardController extends AbstractController
                 ->setParameter('genre', 'Féminin')
                 ->getSingleScalarResult();
             $tab[] = [
-                    'dateNaissance' => $label,
+                    'age' => $label,
                     'nombreEmployeHomme' => $nombreEmployeHomme,
                     'nombreEmployeFemme' => $nombreEmployeFemme
                 ];
