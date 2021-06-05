@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <tc-form-group>
-                        <tc-form-label>Date de création</tc-form-label>
+                        <tc-form-label>Date création</tc-form-label>
                         <nz-date-picker [nzFormat]="'dd/MM/yyyy'" type="Date" [(ngModel)]="entity.dateCreation"
                             name="dateCreation" id="dateCreation" #dateCreation="ngModel">
                         </nz-date-picker>
@@ -47,7 +47,7 @@
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Missions</tc-form-label>
-                        <ckeditor nz-input [required]="true" [(ngModel)]="entity.missions" name="missions" id="missions" #missions="ngModel" [editor]="Editor">
+                        <ckeditor [data]="entity.missions" [required]="true" [(ngModel)]="entity.missions" name="missions" id="missions" #missions="ngModel" [editor]="Editor">
                         </ckeditor>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="missions">
@@ -58,7 +58,7 @@
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Description</tc-form-label>
-                        <ckeditor nz-input [required]="true" [(ngModel)]="entity.description" name="description"
+                        <ckeditor [data]="entity.description" [required]="true" [(ngModel)]="entity.description" name="description"
                         id="description" #description="ngModel" [editor]="Editor">
                         </ckeditor>
                         <tc-form-description>
