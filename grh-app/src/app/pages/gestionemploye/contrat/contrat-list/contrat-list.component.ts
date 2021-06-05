@@ -39,6 +39,7 @@ export class ContratListComponent implements OnInit, OnDestroy {
   }
 
   handlePostLoad() { }
+
   remove(contrat: Contrat) {
     Swal.fire({
       title: 'Êtes-vous sûr ?',
@@ -79,8 +80,6 @@ export class ContratListComponent implements OnInit, OnDestroy {
     .subscribe((data: any)=>{
       this.items = data;
       console.log(this.items);
-      
-            
     },err=>this.contratSrv.httpSrv.catchError(err));
   }
 
