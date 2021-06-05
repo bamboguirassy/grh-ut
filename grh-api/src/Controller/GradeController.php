@@ -44,7 +44,7 @@ class GradeController extends AbstractController
        $em= $this->getDoctrine()->getManager();
        $grades = $em->createQuery('select'
                . ' g FROM App\Entity\Grade g '
-               . 'JOIN g.classe c WHERE c.typeEmploye=:typeEmploye ')
+               . 'JOIN g.classe c WHERE c.typeEmploye=:typeEmploye order by g.classification asc')
                ->setParameter('typeEmploye',$typeEmploye)
                ->getResult();
                
