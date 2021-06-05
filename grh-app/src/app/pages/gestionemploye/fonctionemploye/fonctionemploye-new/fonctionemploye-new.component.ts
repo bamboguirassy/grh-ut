@@ -43,10 +43,15 @@ export class FonctionEmployeNewComponent implements OnInit {
     this.entity.responsabilite = this.selectedStructureFonction.id;
     this.entity.datePriseFonction = this.datePipe.transform(this.entity.datePriseFonction,'yyyy-MM-dd');
     this.entity.dateFin = this.datePipe.transform(this.entity.dateFin,'yyyy-MM-dd');
+    if (this.entity.etat && !this.entity.responsabilite.duree) {
+      this.entity.dateFin = null;
+    }
     this.fonctionEmployeSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
         this.creation.emit(data);
+        this.selectedStructureFonction=null;
+        this.selectedStructure=null;
         this.entity = new FonctionEmploye();
       }, error => this.fonctionEmployeSrv.httpSrv.catchError(error));
   }
@@ -75,6 +80,13 @@ export class FonctionEmployeNewComponent implements OnInit {
         this.structures = data;
       }, err => this.structureSrv.httpSrv.catchError(err));
   }
+  
+  handleDatePriseFonctionChange(newDate) {
+    let datePrise = new Date(newDate);
+    let duree = +this.selectedStructureFonction.duree;
+    let dateFin = datePrise.setMonth(datePrise.getMonth() + duree);
+    this.entity.dateFin = dateFin;
+}
 
 }
 

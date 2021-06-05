@@ -79,8 +79,8 @@ export class DashboardService {
     return this.httpSrv.get(this.routePrefix + 'employe/count-by-diplome');
   }
 
-  getEmployeByPerStats(typeEmploye: TypeEmploye) {
-    return this.httpSrv.get(this.routePrefix + 'employe/count-employe-by-per/'+typeEmploye.id);
+  countAgeByTypeEmploye(typeEmploye: TypeEmploye) {
+    return this.httpSrv.get(this.routePrefix + 'employe/count-by-type-employe/'+typeEmploye.id);
   }
 
 

@@ -4,14 +4,14 @@ import { TypeEmploye } from 'src/app/pages/parametrage/typeemploye/typeemploye';
 import { TypeEmployeService } from 'src/app/pages/parametrage/typeemploye/typeemploye.service';
 import { DashboardBaseComponent } from 'src/app/shared/components/dashboard-base/dashboard-base.component';
 import { DashboardService } from '../../dashboard.service';
-import { PyramideEncienneteGenreCm } from '../pyramide-enciennete-genre-cm';
+import { PyramideAgeGenreCm } from '../pyramide-age-genre-cm';
 
 @Component({
-  selector: 'app-pyramide-enciennete-genre',
-  templateUrl: './pyramide-enciennete-genre.component.html',
-  styleUrls: ['./pyramide-enciennete-genre.component.scss']
+  selector: 'app-pyramide-age-genre',
+  templateUrl: './pyramide-age-genre.component.html',
+  styleUrls: ['./pyramide-age-genre.component.scss']
 })
-export class PyramideEncienneteGenreComponent extends DashboardBaseComponent<PyramideEncienneteGenreCm> implements OnInit {
+export class PyramideAgeGenreComponent extends DashboardBaseComponent<PyramideAgeGenreCm> implements OnInit {
   @Input() canSwitchDiagramType: boolean = true;
   typeDiagrams: { value: string, title: string }[] = [
     { value: 'bar', title: 'Barre verticale' },
@@ -24,7 +24,6 @@ export class PyramideEncienneteGenreComponent extends DashboardBaseComponent<Pyr
   dataDiagram: any;
   constructor(public dashboardSrv: DashboardService, public typeEmployeSrv: TypeEmployeService) {
     super(dashboardSrv);
-    this.methodName = 'getEmployeByPerStats';
   }
 
   ngOnInit(): void {
@@ -53,12 +52,12 @@ export class PyramideEncienneteGenreComponent extends DashboardBaseComponent<Pyr
         plugins: {
           title: {
             display: true,
-            text: 'Nombres employé Per'
+            text: 'Nombres employé par tranche d\'age'
           }
         }
         
     };
-    this.chartLabels = this.rawChartData.map(r => r.anciennete);
+    this.chartLabels = this.rawChartData.map(r => r.dateNaissance);
     this.chartType = 'bar';
     this.chartLegend = true;
     this.chartPlugins = [];
@@ -72,7 +71,7 @@ export class PyramideEncienneteGenreComponent extends DashboardBaseComponent<Pyr
   buildDiagram() {
     this.loading = true;
     if(this.selectedTypeEmploye){
-      this.dashboardSrv.getEmployeByPerStats(this.selectedTypeEmploye)
+      this.dashboardSrv.countAgeByTypeEmploye(this.selectedTypeEmploye)
         .pipe(finalize(() => this.loading = false))
         .subscribe((data: any) => {
           this.isLoad = true;
