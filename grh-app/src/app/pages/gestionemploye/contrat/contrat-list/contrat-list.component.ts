@@ -39,6 +39,7 @@ export class ContratListComponent implements OnInit, OnDestroy {
   }
 
   handlePostLoad() { }
+
   remove(contrat: Contrat) {
     Swal.fire({
       title: 'Êtes-vous sûr ?',
@@ -78,9 +79,6 @@ export class ContratListComponent implements OnInit, OnDestroy {
     this.contratSrv.findByEmploye(this.employe)
     .subscribe((data: any)=>{
       this.items = data;
-      console.log(this.items);
-      
-            
     },err=>this.contratSrv.httpSrv.catchError(err));
   }
 
