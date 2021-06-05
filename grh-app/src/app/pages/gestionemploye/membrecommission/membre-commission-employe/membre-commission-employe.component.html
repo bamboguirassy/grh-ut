@@ -1,12 +1,25 @@
 <!-- Flotting buttom -->
 <div class="add-action-box">
-    <button nz-tooltip nzTooltipTitle="Nouveau membre" [nzTooltipColor]="'#336cfb'" tc-button [afterIcon]="'icofont-plus'" [view]="'accent'" [square]="true" [tcShape]="500"
+    <button nz-tooltip nzTooltipTitle="Nouveau membre" [nzTooltipColor]="'#336cfb'" tc-button
+        [afterIcon]="'icofont-plus'" [view]="'accent'" [square]="true" [tcShape]="500"
         (click)="openAddModal()"></button>
 </div>
 <div *ngIf="isShowable" class="container-fluid">
     <tc-card [outline]="true" [view]="secondViewBorder" title="Membres de la commission" [tcGradient]="secondGradient">
         <ng-container *ngIf="items.length != 0; else elseTemplate">
             <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="false" [pagination]="true" [search]="false">
+                <tc-table-col [columnTitle]="'Actions'" [columnName]="'employe'">
+                    <ng-template #tableTDTemplate let-value let-row="row">
+                        <div class="actions">
+                            <button class="mx-1" *ngIf="membreCommissionSrv.resourceName|editable" tc-button
+                                [afterIcon]="'icofont-ui-edit'" [view]="'warning'" [square]="true" [tcShape]="500"
+                                [size]="'sm'" (click)="openEditModal(row)"></button>
+                            <button *ngIf="membreCommissionSrv.resourceName|deletable" (click)="remove(row)" tc-button
+                                [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
+                                [size]="'sm'"></button>
+                        </div>
+                    </ng-template>
+                </tc-table-col>
                 <tc-table-col [columnTitle]="'Matricule'" [columnName]="'employe'" [enableSorting]="true">
                     <ng-template #tableTDTemplate let-value let-row="row">
                         <a [routerLink]="employeRoute(value)" routerLinkActive="router-link-active">
@@ -58,18 +71,6 @@
                         <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                     </ng-template>
                 </tc-table-col>
-                <tc-table-col [columnTitle]="'Actions'" [columnName]="'employe'">
-                    <ng-template #tableTDTemplate let-value let-row="row">
-                      <div class="actions">
-                        <button class="mx-1" *ngIf="membreCommissionSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-                          [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" (click)="openEditModal(row)"></button>
-                        <button *ngIf="membreCommissionSrv.resourceName|deletable" (click)="remove(row)" tc-button
-                          [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-                        <button class="mx-1" *ngIf="membreCommissionSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"
-                          [view]="'accent'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="employeRoute(value)"></button>
-                      </div>
-                    </ng-template>
-                  </tc-table-col>
             </tc-table>
         </ng-container>
         <ng-template #elseTemplate>
@@ -95,11 +96,11 @@
                     <tc-form-group>
                         <tc-form-label>Employé</tc-form-label>
                         <input class="input-padding" placeholder="Rechercher l'employé" name="searchInput"
-                            #searchInput="ngModel" nz-input [(ngModel)]="inputValue" name="inputSearch" #inputSearch="ngModel" (input)="onInput($event)"
-                            [nzAutocomplete]="auto" />
+                            #searchInput="ngModel" nz-input [(ngModel)]="inputValue" name="inputSearch"
+                            #inputSearch="ngModel" (input)="onInput($event)" [nzAutocomplete]="auto" />
                         <nz-autocomplete #auto>
-                            <nz-auto-option *ngFor="let option of searchResult" 
-                                [nzValue]="option">{{ option }}</nz-auto-option>
+                            <nz-auto-option *ngFor="let option of searchResult" [nzValue]="option">{{ option }}
+                            </nz-auto-option>
                         </nz-autocomplete>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="inputSearch">
@@ -146,8 +147,7 @@
         <div class="actions justify-content-between">
             <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
                 (click)="closeAddModal()">Fermer</button>
-            <button [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
-                tc-button [view]="'accent'">
+            <button [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'" tc-button [view]="'accent'">
                 Enregistrer
             </button>
         </div>
@@ -163,22 +163,24 @@
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Employé</tc-form-label>
-                        <tc-input [contentEditable]="false" [disabled]="true" autocapitalize="words" [value]="selectedMembre.employe.prenoms + ' ' + selectedMembre.employe.nom">
+                        <tc-input [contentEditable]="false" [disabled]="true" autocapitalize="words"
+                            [value]="selectedMembre.employe.prenoms + ' ' + selectedMembre.employe.nom">
                         </tc-input>
                     </tc-form-group>
                 </div>
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Statut</tc-form-label>
-                        <tc-switcher [(ngModel)]="selectedMembre.statut" name="editStatut" id="editStatut" #editStatut="ngModel">
+                        <tc-switcher [(ngModel)]="selectedMembre.statut" name="editStatut" id="editStatut"
+                            #editStatut="ngModel">
                         </tc-switcher>
                     </tc-form-group>
                 </div>
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Fonction</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="selectedMembre.fonction" name="editFonction" id="editFonction"
-                            #editFonction="ngModel">
+                        <tc-input required="required" [(ngModel)]="selectedMembre.fonction" name="editFonction"
+                            id="editFonction" #editFonction="ngModel">
                         </tc-input>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="editFonction">
@@ -190,8 +192,8 @@
                     <tc-form-group>
                         <tc-form-label>Date d'intégration</tc-form-label>
                         <nz-date-picker required="required" [nzFormat]="'dd/MM/yyyy'"
-                            [(ngModel)]="selectedMembre.dateIntegration" name="editDateIntegration" id="editDateIntegration"
-                            #editDateIntegration="ngModel">
+                            [(ngModel)]="selectedMembre.dateIntegration" name="editDateIntegration"
+                            id="editDateIntegration" #editDateIntegration="ngModel">
                         </nz-date-picker>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="editDateIntegration">
@@ -215,10 +217,9 @@
                 <div *ngIf="!selectedMembre.statut" class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Motif de sortie</tc-form-label>
-                        <tc-input  required="required"
-                            [(ngModel)]="selectedMembre.motifSortie" name="editMotifSortie" id="editMotifSortie"
-                            #editMotifSortie="ngModel">
-                        </tc-input >
+                        <tc-input required="required" [(ngModel)]="selectedMembre.motifSortie" name="editMotifSortie"
+                            id="editMotifSortie" #editMotifSortie="ngModel">
+                        </tc-input>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="editMotifSortie">
                             </app-form-field-validation-message>
@@ -232,8 +233,8 @@
         <div class="actions justify-content-between">
             <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
                 (click)="closeEditModal()">Fermer</button>
-            <button [disabled]="form.invalid" (click)="update()" [afterIcon]="'icofont-save'"
-                tc-button [view]="'accent'">
+            <button [disabled]="form.invalid" (click)="update()" [afterIcon]="'icofont-save'" tc-button
+                [view]="'accent'">
                 Enregistrer
             </button>
         </div>
