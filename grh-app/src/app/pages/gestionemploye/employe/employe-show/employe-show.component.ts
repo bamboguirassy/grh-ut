@@ -25,10 +25,9 @@ import { HttpClient } from '@angular/common/http';
 export class EmployeShowComponent extends BasePageComponent<Employe> implements OnInit, OnDestroy {
   @ViewChild('modalBody', { static: true }) modalBody: ElementRef<any>;
   @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
- @ViewChildren('form') form;
   isModalVisible = false;
   editor = ClassicEditor;
-  public model = {
+  public email= {
       object: '',
       message: ''
     };
@@ -58,8 +57,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     public employeSrv: EmployeService, public fonctionEmployeSrv: FonctionEmployeService,
     private activatedRoute: ActivatedRoute,
     public authSrv: BamboAuthService,
-    public location: Location,
-   publicappEmail: HttpClient) {
+    public location: Location) {
     super(store, employeSrv);
     this.pageData = {
       title: '',
@@ -148,7 +146,6 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
         .subscribe(
           (data: any) => {
             this.entity = data;
-            this.handlePostLoad();
             this.employeSrv.toastr.success('Photo mise à jour !')
           },
           error => this.employeSrv.httpSrv.catchError(error))
@@ -205,17 +202,17 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     this.isModalVisible = false;
   }
   sendSingleEmail(){
-    if(this.model.object.length==0 || this.model.message.length==0){
+    if(this.email.object.length==0 || this.email.message.length==0){
       this.employeSrv.toastr.error('Verifier vos champs');
       return;
     }
-    this.employeSrv.sendEmail([this.entity.email],this.model.object,this.model.message)
+    this.employeSrv.sendEmail([this.entity.email],this.email.object,this.email.message)
     .subscribe(
       (data: any) => {
-        console.log(data);
-        this.handlePostLoad();
         this.employeSrv.toastr.success('Email Envoyé avec succès')
         this.closeModal(); 
+        this.email.object=""
+        this.email.message=""
       },
       error => this.employeSrv.httpSrv.catchError(error))
 
