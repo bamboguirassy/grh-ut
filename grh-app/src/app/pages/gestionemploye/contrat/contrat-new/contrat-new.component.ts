@@ -7,7 +7,6 @@ import { TypeContrat } from 'src/app/pages/parametrage/typecontrat/typecontrat';
 import { TypeContratService } from 'src/app/pages/parametrage/typecontrat/typecontrat.service';
 import { DatePipe } from '@angular/common';
 import { EmployeService } from '../../employe/employe.service';
-import { IAppState } from 'src/app/interfaces/app-state';
 
 @Component({
   selector: 'app-contrat-new',
@@ -26,7 +25,6 @@ export class ContratNewComponent implements OnInit {
   @Input() employe: Employe;
 
   typeContrats: TypeContrat[] = [];
-  contrats: Contrat[] = [];
   selectedTypeContrat: any;
   motifFinContrats: any = [];
   contratActif: Contrat;
@@ -40,7 +38,6 @@ export class ContratNewComponent implements OnInit {
 
   ngOnInit(): void {
     this.motifFinContrats = this.employeSrv.motifSorties;
-    this.findByEmploye();
   }
 
   save() {
@@ -128,16 +125,6 @@ export class ContratNewComponent implements OnInit {
       this.entity.dateFinPrevue = null;
     }
   }
-
-  findByEmploye() {
-    this.contratSrv.findByEmploye(this.employe)
-      .subscribe((data: any) => {
-        this.contrats = data;
-        this.contratActif = this.contrats.find(contrat => contrat.etat);
-      }, err => this.contratSrv.httpSrv.catchError(err));
-  }
-
-
 
 }
 

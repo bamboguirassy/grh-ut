@@ -240,7 +240,7 @@
         <div class="col-12">
           <tc-form-group>
             <tc-form-label>Objet</tc-form-label>
-            <tc-input required="required" [(ngModel)]="model.object" name="object" id="object" #object="ngModel">
+            <tc-input required="required" [(ngModel)]="email.object" name="object" id="object" #object="ngModel">
             </tc-input>
         <tc-form-description>
             <app-form-field-validation-message [formField]="object"></app-form-field-validation-message>
@@ -249,7 +249,7 @@
          <tc-form-group>
             <tc-form-label>Message</tc-form-label>
             <ckeditor nz-input [required]="true" id="message" name="message" #message="ngModel"
-                        [(ngModel)]="model.message" [editor]="editor">
+                        [(ngModel)]="email.message" [editor]="editor" class="ckeditor-col-container clearfix">
                     </ckeditor>
             <tc-form-description>
               <app-form-field-validation-message [formField]="message"></app-form-field-validation-message>

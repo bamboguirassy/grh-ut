@@ -22,15 +22,15 @@
         </div>
         <div class="col-12 col-md-6">
           <tc-form-group>
-            <tc-form-label>Missions</tc-form-label>
-            <ckeditor nz-input [required]="true" [(ngModel)]="entity.missions" name="missions" id="missions" #missions="ngModel" [editor]="Editor">
-            </ckeditor>
+            <tc-form-label>Date création</tc-form-label>
+            <nz-date-picker  type="Date" [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateCreation"
+              name="dateCreation" id="dateCreation" #dateCreation="ngModel"></nz-date-picker>
             <tc-form-description>
-              <app-form-field-validation-message [formField]="missions"></app-form-field-validation-message>
+              <app-form-field-validation-message [formField]="dateCreation"></app-form-field-validation-message>
             </tc-form-description>
           </tc-form-group>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12">
           <tc-form-group>
             <tc-form-label>Etat</tc-form-label>
             <tc-switcher [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel">
@@ -42,11 +42,11 @@
         </div>
         <div class="col-12 col-md-6">
           <tc-form-group>
-            <tc-form-label>Date de création</tc-form-label>
-            <nz-date-picker  type="Date" [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateCreation"
-              name="dateCreation" id="dateCreation" #dateCreation="ngModel"></nz-date-picker>
+            <tc-form-label>Missions</tc-form-label>
+            <ckeditor nz-input [required]="true" [(ngModel)]="entity.missions" name="missions" id="missions" #missions="ngModel" [editor]="Editor">
+            </ckeditor>
             <tc-form-description>
-              <app-form-field-validation-message [formField]="dateCreation"></app-form-field-validation-message>
+              <app-form-field-validation-message [formField]="missions"></app-form-field-validation-message>
             </tc-form-description>
           </tc-form-group>
         </div>

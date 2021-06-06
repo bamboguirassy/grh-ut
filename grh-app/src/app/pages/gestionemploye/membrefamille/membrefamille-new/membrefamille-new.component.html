@@ -56,8 +56,8 @@
                         <tc-form-label>Genre</tc-form-label>
                         <tc-radio [direction]="'horizontal'" required="required" [(ngModel)]="entity.genre" name="genre"
                             id="genre" #genre="ngModel">
-                            <tc-radio-option [value]="'Homme'">Homme</tc-radio-option>
-                            <tc-radio-option [value]="'Femme'">Femme</tc-radio-option>
+                            <tc-radio-option [value]="'Masculin'">Masculin</tc-radio-option>
+                            <tc-radio-option [value]="'Féminin'">Féminin</tc-radio-option>
                         </tc-radio>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="genre"></app-form-field-validation-message>
@@ -69,10 +69,10 @@
                         <tc-form-label>Lien Parenté</tc-form-label>
                         <tc-radio required="required" [(ngModel)]="entity.lienParente" name="lienParente"
                             id="lienParente" #lienParente="ngModel" [direction]="'horizontal'">
-                            <tc-radio-option [hidden]="entity?.genre!='Homme'" [value]="'époux'">Epoux</tc-radio-option>
-                            <tc-radio-option [hidden]="entity?.genre!='Femme'" [value]="'épouse'">Epouse</tc-radio-option>
-                            <tc-radio-option [hidden]="entity?.genre!='Homme'" [value]="'fils'">Fils</tc-radio-option>
-                            <tc-radio-option [hidden]="entity?.genre!='Femme'" [value]="'fille'">Fille</tc-radio-option>
+                            <tc-radio-option [hidden]="entity?.genre!='Masculin'" [value]="'époux'">Epoux</tc-radio-option>
+                            <tc-radio-option [hidden]="entity?.genre!='Féminin'" [value]="'épouse'">Epouse</tc-radio-option>
+                            <tc-radio-option [hidden]="entity?.genre!='Masculin'" [value]="'fils'">Fils</tc-radio-option>
+                            <tc-radio-option [hidden]="entity?.genre!='Féminin'" [value]="'fille'">Fille</tc-radio-option>
                         </tc-radio>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="lienParente">

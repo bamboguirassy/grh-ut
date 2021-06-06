@@ -17,11 +17,11 @@ import { AngularChart } from 'ng2-charts';
 export class AffectationListComponent implements OnInit, OnDestroy {
   selectedAffectation: Affectation;
   @Input() employe: Employe;
+  @Input() displayTimeline: boolean = true;
   items: Affectation[]=[];
-  affectations: Affectation[]=[];
   secondViewBorder = 'warning';
   lightGradient = ['#fff', SETTINGS.topbarBg];
-  @Input() displayTimeline: boolean = true;
+
 
 
   constructor(store: Store<IAppState>,
@@ -70,7 +70,7 @@ export class AffectationListComponent implements OnInit, OnDestroy {
   }
   
   onCreate(item: Affectation) {
-    this.items = [item, ...this.items];
+   this.findByEmploye();
   }
 
   onClose(){
