@@ -13,7 +13,7 @@
             <nz-tab *ngFor="let typeEmploye of typeEmployes" [nzTitle]="typeEmploye.code">
                 <div class="d-flex vertical-align-top justify-content-between">
                     <h3 class="mb-1">Liste des employés - {{typeEmploye?.code}} </h3>
-                    <label class="mb-1 h3" nz-checkbox [nzIndeterminate]="isPartialSelection && !isAllSelected " [(ngModel)]="isAllSelected" (ngModelChange)="changeAllSelectionStateLink($event)">Tous sélectionner</label>
+                    <label class="mb-1 h3" nz-checkbox [nzIndeterminate]="isPartialSelection && !isAllSelected " [(ngModel)]="isAllSelected" (ngModelChange)="changeAllSelectionStateLink()">Tous sélectionner</label>
                 </div>
                 <tc-table [itemsPerPage]="15" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
                     <tc-table-col [columnTitle]="''" [columnName]="''">
