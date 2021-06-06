@@ -206,6 +206,7 @@ import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sort
 
 
 import { AnciennetePerGenreComponent } from './dashboards/anciennete/anciennete-per-genre/anciennete-per-genre.component';
+import { MembreSyndicatAmicalComponent } from './gestionemploye/membresyndicat/membre-syndicat-amical/membre-syndicat-amical.component';
 
 @NgModule({
   imports: [
@@ -466,6 +467,7 @@ import { AnciennetePerGenreComponent } from './dashboards/anciennete/anciennete-
     FonctionemployeTimelineComponent,
     FonctionEnExpirationComponent,
     AnciennetePerGenreComponent,
+    MembreSyndicatAmicalComponent,
 
   ],
   exports: [],
