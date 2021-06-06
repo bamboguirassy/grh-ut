@@ -145,7 +145,7 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
     });
   }
 
-  onItemsSelectionStateChange($event){
+  onItemsSelectionStateChange(){
     setTimeout(() => {
       this.isAllSelected = this.isAllCheckt();
       this.isPartialSelection = this.items.some(element => element.selected) && this.items.some(element => !(element.selected));
