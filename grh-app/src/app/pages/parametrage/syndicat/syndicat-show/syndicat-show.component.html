@@ -2,7 +2,7 @@
 
     
     <div class="row">
-        <div class="col-12 col-md-4" >
+        <div class="col-12 col-md-4">
            
                 <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
 
@@ -16,32 +16,38 @@
                             <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
                         </div>
                     </div>
+                    <div class="col-md-7">
+                    
+                    </div>
+            <div class="table-responsive -sm">
 
-                    <table class="table">
-                        <tr>
-                            <th>Nom</th>
-                            <td>
-                                <span *ngIf="entity?.nom">{{ entity?.nom }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.nom">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Code</th>
-                            <td>
-                                <span *ngIf="entity?.code">{{ entity?.code }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.code">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                       
-                        <tr>
-                            <th>MontantCotisationMensuelle</th>
-                            <td>
-                                <span *ngIf="entity?.montantCotisationMensuelle">{{ entity?.montantCotisationMensuelle
-                                    }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.montantCotisationMensuelle">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                    </table>
+                <table class="table">
+                    <tr>
+                        <th>Nom</th>
+                        <td >
+                            <span *ngIf="entity?.nom">{{ entity?.nom }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.nom">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Code</th>
+                        <td>
+                            <span *ngIf="entity?.code">{{ entity?.code }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.code">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                   
+                    <tr>
+                        <th>MontantCotisationMensuelle</th>
+                        <td>
+                            <span *ngIf="entity?.montantCotisationMensuelle">{{ entity?.montantCotisationMensuelle
+                                }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.montantCotisationMensuelle">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+                   
 
                     <div class="d-flex flex-row">
 
