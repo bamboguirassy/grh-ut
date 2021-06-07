@@ -362,7 +362,7 @@ $employe->setProfession($faker->randomElement($professions));
     }
 
     /**
-     * @Rest\Post(path="/public/send-email", name="employe_send-email")
+     * @Rest\Post(path="/send-email", name="employe_send-email")
      * @Rest\View(StatusCode=200)
      * @param Request $request
      * @param Swift_Mailer $mailer

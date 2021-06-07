@@ -200,16 +200,16 @@ import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/
 import { MembreCommissionEmployeComponent } from './gestionemploye/membrecommission/membre-commission-employe/membre-commission-employe.component';
 import { FonctionemployeTimelineComponent } from './gestionemploye/fonctionemploye/fonctionemploye-timeline/fonctionemploye-timeline.component';
 import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/fonction-en-expiration/fonction-en-expiration.component';
+import { PyramideAgeGenreComponent } from './dashboards/pyramide/pyramide-age-genre/pyramide-age-genre.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
 import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sortie-stats.component';
-
-
-import { AnciennetePerGenreComponent } from './dashboards/anciennete/anciennete-per-genre/anciennete-per-genre.component';
 import { MembreSyndicatAmicalComponent } from './gestionemploye/membresyndicat/membre-syndicat-amical/membre-syndicat-amical.component';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 @NgModule({
   imports: [
+    NzCheckboxModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -466,9 +466,9 @@ import { MembreSyndicatAmicalComponent } from './gestionemploye/membresyndicat/m
     MembreCommissionEmployeComponent,
     FonctionemployeTimelineComponent,
     FonctionEnExpirationComponent,
-    AnciennetePerGenreComponent,
     MembreSyndicatAmicalComponent,
 
+    PyramideAgeGenreComponent,
   ],
   exports: [],
   entryComponents: []

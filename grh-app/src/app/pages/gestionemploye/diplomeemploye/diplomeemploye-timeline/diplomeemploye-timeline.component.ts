@@ -17,17 +17,9 @@ export class DiplomeEmployeTimelineComponent implements OnInit {
     this.items = values;
     this.setTimeline();
   }
-  /*
-  @Input() employe: Employe;
-  items:Contrat[]=[];
-  @Input() set setItems(values){
-    this.items = values;
-    this.setTimeline();
-  }
-  */
+ 
   lightGradient = ['#fff', SETTINGS.topbarBg];
   tab = [];
-    constructor(public employeSrv: EmployeService ,public diplomeEmployeSrv: DiplomeEmployeService) { }
   
     ngOnInit(): void {
       this.setTimeline();

@@ -21,7 +21,7 @@ export class AffectationTimelineComponent implements OnInit {
     this.setTimeline();
   }
 
-  constructor( public affectationSrv: AffectationService, public datePipe: DatePipe) { }
+  constructor(public datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.setTimeline();

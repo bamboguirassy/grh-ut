@@ -1,4 +1,5 @@
 <tc-card *ngIf="syndicatSrv.resourceName|showable" [tcGradient]="lightGradient">
+<<<<<<< HEAD
     
     <div class="row">
         <div class="col-12 col-md-4" >
@@ -82,7 +83,75 @@
         <div class="col-12 col-md-8"> 
             
              <app-membre-syndicat-amical *ngIf="entity" [membresyndicat]="entity" [orientation]="orientation"></app-membre-syndicat-amical>
+=======
+    <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
+        <tc-card class="mb-1">
+        <div class="row">
+            
+            <div class="col-12 col-md-7">
+                <blockquote class="blockquote">
+                    <p class="mb-0">{{title}}</p>
+                   
+                </blockquote>
+            </div>
+            <div class="col-12 col-md-4">
+                <button *ngIf="syndicatSrv.resourceName|editable"
+                    [routerLink]="['/'+orientation,syndicatSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+                    class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
+                <button (click)="remove(entity)" *ngIf="syndicatSrv.resourceName|deletable" tc-button view="error"
+                    beforeIcon="icofont-trash" class=" float-right ml-1"></button>
+                <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
+                    beforeIcon="icofont-refresh"></button>
+                <button tc-button class="float-right" (click)="location.back()" beforeIcon="icofont-reply"></button>
+            </div>
+        </div>
+        </tc-card>
+    </tc-card>
+    <div class="row">
+        
+        <div class="col-12 col-md-4">
+        <div class="table-responsive">
+            <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
+                <div class="container-fluid">
+
+                    <div class="rounded-circle text-center" style="justify-content: center;" >
+                        <img (click)="fileInput.click()"
+                        [src]="entity?.filepath ? entity?.filepath:'assets/img/default-profile-picture1.jpg'"
+                        alt="photo syndicat" style="width: 100%;">
+                    <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
+                        
+                    </div>
+                </div>
+ 
+                <table class="table">
+                    <tr>
+                        <th>Nom</th>
+                        <td>
+                            <span *ngIf="entity?.nom">{{ entity?.nom }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.nom">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Code</th>
+                        <td>
+                            <span *ngIf="entity?.code">{{ entity?.code }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.code">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                     
+                    <tr>
+                        <th>MontantCotisationMensuelle</th>
+                        <td>
+                            <span *ngIf="entity?.montantCotisationMensuelle">{{ entity?.montantCotisationMensuelle
+                                }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.montantCotisationMensuelle">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                </table>
+            </tc-card>
+>>>>>>> a6540df4a970d71708b2c91d4d4040e179fea629
         </div>
     </div>
-</tc-card>
+
 <app-access-denied *ngIf="!(syndicatSrv.resourceName|showable)"></app-access-denied>

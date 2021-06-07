@@ -1,29 +1,32 @@
 <tc-card *ngIf="employeSrv.resourceName|listable" [tcGradient]="lightGradient">
     <tc-card [view]="secondViewBorder" [outline]="true">
         <div class="row">
-            <div class="col-12">
-                <button class="float-right" tc-button afterIcon="icofont-refresh"
-                    (click)="findByTypeEmploye(typeEmployes[selectedIndex])">Rafraichir</button>
+            <div class="d-flex justify-content-end col-12">
+                <button tc-button (click)="toogleSendEmailModal(modalBody, 'Edition d\'email', modalFooter, { width: '100%' })" afterIcon="icofont-send-mail">
+                    Envoyer Email</button>
+                <button class="ml-1" tc-button afterIcon="icofont-refresh" (click)="findByTypeEmploye(typeEmployes[selectedIndex])">Rafraichir</button>
             </div>
         </div>
     </tc-card>
-    <tc-card [view]="secondViewBorder" [outline]="true" >
-        <nz-tabset  [(nzSelectedIndex)]="selectedIndex" (nzSelectChange)="handleTabChange($event)">
-            <nz-tab  *ngFor="let typeEmploye of typeEmployes" [nzTitle]="typeEmploye.code" >
-                <h3>Liste des employés - {{typeEmploye?.code}} </h3>
-                <tc-table   [itemsPerPage]="15" [rows]="items" [hovered]="true"  [pagination]="true" [search]="true">
+    <tc-card [view]="secondViewBorder" [outline]="true">
+        <nz-tabset [(nzSelectedIndex)]="selectedIndex" (nzSelectChange)="handleTabChange($event)">
+            <nz-tab *ngFor="let typeEmploye of typeEmployes" [nzTitle]="typeEmploye.code">
+                <div class="d-flex vertical-align-top justify-content-between">
+                    <h3 class="mb-1">Liste des employés - {{typeEmploye?.code}} </h3>
+                    <label class="mb-1 h4" nz-checkbox [nzIndeterminate]="isPartialSelection && !isAllSelected " [(ngModel)]="isAllSelected" (ngModelChange)="changeAllSelectionStateLink()">Tous sélectionner</label>
+                </div>
+                <tc-table [itemsPerPage]="15" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
+                    <tc-table-col [columnTitle]="''" [columnName]="''">
+                        <ng-template #tableTDTemplate let-row="row">
+                            <label nz-checkbox (ngModelChange)="onItemsSelectionStateChange()" [(ngModel)]="row.selected"></label>
+                        </ng-template>
+                    </tc-table-col>
                     <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
                         <ng-template #tableTDTemplate let-row="row">
                             <div class="actions">
-                                <button *ngIf="employeSrv.resourceName|editable" tc-button
-                                    [afterIcon]="'icofont-ui-edit'" [view]="'warning'" [square]="true" [tcShape]="500"
-                                    [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-                                <button *ngIf="employeSrv.resourceName|deletable" (click)="remove(row)" tc-button
-                                    [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
-                                    [size]="'sm'"></button>
-                                <button *ngIf="employeSrv.resourceName|showable" tc-button
-                                    [afterIcon]="'icofont-eye-open'" [view]="'accent'" [square]="true" [tcShape]="500"
-                                    [size]="'sm'" [routerLink]="[row.id]"></button>
+                                <button *ngIf="employeSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
+                                <button *ngIf="employeSrv.resourceName|deletable" (click)="remove(row)" tc-button [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+                                <button *ngIf="employeSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'" [view]="'accent'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id]"></button>
                             </div>
                         </ng-template>
                     </tc-table-col>
@@ -49,15 +52,13 @@
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                    <tc-table-col [columnTitle]="'Date Naissance'" [columnName]="'dateNaissance'"
-                        [enableSorting]="true">
+                    <tc-table-col [columnTitle]="'Date Naissance'" [columnName]="'dateNaissance'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                    <tc-table-col [columnTitle]="'Lieu Naissance'" [columnName]="'lieuNaissance'"
-                        [enableSorting]="true">
+                    <tc-table-col [columnTitle]="'Lieu Naissance'" [columnName]="'lieuNaissance'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value }}</span>
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
@@ -81,22 +82,19 @@
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                    <tc-table-col [columnTitle]="'Matricule Caisse Sociale'" [columnName]="'matriculeCaisseSociale'"
-                        [enableSorting]="true">
+                    <tc-table-col [columnTitle]="'Matricule Caisse Sociale'" [columnName]="'matriculeCaisseSociale'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value }}</span>
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                    <tc-table-col [columnTitle]="'Date Recrutement'" [columnName]="'dateRecrutement'"
-                        [enableSorting]="true">
+                    <tc-table-col [columnTitle]="'Date Recrutement'" [columnName]="'dateRecrutement'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                    <tc-table-col [columnTitle]="'Situtation Matrimoniale'" [columnName]="'situtationMatrimoniale'"
-                        [enableSorting]="true">
+                    <tc-table-col [columnTitle]="'Situtation Matrimoniale'" [columnName]="'situtationMatrimoniale'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value }}</span>
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
@@ -114,8 +112,7 @@
                             <tc-badge view="success" [outline]="true" *ngIf="value">Oui</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                    <tc-table-col [columnTitle]="'Email Instutitionnel'" [columnName]="'emailUniv'"
-                        [enableSorting]="true">
+                    <tc-table-col [columnTitle]="'Email Instutitionnel'" [columnName]="'emailUniv'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">
                                 <a href="mailto:{{value}}">{{value}}</a>
@@ -131,8 +128,7 @@
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                    <tc-table-col [columnTitle]="'Téléphone Primaire'" [columnName]="'telephonePrimaire'"
-                        [enableSorting]="true">
+                    <tc-table-col [columnTitle]="'Téléphone Primaire'" [columnName]="'telephonePrimaire'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">
                                 <a href="tel:{{ value }}">{{value}}</a>
@@ -140,8 +136,7 @@
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                    <tc-table-col [columnTitle]="'Téléphone Secondaire'" [columnName]="'telephoneSecondaire'"
-                        [enableSorting]="true">
+                    <tc-table-col [columnTitle]="'Téléphone Secondaire'" [columnName]="'telephoneSecondaire'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">
                                 <a href="tel:{{ value }}">{{value}}</a>
@@ -189,8 +184,7 @@
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                    <tc-table-col [columnTitle]="'Caisse Sociale'" [columnName]="'caisseSociale'"
-                        [enableSorting]="true">
+                    <tc-table-col [columnTitle]="'Caisse Sociale'" [columnName]="'caisseSociale'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">
                                 {{value?.code}}
@@ -198,8 +192,7 @@
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                    <tc-table-col [columnTitle]="'Mutuelle de Santé'" [columnName]="'mutuelleSante'"
-                        [enableSorting]="true">
+                    <tc-table-col [columnTitle]="'Mutuelle de Santé'" [columnName]="'mutuelleSante'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">
                                 {{value?.code}}
@@ -207,8 +200,7 @@
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                    <tc-table-col [columnTitle]="'Date Prise Service'" [columnName]="'datePriseService'"
-                        [enableSorting]="true">
+                    <tc-table-col [columnTitle]="'Date Prise Service'" [columnName]="'datePriseService'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">{{ value|date:'dd/MM/yyyy' }}</span>
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
@@ -228,8 +220,7 @@
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                    <tc-table-col [columnTitle]="'Numero Main d\'Oeuvre'" [columnName]="'numeroMainOeuvre'"
-                        [enableSorting]="true">
+                    <tc-table-col [columnTitle]="'Numero Main d\'Oeuvre'" [columnName]="'numeroMainOeuvre'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value let-row="row">
                             <span class="nowrap" *ngIf="value">
                                 {{ value }}
@@ -237,8 +228,7 @@
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                    <tc-table-col [columnTitle]="'Numero Affiliation Ipres'" [columnName]="'numeroAffiliationIpres'"
-                        [enableSorting]="true">
+                    <tc-table-col [columnTitle]="'Numero Affiliation Ipres'" [columnName]="'numeroAffiliationIpres'" [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value let-row="row">
                             <span class="nowrap" *ngIf="value">
                                 {{ value }}
@@ -253,4 +243,30 @@
     </tc-card>
     <app-employe-new [typeEmploye]="typeEmployes[selectedIndex]" (creation)="onCreate($event)"></app-employe-new>
 </tc-card>
-<app-access-denied *ngIf="!(employeSrv.resourceName|listable)"></app-access-denied>
+<ng-container>
+    <ng-template #modalHeader>
+        <h2 class="title">Modal title</h2>
+        <div class="actions">
+            <tc-badge [view]="'warning'">New</tc-badge>
+        </div>
+    </ng-template>
+
+    <ng-template #modalBody>
+        <div>
+            <label class="mb-1" for="objet">Objet</label>
+            <tc-input id="objet" class="mb-4" [placeholder]="'Objet'" [(ngModel)]="emailEditionModel.object">
+            </tc-input>
+            <ckeditor [config]="config" [(ngModel)]="emailEditionModel.body" [editor]="emailEditor"></ckeditor>
+        </div>
+
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="actions justify-content-between">
+            <button tc-button [view]="'error'" (click)="closeModal()">Fermer</button>
+            <button tc-button [view]="'success'" (click)="sendEmaillToSelectedEmployes()">Envoyer</button>
+        </div>
+    </ng-template>
+</ng-container>
+
+<app-access-denied *ngIf=" !(employeSrv.resourceName|listable) "></app-access-denied>
