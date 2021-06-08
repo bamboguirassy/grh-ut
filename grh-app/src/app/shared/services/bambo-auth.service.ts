@@ -269,20 +269,9 @@ export class BamboAuthService {
 
   sendPasswordRequest(email: string) {
     return this.httpSrv.post('auth/public/forgot-password', {email}).pipe(first());
-    // .subscribe(
-    //     () => {
-    //         Swal.fire({
-    //             title: 'Demande Mot de passe',
-    //             text: `Une demande de réinitialisation de mot de passe a été envoyé à l'adresse ${this.email.value}`,
-    //             icon: 'success',
-    //             confirmButtonText: 'Ok',
-    //         }).then(r => {
-    //             if (r) {
-    //                 // this.onRequestSent.emit(true);
-    //                 // this.email.reset();
-    //             }
-    //         });
-    //     }, error => this.httpSrv.toastr.error(error.error.message)
-    // )
+  }
+
+  createNewPassorwd(token: string, password: string) {
+    return this.httpSrv.post('auth/public/update-password', {password, token}).pipe(first());
 }
 }

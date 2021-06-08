@@ -206,6 +206,7 @@ import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-ca
 import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sortie-stats.component';
 import { MembreSyndicatAmicalComponent } from './gestionemploye/membresyndicat/membre-syndicat-amical/membre-syndicat-amical.component';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { PageResetPasswordComponent } from './apps/sessions/reset-password/reset-password.component';
 
 @NgModule({
   imports: [
@@ -266,6 +267,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
     PageUserProfileComponent,
     PageEditAccountComponent,
     PageSignInComponent,
+    PageResetPasswordComponent,
     PageSignUpComponent,
     PageSettingsComponent,
     Page404Component,

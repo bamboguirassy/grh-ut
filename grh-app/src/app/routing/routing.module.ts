@@ -43,6 +43,7 @@ import { TestComponent } from '../pages/tests/test/test.component';
 import { contratRoutes } from '../pages/gestionemploye/contrat/contrat.routes';
 import { commissionRoutes } from '../pages/parametrage/commission/commission.routes';
 import { membreCommissionRoutes } from '../pages/gestionemploye/membrecommission/membrecommission.routes';
+import { PageResetPasswordComponent } from '../pages/apps/sessions/reset-password/reset-password.component';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -85,6 +86,7 @@ const VERTICAL_ROUTES: Routes = [
 const PUBLIC_ROUTES: Routes = [
   { path: 'sign-in', component: PageSignInComponent },
   { path: 'sign-up', component: PageSignUpComponent },
+  { path: 'new-password/:token', component: PageResetPasswordComponent },
   { path: 'page-404', component: Page404Component },
   { path: 'page-500', component: Page500Component },
   { path: '**', component: Page404Component }
