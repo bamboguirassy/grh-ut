@@ -26,10 +26,15 @@ export class ResetPasswordFormComponent implements OnInit {
   }
 
   resetPassword() {
+    if (this.resetPasswordForm?.value?.password?.length < 4) {
+      this.authSrv.httpSrv.toastr.error('le mot de passe doit comporter au moins 4 caractères');
+      return;
+    }
     if (this.resetPasswordForm?.value?.password !== this.resetPasswordForm?.value?.confirmPassword) {
       this.authSrv.httpSrv.toastr.error('les deux mots de passe ne concordent pas');
       return;
     }
+    
     const {password} = this.resetPasswordForm?.value;
     this.authSrv.createNewPassorwd(this.token, password).subscribe(() => {
         this.authSrv.httpSrv.toastr.success('Réinitialisation mot de passe réussie');
