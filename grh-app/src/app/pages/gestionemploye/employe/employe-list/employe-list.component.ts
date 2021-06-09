@@ -133,7 +133,7 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
 
   changeAllSelectionStateLink(){
 
-    this.isAllSelected = !this.isAllChecked();
+    this.isAllSelected = !this.isAllCheckt();
     this.changeAllSelectionState(this.isAllSelected);
     this.isPartialSelection = false;
   }
@@ -147,12 +147,12 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
 
   onItemsSelectionStateChange(){
     setTimeout(() => {
-      this.isAllSelected = this.isAllChecked();
+      this.isAllSelected = this.isAllCheckt();
       this.isPartialSelection = this.items.some(element => element.selected) && this.items.some(element => !(element.selected));
     }, 1);
   }
 
-  isAllChecked(){
+  isAllCheckt(){
     return this.items.every(element => element.selected);
   }
 

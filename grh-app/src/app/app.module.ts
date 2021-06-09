@@ -18,6 +18,7 @@ import fr from '@angular/common/locales/fr';
 import { BamboAuthService } from './shared/services/bambo-auth.service';
 import { ToastrModule } from 'ngx-toastr';
 import { NgHttpLoaderModule } from 'ng-http-loader';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 registerLocaleData(fr);
 
@@ -38,6 +39,7 @@ export function currentUserProviderFactory(authSrv: BamboAuthService) {
   ],
   imports: [
     BrowserModule,
+    NzSelectModule,
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES, { relativeLinkResolution: 'legacy' }),
