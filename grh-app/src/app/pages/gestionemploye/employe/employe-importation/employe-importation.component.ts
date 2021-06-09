@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, VERSION, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
@@ -18,12 +19,15 @@ export class EmployeImportationComponent extends BasePageComponent<Employe> impl
   typeEmployes: TypeEmploye[] = [];
   selectedTypeEmploye: TypeEmploye;
   records: any[];
+  isError = true;
+  layout = 'horizontal';
   
 
   constructor(
     public employeSrv: EmployeService,
     store: Store<IAppState>,
-    public typeEmployeSrv: TypeEmployeService
+    public typeEmployeSrv: TypeEmployeService,
+    public router: Router
   ) {
     super(store, employeSrv);
   }
@@ -51,6 +55,19 @@ export class EmployeImportationComponent extends BasePageComponent<Employe> impl
         }
       });
     }
+  }
+
+  chargerEmployes(){
+    if(this.selectedTypeEmploye){
+      this.employeSrv.chargerEmployeByTypeEmploye(this.selectedTypeEmploye, this.records)
+        .subscribe((data: any) => {
+          this.isError = false;
+        }, err => this.employeSrv.httpSrv.catchError(err));
+    }
+  }
+
+  goTo(){
+    this.router.navigate(['/' + this.layout + '/' + this.employeSrv.getRoutePrefix()]);
   }
 
 }
