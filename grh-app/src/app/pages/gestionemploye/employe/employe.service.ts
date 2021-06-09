@@ -42,7 +42,7 @@ export class EmployeService extends BamboAbstractService {
     { label: 'Démission', value: 'Démission' },
     { label: 'Retraite', value: 'Retraite' },
     { label: 'Retraite Anticipé', value: 'Retraite Anticipé' },
-    { label: 'Mis à pied', value: 'Mis à pied' },
+    { label: 'Licenciement', value: 'Licenciement' },
     { label: 'Expiration Contrat', value: 'Expiration Contrat' },
   ]
 

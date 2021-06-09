@@ -900,7 +900,7 @@ class DashboardController extends AbstractController
      public function countPersByGradeGroupByGenre():array {
         $em = $this->getDoctrine()->getManager();
         
-        $grades = $em->createQuery('Select distinct e.grade FROM App\Entity\Employe e')
+        $grades = $em->createQuery('Select distinct e.grade FROM App\Entity\Employe e where e.grade is NOT NULL')
              ->getResult();
      $typeEmploye = $em->getRepository(TypeEmploye::class)->findOneByCode('PER');
      foreach ($grades as $grade){
