@@ -64,6 +64,10 @@ export class EmployeService extends BamboAbstractService {
     return this.httpSrv.post(this.routePrefix+ 'realtime-search',{'searchTerm': searchTerm})
   }
 
+  chargerEmployeByTypeEmploye(typeEmploye: any ,elements: any) {
+    return this.httpSrv.post(this.routePrefix+ 'charger-employe/'+typeEmploye, elements);
+  }
+
   
   findAll(): any {
     this

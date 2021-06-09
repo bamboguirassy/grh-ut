@@ -208,6 +208,7 @@ import { MembreSyndicatAmicalComponent } from './gestionemploye/membresyndicat/m
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { EmployeImportationComponent } from './gestionemploye/employe/employe-importation/employe-importation.component';
 import { PageResetPasswordComponent } from './apps/sessions/reset-password/reset-password.component';
+import { NzResultModule } from 'ng-zorro-antd/result';
 
 @NgModule({
   imports: [
@@ -259,7 +260,8 @@ import { PageResetPasswordComponent } from './apps/sessions/reset-password/reset
     NgPipesModule,
     NzRadioModule,
     NzIconModule,
-    NzToolTipModule
+    NzToolTipModule,
+    NzResultModule 
 
   ],
   declarations: [

@@ -400,4 +400,45 @@ $employe->setProfession($faker->randomElement($professions));
         
           return $employes;
     }
+    
+    /**
+     * @Rest\Post(path="/charger-employe/{id}", name="charger_employe_by_type_employe", requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode = 200)
+     */
+    public function chargerEmployeByTypeEmploye(Request $request, TypeEmploye $typeEmploye) {
+        $em = $this->getDoctrine()->getManager();
+        $reqData = Utils::getObjectFromRequest($request);
+        foreach ($reqData as $rowEmploye) {            
+            $employe = new Employe();
+            $form = $this->createForm(EmployeType::class, $employe);
+            $form->submit((array)$rowEmploye);
+            if (!isset($rowEmploye->cni) || $rowEmploye->cni == NULL) {
+                throw $this->createNotFoundException("L'ajout échoué pour l'employé ".$rowEmploye->prenoms." ".$rowEmploye->nom.", le CNI est obligatoire.");
+            }
+            $employeVerifCni = $this->getDoctrine()
+                    ->getRepository(Employe::class)
+                    ->findByCni($employe->getCni());
+            if(count($employeVerifCni)<1){                
+                $employe->setTypeEmploye($typeEmploye);
+                if (isset($rowEmploye->dateNaissance)) {
+                    $employe->setDateNaissance(new \DateTime($rowEmploye->dateNaissance));
+                }
+                if (isset($rowEmploye->dateRecrutement)) {
+                    $employe->setDateRecrutement(new \DateTime($rowEmploye->dateRecrutement));
+                }
+                if (isset($rowEmploye->dateSortie)) {
+                    $employe->setDateSortie(new \DateTime($rowEmploye->dateSortie));
+                }
+                if (isset($rowEmploye->datePriseService)) {
+                    $employe->setDatePriseService(new \DateTime($rowEmploye->datePriseService));
+                }
+                $em->persist($employe);
+            } else {
+                throw $this->createNotFoundException("L'ajout échoué pour l'employé ".$employe->getPrenoms()." ".$employe->getNom()." CNI ".$employe->getCni().".");
+            }
+            
+        }
+        
+        return $em->flush();
+    }
 }
