@@ -22,6 +22,7 @@ import { NavbarSkeletonComponent } from './components/navbar-skeleton';
 import { SettingsComponent } from './components/settings';
 import { EmployeSearchComponent } from './components/employe-search/employe-search.component';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { ResetPasswordFormComponent } from './components/reset-password-form/reset-password-form.component';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
     PublicLayoutComponent,
     LoginFormComponent,
     RegisterFormComponent,
+    ResetPasswordFormComponent,
     NavbarSkeletonComponent,
     SettingsComponent,
     EmployeSearchComponent
@@ -54,6 +56,7 @@ import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
   exports: [
     LoginFormComponent,
     RegisterFormComponent,
+    ResetPasswordFormComponent,
     SettingsComponent,
     EmployeSearchComponent,
     NzAutocompleteModule

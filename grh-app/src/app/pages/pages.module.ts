@@ -204,8 +204,10 @@ import { PyramideAgeGenreComponent } from './dashboards/pyramide/pyramide-age-ge
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
 import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sortie-stats.component';
+import { MembreSyndicatAmicalComponent } from './gestionemploye/membresyndicat/membre-syndicat-amical/membre-syndicat-amical.component';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { EmployeImportationComponent } from './gestionemploye/employe/employe-importation/employe-importation.component';
+import { PageResetPasswordComponent } from './apps/sessions/reset-password/reset-password.component';
 
 @NgModule({
   imports: [
@@ -266,6 +268,7 @@ import { EmployeImportationComponent } from './gestionemploye/employe/employe-im
     PageUserProfileComponent,
     PageEditAccountComponent,
     PageSignInComponent,
+    PageResetPasswordComponent,
     PageSignUpComponent,
     PageSettingsComponent,
     Page404Component,
@@ -466,6 +469,8 @@ import { EmployeImportationComponent } from './gestionemploye/employe/employe-im
     MembreCommissionEmployeComponent,
     FonctionemployeTimelineComponent,
     FonctionEnExpirationComponent,
+    MembreSyndicatAmicalComponent,
+
     PyramideAgeGenreComponent,
     EmployeImportationComponent,
   ],

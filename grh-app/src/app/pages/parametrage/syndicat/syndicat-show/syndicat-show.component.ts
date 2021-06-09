@@ -13,7 +13,8 @@ import { Location } from '@angular/common';
   styleUrls: ['./syndicat-show.component.scss']
 })
 export class SyndicatShowComponent extends BasePageComponent<Syndicat> implements OnInit, OnDestroy {
-  entity: Syndicat;
+  entity:Syndicat;
+
   currentAvatar: any;
 
   constructor(store: Store<IAppState>,
