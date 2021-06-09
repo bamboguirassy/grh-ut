@@ -7,8 +7,6 @@ import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { BasePageComponent } from 'src/app/pages/base-page';
 import { Location } from '@angular/common';
-import { TypeEntite } from '../../typeentite/typeentite';
-import { TypeEntiteService } from '../../typeentite/typeentite.service';
 
 @Component({
   selector: 'app-structure-edit',
@@ -18,7 +16,6 @@ import { TypeEntiteService } from '../../typeentite/typeentite.service';
 export class StructureEditComponent extends BasePageComponent<Structure> implements OnInit, OnDestroy {
 
   
-  typeEntites: TypeEntite[] = [];
   structureParentes: Structure[] = [];
   selectedStructureParenteId: any;
   selectedTypeEntiteId: any;
@@ -27,8 +24,7 @@ export class StructureEditComponent extends BasePageComponent<Structure> impleme
               public structureSrv: StructureService,
               public router: Router,
               private activatedRoute: ActivatedRoute,
-              public location: Location,
-              public typeEntiteSrv: TypeEntiteService) {
+              public location: Location) {
     super(store, structureSrv);
     this.pageData = {
       title: 'Modification - Structure',
@@ -58,18 +54,10 @@ export class StructureEditComponent extends BasePageComponent<Structure> impleme
   }
 
   handlePostLoad() {
-    this.selectedTypeEntiteId = this.entity.typeEntite?.id;
     this.selectedStructureParenteId = this.entity?.structureParente?.id;
-    this.findTypeEntites();
     this.findStructureParentes();
   }
 
-  findTypeEntites() {
-    this.typeEntiteSrv.findAll()
-    .subscribe((data: any)=>{
-      this.typeEntites = data;
-    })
-  }
 
   findStructureParentes() {
     this.structureSrv.findAll()
@@ -82,7 +70,6 @@ export class StructureEditComponent extends BasePageComponent<Structure> impleme
     if(this.selectedStructureParenteId) {
       this.entity.structureParente = this.selectedStructureParenteId;
     }
-    this.entity.typeEntite = this.selectedTypeEntiteId;
   }
 
   handlePostUpdate() {
