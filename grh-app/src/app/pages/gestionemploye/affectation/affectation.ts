@@ -8,4 +8,5 @@ export class Affectation extends BamboAbstractObject {
     date: string;
     motif: string;
     poste: string;
+    etat: boolean;
 }
