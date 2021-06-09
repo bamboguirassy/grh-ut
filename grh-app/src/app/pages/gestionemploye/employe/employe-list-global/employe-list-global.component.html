@@ -1,0 +1,65 @@
+<nz-table #filterTable [nzData]="employes" nzTableLayout="fixed">
+    <thead>
+        <tr>
+            <th *ngFor="let column of listOfColumns; trackBy: trackByName" [(nzSortOrder)]="column.sortOrder"
+                [nzSortFn]="column.sortFn" [nzFilters]="column.listOfFilter" [nzFilterFn]="column.filterFn">
+                {{ column.name }}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let employe of filterTable.data">
+            <td>
+                <span class="nowrap">
+                    {{ employe?.prenoms }}
+                </span>
+
+            </td>
+            <td>
+                <span class="nowrap">
+                    {{ employe?.nom }}
+                </span>
+            </td>
+            <td>
+                <span class="nowrap">
+                    {{ employe?.dateNaissance | date:'dd/MM/yyyy' }}
+                </span>
+            </td>
+            <td>
+                <span class="nowrap">
+                    {{ employe?.lieuNaissance }}
+                </span>
+            </td>
+            <td>
+                <span class="nowrap">
+                    {{ employe?.cni }}
+                </span>
+            </td>
+            <td>
+                <span class="nowrap">
+                    {{ employe?.profession?.nom }}
+                </span>
+            </td>
+            <td>
+                <span class="nowrap">{{employe?.matriculeCaisseSociale}}</span>
+            </td>
+            <td>
+                <span class="nowrap">{{employe?.dateRecrutement | date:'dd/MM/yyyy'}}</span>
+            </td>
+            <td> 
+                <span class="nowrap">{{employe?.situtationMatrimoniale}}</span> 
+            </td>
+            <td> <span class="nowrap">{{employe?.Genre}}</span> </td>
+            <td> <span class="nowrap">{{ employe?.Etat }}</span> </td>
+            <td> <span class="nowrap">{{ employe?.emailUniv }}</span> </td>
+            <td> <span class="nowrap">{{ employe?.email }}</span> </td>
+            <td> <span class="nowrap">{{ employe?.telephonePrimaire }}</span> </td>
+            <td> <span class="nowrap">{{ employe?.telephoneSecondaire }}</span> </td>
+            <td> <span class="nowrap">{{ employe?.nationalite?.nationalite }}</span> </td>
+            <td> <span class="nowrap">{{ employe?.structure?.nom }}</span>  </td>
+            <td> <span class="nowrap">{{ employe?.caisseSociale?.nom }}</span>  </td>
+            <td> <span class="nowrap">{{ employe?.mutuelleSante?.nom }} </span>  </td>
+            <td> <span class="nowrap">{{ employe?.datePriseService }}</span>  </td>
+        </tr>
+    </tbody>
+</nz-table>
