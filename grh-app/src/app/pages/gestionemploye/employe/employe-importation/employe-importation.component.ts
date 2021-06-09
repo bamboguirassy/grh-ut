@@ -58,12 +58,10 @@ export class EmployeImportationComponent extends BasePageComponent<Employe> impl
   }
 
   chargerEmployes(){
-    //alert(this.selectedTypeEmploye);
     if(this.selectedTypeEmploye){
       this.employeSrv.chargerEmployeByTypeEmploye(this.selectedTypeEmploye, this.records)
         .subscribe((data: any) => {
           this.isError = false;
-          //this.setLoaded();
         }, err => this.employeSrv.httpSrv.catchError(err));
     }
   }
