@@ -20,7 +20,7 @@ export class FonctionemployeTimelineComponent implements OnInit {
 
   lightGradient = ['#fff', SETTINGS.topbarBg];
   tab = [];
-    constructor(public employeSrv: EmployeService, public datePipe: DatePipe) { }
+    constructor(public datePipe: DatePipe) { }
   
     ngOnInit(): void {
       this.setTimeline();

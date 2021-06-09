@@ -7,6 +7,7 @@ import { MutuelleSante } from '../../parametrage/mutuellesante/mutuellesante';
 import { BehaviorSubject } from 'rxjs';
 import { Employe } from './employe';
 import { CaisseSociale } from '../../parametrage/caissesociale/caissesociale';
+import { data } from 'jquery';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,6 @@ export class EmployeService extends BamboAbstractService {
   ];
   public gradesPER: any[] = [
     { label: 'Professeur Titulaire', value: 'Professeur Titulaire' },
-    { label: 'Professeur assimilé', value: 'Professeur assimilé' },
     { label: 'Maitre de Conférences titulaire', value: 'Maitre de Conférences titulaire' },
     { label: 'Maitre de Conférences assimilé', value: 'Maitre de Conférences assimilé' },
     { label: 'Assistant', value: 'Assistant' },
@@ -64,6 +64,10 @@ export class EmployeService extends BamboAbstractService {
     return this.httpSrv.post(this.routePrefix+ 'realtime-search',{'searchTerm': searchTerm})
   }
 
+  chargerEmployeByTypeEmploye(typeEmploye: any ,elements: any) {
+    return this.httpSrv.post(this.routePrefix+ 'charger-employe/'+typeEmploye, elements);
+  }
+
   
   findAll(): any {
     this
@@ -78,6 +82,10 @@ export class EmployeService extends BamboAbstractService {
 
   findByCaisseSociale(caissesociale: CaisseSociale) {
     return this.httpSrv.get(this.routePrefix + "caisse-sociale/" + caissesociale.id);
+  }
+  sendEmail(email:any,object:any,message:any){
+    const data ={emailDestinataires: email, object: object, message: message};
+    return this.httpSrv.post(this.routePrefix + "send-email" ,data);
   }
 
   findByMutuelleSante(membremutuelle:MutuelleSante)

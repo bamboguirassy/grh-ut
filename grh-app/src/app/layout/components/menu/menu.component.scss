@@ -6,10 +6,10 @@ $_animation: $animation;
 //item
 $_item-color: currentColor;
 $_item-hover-color: accent-palette(500);
-$_item-active-color: #000;
+$_item-active-color: #4760A8;
 $_item-group-color: currentColor;
 $_item-bg: transparent;
-$_item-hover-bg: #DADCE3;
+$_item-hover-bg: #fff;
 $_item-active-bg: rgba(main-palette(600),.1);
 $_item-group-bg-compress: main-palette(200);
 $_item-h-indents: 0;
@@ -191,7 +191,7 @@ $_sub-separator: main-palette(300);
               }
             }
             .sub {
-              background: #346BFA;
+              background: #336CFB;
               border-radius: $shape;
               box-shadow: $shadow;
               display: block !important;

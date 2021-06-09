@@ -13,6 +13,8 @@ import { FonctionEmploye } from '../../fonctionemploye/fonctionemploye';
 import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
 import { FormGroup } from '@angular/forms';
 import { SETTINGS } from 'src/environments/settings';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -23,8 +25,12 @@ import { SETTINGS } from 'src/environments/settings';
 export class EmployeShowComponent extends BasePageComponent<Employe> implements OnInit, OnDestroy {
   @ViewChild('modalBody', { static: true }) modalBody: ElementRef<any>;
   @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
-  @ViewChildren('form') form;
   isModalVisible = false;
+  editor = ClassicEditor;
+  public email= {
+      object: '',
+      message: ''
+    };
   entity: Employe;
   employeForm: FormGroup;
   latestFonction: FonctionEmploye;
@@ -140,7 +146,6 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
         .subscribe(
           (data: any) => {
             this.entity = data;
-            this.handlePostLoad();
             this.employeSrv.toastr.success('Photo mise à jour !')
           },
           error => this.employeSrv.httpSrv.catchError(error))
@@ -196,6 +201,24 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   closeModal() {
     this.isModalVisible = false;
   }
+  sendSingleEmail(){
+    if(this.email.object.length==0 || this.email.message.length==0){
+      this.employeSrv.toastr.error('Verifier vos champs');
+      return;
+    }
+    this.employeSrv.sendEmail([this.entity.email],this.email.object,this.email.message)
+    .subscribe(
+      (data: any) => {
+        this.employeSrv.toastr.success('Email Envoyé avec succès')
+        this.closeModal(); 
+        this.email.object=""
+        this.email.message=""
+      },
+      error => this.employeSrv.httpSrv.catchError(error))
 
+  }
+    
+      
+    
 
 }

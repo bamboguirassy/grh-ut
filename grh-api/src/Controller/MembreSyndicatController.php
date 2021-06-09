@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Utils\Utils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Entity\Syndicat;
 
 /**
  * @Route("/api/membresyndicat")
@@ -141,4 +142,19 @@ class MembreSyndicatController extends AbstractController
 
         return $membreSyndicats;
     }
+    
+    
+     /**
+     * @Rest\Get(path="/{id}/membre-syndicat", name="syndicat_amical_membre",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200, serializerEnableMaxDepthChecks=true)
+     * @IsGranted("ROLE_MEMBRESYNDICAT_SHOW")
+     */
+    public function findBySyndicat(Syndicat $syndicat)
+    {
+        $membres = $this->getDoctrine()
+            ->getRepository(MembreSyndicat::class)
+            ->findBySyndicat($syndicat);
+        return $membres;
+    }
+
 }

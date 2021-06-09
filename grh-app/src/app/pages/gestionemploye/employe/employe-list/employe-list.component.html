@@ -1,17 +1,33 @@
 <tc-card *ngIf="employeSrv.resourceName|listable" [tcGradient]="lightGradient">
     <tc-card [view]="secondViewBorder" [outline]="true">
         <div class="row">
-            <div class="col-12">
-                <button class="float-right" tc-button afterIcon="icofont-refresh"
+            <div class="d-flex justify-content-end col-12">
+                <button tc-button
+                    (click)="toogleSendEmailModal(modalBody, 'Edition d\'email', modalFooter, { width: '100%' })"
+                    afterIcon="icofont-send-mail"> Envoyer Email</button>
+                <button class="ml-1" tc-button afterIcon="icofont-refresh"
                     (click)="findByTypeEmploye(typeEmployes[selectedIndex])">Rafraichir</button>
+                <button class="ml-1" tc-button afterIcon="icofont-file-excel"
+                    [routerLink]="['importation']">Importation</button>
             </div>
         </div>
     </tc-card>
-    <tc-card [view]="secondViewBorder" [outline]="true" >
-        <nz-tabset  [(nzSelectedIndex)]="selectedIndex" (nzSelectChange)="handleTabChange($event)">
-            <nz-tab  *ngFor="let typeEmploye of typeEmployes" [nzTitle]="typeEmploye.code" >
-                <h3>Liste des employés - {{typeEmploye?.code}} </h3>
-                <tc-table   [itemsPerPage]="15" [rows]="items" [hovered]="true"  [pagination]="true" [search]="true">
+    <tc-card [view]="secondViewBorder" [outline]="true">
+        <nz-tabset [(nzSelectedIndex)]="selectedIndex" (nzSelectChange)="handleTabChange($event)">
+            <nz-tab *ngFor="let typeEmploye of typeEmployes" [nzTitle]="typeEmploye.code">
+                <div class="d-flex vertical-align-top justify-content-between">
+                    <h3 class="mb-1">Liste des employés - {{typeEmploye?.code}} </h3>
+                    <label class="mb-1 h4" nz-checkbox [nzIndeterminate]="isPartialSelection && !isAllSelected "
+                        [(ngModel)]="isAllSelected" (ngModelChange)="changeAllSelectionStateLink()">Tous
+                        sélectionner</label>
+                </div>
+                <tc-table [itemsPerPage]="15" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
+                    <tc-table-col [columnTitle]="''" [columnName]="''">
+                        <ng-template #tableTDTemplate let-row="row">
+                            <label nz-checkbox (ngModelChange)="onItemsSelectionStateChange()"
+                                [(ngModel)]="row.selected"></label>
+                        </ng-template>
+                    </tc-table-col>
                     <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
                         <ng-template #tableTDTemplate let-row="row">
                             <div class="actions">
@@ -173,7 +189,8 @@
                             <tc-badge view="error" [outline]="true" *ngIf="!value">Indéfinie</tc-badge>
                         </ng-template>
                     </tc-table-col>
-                    <tc-table-col [columnTitle]="'Diplome académique'" [columnName]="'diplomeAcademique'" [enableSorting]="true">
+                    <tc-table-col [columnTitle]="'Diplome académique'" [columnName]="'diplomeAcademique'"
+                        [enableSorting]="true">
                         <ng-template #tableTDTemplate let-value>
                             <span class="nowrap" *ngIf="value">
                                 {{value}}
@@ -253,4 +270,30 @@
     </tc-card>
     <app-employe-new [typeEmploye]="typeEmployes[selectedIndex]" (creation)="onCreate($event)"></app-employe-new>
 </tc-card>
-<app-access-denied *ngIf="!(employeSrv.resourceName|listable)"></app-access-denied>
+<ng-container>
+    <ng-template #modalHeader>
+        <h2 class="title">Modal title</h2>
+        <div class="actions">
+            <tc-badge [view]="'warning'">New</tc-badge>
+        </div>
+    </ng-template>
+
+    <ng-template #modalBody>
+        <div>
+            <label class="mb-1" for="objet">Objet</label>
+            <tc-input id="objet" class="mb-4" [placeholder]="'Objet'" [(ngModel)]="emailEditionModel.object">
+            </tc-input>
+            <ckeditor [config]="config" [(ngModel)]="emailEditionModel.body" [editor]="emailEditor"></ckeditor>
+        </div>
+
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="actions justify-content-between">
+            <button tc-button [view]="'error'" (click)="closeModal()">Fermer</button>
+            <button tc-button [view]="'success'" (click)="sendEmaillToSelectedEmployes()">Envoyer</button>
+        </div>
+    </ng-template>
+</ng-container>
+
+<app-access-denied *ngIf=" !(employeSrv.resourceName|listable) "></app-access-denied>

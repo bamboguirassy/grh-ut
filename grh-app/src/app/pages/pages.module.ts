@@ -197,22 +197,28 @@ import { MembreCommissionListComponent } from './gestionemploye/membrecommission
 import { MembreCommissionEditComponent } from './gestionemploye/membrecommission/membrecommission-edit/membrecommission-edit.component';
 import { MembreCommissionShowComponent } from './gestionemploye/membrecommission/membrecommission-show/membrecommission-show.component';
 import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/membrecommission-new/membrecommission-new.component';
-import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sortie-stats.component';
-import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
-
-
 import { MembreCommissionEmployeComponent } from './gestionemploye/membrecommission/membre-commission-employe/membre-commission-employe.component';
 import { FonctionemployeTimelineComponent } from './gestionemploye/fonctionemploye/fonctionemploye-timeline/fonctionemploye-timeline.component';
 import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/fonction-en-expiration/fonction-en-expiration.component';
 import { EmployeListGlobalComponent } from './gestionemploye/employe/employe-list-global/employe-list-global.component';
+import { PyramideAgeGenreComponent } from './dashboards/pyramide/pyramide-age-genre/pyramide-age-genre.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
+import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sortie-stats.component';
+import { MembreSyndicatAmicalComponent } from './gestionemploye/membresyndicat/membre-syndicat-amical/membre-syndicat-amical.component';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { EmployeImportationComponent } from './gestionemploye/employe/employe-importation/employe-importation.component';
+import { PageResetPasswordComponent } from './apps/sessions/reset-password/reset-password.component';
+import { NzResultModule } from 'ng-zorro-antd/result';
 
 @NgModule({
   imports: [
+    NzCheckboxModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-
+    CKEditorModule,
     ChartsModule,
     AgmCoreModule.forRoot({
       apiKey: environment.googleMapApiKey
@@ -255,7 +261,8 @@ import { EmployeListGlobalComponent } from './gestionemploye/employe/employe-lis
     NgPipesModule,
     NzRadioModule,
     NzIconModule,
-    NzToolTipModule
+    NzToolTipModule,
+    NzResultModule 
 
   ],
   declarations: [
@@ -264,6 +271,7 @@ import { EmployeListGlobalComponent } from './gestionemploye/employe/employe-lis
     PageUserProfileComponent,
     PageEditAccountComponent,
     PageSignInComponent,
+    PageResetPasswordComponent,
     PageSignUpComponent,
     PageSettingsComponent,
     Page404Component,
@@ -346,6 +354,8 @@ import { EmployeListGlobalComponent } from './gestionemploye/employe/employe-lis
     AdresseShowComponent,
     AdresseCloneComponent,
     AdresseNewComponent,
+    // membresCaisseSociale components
+    MembreCaisseSocialeComponent,
     // membrefamille components
     MembreFamilleListComponent,
     MembreFamilleEditComponent,
@@ -463,7 +473,10 @@ import { EmployeListGlobalComponent } from './gestionemploye/employe/employe-lis
     FonctionemployeTimelineComponent,
     FonctionEnExpirationComponent,
     EmployeListGlobalComponent,
+    MembreSyndicatAmicalComponent,
 
+    PyramideAgeGenreComponent,
+    EmployeImportationComponent,
   ],
   exports: [],
   entryComponents: []

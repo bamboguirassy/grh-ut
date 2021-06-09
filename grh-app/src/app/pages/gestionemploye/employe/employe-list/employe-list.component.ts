@@ -6,19 +6,37 @@ import { EmployeService } from '../employe.service';
 import { Employe } from '../employe';
 import { TypeEmploye } from 'src/app/pages/parametrage/typeemploye/typeemploye';
 import { TypeEmployeService } from 'src/app/pages/parametrage/typeemploye/typeemploye.service';
-
+import Swal from 'sweetalert2';
+import { TCModalService } from '../../../../ui/services/modal/modal.service';
+import { Content } from '../../../../ui/interfaces/modal';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import '@ckeditor/ckeditor5-build-classic/build/translations/fr';
 @Component({
   selector: 'app-employe-list',
   templateUrl: './employe-list.component.html',
   styleUrls: ['./employe-list.component.scss']
 })
 export class EmployeListComponent extends BasePageComponent<Employe> implements OnInit, OnDestroy {
+  emailEditor = ClassicEditor;
+  emailEditionModel = {
+    body: '',
+    object: ''
+  };
+  config = {
+    language: 'fr'
+  };
+  selectedEmployes: Employe[] = [];
+  isAllSelected = false;
+  isPartialSelection = false;
 
-  typeEmployes: TypeEmploye[] = []; 
+
+  typeEmployes: TypeEmploye[] = [];
   selectedIndex = 0;
-
-  constructor(store: Store<IAppState>,
+  isModalVisible: boolean;
+  constructor(
+    private modal: TCModalService,
     public employeSrv: EmployeService,
+    store: Store<IAppState>,
     public typeEmployeSrv: TypeEmployeService) {
     super(store, employeSrv);
 
@@ -39,7 +57,6 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
   ngOnInit(): void {
     super.ngOnInit();
     this.findTypeEmployes();
-    
   }
 
   ngOnDestroy() {
@@ -71,8 +88,80 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
   handleTabChange(event) {
     this.findByTypeEmploye(this.typeEmployes[event.index]);
   }
-  
 
-  
+  getSelectedEmployes(){
+    return this.items.filter(item => item.selected);
+  }
+  toogleSendEmailModal<T>(body: Content<T>, header: Content<T> = null, footer: Content<T> = null, options: any = null) {
+    this.selectedEmployes = this.getSelectedEmployes();
+    if (!this.selectedEmployes.length){
+      Swal.fire('Vous devez d\'abord selectionner les employés dont vous voulez envoyer le mail');
+      return;
+    }
+    this.modal.open({
+      body,
+      header,
+      footer,
+      options
+    });
+  }
+  sendEmaillToSelectedEmployes(){
+    if (this.emailEditionModel.object.length === 0 || this.emailEditionModel.body.length === 0){
+      this.employeSrv.toastr.error('Verifier si vous averz donnez l\'objet et le contenu');
+      return;
+    }
+
+    const emails = this.selectedEmployes.map(val => val.email);
+    this.employeSrv.sendEmail(emails, this.emailEditionModel.object, this.emailEditionModel.body)
+    .subscribe(
+      (data: any) => {
+        this.handlePostLoad();
+        this.employeSrv.toastr.success('Email Envoyé avec succès');
+        this.closeModal();
+        this.emailEditionModel = {body: '', object: ''};
+        this.changeAllSelectionState(false);
+        this.isAllSelected = false;
+        this.isPartialSelection = false;
+
+      },
+      error => this.employeSrv.httpSrv.catchError(error));
+  }
+  closeModal() {
+    this.modal.close();
+  }
+
+
+  changeAllSelectionStateLink(){
+
+    this.isAllSelected = !this.isAllCheckt();
+    this.changeAllSelectionState(this.isAllSelected);
+    this.isPartialSelection = false;
+  }
+
+
+  changeAllSelectionState(state = false){
+    this.items.forEach(element => {
+      element.selected = state;
+    });
+  }
+
+  onItemsSelectionStateChange(){
+    setTimeout(() => {
+      this.isAllSelected = this.isAllCheckt();
+      this.isPartialSelection = this.items.some(element => element.selected) && this.items.some(element => !(element.selected));
+    }, 1);
+  }
+
+  isAllCheckt(){
+    return this.items.every(element => element.selected);
+  }
+
+
+
+
+
+
+
+
 
 }

@@ -13,7 +13,9 @@ import { Location } from '@angular/common';
   styleUrls: ['./syndicat-show.component.scss']
 })
 export class SyndicatShowComponent extends BasePageComponent<Syndicat> implements OnInit, OnDestroy {
-  entity: Syndicat;
+  entity:Syndicat;
+
+  currentAvatar: any;
 
   constructor(store: Store<IAppState>,
     public syndicatSrv: SyndicatService,
@@ -53,6 +55,23 @@ export class SyndicatShowComponent extends BasePageComponent<Syndicat> implement
 
   handlePostDelete() {
     this.location.back();
+  }
+  // upload new file
+  onFileChanged(inputValue: any) {
+    let file: File = inputValue.target.files[0];
+    let reader: FileReader = new FileReader();
+    reader.onloadend = () => {
+      this.currentAvatar = reader.result;
+      this.syndicatSrv.uploadPhoto(this.entity, this.currentAvatar.split(',')[1], file.name.split('.')[0])
+        .subscribe(
+          (data: any) => {
+            this.entity = data;
+            this.handlePostLoad();
+            this.syndicatSrv.toastr.success('Photo mise à jour !')
+          },
+          error => this.syndicatSrv.httpSrv.catchError(error))
+    };
+    reader.readAsDataURL(file);
   }
 
 }

@@ -11,16 +11,16 @@
         </div>
       </div>
     </div>
-  </div>s
+  </div>
   <div class="col-12 col-md-4 col-lg-3" *ngFor="let item of items">
     <div class="famille-card m-1">
       <div class="info-box">
         <h4 class="name">{{ item.prenoms+' '+item.nom }}</h4>
         <div class="role">
           {{ item.lienParente }}
-          <span *ngIf="item?.lienParente=='époux' || item?.lienParente=='épouse'">
-              depuis le {{ item.dateMariage|date:'dd/MM/yyyy' }}
-            <tc-badge size="xs" view="error" *ngIf="!item.dateMariage">Indéfinie</tc-badge>
+          <span title="date mariage" *ngIf="item?.lienParente=='époux' || item?.lienParente=='épouse'">
+            ({{ item.dateMariage|date:'dd/MM/yyyy' }}
+            <tc-badge size="xs" view="error" *ngIf="!item.dateMariage">Indéfinie</tc-badge>)
           </span>
         </div>
         <p class="address">Né le {{ item.dateNaissance|date:'dd/MM/yyyy' }} à {{item.lieuNaissance}}</p>
@@ -32,7 +32,8 @@
         </p>
         <div class="social">
           <button *ngIf="membreFamilleSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"
+            (click)="setSelectedMembreFamille(item)"></button>
           <button class="ml-1" *ngIf="membreFamilleSrv.resourceName|deletable" (click)="remove(item)" tc-button
             [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
         </div>
@@ -40,4 +41,6 @@
     </div>
   </div>
 </div>
+<app-membrefamille-edit *ngIf="selectedMembreFamille" [selectedMembreFamille]="selectedMembreFamille" (modification)="findByEmploye()"
+  (onClose)="onClose()"></app-membrefamille-edit>
 <app-access-denied *ngIf="!(membreFamilleSrv.resourceName|showable)"></app-access-denied>
