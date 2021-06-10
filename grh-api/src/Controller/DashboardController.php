@@ -900,35 +900,38 @@ class DashboardController extends AbstractController
      public function countPersByGradeGroupByGenre():array {
         $em = $this->getDoctrine()->getManager();
         
-        $grades = $em->createQuery('Select distinct e.grade FROM App\Entity\Employe e where e.grade is NOT NULL')
+       $typeEmploye = $em->getRepository(TypeEmploye::class)->findOneByCode('PER');
+        $grades = $em->createQuery('SELECT DISTINCT e.grade FROM App\Entity\Employe e '
+                . 'where e.grade is NOT NULL and e.typeEmploye=?1 ')
+                ->setParameter(1,$typeEmploye)
              ->getResult();
-     $typeEmploye = $em->getRepository(TypeEmploye::class)->findOneByCode('PER');
+        
+    
+     $tab = [];
      foreach ($grades as $grade){
        $nbrHomme = $em->createQuery('
             SELECT count(e)
             FROM App\Entity\Employe e
-            WHERE  e.typeEmploye=:typeEmploye and e.grade=:grade and e.genre=:genre
+            WHERE  e.typeEmploye=?1 and e.grade=?2 and e.genre=?3
             
-        ')
-            ->setParameter('typeEmploye', $typeEmploye)
-            ->setParameter('grade',$grade )
-            ->setParameter('genre','Masculin' )
-            ->getResult();
+        ')  ->setParameter(1, $typeEmploye)
+            ->setParameter(2,$grade )
+            ->setParameter(3,'Masculin' )
+            ->getSingleScalarResult();
        $nbrFemme = $em->createQuery('
             SELECT count(e)
             FROM App\Entity\Employe e
-            WHERE  e.typeEmploye=:typeEmploye and e.grade=:grade and e.genre=:genre
-            
-        ')
-            ->setParameter('typeEmploye', $typeEmploye)
-            ->setParameter('grade',$grade )
-            ->setParameter('genre','Féminin' )
-            ->getResult();
+            WHERE  e.typeEmploye=?1 and e.grade=?2 and e.genre=?3')
+            ->setParameter(1, $typeEmploye)
+            ->setParameter(2,$grade )
+            ->setParameter(3,'Féminin' )
+              // ->getResult();
+            ->getSingleScalarResult();
 
        $tab[] = [
-                'typeEmploye' => $grade,
+                'grade' => $grade,
                 'nbrHomme' => $nbrHomme,
-                'nbrFemme' => $nbrFemme
+               'nbrFemme' => $nbrFemme
             ];
         }
 
