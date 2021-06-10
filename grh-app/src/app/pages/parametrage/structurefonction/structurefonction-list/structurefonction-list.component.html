@@ -6,13 +6,13 @@
     <div class="col-sm-12 col-lg-6 col-md-6 pt-1 pb-2" *ngIf="structureFonctionActive">
       <div class="custom-card pb-2">
         <div class="info-box">
-          <h4 class="name">
+          <!-- <h4 class="name">
             <i class="icofont-stamp icofont-1x"></i>
             <span style="font-weight: bold; font-style: italic;">
               {{ structureFonctionActive?.fonction?.nom }}
             </span>
 
-          </h4>
+          </h4> -->
           <p>
             <span class="badge badge-success" style="font-style: italic; font-size: 15px;">
               Poste Actif
@@ -140,11 +140,11 @@
         <i class="icofont-stamp icofont-2x"></i> &nbsp;
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Fonction'" [columnName]="'fonction'" [enableSorting]="true">
+    <!-- <tc-table-col [columnTitle]="'Fonction'" [columnName]="'fonction'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value let-row>
         <span class="nowrap">{{ value?.nom }}</span>
       </ng-template>
-    </tc-table-col>
+    </tc-table-col> -->
     <tc-table-col [columnTitle]="'Etat'" [columnName]="'etat'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-row="row" let-value>
         <tc-switcher [value]="value" (valueChanged)="onChange($event, row)" name="etat" id="etat"
