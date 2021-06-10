@@ -1,3 +1,5 @@
+import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
+
 const employeColumns = [
     { header: 'Prenoms', field: 'prenoms', dataKey: 'prenoms' },
     { header: 'Nom', field: 'nom', dataKey: 'nom' },
@@ -17,7 +19,7 @@ const employeColumns = [
     { header: 'TelephonePrimaire', field: 'telephonePrimaire', dataKey: 'telephonePrimaire' },
     { header: 'TelephoneSecondaire', field: 'telephoneSecondaire', dataKey: 'telephoneSecondaire' },
 ];
-​
+
 const allowedEmployeFieldsForFilter = [
     'prenoms',
     'nom',
@@ -37,5 +39,16 @@ const allowedEmployeFieldsForFilter = [
     'telephonePrimaire',
     'telephoneSecondaire',
 ];
-​
+
+export interface EmployeColumnItem {
+    name: string;
+    sortOrder: NzTableSortOrder | null;
+    sortFn: NzTableSortFn | null;
+    listOfFilter: NzTableFilterList;
+    filterFn: NzTableFilterFn | null;
+    nzLeft?: boolean;
+    nzRight?: boolean;
+}
+
+
 export { employeColumns, allowedEmployeFieldsForFilter };
