@@ -46,6 +46,8 @@ export interface EmployeColumnItem {
     sortFn: NzTableSortFn | null;
     listOfFilter: NzTableFilterList;
     filterFn: NzTableFilterFn | null;
+    nzLeft?: boolean;
+    nzRight?: boolean;
 }
 
 

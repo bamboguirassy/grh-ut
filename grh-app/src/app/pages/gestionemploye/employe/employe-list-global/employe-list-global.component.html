@@ -2,64 +2,54 @@
     <thead>
         <tr>
             <th *ngFor="let column of listOfColumns; trackBy: trackByName" [(nzSortOrder)]="column.sortOrder"
-                [nzSortFn]="column.sortFn" [nzFilters]="column.listOfFilter" [nzFilterFn]="column.filterFn">
+                [nzLeft]="column.nzLeft" [nzSortFn]="column.sortFn" [nzFilters]="column.listOfFilter" [nzRight]="column.nzRight"
+                [nzFilterFn]="column.filterFn">
                 {{ column.name }}
             </th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let employe of filterTable.data">
-            <td>
-                <span class="nowrap">
-                    {{ employe?.prenoms }}
-                </span>
+            <td nzBreakWord nzLeft>
+
+                {{ employe?.prenoms }}
 
             </td>
-            <td>
-                <span class="nowrap">
-                    {{ employe?.nom }}
-                </span>
+            <td nzBreakWord nzLeft>
+                {{ employe?.nom }}
             </td>
-            <td>
-                <span class="nowrap">
-                    {{ employe?.dateNaissance | date:'dd/MM/yyyy' }}
-                </span>
+            <td nzBreakWord>
+                {{ employe?.dateNaissance | date:'dd/MM/yyyy' }}
             </td>
-            <td>
-                <span class="nowrap">
-                    {{ employe?.lieuNaissance }}
-                </span>
+            <td nzBreakWord>
+                {{ employe?.lieuNaissance }}
             </td>
-            <td>
-                <span class="nowrap">
-                    {{ employe?.cni }}
-                </span>
+            <td nzBreakWord>
+                {{ employe?.cni }}
             </td>
-            <td>
-                <span class="nowrap">
-                    {{ employe?.profession?.nom }}
-                </span>
+            <td nzBreakWord>
+                {{ employe?.profession?.nom }}
             </td>
-            <td>
-                <span class="nowrap">{{employe?.matriculeCaisseSociale}}</span>
+            <td nzBreakWord>
+                {{employe?.matriculeCaisseSociale}}
             </td>
-            <td>
-                <span class="nowrap">{{employe?.dateRecrutement | date:'dd/MM/yyyy'}}</span>
+            <td nzBreakWord>
+                {{employe?.dateRecrutement | date:'dd/MM/yyyy'}}
             </td>
-            <td> 
-                <span class="nowrap">{{employe?.situtationMatrimoniale}}</span> 
+            <td nzBreakWord>
+                {{employe?.situtationMatrimoniale}}
             </td>
-            <td> <span class="nowrap">{{employe?.Genre}}</span> </td>
-            <td> <span class="nowrap">{{ employe?.Etat }}</span> </td>
-            <td> <span class="nowrap">{{ employe?.emailUniv }}</span> </td>
-            <td> <span class="nowrap">{{ employe?.email }}</span> </td>
-            <td> <span class="nowrap">{{ employe?.telephonePrimaire }}</span> </td>
-            <td> <span class="nowrap">{{ employe?.telephoneSecondaire }}</span> </td>
-            <td> <span class="nowrap">{{ employe?.nationalite?.nationalite }}</span> </td>
-            <td> <span class="nowrap">{{ employe?.structure?.nom }}</span>  </td>
-            <td> <span class="nowrap">{{ employe?.caisseSociale?.nom }}</span>  </td>
-            <td> <span class="nowrap">{{ employe?.mutuelleSante?.nom }} </span>  </td>
-            <td> <span class="nowrap">{{ employe?.datePriseService }}</span>  </td>
+            <td nzBreakWord> {{employe?.Genre}} </td>
+            <td nzBreakWord> {{ employe?.Etat }} </td>
+            <td nzBreakWord> {{ employe?.emailUniv }} </td>
+            <td nzBreakWord> {{ employe?.email }} </td>
+            <td nzBreakWord> {{ employe?.telephonePrimaire }} </td>
+            <td nzBreakWord> {{ employe?.telephoneSecondaire }} </td>
+            <td nzBreakWord> {{ employe?.nationalite?.nationalite }} </td>
+            <td nzBreakWord> {{ employe?.structure?.nom }} </td>
+            <td nzBreakWord> {{ employe?.caisseSociale?.nom }} </td>
+            <td nzBreakWord> {{ employe?.mutuelleSante?.nom }} </td>
+            <td nzBreakWord> {{ employe?.datePriseService | date:'dd/MM/yyyy' }} </td>
         </tr>
     </tbody>
 </nz-table>
