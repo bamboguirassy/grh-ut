@@ -25,7 +25,7 @@
                            </tr>
                            <tr>
                                <td colspan="2">
-                                   <div class="col-12 col-md-10">
+                                   <div class="col-12">
                                        <button *ngIf="caisseSocialeSrv.resourceName|editable"
                                            [routerLink]="['/'+orientation,caisseSocialeSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
                                            class="float-right ml-1" tc-button view="warning"
@@ -35,7 +35,7 @@
                                            class=" float-right ml-1"></button>
                                        <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
                                            beforeIcon="icofont-refresh"></button>
-                                       <button tc-button class="float-right" (click)="location.back()"
+                                       <button tc-button class="float-right ml-1" (click)="location.back()"
                                            beforeIcon="icofont-reply"></button>
                                    </div>
                                </td>
