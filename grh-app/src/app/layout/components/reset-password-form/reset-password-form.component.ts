@@ -10,6 +10,7 @@ import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
 })
 export class ResetPasswordFormComponent implements OnInit {
   @Input() token: string;
+  @Input() email: string;
 
   resetPasswordForm: FormGroup;
 
@@ -34,13 +35,16 @@ export class ResetPasswordFormComponent implements OnInit {
       this.authSrv.httpSrv.toastr.error('les deux mots de passe ne concordent pas');
       return;
     }
-    
     const {password} = this.resetPasswordForm?.value;
     this.authSrv.createNewPassorwd(this.token, password).subscribe(() => {
         this.authSrv.httpSrv.toastr.success('Réinitialisation mot de passe réussie');
-        this.router.navigate(['./', 'public', 'sign-in']).then(_ =>
-            this.resetPasswordForm.reset()
-          );
+        if (this.email){
+          this.authSrv.login({username: this.email, password: this.resetPasswordForm?.value?.password});
+        }else{
+          this.router.navigate(['./', 'public', 'sign-in']).then(_ =>
+              this.resetPasswordForm.reset()
+            );
+        }
       },
       error => this.authSrv.httpSrv.toastr.error(error.error.message)
   );

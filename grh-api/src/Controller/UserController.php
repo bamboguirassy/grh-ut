@@ -123,7 +123,7 @@ class UserController extends AbstractController {
           ->setTo($user->getEmail())
           ->setBody(
           $this->renderView(
-          'emails/register.html.twig', ['user' => $user, 'siteUrl' => Utils::$passwordResetLink . $confirmationToken]
+          'emails/register.html.twig', ['user' => $user, 'siteUrl' => Utils::$passwordResetLink . $user->getEmail() . '/' . $confirmationToken]
           ), 'text/html'
           );
           $mailer->send($message); 
