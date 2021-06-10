@@ -23,8 +23,6 @@ final class Version20210609155457 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE affectation ADD etat TINYINT(1) DEFAULT NULL');
-        $this->addSql('ALTER TABLE membre_syndicat CHANGE etat etat TINYINT(1) DEFAULT NULL COMMENT \'true si c\'\'est le syndicat actuel du travailleur
-        un employé peut être dans plusieurs syndicats\'');
     }
 
     public function down(Schema $schema) : void
