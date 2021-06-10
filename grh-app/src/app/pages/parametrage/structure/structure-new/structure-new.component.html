@@ -24,21 +24,7 @@
               <app-form-field-validation-message [formField]="structureParente"></app-form-field-validation-message>
             </tc-form-description>
           </tc-form-group>
-        </div>
-        <div class="col-12 col-md-6">
-          <tc-form-group>
-            <tc-form-label>Type</tc-form-label>
-            <nz-select [required]="true" style="width: 100%" nzPlaceHolder="Sélectionner type structure" [(ngModel)]="selectedTypeEntite" name="typeEntite" id="typeEntite"
-              #typeEntite="ngModel"  nzAllowClear nzShowSearch>
-              <ng-container *ngFor="let typeEntite of typeEntites">
-                <nz-option [nzValue]="typeEntite" [nzLabel]="typeEntite.nom"></nz-option>
-              </ng-container>
-            </nz-select>
-            <tc-form-description>
-              <app-form-field-validation-message [formField]="typeEntite"></app-form-field-validation-message>
-            </tc-form-description>
-          </tc-form-group>
-        </div>
+        </div>        
         <div class="col-12 col-md-6">
           <tc-form-group>
             <tc-form-label>Nom</tc-form-label>

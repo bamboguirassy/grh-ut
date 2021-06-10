@@ -18,10 +18,10 @@ class Responsabilite
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Fonction::class)
+     * @ORM\ManyToOne(targetEntity=Rang::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $fonction;
+    private $rang;
 
     /**
      * @ORM\ManyToOne(targetEntity=Structure::class)
@@ -34,14 +34,14 @@ class Responsabilite
         return $this->id;
     }
 
-    public function getFonction(): ?Fonction
+    public function getRang(): ?Rang
     {
-        return $this->fonction;
+        return $this->rang;
     }
 
-    public function setFonction(?Fonction $fonction): self
+    public function setRang(?Rang $rang): self
     {
-        $this->fonction = $fonction;
+        $this->rang = $rang;
 
         return $this;
     }

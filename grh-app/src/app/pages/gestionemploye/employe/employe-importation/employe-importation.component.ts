@@ -22,7 +22,6 @@ export class EmployeImportationComponent extends BasePageComponent<Employe> impl
   isError = true;
   layout = 'horizontal';
   
-
   constructor(
     public employeSrv: EmployeService,
     store: Store<IAppState>,

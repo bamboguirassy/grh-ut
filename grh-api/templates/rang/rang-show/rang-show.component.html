@@ -1,4 +1,4 @@
-<tc-card *ngIf="typeEntiteSrv.resourceName|showable" [tcGradient]="lightGradient">
+<tc-card *ngIf="rangSrv.resourceName|showable" [tcGradient]="lightGradient">
     <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
         <div class="row">
             <div class="d-none d-md-block col-md-1">
@@ -11,10 +11,10 @@
                 </blockquote>
             </div>
             <div class="col-12 col-md-4">
-                <button *ngIf="typeEntiteSrv.resourceName|editable"
-                    [routerLink]="['/'+orientation,typeEntiteSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+                <button *ngIf="rangSrv.resourceName|editable"
+                    [routerLink]="['/'+orientation,rangSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
                     class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
-                <button (click)="remove(entity)" *ngIf="typeEntiteSrv.resourceName|deletable" tc-button
+                <button (click)="remove(entity)" *ngIf="rangSrv.resourceName|deletable" tc-button
                     view="error" beforeIcon="icofont-trash" class=" float-right ml-1"></button>
                 <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
                     beforeIcon="icofont-refresh"></button>
@@ -35,10 +35,10 @@
                             </td>
                         </tr>
                                                                                 <tr>
-                            <th>Code</th>
+                            <th>Etat</th>
                             <td>
-                                <span *ngIf="entity?.code">{{ entity?.code }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.code">Indéfinie</tc-badge>
+                                <span *ngIf="entity?.etat">{{ entity?.etat }}</span>
+                                <tc-badge view="error" *ngIf="!entity?.etat">Indéfinie</tc-badge>
                             </td>
                         </tr>
                                                     </table>
@@ -46,4 +46,4 @@
         </div>
     </div>
 </tc-card>
-<app-access-denied *ngIf="!(typeEntiteSrv.resourceName|showable)"></app-access-denied>
+<app-access-denied *ngIf="!(rangSrv.resourceName|showable)"></app-access-denied>

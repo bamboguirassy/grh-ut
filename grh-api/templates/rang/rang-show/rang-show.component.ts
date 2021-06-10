@@ -1,35 +1,35 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BasePageComponent } from 'src/app/pages/base-page';
-import { TypeEntiteService } from '../typeentite.service';
+import { RangService } from '../rang.service';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
-import { TypeEntite } from '../typeentite';
+import { Rang } from '../rang';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-typeentite-show',
-  templateUrl: './typeentite-show.component.html',
-  styleUrls: ['./typeentite-show.component.scss']
+  selector: 'app-rang-show',
+  templateUrl: './rang-show.component.html',
+  styleUrls: ['./rang-show.component.scss']
 })
-export class TypeEntiteShowComponent extends BasePageComponent<TypeEntite> implements OnInit, OnDestroy {
-  entity: TypeEntite;
+export class RangShowComponent extends BasePageComponent<Rang> implements OnInit, OnDestroy {
+  entity: Rang;
 
   constructor(store: Store<IAppState>,
-    public typeEntiteSrv: TypeEntiteService,
+    public rangSrv: RangService,
     private activatedRoute: ActivatedRoute,
     public location: Location) {
-    super(store, typeEntiteSrv);
+    super(store, rangSrv);
     this.pageData = {
-      title: 'Détails - TypeEntite',
+      title: 'Détails - Rang',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'TypeEntites',
-          route: '/'+this.orientation+'/typeentite'
+          title: 'Rangs',
+          route: '/'+this.orientation+'/rang'
         },
         {
           title: 'Affichage'
@@ -48,7 +48,7 @@ export class TypeEntiteShowComponent extends BasePageComponent<TypeEntite> imple
   }
 
   handlePostLoad() {
-    this.title = 'TypeEntite - ' + this.entity?.id;
+    this.title = 'Rang - ' + this.entity?.id;
   }
 
   handlePostDelete() {

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { TypeEntite } from '../typeentite';
-import { TypeEntiteService } from '../typeentite.service';
+import { Rang } from '../rang';
+import { RangService } from '../rang.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -9,28 +9,28 @@ import { BasePageComponent } from 'src/app/pages/base-page';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-typeentite-edit',
-  templateUrl: './typeentite-edit.component.html',
-  styleUrls: ['./typeentite-edit.component.scss']
+  selector: 'app-rang-edit',
+  templateUrl: './rang-edit.component.html',
+  styleUrls: ['./rang-edit.component.scss']
 })
-export class TypeEntiteEditComponent extends BasePageComponent<TypeEntite> implements OnInit, OnDestroy {
+export class RangEditComponent extends BasePageComponent<Rang> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public typeEntiteSrv: TypeEntiteService,
+              public rangSrv: RangService,
               public router: Router,
               private activatedRoute: ActivatedRoute,
               public location: Location) {
-    super(store, typeEntiteSrv);
+    super(store, rangSrv);
     this.pageData = {
-      title: 'Modification - Type d\'entité',
+      title: 'Modification - Rang',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'liste des types d\'entité',
-          route: '/'+this.orientation+'/typeentite'
+          title: 'Rangs',
+          route: '/'+this.orientation+'/rang'
         },
         {
           title: 'Modification'

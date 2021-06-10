@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Employe } from './employe';
 import { CaisseSociale } from '../../parametrage/caissesociale/caissesociale';
 import { data } from 'jquery';
+import { Structure } from '../../parametrage/structure/structure';
 
 @Injectable({
   providedIn: 'root'
@@ -92,5 +93,17 @@ export class EmployeService extends BamboAbstractService {
   {
     return this.httpSrv.get(this.routePrefix +membremutuelle.id+'/membre-mutuelle-sante');
   }
+
+  findByTypeEmployes(typeEmployes: TypeEmploye[]) {
+    return this.httpSrv.post(this.routePrefix + 'many-type-employe', {typeEmployes});
+  }
+
+  findByManyStructure(structures: Structure[]) {
+    return this.httpSrv.post(this.routePrefix + 'many-structure', {structures});
+  }
+
+   findByDateRecrutementRange(startDate: string, endDate: string) {
+     return this.httpSrv.get(this.routePrefix + 'date-recrutement-range/' + startDate + '/' + endDate);
+   }
 
 }

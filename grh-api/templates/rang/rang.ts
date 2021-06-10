@@ -1,6 +1,6 @@
 import { BamboAbstractObject } from './../../../shared/classes/bambo-abstract-object';
 
-export class TypeEntite extends BamboAbstractObject {
+export class Rang extends BamboAbstractObject {
                                     nom: string;
-                                code: string;
+                                etat: string;
             }

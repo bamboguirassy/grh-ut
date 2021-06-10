@@ -6,12 +6,12 @@ import { ToastrService } from 'ngx-toastr';
 @Injectable({
   providedIn: 'root'
 })
-export class TypeEntiteService extends BamboAbstractService {
+export class RangService extends BamboAbstractService {
 
   constructor(public httpSrv: BamboHttpService, public toastr: ToastrService) {
     super(httpSrv, toastr);
-    this.routePrefix = 'typeentite/';
-    this.resourceName = 'TYPEENTITE';
+    this.routePrefix = 'rang/';
+    this.resourceName = 'RANG';
   }
   
 }
