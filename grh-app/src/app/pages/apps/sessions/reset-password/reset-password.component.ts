@@ -9,12 +9,15 @@ import { ActivatedRoute } from '@angular/router';
 export class PageResetPasswordComponent implements OnInit {
 
   token: string;
+  email: string;
   constructor(
     public activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
     this.token = this.activatedRoute.snapshot.paramMap.get('token');
+    this.email = this.activatedRoute.snapshot.paramMap.get('email');
+
   }
 
 }

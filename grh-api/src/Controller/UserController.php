@@ -96,7 +96,7 @@ class UserController extends AbstractController {
         $user->setConfirmationToken($confirmationToken);
         $user->setPasswordRequestedAt(new \DateTime());
         $user->setPassword($passwordEncoder->encodePassword($user, 'bienvenue'));
-        $user->setEnabled(true);
+        $user->setEnabled(false);
         $user->setSource('sm');
 
         //check if file provided
@@ -118,15 +118,15 @@ class UserController extends AbstractController {
         $entityManager->flush();
 
         //send confirmation mail
-        /* $message = (new \Swift_Message('Creation Compte'))
-          ->setFrom(Utils::$senderEmail)
+        $message = (new \Swift_Message('Creation Compte'))
+          ->setFrom(Utils::$sender)
           ->setTo($user->getEmail())
           ->setBody(
           $this->renderView(
-          'emails/register.html.twig', ['user' => $user, 'siteUrl' => Utils::$siteUrl . '/reset-password/' . $confirmationToken]
+          'emails/register.html.twig', ['user' => $user, 'siteUrl' => Utils::$passwordResetLink . $user->getEmail() . '/' . $confirmationToken]
           ), 'text/html'
           );
-          $mailer->send($message); */
+          $mailer->send($message); 
 
         return $user;
     }
