@@ -25,11 +25,6 @@ class StructureFonction
      */
     private $structure;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Fonction::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $fonction;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -64,18 +59,6 @@ class StructureFonction
     public function setStructure(?Structure $structure): self
     {
         $this->structure = $structure;
-
-        return $this;
-    }
-
-    public function getFonction(): ?Fonction
-    {
-        return $this->fonction;
-    }
-
-    public function setFonction(?Fonction $fonction): self
-    {
-        $this->fonction = $fonction;
 
         return $this;
     }

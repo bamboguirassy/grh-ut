@@ -415,10 +415,15 @@ $employe->setProfession($faker->randomElement($professions));
             if (!isset($rowEmploye->cni) || $rowEmploye->cni == NULL) {
                 throw $this->createNotFoundException("L'ajout échoué pour l'employé ".$rowEmploye->prenoms." ".$rowEmploye->nom.", le CNI est obligatoire.");
             }
-            $employeVerifCni = $this->getDoctrine()
-                    ->getRepository(Employe::class)
-                    ->findByCni($employe->getCni());
-            if(count($employeVerifCni)<1){                
+        
+            $employes = $em->createQuery('SELECT e
+                    FROM App\Entity\Employe e
+                    WHERE e.cni = :cni')
+                ->setParameter('cni', $rowEmploye->cni)
+                ->getResult();
+            if(count($employes)>0){                
+                throw $this->createNotFoundException("L'ajout échoué pour l'employé ".$employe->getPrenoms()." ".$employe->getNom()." CNI ".$employe->getCni().".");
+            } else {
                 $employe->setTypeEmploye($typeEmploye);
                 if (isset($rowEmploye->dateNaissance)) {
                     $employe->setDateNaissance(new \DateTime($rowEmploye->dateNaissance));
@@ -433,8 +438,6 @@ $employe->setProfession($faker->randomElement($professions));
                     $employe->setDatePriseService(new \DateTime($rowEmploye->datePriseService));
                 }
                 $em->persist($employe);
-            } else {
-                throw $this->createNotFoundException("L'ajout échoué pour l'employé ".$employe->getPrenoms()." ".$employe->getNom()." CNI ".$employe->getCni().".");
             }
             
         }
