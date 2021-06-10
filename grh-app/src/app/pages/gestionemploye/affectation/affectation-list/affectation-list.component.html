@@ -38,6 +38,13 @@
               <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
             </ng-template>
           </tc-table-col>
+         
+           <tc-table-col [columnTitle]="'Etat'" [columnName]="'etat'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <span class="badge badge-danger" *ngIf="!value">Indéfinie</span>
+              <span class="badge badge-success" *ngIf="value">En cours</span>
+            </ng-template>
+          </tc-table-col>
           <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
             <ng-template #tableTDTemplate let-row="row">
               <div class="actions">

@@ -151,10 +151,6 @@ import { TypeEmployeEditComponent } from './parametrage/typeemploye/typeemploye-
 import { TypeEmployeListComponent } from './parametrage/typeemploye/typeemploye-list/typeemploye-list.component';
 import { TypeEmployeNewComponent } from './parametrage/typeemploye/typeemploye-new/typeemploye-new.component';
 import { TypeEmployeShowComponent } from './parametrage/typeemploye/typeemploye-show/typeemploye-show.component';
-import { TypeEntiteEditComponent } from './parametrage/typeentite/typeentite-edit/typeentite-edit.component';
-import { TypeEntiteListComponent } from './parametrage/typeentite/typeentite-list/typeentite-list.component';
-import { TypeEntiteNewComponent } from './parametrage/typeentite/typeentite-new/typeentite-new.component';
-import { TypeEntiteShowComponent } from './parametrage/typeentite/typeentite-show/typeentite-show.component';
 import { UserEditComponent } from './parametrage/user/user-edit/user-edit.component';
 import { UserListComponent } from './parametrage/user/user-list/user-list.component';
 import { UserNewComponent } from './parametrage/user/user-new/user-new.component';
@@ -206,7 +202,9 @@ import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-ca
 import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sortie-stats.component';
 import { MembreSyndicatAmicalComponent } from './gestionemploye/membresyndicat/membre-syndicat-amical/membre-syndicat-amical.component';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { EmployeImportationComponent } from './gestionemploye/employe/employe-importation/employe-importation.component';
 import { PageResetPasswordComponent } from './apps/sessions/reset-password/reset-password.component';
+import { NzResultModule } from 'ng-zorro-antd/result';
 
 @NgModule({
   imports: [
@@ -258,7 +256,8 @@ import { PageResetPasswordComponent } from './apps/sessions/reset-password/reset
     NgPipesModule,
     NzRadioModule,
     NzIconModule,
-    NzToolTipModule
+    NzToolTipModule,
+    NzResultModule 
 
   ],
   declarations: [
@@ -282,11 +281,6 @@ import { PageResetPasswordComponent } from './apps/sessions/reset-password/reset
     GroupShowComponent,
     GroupListComponent,
     GroupNewComponent,
-    // typeentite components
-    TypeEntiteListComponent,
-    TypeEntiteEditComponent,
-    TypeEntiteShowComponent,
-    TypeEntiteNewComponent,
     // typecontrat components
     TypeContratListComponent,
     TypeContratEditComponent,
@@ -471,6 +465,7 @@ import { PageResetPasswordComponent } from './apps/sessions/reset-password/reset
     MembreSyndicatAmicalComponent,
 
     PyramideAgeGenreComponent,
+    EmployeImportationComponent,
   ],
   exports: [],
   entryComponents: []
