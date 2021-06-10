@@ -24,12 +24,6 @@ final class Version20210609171321 extends AbstractMigration
 
         $this->addSql('ALTER TABLE structure DROP FOREIGN KEY fk_structure_typeentite');
         $this->addSql('DROP TABLE type_entite');
-        $this->addSql('ALTER TABLE grade ADD CONSTRAINT FK_595AAE344D8771C0 FOREIGN KEY (echelon_id) REFERENCES gechelon (id)');
-        $this->addSql('ALTER TABLE grade ADD CONSTRAINT FK_595AAE34B3E9C81 FOREIGN KEY (niveau_id) REFERENCES gniveau (id)');
-        $this->addSql('ALTER TABLE grade ADD CONSTRAINT FK_595AAE34BCF5E72D FOREIGN KEY (categorie_id) REFERENCES gcategorie (id)');
-        $this->addSql('ALTER TABLE grade ADD CONSTRAINT FK_595AAE348F5EA509 FOREIGN KEY (classe_id) REFERENCES gclasse (id)');
-        $this->addSql('ALTER TABLE membre_syndicat CHANGE etat etat TINYINT(1) DEFAULT NULL COMMENT \'true si c\'\'est le syndicat actuel du travailleur
-        un employé peut être dans plusieurs syndicats\'');
         $this->addSql('DROP INDEX fk_structure_typeentite_idx ON structure');
         $this->addSql('ALTER TABLE structure DROP type_entite');
     }
