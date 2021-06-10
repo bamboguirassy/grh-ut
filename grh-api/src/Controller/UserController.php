@@ -119,7 +119,7 @@ class UserController extends AbstractController {
 
         //send confirmation mail
         $message = (new \Swift_Message('Creation Compte'))
-          ->setFrom(Utils::$senderEmail)
+          ->setFrom(Utils::$sender)
           ->setTo($user->getEmail())
           ->setBody(
           $this->renderView(

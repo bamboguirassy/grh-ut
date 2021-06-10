@@ -39,6 +39,9 @@ export class ResetPasswordFormComponent implements OnInit {
     this.authSrv.createNewPassorwd(this.token, password).subscribe(() => {
         this.authSrv.httpSrv.toastr.success('Réinitialisation mot de passe réussie');
         if (this.email){
+          console.log(this.email);
+          console.log(this.resetPasswordForm?.value?.password);
+          
           this.authSrv.login({username: this.email, password: this.resetPasswordForm?.value?.password});
         }else{
           this.router.navigate(['./', 'public', 'sign-in']).then(_ =>
