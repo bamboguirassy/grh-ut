@@ -44,6 +44,11 @@ class Affectation
      */
     private $structure;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $etat;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +110,18 @@ class Affectation
     public function setStructure(?Structure $structure): self
     {
         $this->structure = $structure;
+
+        return $this;
+    }
+
+    public function getEtat(): ?bool
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(?bool $etat): self
+    {
+        $this->etat = $etat;
 
         return $this;
     }

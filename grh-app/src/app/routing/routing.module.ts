@@ -37,7 +37,6 @@ import { syndicatRoutes } from '../pages/parametrage/syndicat/syndicat.routes';
 import { typeContratRoutes } from '../pages/parametrage/typecontrat/typecontrat.routes';
 import { typeDocumentRoutes } from '../pages/parametrage/typedocument/typedocument.routes';
 import { typeEmployeRoutes } from '../pages/parametrage/typeemploye/typeemploye.routes';
-import { typeEntiteRoutes } from '../pages/parametrage/typeentite/typeentite.routes';
 import { userRoutes } from '../pages/parametrage/user/user.routes';
 import { TestComponent } from '../pages/tests/test/test.component';
 import { contratRoutes } from '../pages/gestionemploye/contrat/contrat.routes';
@@ -55,7 +54,6 @@ const VERTICAL_ROUTES: Routes = [
   userRoutes,
   contratRoutes,
   groupRoutes,
-  typeEntiteRoutes,
   typeContratRoutes,
   typeDocumentRoutes,
   caisseSocialeRoutes,

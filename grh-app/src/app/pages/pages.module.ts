@@ -151,10 +151,6 @@ import { TypeEmployeEditComponent } from './parametrage/typeemploye/typeemploye-
 import { TypeEmployeListComponent } from './parametrage/typeemploye/typeemploye-list/typeemploye-list.component';
 import { TypeEmployeNewComponent } from './parametrage/typeemploye/typeemploye-new/typeemploye-new.component';
 import { TypeEmployeShowComponent } from './parametrage/typeemploye/typeemploye-show/typeemploye-show.component';
-import { TypeEntiteEditComponent } from './parametrage/typeentite/typeentite-edit/typeentite-edit.component';
-import { TypeEntiteListComponent } from './parametrage/typeentite/typeentite-list/typeentite-list.component';
-import { TypeEntiteNewComponent } from './parametrage/typeentite/typeentite-new/typeentite-new.component';
-import { TypeEntiteShowComponent } from './parametrage/typeentite/typeentite-show/typeentite-show.component';
 import { UserEditComponent } from './parametrage/user/user-edit/user-edit.component';
 import { UserListComponent } from './parametrage/user/user-list/user-list.component';
 import { UserNewComponent } from './parametrage/user/user-new/user-new.component';
@@ -286,11 +282,6 @@ import { NzResultModule } from 'ng-zorro-antd/result';
     GroupShowComponent,
     GroupListComponent,
     GroupNewComponent,
-    // typeentite components
-    TypeEntiteListComponent,
-    TypeEntiteEditComponent,
-    TypeEntiteShowComponent,
-    TypeEntiteNewComponent,
     // typecontrat components
     TypeContratListComponent,
     TypeContratEditComponent,
