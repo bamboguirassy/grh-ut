@@ -32,12 +32,9 @@ export class MembreSyndicatAmicalComponent extends BasePageComponent<Employe> im
 
   findBySyndicat()
   {
-
-    
     this.membresyndicatSrv.findBySyndicat(this.membresyndicat).subscribe((data:any) => {
       this.employes = data;
     }, err => this.membresyndicatSrv.httpSrv.catchError(err));
-    
   }
 
 

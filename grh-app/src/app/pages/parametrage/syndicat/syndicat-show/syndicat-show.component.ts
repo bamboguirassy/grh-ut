@@ -50,7 +50,7 @@ export class SyndicatShowComponent extends BasePageComponent<Syndicat> implement
   }
 
   handlePostLoad() {
-    this.title = 'Partenaire Social - ' + this.entity?.nom;
+    this.title = 'Partenaire Social - ' + this.entity?.code;
   }
 
   handlePostDelete() {
