@@ -4,7 +4,7 @@
 </div>-->
 <app-access-denied *ngIf="!(structureFonctionSrv.resourceName|creable)"></app-access-denied>
 
-<form #form="ngForm" ngNativeValidate>
+<!-- <form #form="ngForm" ngNativeValidate>
   <div class="row">
     <div class="col-12 col-md-12">
       <tc-form-group>
@@ -23,16 +23,16 @@
       </tc-form-group>
     </div>
   </div>
-</form>
+</form> -->
 
 <tc-table *ngIf="structureFonctions?.length" [itemsPerPage]="10" [rows]="structureFonctions" [hovered]="true"
   [pagination]="true" [search]="false">
-  <tc-table-col [columnTitle]="'Fonction'" [columnName]="'fonction'" [enableSorting]="true">
+  <!-- <tc-table-col [columnTitle]="'Fonction'" [columnName]="'fonction'" [enableSorting]="true">
     <ng-template #tableTDTemplate let-value let-row>
       <i class="icofont-stamp icofont-2x"></i> &nbsp;
       <span class="nowrap">{{ value?.nom }}</span>
     </ng-template>
-  </tc-table-col>
+  </tc-table-col> -->
   <tc-table-col [columnTitle]="'Etat'" [columnName]="'etat'" [enableSorting]="true">
     <ng-template #tableTDTemplate let-value let-row="row">
       <tc-switcher [(ngModel)]="row.etat" name="etat" id="etat" #etat="ngModel"
