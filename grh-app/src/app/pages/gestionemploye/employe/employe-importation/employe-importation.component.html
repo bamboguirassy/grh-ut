@@ -2,11 +2,11 @@
     <tc-card *ngIf="employeSrv.resourceName|listable" [tcGradient]="lightGradient">
         <tc-card [view]="secondViewBorder" [outline]="true">
             <div class="card-header">
-                Choisir le csv à lire
+                Choisir le fichier csv à importer
             </div>
             <br>
             <div class="row">
-                <div class="col-12 col-md-6 col-lg-6">
+                <div class="col-12 col-md-6 col-lg-4">
                     <nz-select style="width: 100%" nzPlaceHolder="Sélectionner type employe" nzAllowClear nzShowSearch
                         [(ngModel)]="selectedTypeEmploye" name="typeEmploye" id="typeEmploye" #typeEmploye="ngModel">
                         <ng-container *ngFor="let typeEmploye of typeEmployes">
@@ -15,7 +15,7 @@
                         </ng-container>
                     </nz-select>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4">
+                <div *ngIf="selectedTypeEmploye" class="col-12 col-md-6 col-lg-4">
                     <input type="file" name="files" class="form-control" #uploads (change)="onChange(uploads.files)"
                         multiple value="process" accept=".csv" />
                 </div>
@@ -23,97 +23,100 @@
         </tc-card>
     </tc-card>
     <tc-card *ngIf="employeSrv.resourceName|listable" [tcGradient]="lightGradient">
-
-            <button class="float-right mb-3" type="submit" [afterIcon]="'icofont-save'" tc-button
-            [view]="'accent'" (click)="chargerEmployes()" >
-            Enregistrer
-        </button>
-        <table class="table table-bordered table-responsive table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Matricule</th>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Prénoms</th>
-                    <th scope="col">Genre</th>
-                    <th scope="col">Date naissance</th>
-                    <th scope="col">Lieu naissance</th>
-                    <th scope="col">Cni ou passport</th>
-                    <th scope="col">Téléphone primaire</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Email univ</th>
-                    <th scope="col">Date recrutement</th>
-                    <th scope="col">Grade</th>
-                    <th scope="col">Diplome académique</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let record of records;let i = index;">
-                    <td>
-                        <input class="input form-control" [(ngModel)]="record.matricule" name="matricule" id="matricule"
-                        #matricule="ngModel">
-                    </td>
-                    <td>
-                        <input class="input form-control" [(ngModel)]="record.nom" name="nom" id="nom" #nom="ngModel">
-                    </td>
-                    <td>
-                        <input class="input form-control" [(ngModel)]="record.prenoms" name="prenoms" id="prenoms"
-                        #prenoms="ngModel">
-                    </td>
-                    <td>
-                        <input class="input form-control" [(ngModel)]="record.genre" name="genre" id="genre"
-                        #genre="ngModel">
-                    </td>
-                    <td>
-                        <input class="input form-control" [(ngModel)]="record.dateNaissance" name="dateNaissance"
-                        id="dateNaissance" #dateNaissance="ngModel">
-                    </td>
-                    <td>
-                        <input class="input form-control" [(ngModel)]="record.lieuNaissance" name="lieuNaissance"
-                            id="lieuNaissance" #lieuNaissance="ngModel">
-                        </td>
-                        <td>
-                            <input class="input form-control" [(ngModel)]="record.cni" name="cni" id="cni" #cni="ngModel">
-                        </td>
-                        <td>
-                            <input class="input form-control" [(ngModel)]="record.telephonePrimaire" name="telephonePrimaire"
-                            id="telephonePrimaire" #telephonePrimaire="ngModel">
-                        </td>
-                        <td>
-                            <input class="input form-control" [(ngModel)]="record.email" name="email" id="email"
-                            #email="ngModel">
-                        </td>
-                        <td>
-                            <input class="input form-control" [(ngModel)]="record.emailUniv" name="emailUniv" id="emailUniv"
-                            #emailUniv="ngModel">
-                        </td>
-                        <td>
-                            <input class="input form-control" [(ngModel)]="record.dateRecrutement" name="dateRecrutement"
-                            id="dateRecrutement" #dateRecrutement="ngModel">
-                        </td>
-                        <td>
-                            <input class="input form-control" [(ngModel)]="record.grade" name="grade" id="grade"
-                            #grade="ngModel">
-                            
-                        </td>
-                        <td>
-                            <input class="input form-control" [(ngModel)]="record.diplomeAcademique" name="diplomeAcademique"
-                            id="diplomeAcademique" #diplomeAcademique="ngModel">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-bordered table-responsive table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Matricule</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Prénoms</th>
+                            <th scope="col">Genre</th>
+                            <th scope="col">Date naissance</th>
+                            <th scope="col">Lieu naissance</th>
+                            <th scope="col">Cni ou passport</th>
+                            <th scope="col">Téléphone primaire</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Email univ</th>
+                            <th scope="col">Date recrutement</th>
+                            <th scope="col">Grade</th>
+                            <th scope="col">Diplome académique</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let record of records;let i = index;">
+                            <td>
+                                <input class="input form-control" [(ngModel)]="record.matricule" name="matricule"
+                                    id="matricule" #matricule="ngModel">
+                            </td>
+                            <td>
+                                <input class="input form-control" [(ngModel)]="record.nom" name="nom" id="nom"
+                                    #nom="ngModel">
+                            </td>
+                            <td>
+                                <input class="input form-control" [(ngModel)]="record.prenoms" name="prenoms"
+                                    id="prenoms" #prenoms="ngModel">
+                            </td>
+                            <td>
+                                <input class="input form-control" [(ngModel)]="record.genre" name="genre" id="genre"
+                                    #genre="ngModel">
+                            </td>
+                            <td>
+                                <input class="input form-control" [(ngModel)]="record.dateNaissance"
+                                    name="dateNaissance" id="dateNaissance" #dateNaissance="ngModel">
+                            </td>
+                            <td>
+                                <input class="input form-control" [(ngModel)]="record.lieuNaissance"
+                                    name="lieuNaissance" id="lieuNaissance" #lieuNaissance="ngModel">
+                            </td>
+                            <td>
+                                <input class="input form-control" [(ngModel)]="record.cni" name="cni" id="cni"
+                                    #cni="ngModel">
+                            </td>
+                            <td>
+                                <input class="input form-control" [(ngModel)]="record.telephonePrimaire"
+                                    name="telephonePrimaire" id="telephonePrimaire" #telephonePrimaire="ngModel">
+                            </td>
+                            <td>
+                                <input class="input form-control" [(ngModel)]="record.email" name="email" id="email"
+                                    #email="ngModel">
+                            </td>
+                            <td>
+                                <input class="input form-control" [(ngModel)]="record.emailUniv" name="emailUniv"
+                                    id="emailUniv" #emailUniv="ngModel">
+                            </td>
+                            <td>
+                                <input class="input form-control" [(ngModel)]="record.dateRecrutement"
+                                    name="dateRecrutement" id="dateRecrutement" #dateRecrutement="ngModel">
+                            </td>
+                            <td>
+                                <input class="input form-control" [(ngModel)]="record.grade" name="grade" id="grade"
+                                    #grade="ngModel">
+                            </td>
+                            <td>
+                                <input class="input form-control" [(ngModel)]="record.diplomeAcademique"
+                                    name="diplomeAcademique" id="diplomeAcademique" #diplomeAcademique="ngModel">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 mt-2">
+                <button class="float-right mb-3" type="submit" [afterIcon]="'icofont-save'" tc-button [view]="'accent'"
+                    (click)="chargerEmployes()">
+                    Sauvegarder
+                </button>
+            </div>
+        </div>
     </tc-card>
 </div>
-    
-    <div class="row">
-        <div class="col-12">
-        <nz-result *ngIf="!isError"
-      nzStatus="success"
-      nzTitle="Ajout reussie!"
-    >
-      <div nz-result-extra>
-        <button nz-button nzType="primary" (click)="goTo()" >Ok</button>
-      </div>
-    </nz-result>
+
+<div class="row">
+    <div class="col-12">
+        <nz-result *ngIf="!isError" nzStatus="success" nzTitle="Ajout reussie!">
+            <div nz-result-extra>
+                <button nz-button nzType="primary" (click)="goTo()">Ok</button>
+            </div>
+        </nz-result>
     </div>
 </div>
