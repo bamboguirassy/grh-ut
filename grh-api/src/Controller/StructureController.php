@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Structure;
 use App\Form\StructureType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,6 +31,28 @@ class StructureController extends AbstractController
 
         return count($structures)?$structures:[];
     }
+
+    /**
+     * @Rest\Get(path="/with-at-least-one-employe", name="find_with_at_least_one_employe")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_STRUCTURE_INDEX")
+     */
+    public function findWithAtLeastOneEmploye(EntityManagerInterface $entityManager): array
+    {
+        $structures = $entityManager->createQuery('
+            SELECT s
+            FROM App\Entity\Structure s
+            WHERE s IN (
+                SELECT struct
+                FROM App\Entity\Employe e
+                JOIN e.structure struct
+            )
+        ')->getResult();
+
+        return count($structures)?$structures:[];
+    }
+
+
 
     /**
      * @Rest\Post(Path="/create", name="structure_new")

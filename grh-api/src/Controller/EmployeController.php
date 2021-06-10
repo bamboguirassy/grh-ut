@@ -12,6 +12,7 @@ use App\Entity\Structure;
 use App\Entity\TypeEmploye;
 use App\Entity\MembreFamille;
 use App\Form\EmployeType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -48,19 +49,20 @@ class EmployeController extends AbstractController
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_EMPLOYE_INDEX")
      */
-    public function realtimeSearch(Request $request) {
+    public function realtimeSearch(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
         $redData = Utils::serializeRequestContent($request);
         $employes = [];
-        if(isset($redData['searchTerm'])){
-            $names = explode(' ',$redData['searchTerm']);
-            if(count($names)>1){
+        if (isset($redData['searchTerm'])) {
+            $names = explode(' ', $redData['searchTerm']);
+            if (count($names) > 1) {
                 $employes = $em->createQuery('SELECT e
                     FROM App\Entity\Employe e
                     WHERE CONCAT(e.prenoms,\' \',e.nom) LIKE :term')
-                ->setParameter('term', '%'.$redData['searchTerm'].'%')
-                ->getResult();
-            }else{
+                    ->setParameter('term', '%' . $redData['searchTerm'] . '%')
+                    ->getResult();
+            } else {
                 $employes = $em->createQuery('SELECT e
                     FROM App\Entity\Employe e
                     WHERE e.prenoms LIKE :term OR
@@ -68,8 +70,8 @@ class EmployeController extends AbstractController
                     e.matricule LIKE :term OR 
                     e.emailUniv LIKE :term OR 
                     e.cni LIKE :term')
-                ->setParameter('term', '%'.$redData['searchTerm'].'%')
-                ->getResult();
+                    ->setParameter('term', '%' . $redData['searchTerm'] . '%')
+                    ->getResult();
             }
         }
 
@@ -126,7 +128,7 @@ $employe->setProfession($faker->randomElement($professions));
         }
         $employe->setDateNaissance(new \DateTime($reqData->dateNaissance));
 
-        
+
         if ($employe->getFilepath()) {
             $scheme = $request->getScheme();
             file_put_contents($employe->getFilename(), base64_decode($employe->getFilepath()));
@@ -168,6 +170,27 @@ $employe->setProfession($faker->randomElement($professions));
             ->getRepository(Employe::class)
             ->findByCaisseSociale($caisseSociale);
         return $employes;
+    }
+
+    /**
+     * @Rest\Get(path="/date-recrutement-range/{startDate}/{endDate}", name="find_by_date_recrutement_range",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200, serializerEnableMaxDepthChecks=true)
+     * @IsGranted("ROLE_EMPLOYE_SHOW")
+     */
+    public function findByDateRecrutementRange(EntityManagerInterface $entityManager, $startDate, $endDate)
+    {
+        if(!isset($startDate) || empty($startDate)) throw new BadRequestHttpException("Vous devez préciser la date de début!");
+
+        if(!isset($endDate) || empty($endDate)) throw new BadRequestHttpException("Vous devez préciser la date de fin!");
+
+        return $entityManager->createQuery('
+            SELECT e
+            FROM App\Entity\Employe e
+            WHERE e.dateRecrutement BETWEEN :startDate AND :endDate
+        ')->setParameters([
+            'startDate' => $startDate,
+            'endDate' => $endDate
+        ])->getResult();
     }
 
     /**
@@ -382,11 +405,58 @@ $employe->setProfession($faker->randomElement($professions));
                 ->setTo($dest)
                 ->setBody($messaye_body, 'text/html');
 
-            array_push($result,  [$dest => $mailer->send($message)]); // 0 => failure
+            array_push($result, [$dest => $mailer->send($message)]); // 0 => failure
 
         }
         return $result;
     }
+
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @Rest\Post(path="/many-type-employe", name="find_by_many_type_employe")
+     * @Rest\View(StatusCode=200)
+     * @return mixed
+     */
+    public function findByManyTypeEmploye(Request $request, EntityManagerInterface $entityManager)
+    {
+        $typeEmployes = Utils::serializeRequestContent($request)['typeEmployes'];
+        if (count($typeEmployes)) {
+            return $entityManager->createQuery('
+                SELECT e
+                FROM App\Entity\Employe e
+                WHERE e.typeEmploye IN (:typeEmployes)
+            ')->setParameter('typeEmployes', $typeEmployes)
+                ->getResult();
+        } else {
+            throw new BadRequestHttpException("Vous devez selectionner au moins un type d'employé!");
+        }
+
+    }
+
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @Rest\Post(path="/many-structure", name="find_by_many_structure")
+     * @Rest\View(StatusCode=200)
+     * @return mixed
+     */
+    public function findByManyStructure(Request $request, EntityManagerInterface $entityManager)
+    {
+        $structures = Utils::serializeRequestContent($request)['structures'];
+        if (count($structures)) {
+            return $entityManager->createQuery('
+                SELECT e
+                FROM App\Entity\Employe e
+                WHERE e.structure IN (:structures)
+            ')->setParameter('structures', $structures)
+                ->getResult();
+        } else {
+            throw new BadRequestHttpException("Vous devez selectionner au moins une structure!");
+        }
+
+    }
+
     /**
      * @Rest\Get(path="/{id}/membre-mutuelle-sante", name="employe_by_mutuellesante",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode = 200, serializerEnableMaxDepthChecks=true)
@@ -395,30 +465,31 @@ $employe->setProfession($faker->randomElement($professions));
     public function findByMutuelleSante(MutuelleSante $mutuellesante)
     {
         $em = $this->getDoctrine()->getManager();
-        $employes =$em->getRepository(Employe::class)
-                ->findByMutuelleSante($mutuellesante);
-        
-          return $employes;
+        $employes = $em->getRepository(Employe::class)
+            ->findByMutuelleSante($mutuellesante);
+
+        return $employes;
     }
-    
+
     /**
      * @Rest\Post(path="/charger-employe/{id}", name="charger_employe_by_type_employe", requirements = {"id"="\d+"})
      * @Rest\View(StatusCode = 200)
      */
-    public function chargerEmployeByTypeEmploye(Request $request, TypeEmploye $typeEmploye) {
+    public function chargerEmployeByTypeEmploye(Request $request, TypeEmploye $typeEmploye)
+    {
         $em = $this->getDoctrine()->getManager();
         $reqData = Utils::getObjectFromRequest($request);
-        foreach ($reqData as $rowEmploye) {            
+        foreach ($reqData as $rowEmploye) {
             $employe = new Employe();
             $form = $this->createForm(EmployeType::class, $employe);
             $form->submit((array)$rowEmploye);
             if (!isset($rowEmploye->cni) || $rowEmploye->cni == NULL) {
-                throw $this->createNotFoundException("L'ajout échoué pour l'employé ".$rowEmploye->prenoms." ".$rowEmploye->nom.", le CNI est obligatoire.");
+                throw $this->createNotFoundException("L'ajout échoué pour l'employé " . $rowEmploye->prenoms . " " . $rowEmploye->nom . ", le CNI est obligatoire.");
             }
             $employeVerifCni = $this->getDoctrine()
-                    ->getRepository(Employe::class)
-                    ->findByCni($employe->getCni());
-            if(count($employeVerifCni)<1){                
+                ->getRepository(Employe::class)
+                ->findByCni($employe->getCni());
+            if (count($employeVerifCni) < 1) {
                 $employe->setTypeEmploye($typeEmploye);
                 if (isset($rowEmploye->dateNaissance)) {
                     $employe->setDateNaissance(new \DateTime($rowEmploye->dateNaissance));
@@ -434,11 +505,11 @@ $employe->setProfession($faker->randomElement($professions));
                 }
                 $em->persist($employe);
             } else {
-                throw $this->createNotFoundException("L'ajout échoué pour l'employé ".$employe->getPrenoms()." ".$employe->getNom()." CNI ".$employe->getCni().".");
+                throw $this->createNotFoundException("L'ajout échoué pour l'employé " . $employe->getPrenoms() . " " . $employe->getNom() . " CNI " . $employe->getCni() . ".");
             }
-            
+
         }
-        
+
         return $em->flush();
     }
 }
