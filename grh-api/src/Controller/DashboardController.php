@@ -901,10 +901,11 @@ class DashboardController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         
        $typeEmploye = $em->getRepository(TypeEmploye::class)->findOneByCode('PER');
-        $grades = $em->createQuery('SELECT DISTINCT e.grade FROM App\Entity\Employe e '
+       
+       $grades = $em->createQuery('SELECT DISTINCT e.grade FROM App\Entity\Employe e '
                 . 'where e.grade is NOT NULL and e.typeEmploye=?1 ')
                 ->setParameter(1,$typeEmploye)
-             ->getResult();
+                ->getResult();
         
     
      $tab = [];
@@ -912,20 +913,18 @@ class DashboardController extends AbstractController
        $nbrHomme = $em->createQuery('
             SELECT count(e)
             FROM App\Entity\Employe e
-            WHERE  e.typeEmploye=?1 and e.grade=?2 and e.genre=?3
-            
-        ')  ->setParameter(1, $typeEmploye)
-            ->setParameter(2,$grade )
-            ->setParameter(3,'Masculin' )
+            WHERE e.typeEmploye=?1 and e.grade=?2 and e.genre=?3')
+            ->setParameter(1, $typeEmploye)
+            ->setParameter(2,$grade)
+            ->setParameter(3,'Masculin')
             ->getSingleScalarResult();
        $nbrFemme = $em->createQuery('
             SELECT count(e)
             FROM App\Entity\Employe e
-            WHERE  e.typeEmploye=?1 and e.grade=?2 and e.genre=?3')
+            WHERE e.typeEmploye=?1 and e.grade=?2 and e.genre=?3')
             ->setParameter(1, $typeEmploye)
-            ->setParameter(2,$grade )
-            ->setParameter(3,'Féminin' )
-              // ->getResult();
+            ->setParameter(2,$grade)
+            ->setParameter(3,'Féminin')
             ->getSingleScalarResult();
 
        $tab[] = [

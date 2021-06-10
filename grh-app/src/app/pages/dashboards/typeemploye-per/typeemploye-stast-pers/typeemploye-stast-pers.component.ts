@@ -38,19 +38,19 @@ export class TypeemployeStastPersComponent extends DashboardBaseComponent<TypeEm
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Type Employe PER'
+              labelString: 'Type Employe PER Par Grade'
             }
           }
         },
         plugins: {
           title: {
             display: true,
-            text: 'Nombres employé / Homme / Femme par Type Employe PER'
+            text: 'Nombres employé / Homme / Femme Type Employe PER Par Grade'
           }
         }
         
     };
-    this.chartLabels = this.rawChartData.map(r => r.grade);
+    this.chartLabels = this.rawChartData.map(r => r.grade.grade);
     this.chartType = 'bar';
     this.chartLegend = true;
     this.chartPlugins = [];
