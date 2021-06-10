@@ -108,6 +108,10 @@ import { DiplomeEditComponent } from './parametrage/diplome/diplome-edit/diplome
 import { DiplomeListComponent } from './parametrage/diplome/diplome-list/diplome-list.component';
 import { DiplomeNewComponent } from './parametrage/diplome/diplome-new/diplome-new.component';
 import { DiplomeShowComponent } from './parametrage/diplome/diplome-show/diplome-show.component';
+import { FonctionEditComponent } from './parametrage/fonction/fonction-edit/fonction-edit.component';
+import { FonctionListComponent } from './parametrage/fonction/fonction-list/fonction-list.component';
+import { FonctionNewComponent } from './parametrage/fonction/fonction-new/fonction-new.component';
+import { FonctionShowComponent } from './parametrage/fonction/fonction-show/fonction-show.component';
 import { GroupEditComponent } from './parametrage/group/group-edit/group-edit.component';
 import { GroupListComponent } from './parametrage/group/group-list/group-list.component';
 import { GroupNewComponent } from './parametrage/group/group-new/group-new.component';
@@ -294,7 +298,11 @@ import { NzResultModule } from 'ng-zorro-antd/result';
     CaisseSocialeEditComponent,
     CaisseSocialeShowComponent,
     CaisseSocialeNewComponent,
-    
+    // fonction components
+    FonctionListComponent,
+    FonctionEditComponent,
+    FonctionShowComponent,
+    FonctionNewComponent,
     // mutuellesante components
     MutuelleSanteListComponent,
     MutuelleSanteEditComponent,
