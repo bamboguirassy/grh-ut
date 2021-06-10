@@ -22,14 +22,14 @@ export class SyndicatListComponent extends BasePageComponent<Syndicat> implement
     super(store, syndicatSrv);
 
     this.pageData = {
-      title: 'Liste des Syndicats/Amicales',
+      title: 'Liste des Partenaires Sociaux',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des syndicats/amicales'
+          title: 'Liste des Partenaires Sociaux'
         }
       ]
     };

@@ -30,7 +30,7 @@ export class SyndicatShowComponent extends BasePageComponent<Syndicat> implement
           route: ''
         },
         {
-          title: 'Syndicats/Amicales',
+          title: 'Partenaires Sociaux',
           route: '/'+this.orientation+'/syndicat'
         },
         {
@@ -50,7 +50,7 @@ export class SyndicatShowComponent extends BasePageComponent<Syndicat> implement
   }
 
   handlePostLoad() {
-    this.title = 'Syndicat/Amicale - ' + this.entity?.id;
+    this.title = 'Partenaire Social - ' + this.entity?.nom;
   }
 
   handlePostDelete() {
