@@ -83,8 +83,8 @@ export class EmployeService extends BamboAbstractService {
   findByCaisseSociale(caissesociale: CaisseSociale) {
     return this.httpSrv.get(this.routePrefix + "caisse-sociale/" + caissesociale.id);
   }
-  sendEmail(email:any,object:any,message:any){
-    const data ={emailDestinataires: email, object: object, message: message};
+  sendEmail(id:any,object:any,message:any){
+    const data ={id:id, object: object, message: message};
     return this.httpSrv.post(this.routePrefix + "send-email" ,data);
   }
 

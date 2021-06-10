@@ -372,19 +372,30 @@ $employe->setProfession($faker->randomElement($professions));
     public function sendSingleEmail(Request $request, Swift_Mailer $mailer): array
     {
 
-        $email_destinatires = Utils::serializeRequestContent($request)['emailDestinataires'];
+       $employes_id = Utils::serializeRequestContent($request)['id'];
+       $entityManager = $this->getDoctrine()->getManager();
         $object = Utils::serializeRequestContent($request)['object'];
         $messaye_body = Utils::serializeRequestContent($request)['message'];
         $result = []; // confirmation link
-        foreach ($email_destinatires as $dest) {
-            $message = (new Swift_Message($object))
+        foreach ($employes_id as $id) {
+            $employe = $entityManager->getRepository(Employe::class)->find($id);
+            if($employe->getEmail()!=NULL){
+                $message = (new Swift_Message($object))
                 ->setFrom(Utils::$sender)
-                ->setTo($dest)
+                ->setTo($employe->getEmail())
+                ->setCc($employe->getEmailUniv())
                 ->setBody($messaye_body, 'text/html');
-
-            array_push($result,  [$dest => $mailer->send($message)]); // 0 => failure
-
+                array_push($result,  [$employe->getId() => $mailer->send($message)]); 
+            }
+            else{
+                $message = (new Swift_Message($object))
+                ->setFrom(Utils::$sender)
+                ->setTo($employe->getEmailUniv())
+                ->setBody($messaye_body, 'text/html');
+                array_push($result,  [$employe->getId() => $mailer->send($message)]); 
+            }
         }
+          
         return $result;
     }
     /**
