@@ -2,11 +2,21 @@
     <tc-card *ngIf="employeSrv.resourceName|listable" [tcGradient]="lightGradient">
         <tc-card [view]="secondViewBorder" [outline]="true">
             <div class="card-header">
-                Choisir le fichier csv à importer
+                <div class="alert alert-primary" role="alert">
+                    <strong>Pour importer la liste des employés depuis un fichier csv, il y'a un modèle à respecter.
+                        Merci de cliquer sur lien suivant pour obtenir le modèle
+                        d'importation : <a target="_blank" href="assets/import/modèle_importation_employe.csv">
+                            Modèle d'importation </a>
+                    </strong>
+                </div>
+            </div>
+            <br>
+            <div class="card-header">
+                Choisir le type employé puis le fichier csv à importer
             </div>
             <br>
             <div class="row">
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-6">
                     <nz-select style="width: 100%" nzPlaceHolder="Sélectionner type employe" nzAllowClear nzShowSearch
                         [(ngModel)]="selectedTypeEmploye" name="typeEmploye" id="typeEmploye" #typeEmploye="ngModel">
                         <ng-container *ngFor="let typeEmploye of typeEmployes">
@@ -15,14 +25,9 @@
                         </ng-container>
                     </nz-select>
                 </div>
-                <div *ngIf="selectedTypeEmploye" class="col-12 col-md-6 col-lg-4">
+                <div *ngIf="selectedTypeEmploye" class="col-12 col-md-6 col-lg-6">
                     <input type="file" name="files" class="form-control" #uploads (change)="onChange(uploads.files)"
                         multiple value="process" accept=".csv" />
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <a target="_blank" href="assets/import/modele_importation_employe.csv">
-                        <button type="button" class="btn btn-primary">Télécharger modèle</button>
-                    </a>
                 </div>
             </div>
         </tc-card>
