@@ -93,6 +93,7 @@ class AuthController extends AbstractController
 
         $user = $this->checkTokenValidity($data['token']);
         $user->setPlainPassword($data['password']);
+        $user->setEnabled(true);
         $user->setConfirmationToken(null)->setPasswordRequestedAt(null);
 
         $userManager->updateUser($user);

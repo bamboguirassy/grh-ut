@@ -1,35 +1,36 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Syndicat } from '../syndicat';
-import { SyndicatService } from '../syndicat.service';
+import { Rang } from '../rang';
+import { RangService } from '../rang.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { BasePageComponent } from 'src/app/pages/base-page';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-syndicat-edit',
-  templateUrl: './syndicat-edit.component.html',
-  styleUrls: ['./syndicat-edit.component.scss']
+  selector: 'app-rang-edit',
+  templateUrl: './rang-edit.component.html',
+  styleUrls: ['./rang-edit.component.scss']
 })
-export class SyndicatEditComponent extends BasePageComponent<Syndicat> implements OnInit, OnDestroy {
+export class RangEditComponent extends BasePageComponent<Rang> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-    public syndicatSrv: SyndicatService,
-    public router: Router,
-    private activatedRoute: ActivatedRoute,
-    public location: Location) {
-    super(store, syndicatSrv);
+              public rangSrv: RangService,
+              public router: Router,
+              private activatedRoute: ActivatedRoute,
+              public location: Location) {
+    super(store, rangSrv);
     this.pageData = {
-      title: 'Modification - Partenaire Social',
+      title: 'Modification - Rang',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des partenaires sociaux',
-          route: '/' + this.orientation + '/syndicat'
+          title: 'Rangs',
+          route: '/'+this.orientation+'/rang'
         },
         {
           title: 'Modification'

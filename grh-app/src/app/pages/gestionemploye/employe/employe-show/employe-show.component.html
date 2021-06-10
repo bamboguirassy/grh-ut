@@ -24,9 +24,9 @@
                         {{titre+' '+entity?.prenoms+' '+entity?.nom}} - {{entity?.matricule}}</div>
                     <div [ngStyle]="{'color': sidebarBg}">{{entity?.structure?.nom}}</div>
                     <div style="font-weight: bold;">{{ entity?.profession?.nom}}</div>
-                    <div [ngStyle]="{'color': sidebarBg}" style="font-size: large;" class="m-1">
+                    <!-- <div [ngStyle]="{'color': sidebarBg}" style="font-size: large;" class="m-1">
                         {{latestFonction?.responsabilite?.fonction?.nom}}
-                    </div>
+                    </div> -->
                     <hr [ngStyle]="{'background-color': sidebarBg}" class="m-1">
                     <ul class="personal-info">
                         <li class="info-line">
@@ -69,6 +69,12 @@
                             <div class="row">
                                 <div class="col-6 col-md-5 title">Date Prise Service:</div>
                                 <div class="col-6 col-md-7 content">{{entity?.datePriseService|date:'dd/MM/yyyy'}}</div>
+                            </div>
+                        </li>
+                        <li class="info-line" *ngIf="entity?.typeEmploye?.code=='PER'">
+                            <div class="row">
+                                <div class="col-6 col-md-5 title">Diplôme académique:</div>
+                                <div class="col-6 col-md-7 content">{{entity?.diplomeAcademique}}</div>
                             </div>
                         </li>
                     </ul>

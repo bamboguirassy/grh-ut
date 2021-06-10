@@ -26,6 +26,5 @@ export class MembreCaisseSocialeComponent implements OnInit {
     this.employeSrv.findByCaisseSociale(this.caisseSociale).pipe(first())
       .subscribe((data: any) => this.employes = data,
         error => this.employeSrv.httpSrv.catchError(error));
-        console.log(this.employes);
   }
 }

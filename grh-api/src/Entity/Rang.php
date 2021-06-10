@@ -2,41 +2,35 @@
 
 namespace App\Entity;
 
+use App\Repository\RangRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Fonction
- *
- * @ORM\Table(name="fonction")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=RangRepository::class)
  */
-class Fonction
+class Rang
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nom", type="string", length=145, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
     private $etat;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      */
-    private $rang;
+    private $appelation;
 
     public function getId(): ?int
     {
@@ -60,24 +54,22 @@ class Fonction
         return $this->etat;
     }
 
-    public function setEtat(?bool $etat): self
+    public function setEtat(bool $etat): self
     {
         $this->etat = $etat;
 
         return $this;
     }
 
-    public function getRang(): ?int
+    public function getAppelation(): ?string
     {
-        return $this->rang;
+        return $this->appelation;
     }
 
-    public function setRang(int $rang): self
+    public function setAppelation(string $appelation): self
     {
-        $this->rang = $rang;
+        $this->appelation = $appelation;
 
         return $this;
     }
-
-
 }

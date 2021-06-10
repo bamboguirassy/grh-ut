@@ -25,11 +25,6 @@ class StructureFonction
      */
     private $structure;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Fonction::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $fonction;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -45,6 +40,12 @@ class StructureFonction
      * @ORM\Column(type="integer", nullable=true)
      */
     private $duree;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity=Rang::class)
+     * @ORM\JoinColumn(name="rang", referencedColumnName="id",nullable=false)
+    */
+    private $rang;
 
     public function __construct()
     {
@@ -64,18 +65,6 @@ class StructureFonction
     public function setStructure(?Structure $structure): self
     {
         $this->structure = $structure;
-
-        return $this;
-    }
-
-    public function getFonction(): ?Fonction
-    {
-        return $this->fonction;
-    }
-
-    public function setFonction(?Fonction $fonction): self
-    {
-        $this->fonction = $fonction;
 
         return $this;
     }
@@ -130,6 +119,18 @@ class StructureFonction
     public function setDuree(?int $duree): self
     {
         $this->duree = $duree;
+
+        return $this;
+    }
+    
+    public function getRang()
+    {
+        return $this->rang;
+    }
+
+    public function setRang(?Rang $rang)
+    {
+        $this->rang = $rang;
 
         return $this;
     }

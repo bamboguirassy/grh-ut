@@ -1,30 +1,19 @@
 <tc-card *ngIf="syndicatSrv.resourceName|showable" [tcGradient]="lightGradient">
-
-    
     <div class="row">
         <div class="col-12 col-md-4">
-           
-                <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
-
-                    <div class="container-fluid">
-
-                        <div class="rounded-circle text-center" style="justify-content: center;" >
-
-                            <img (click)="fileInput.click()"
-                             [src]="entity?.filepath ? entity?.filepath:'assets/img/default-profile-picture1.jpg'"
-                            alt="photo employé" style="min-width: center; width: 100px;" >
-                            <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
-                        </div>
+            <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
+                <div class="container-fluid">
+                    <div class="rounded-circle text-center" style="justify-content: center;">
+                        <img (click)="fileInput.click()"
+                            [src]="entity?.filepath ? entity?.filepath:'assets/img/default-profile-picture1.jpg'"
+                            alt="photo employé" style="min-width: center; width: 100px;">
+                        <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
                     </div>
-                    <div class="col-md-7">
-                    
-                    </div>
-            <div class="table-responsive -sm">
-
-                <table class="table">
+                </div>
+                <table class="table table-responsive-sm">
                     <tr>
                         <th>Nom</th>
-                        <td >
+                        <td>
                             <span *ngIf="entity?.nom">{{ entity?.nom }}</span>
                             <tc-badge view="error" *ngIf="!entity?.nom">Indéfinie</tc-badge>
                         </td>
@@ -36,9 +25,8 @@
                             <tc-badge view="error" *ngIf="!entity?.code">Indéfinie</tc-badge>
                         </td>
                     </tr>
-                   
                     <tr>
-                        <th>MontantCotisationMensuelle</th>
+                        <th title="Montant Cotisation Mensuelle">Montant</th>
                         <td>
                             <span *ngIf="entity?.montantCotisationMensuelle">{{ entity?.montantCotisationMensuelle
                                 }}</span>
@@ -46,43 +34,39 @@
                         </td>
                     </tr>
                 </table>
-            </div>
-                   
 
+
+                <div class="d-flex flex-row">
                     <div class="d-flex flex-row">
-
-                        <div class="d-flex flex-row">
-                            <button *ngIf="syndicatSrv.resourceName|editable"
+                        <button *ngIf="syndicatSrv.resourceName|editable"
                             [routerLink]="['/'+orientation,syndicatSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
                             class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
-                        </div>
-
-                        <div class="d-flex flex-row">
-                            <button (click)="remove(entity)" *ngIf="syndicatSrv.resourceName|deletable" tc-button view="error"
-                            beforeIcon="icofont-trash" class=" float-right ml-1"></button>
-                        </div>
-
-                        <div class="d-flex flex-row">
-                            <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
-                                beforeIcon="icofont-refresh"></button>
-                        </div>
-
-                        <div class="d-flex flex-row">
-                            <button tc-button class="float-right" (click)="location.back()" beforeIcon="icofont-reply"></button>
-                        </div>
-
                     </div>
+                    <div class="d-flex flex-row">
+                        <button (click)="remove(entity)" *ngIf="syndicatSrv.resourceName|deletable" tc-button
+                            view="error" beforeIcon="icofont-trash" class=" float-right ml-1"></button>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
+                            beforeIcon="icofont-refresh"></button>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <button tc-button class="float-right ml-1" (click)="location.back()"
+                            beforeIcon="icofont-reply"></button>
+                    </div>
+                </div>
 
 
 
-                </tc-card>
-            
-           
+            </tc-card>
+
+
         </div>
 
 
-        <div class="col-12 col-md-8"> 
-            
-             <app-membre-syndicat-amical *ngIf="entity" [membresyndicat]="entity" [orientation]="orientation"></app-membre-syndicat-amical>
+        <div class="col-12 col-md-8">
 
-<app-access-denied *ngIf="!(syndicatSrv.resourceName|showable)"></app-access-denied>
+            <app-membre-syndicat-amical *ngIf="entity" [membresyndicat]="entity" [orientation]="orientation">
+            </app-membre-syndicat-amical>
+
+            <app-access-denied *ngIf="!(syndicatSrv.resourceName|showable)"></app-access-denied>
