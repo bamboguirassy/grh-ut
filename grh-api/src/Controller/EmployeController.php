@@ -422,7 +422,7 @@ $employe->setProfession($faker->randomElement($professions));
                 ->setParameter('cni', $rowEmploye->cni)
                 ->getResult();
             if(count($employes)>0){                
-                throw $this->createNotFoundException("L'ajout échoué pour l'employé ".$employe->getPrenoms()." ".$employe->getNom()." CNI ".$employe->getCni().".");
+                throw $this->createNotFoundException("Ajout échoué pour l'employé ".$employe->getPrenoms()." ".$employe->getNom().", CNI ".$employe->getCni().".");
             } else {
                 $employe->setTypeEmploye($typeEmploye);
                 if (isset($rowEmploye->dateNaissance)) {
@@ -442,6 +442,12 @@ $employe->setProfession($faker->randomElement($professions));
             
         }
         
-        return $em->flush();
+        try {
+           return $em->flush();
+        }   
+        catch(\Exception $e){
+            throw $this->createNotFoundException("Il y'a une duplication au niveaau des CNI merci!"); 
+        }
+        
     }
 }
