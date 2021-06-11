@@ -395,12 +395,12 @@ $employe->setProfession($faker->randomElement($professions));
     public function sendSingleEmail(Request $request, Swift_Mailer $mailer): array
     {
 
-       $employes_id = Utils::serializeRequestContent($request)['id'];
+       $employeIds = Utils::serializeRequestContent($request)['id'];
        $entityManager = $this->getDoctrine()->getManager();
         $object = Utils::serializeRequestContent($request)['object'];
         $messaye_body = Utils::serializeRequestContent($request)['message'];
         $result = []; // confirmation link
-        foreach ($employes_id as $id) {
+        foreach ($employeIds as $id) {
             $employe = $entityManager->getRepository(Employe::class)->find($id);
             if($employe->getEmail()!=NULL){
                 $message = (new Swift_Message($object))
