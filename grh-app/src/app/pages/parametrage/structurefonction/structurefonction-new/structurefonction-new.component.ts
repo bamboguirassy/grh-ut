@@ -1,11 +1,11 @@
+import { Rang } from './../../rang/rang';
 import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren, Input } from '@angular/core';
 import { StructureFonctionService } from '../structurefonction.service';
 import { StructureFonction } from '../structurefonction';
 import { Router } from '@angular/router';
-import { Fonction } from '../../fonction/fonction';
-import { FonctionService } from '../../fonction/fonction.service';
 import { finalize, first } from 'rxjs/operators';
 import { Structure } from '../../structure/structure';
+import { RangService } from '../../rang/rang.service';
 
 @Component({
   selector: 'app-structurefonction-new',
@@ -21,13 +21,13 @@ export class StructureFonctionNewComponent implements OnInit {
   @Output() creation: EventEmitter<StructureFonction> = new EventEmitter();
   @Input() structure: Structure;
   isModalVisible = false;
-  fonctions: Fonction[] = [];
+  rangs: Rang[] = [];
   fetching = false;
-  selectedFonctions: Fonction[] = [];
+  selectedRangs: Rang[] = [];
   structureFonctions: StructureFonction[] = [];
   isLimited = false;
   duree = 0;
-  constructor(public structureFonctionSrv: StructureFonctionService, public fonctionSrv: FonctionService,
+  constructor(public structureFonctionSrv: StructureFonctionService, public rangSrv: RangService,
     public router: Router) {
     this.entity = new StructureFonction();
   }
@@ -38,13 +38,13 @@ export class StructureFonctionNewComponent implements OnInit {
   save() {
     this
       .structureFonctionSrv
-      .createMultiple(this.structureFonctions.map(sf => ({ etat: sf.etat, fonction: sf.fonction.id, structure: this.structure.id, duree: this.duree } as any)), this.structure)
+      .createMultiple(this.structureFonctions.map(sf => ({ etat: sf.etat, rang: sf.rang.id, structure: this.structure.id, duree: this.duree } as any)), this.structure)
       .subscribe((data: any) => {
         this.closeModal();
         this.structure.structureFonctions.concat(data);
         this.creation.emit(data);
         this.entity = new StructureFonction();
-        this.selectedFonctions = [];
+        this.selectedRangs = [];
         this.structureFonctions = [];
       }, error => this.structureFonctionSrv.httpSrv.catchError(error));
   }
@@ -59,21 +59,21 @@ export class StructureFonctionNewComponent implements OnInit {
     this.isModalVisible = false;
   }
 
-  onFonctionSelected(fonction: any) {
-    this.structureFonctions = [{ etat: false, fonction: fonction, structure: this.structure, duree: 0 } as any];
+  onFonctionSelected(rang: any) {
+    this.structureFonctions = [{ etat: false, rang: rang, structure: this.structure, duree: 0 } as any];
   }
 
   fetchNotBindedFonctions() {
     const arr: Structure[] = [];
     this.fetching = true;
     this
-      .fonctionSrv
+      .rangSrv
       .findNotBindedByStructure(this.structure)
       .pipe(first(), finalize(() => this.fetching = false))
-      .subscribe((fonctions: any) => {
-        this.fonctions = fonctions;
+      .subscribe((rangs: any) => {
+        this.rangs = rangs;
       }, err => {
-        this.fonctionSrv.httpSrv.catchError(err);
+        this.rangSrv.httpSrv.catchError(err);
       });
   }
 

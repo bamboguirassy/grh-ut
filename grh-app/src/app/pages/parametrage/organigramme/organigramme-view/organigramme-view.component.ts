@@ -86,7 +86,7 @@ export class OrganigrammeViewComponent implements OnInit {
     return structure.children.map(struct => {
       let title = '';
       if (struct.structureFonctions.length && struct.structureFonctions.some(sf => sf.etat)) {
-        title += `${struct.structureFonctions.find(sf => sf.etat).fonction.nom}`;
+        title += `${struct.structureFonctions.find(sf => sf.etat).rang.nom}`;
       }
       if (struct.structureFonctions.length && struct.structureFonctions.some(sf => sf.etat) && struct.structureFonctions.find(sf => sf.etat).fonctionEmployes.some(fe => fe.etat)) {
         title += ` - ${struct.structureFonctions.find(sf => sf.etat).fonctionEmployes.find(fe => fe.etat)?.employe?.prenoms + ' ' + struct.structureFonctions.find(sf => sf.etat).fonctionEmployes.find(fe => fe.etat)?.employe?.nom}`;
@@ -111,7 +111,7 @@ export class OrganigrammeViewComponent implements OnInit {
     const rootEntity = this.structures.find(s => s.structureParente === null);
     let title = '';
     if (rootEntity.structureFonctions.length && rootEntity.structureFonctions.some(sf => sf.etat)) {
-      title += `${rootEntity.structureFonctions.find(sf => sf.etat).fonction.nom}`;
+      title += `${rootEntity.structureFonctions.find(sf => sf.etat).rang.nom}`;
     }
     if (rootEntity.structureFonctions.length && rootEntity.structureFonctions.some(sf => sf.etat) && rootEntity.structureFonctions.find(sf => sf.etat).fonctionEmployes.some(fe => fe.etat)) {
       title += ` - ${rootEntity.structureFonctions.find(sf => sf.etat).fonctionEmployes.find(fe => fe.etat)?.employe?.prenoms + ' ' + rootEntity.structureFonctions.find(sf => sf.etat).fonctionEmployes.find(fe => fe.etat)?.employe?.nom}`;

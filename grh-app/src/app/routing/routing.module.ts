@@ -26,7 +26,7 @@ import { gNiveauRoutes } from '../pages/gestiongrade/gniveau/gniveau.routes';
 import { gradeRoutes } from '../pages/gestiongrade/grade/grade.routes';
 import { caisseSocialeRoutes } from '../pages/parametrage/caissesociale/caissesociale.routes';
 import { diplomeRoutes } from '../pages/parametrage/diplome/diplome.routes';
-import { fonctionRoutes } from '../pages/parametrage/fonction/fonction.routes';
+import { rangRoutes } from '../pages/parametrage/rang/rang.routes';
 import { groupRoutes } from '../pages/parametrage/group/group.routes';
 import { mutuelleSanteRoutes } from '../pages/parametrage/mutuellesante/mutuellesante.routes';
 import { organigrammeRoutes } from '../pages/parametrage/organigramme/organigramme.routes';
@@ -58,7 +58,7 @@ const VERTICAL_ROUTES: Routes = [
   typeDocumentRoutes,
   caisseSocialeRoutes,
   mutuelleSanteRoutes,
-  fonctionRoutes,
+  rangRoutes,
   paysRoutes,
   typeEmployeRoutes,
   structureRoutes,
