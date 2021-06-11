@@ -3,20 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\CaisseSociale;
-use App\Entity\Employe;
-use App\Entity\Grade;
 use App\Entity\Diplome;
+use App\Entity\Employe;
 use App\Entity\TypeEmploye;
-use App\Entity\Contrat;
 use App\Utils\Utils;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
-use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 
