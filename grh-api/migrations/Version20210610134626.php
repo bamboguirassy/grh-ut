@@ -23,8 +23,6 @@ final class Version20210610134626 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('DROP INDEX cni ON employe');
-        $this->addSql('ALTER TABLE membre_syndicat CHANGE etat etat TINYINT(1) DEFAULT NULL COMMENT \'true si c\'\'est le syndicat actuel du travailleur
-        un employé peut être dans plusieurs syndicats\'');
         $this->addSql('ALTER TABLE rang ADD appelation VARCHAR(255) NOT NULL');
         $this->addSql('ALTER TABLE responsabilite ADD rang_id INT NOT NULL');
         $this->addSql('ALTER TABLE responsabilite ADD CONSTRAINT FK_4EA098203CC0D837 FOREIGN KEY (rang_id) REFERENCES rang (id)');
