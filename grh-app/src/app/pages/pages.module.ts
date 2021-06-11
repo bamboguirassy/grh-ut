@@ -209,6 +209,8 @@ import { RangListComponent } from './parametrage/rang/rang-list/rang-list.compon
 import { RangEditComponent } from './parametrage/rang/rang-edit/rang-edit.component';
 import { RangShowComponent } from './parametrage/rang/rang-show/rang-show.component';
 import { RangNewComponent } from './parametrage/rang/rang-new/rang-new.component';
+import { TypeemployeStastPersComponent } from './dashboards/typeemploye-per/typeemploye-stast-pers/typeemploye-stast-pers.component';
+
 
 @NgModule({
   imports: [
@@ -478,6 +480,8 @@ import { RangNewComponent } from './parametrage/rang/rang-new/rang-new.component
 
     PyramideAgeGenreComponent,
     EmployeImportationComponent,
+    TypeemployeStastPersComponent,
+  
   ],
   exports: [],
   entryComponents: []
