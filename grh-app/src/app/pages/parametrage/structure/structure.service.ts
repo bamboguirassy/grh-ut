@@ -13,5 +13,9 @@ export class StructureService extends BamboAbstractService {
     this.routePrefix = 'structure/';
     this.resourceName = 'STRUCTURE';
   }
+
+  findWithAtLeastOneEmploye() {
+    return this.httpSrv.get(this.routePrefix + 'with-at-least-one-employe');
+  }
   
 }

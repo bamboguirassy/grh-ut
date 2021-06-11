@@ -205,6 +205,8 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { EmployeImportationComponent } from './gestionemploye/employe/employe-importation/employe-importation.component';
 import { PageResetPasswordComponent } from './apps/sessions/reset-password/reset-password.component';
 import { NzResultModule } from 'ng-zorro-antd/result';
+import { TypeemployeStastPersComponent } from './dashboards/typeemploye-per/typeemploye-stast-pers/typeemploye-stast-pers.component';
+
 
 @NgModule({
   imports: [
@@ -466,6 +468,8 @@ import { NzResultModule } from 'ng-zorro-antd/result';
 
     PyramideAgeGenreComponent,
     EmployeImportationComponent,
+    TypeemployeStastPersComponent,
+  
   ],
   exports: [],
   entryComponents: []
