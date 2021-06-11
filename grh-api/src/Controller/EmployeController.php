@@ -402,7 +402,7 @@ $employe->setProfession($faker->randomElement($professions));
         $result = []; // confirmation link
         foreach ($employeIds as $id) {
             $employe = $entityManager->getRepository(Employe::class)->find($id);
-            if($employe->getEmail()!=NULL){
+            if($employe->getEmail()!=NULL && $employe->getEmailUniv()!=NULL){
                 $message = (new Swift_Message($object))
                 ->setFrom(Utils::$sender)
                 ->setTo($employe->getEmail())
@@ -411,14 +411,26 @@ $employe->setProfession($faker->randomElement($professions));
                 array_push($result,  [$employe->getId() => $mailer->send($message)]); 
             }
             else{
-                $message = (new Swift_Message($object))
-                ->setFrom(Utils::$sender)
-                ->setTo($employe->getEmailUniv())
-                ->setBody($messaye_body, 'text/html');
-                array_push($result,  [$employe->getId() => $mailer->send($message)]); 
-            }
+                 if($employe->getEmailUniv()==NULL && $employe->getEmail()!=NULL){
+                    $message = (new Swift_Message($object))
+                     ->setFrom(Utils::$sender)
+                     ->setTo($employe->getEmail())
+                     ->setBody($messaye_body, 'text/html');
+                     array_push($result,  [$employe->getId() => $mailer->send($message)]); 
+                 }
+                 elseif($employe->getEmailUniv()!=NULL && $employe->getEmail()==NULL){
+                    $message = (new Swift_Message($object))
+                     ->setFrom(Utils::$sender)
+                     ->setTo($employe->getEmailUniv())
+                     ->setBody($messaye_body, 'text/html');
+                     array_push($result,  [$employe->getId() => $mailer->send($message)]); 
+                 }
+                 else{
+                    throw $this->createNotFoundException("L'employé {$employe->getPrenoms()} {$employe->getNom()} avec l'identifiant {$employe->getId()} ne dispose d'aucun email dans le système");
+                 }
 
-            array_push($result, [$dest => $mailer->send($message)]); // 0 => failure
+               
+            }// 0 => failure
 
         }
           
