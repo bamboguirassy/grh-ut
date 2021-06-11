@@ -205,6 +205,10 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { EmployeImportationComponent } from './gestionemploye/employe/employe-importation/employe-importation.component';
 import { PageResetPasswordComponent } from './apps/sessions/reset-password/reset-password.component';
 import { NzResultModule } from 'ng-zorro-antd/result';
+import { RangListComponent } from './parametrage/rang/rang-list/rang-list.component';
+import { RangEditComponent } from './parametrage/rang/rang-edit/rang-edit.component';
+import { RangShowComponent } from './parametrage/rang/rang-show/rang-show.component';
+import { RangNewComponent } from './parametrage/rang/rang-new/rang-new.component';
 
 @NgModule({
   imports: [
@@ -298,11 +302,7 @@ import { NzResultModule } from 'ng-zorro-antd/result';
     CaisseSocialeEditComponent,
     CaisseSocialeShowComponent,
     CaisseSocialeNewComponent,
-    // fonction components
-    FonctionListComponent,
-    FonctionEditComponent,
-    FonctionShowComponent,
-    FonctionNewComponent,
+    
     // mutuellesante components
     MutuelleSanteListComponent,
     MutuelleSanteEditComponent,
@@ -432,6 +432,18 @@ import { NzResultModule } from 'ng-zorro-antd/result';
     GradeManagerComponent,
     MembresMutuellesanteComponent,
     DiplomeEmployeTimelineComponent,
+
+    // rang components
+    RangListComponent,
+    RangEditComponent,
+    RangShowComponent,
+    RangNewComponent,
+
+    // fonction
+    FonctionEditComponent,
+    FonctionListComponent,
+    FonctionNewComponent,
+    FonctionShowComponent,
 
     // affectation components
     AffectationListComponent,
