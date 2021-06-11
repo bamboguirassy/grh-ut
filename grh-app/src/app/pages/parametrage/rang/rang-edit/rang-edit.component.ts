@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Fonction } from '../fonction';
-import { FonctionService } from '../fonction.service';
+import { Rang } from '../rang';
+import { RangService } from '../rang.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -9,28 +9,28 @@ import { BasePageComponent } from 'src/app/pages/base-page';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-fonction-edit',
-  templateUrl: './fonction-edit.component.html',
-  styleUrls: ['./fonction-edit.component.scss']
+  selector: 'app-rang-edit',
+  templateUrl: './rang-edit.component.html',
+  styleUrls: ['./rang-edit.component.scss']
 })
-export class FonctionEditComponent extends BasePageComponent<Fonction> implements OnInit, OnDestroy {
+export class RangEditComponent extends BasePageComponent<Rang> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public fonctionSrv: FonctionService,
+              public rangSrv: RangService,
               public router: Router,
               private activatedRoute: ActivatedRoute,
               public location: Location) {
-    super(store, fonctionSrv);
+    super(store, rangSrv);
     this.pageData = {
-      title: 'Modification - Fonction',
+      title: 'Modification - Rang',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des fonctions',
-          route: '/'+this.orientation+'/fonction'
+          title: 'Rangs',
+          route: '/'+this.orientation+'/rang'
         },
         {
           title: 'Modification'

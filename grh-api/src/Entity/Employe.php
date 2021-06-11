@@ -53,7 +53,7 @@ class Employe
     /**
      * @var string
      *
-     * @ORM\Column(name="cni", type="string", length=45, nullable=true)
+     * @ORM\Column(name="cni", type="string", length=45, nullable=false)
      */
     private $cni;
 

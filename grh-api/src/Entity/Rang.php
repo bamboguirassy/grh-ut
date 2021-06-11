@@ -27,10 +27,6 @@ class Rang
      */
     private $etat;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $appelation;
 
     public function getId(): ?int
     {
@@ -61,15 +57,4 @@ class Rang
         return $this;
     }
 
-    public function getAppelation(): ?string
-    {
-        return $this->appelation;
-    }
-
-    public function setAppelation(string $appelation): self
-    {
-        $this->appelation = $appelation;
-
-        return $this;
-    }
 }
