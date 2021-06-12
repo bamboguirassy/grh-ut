@@ -9,113 +9,86 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use FOS\RestBundle\Controller\Annotations as Rest;
-use App\Utils\Utils;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @Route("/api/rang")
+ * @Route("/rang")
  */
 class RangController extends AbstractController
 {
     /**
-     * @Rest\Get(path="/", name="rang_index")
-     * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_RANG_INDEX")
+     * @Route("/", name="rang_index", methods={"GET"})
      */
-    public function index(RangRepository $rangRepository): array
+    public function index(RangRepository $rangRepository): Response
     {
-        return $rangRepository->findAll();
+        return $this->render('rang/index.html.twig', [
+            'rangs' => $rangRepository->findAll(),
+        ]);
     }
 
     /**
-     * @Rest\Post(Path="/create", name="rang_new")
-     * @Rest\View(StatusCode=200)
-     * @IsGranted("ROLE_RANG_CREATE")
+     * @Route("/new", name="rang_new", methods={"GET","POST"})
      */
-    public function create(Request $request): Rang    {
+    public function new(Request $request): Response
+    {
         $rang = new Rang();
         $form = $this->createForm(RangType::class, $rang);
-        $form->submit(Utils::serializeRequestContent($request));
+        $form->handleRequest($request);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($rang);
-        $entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($rang);
+            $entityManager->flush();
 
-        return $rang;
+            return $this->redirectToRoute('rang_index');
+        }
+
+        return $this->render('rang/new.html.twig', [
+            'rang' => $rang,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
-     * @Rest\Get(path="/{id}", name="rang_show",requirements = {"id"="\d+"})
-     * @Rest\View(StatusCode=200)
-     * @IsGranted("ROLE_RANG_SHOW")
+     * @Route("/{id}", name="rang_show", methods={"GET"})
      */
-    public function show(Rang $rang): Rang    {
-        return $rang;
+    public function show(Rang $rang): Response
+    {
+        return $this->render('rang/show.html.twig', [
+            'rang' => $rang,
+        ]);
     }
 
-    
     /**
-     * @Rest\Put(path="/{id}/edit", name="rang_edit",requirements = {"id"="\d+"})
-     * @Rest\View(StatusCode=200)
-     * @IsGranted("ROLE_RANG_EDIT")
+     * @Route("/{id}/edit", name="rang_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Rang $rang): Rang    {
+    public function edit(Request $request, Rang $rang): Response
+    {
         $form = $this->createForm(RangType::class, $rang);
-        $form->submit(Utils::serializeRequestContent($request));
+        $form->handleRequest($request);
 
-        $this->getDoctrine()->getManager()->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
 
-        return $rang;
-    }
-    
-    /**
-     * @Rest\Put(path="/{id}/clone", name="rang_clone",requirements = {"id"="\d+"})
-     * @Rest\View(StatusCode=200)
-     * @IsGranted("ROLE_RANG_CLONE")
-     */
-    public function cloner(Request $request, Rang $rang):  Rang {
-        $em=$this->getDoctrine()->getManager();
-        $rangNew=new Rang();
-        $form = $this->createForm(RangType::class, $rangNew);
-        $form->submit(Utils::serializeRequestContent($request));
-        $em->persist($rangNew);
-
-        $em->flush();
-
-        return $rangNew;
-    }
-
-    /**
-     * @Rest\Delete("/{id}", name="rang_delete",requirements = {"id"="\d+"})
-     * @Rest\View(StatusCode=200)
-     * @IsGranted("ROLE_RANG_EDIT")
-     */
-    public function delete(Rang $rang): Rang    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($rang);
-        $entityManager->flush();
-
-        return $rang;
-    }
-    
-    /**
-     * @Rest\Post("/delete-selection/", name="rang_selection_delete")
-     * @Rest\View(StatusCode=200)
-     * @IsGranted("ROLE_RANG_DELETE")
-     */
-    public function deleteMultiple(Request $request): array {
-        $entityManager = $this->getDoctrine()->getManager();
-        $rangs = Utils::getObjectFromRequest($request);
-        if (!count($rangs)) {
-            throw $this->createNotFoundException("Selectionner au minimum un élément à supprimer.");
+            return $this->redirectToRoute('rang_index');
         }
-        foreach ($rangs as $rang) {
-            $rang = $entityManager->getRepository(Rang::class)->find($rang->id);
+
+        return $this->render('rang/edit.html.twig', [
+            'rang' => $rang,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="rang_delete", methods={"POST"})
+     */
+    public function delete(Request $request, Rang $rang): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$rang->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($rang);
+            $entityManager->flush();
         }
-        $entityManager->flush();
 
-        return $rangs;
+        return $this->redirectToRoute('rang_index');
     }
 }

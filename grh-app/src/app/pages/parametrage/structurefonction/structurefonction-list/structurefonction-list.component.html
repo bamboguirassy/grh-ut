@@ -9,7 +9,7 @@
           <h4 class="name">
             <i class="icofont-stamp icofont-1x"></i>
             <span style="font-weight: bold; font-style: italic;">
-              {{ structureFonctionActive?.fonction?.nom }}
+              {{ structureFonctionActive?.rang?.nom }}
             </span>
 
           </h4>
@@ -140,7 +140,7 @@
         <i class="icofont-stamp icofont-2x"></i> &nbsp;
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Fonction'" [columnName]="'fonction'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Rang'" [columnName]="'rang'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value let-row>
         <span class="nowrap">{{ value?.nom }}</span>
       </ng-template>

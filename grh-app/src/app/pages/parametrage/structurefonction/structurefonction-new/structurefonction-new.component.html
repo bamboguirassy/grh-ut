@@ -8,12 +8,12 @@
   <div class="row">
     <div class="col-12 col-md-12">
       <tc-form-group>
-        <tc-form-label>Fonctions</tc-form-label>
+        <tc-form-label>Rangs</tc-form-label>
         <nz-select (ngModelChange)="onFonctionSelected($event)" style="width: 100%;"
           (nzOpenChange)="fetchNotBindedFonctions()" nzMode="default" [nzAllowClear]="true" [nzShowSearch]="true"
-          name="fonctions" nzPlaceHolder="Selectionner le poste principal" [(ngModel)]="selectedFonctions">
-          <ng-container *ngFor="let fonction of fonctions">
-            <nz-option *ngIf="!fetching" [nzLabel]="fonction?.nom" [nzValue]="fonction">
+          name="rangs" nzPlaceHolder="Selectionner le poste principal" [(ngModel)]="selectedRangs">
+          <ng-container *ngFor="let rang of rangs">
+            <nz-option *ngIf="!fetching" [nzLabel]="rang?.nom" [nzValue]="rang">
             </nz-option>
           </ng-container>
           <nz-option *ngIf="fetching" nzDisabled nzCustomContent>
@@ -27,7 +27,7 @@
 
 <tc-table *ngIf="structureFonctions?.length" [itemsPerPage]="10" [rows]="structureFonctions" [hovered]="true"
   [pagination]="true" [search]="false">
-  <tc-table-col [columnTitle]="'Fonction'" [columnName]="'fonction'" [enableSorting]="true">
+  <tc-table-col [columnTitle]="'Rang'" [columnName]="'rang'" [enableSorting]="true">
     <ng-template #tableTDTemplate let-value let-row>
       <i class="icofont-stamp icofont-2x"></i> &nbsp;
       <span class="nowrap">{{ value?.nom }}</span>

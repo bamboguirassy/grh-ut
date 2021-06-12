@@ -7,12 +7,12 @@ import { Structure } from '../structure/structure';
 @Injectable({
   providedIn: 'root'
 })
-export class FonctionService extends BamboAbstractService {
+export class RangService extends BamboAbstractService {
 
   constructor(public httpSrv: BamboHttpService, public toastr: ToastrService) {
     super(httpSrv, toastr);
-    this.routePrefix = 'fonction/';
-    this.resourceName = 'FONCTION';
+    this.routePrefix = 'rang/';
+    this.resourceName = 'RANG';
   }
 
   findNotBindedByStructure(structure: Structure) {

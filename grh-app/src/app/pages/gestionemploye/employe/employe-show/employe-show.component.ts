@@ -206,7 +206,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
       this.employeSrv.toastr.error('Verifier vos champs');
       return;
     }
-    this.employeSrv.sendEmail([this.entity.email],this.email.object,this.email.message)
+    this.employeSrv.sendEmail([this.entity.id],this.email.object,this.email.message)
     .subscribe(
       (data: any) => {
         this.employeSrv.toastr.success('Email Envoyé avec succès')
