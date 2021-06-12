@@ -85,6 +85,7 @@ const PUBLIC_ROUTES: Routes = [
   { path: 'sign-in', component: PageSignInComponent },
   { path: 'sign-up', component: PageSignUpComponent },
   { path: 'new-password/:token', component: PageResetPasswordComponent },
+  { path: 'new-password/:email/:token', component: PageResetPasswordComponent },
   { path: 'page-404', component: Page404Component },
   { path: 'page-500', component: Page500Component },
   { path: '**', component: Page404Component }
