@@ -392,7 +392,7 @@ $employe->setProfession($faker->randomElement($professions));
      * @return array
      * @throws Exception
      */
-    public function sendSingleEmail(Request $request, Swift_Mailer $mailer): array
+    public function sendEmail(Request $request, Swift_Mailer $mailer): array
     {
 
        $employeIds = Utils::serializeRequestContent($request)['id'];
