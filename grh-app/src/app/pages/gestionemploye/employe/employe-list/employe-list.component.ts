@@ -137,8 +137,8 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
       return;
     }
 
-    const emails = this.selectedEmployes.map(val => val.email);
-    this.employeSrv.sendEmail(emails, this.emailEditionModel.object, this.emailEditionModel.body)
+    const employesId = this.selectedEmployes.map(val => val.id);
+    this.employeSrv.sendEmail(employesId, this.emailEditionModel.object, this.emailEditionModel.body)
       .subscribe(
         (data: any) => {
           this.handlePostLoad();
