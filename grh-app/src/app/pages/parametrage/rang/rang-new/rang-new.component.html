@@ -10,26 +10,26 @@
   <ng-template #modalBody>
     <form #form="ngForm" ngNativeValidate>
       <div class="row">
-                     <div class="col-12 col-md-6">
-                        <tc-form-group>
-                            <tc-form-label>Nom</tc-form-label>
-                            <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
-                            </tc-input>
-                            <tc-form-description>
-                                <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
-                            </tc-form-description>
-                        </tc-form-group>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <tc-form-group>
-                            <tc-form-label>Etat</tc-form-label> 
-                            <nz-switch [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel"></nz-switch>
-                            
-                            <tc-form-description>
-                                <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
-                            </tc-form-description>
-                        </tc-form-group>
-                    </div>
+        <div class="col-12 col-md-6">
+          <tc-form-group>
+            <tc-form-label>Nom</tc-form-label>
+            <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
+            </tc-input>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12 col-md-6">
+          <tc-form-group>
+            <tc-form-label>Etat</tc-form-label>
+            <nz-switch [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel"></nz-switch>
+
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
       </div>
     </form>
   </ng-template>
@@ -38,7 +38,8 @@
     <div class="actions justify-content-between">
       <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
         (click)="closeModal()">Fermer</button>
-      <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'" tc-button [view]="'accent'">
+      <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
+        tc-button [view]="'accent'">
         Enregistrer
       </button>
     </div>
