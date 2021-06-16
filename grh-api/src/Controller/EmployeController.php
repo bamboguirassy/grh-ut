@@ -587,16 +587,10 @@ $employe->setProfession($faker->randomElement($professions));
         }
 
         try {
-<<<<<<< HEAD
-            return $em->flush();
-        } catch (\Exception $e) {
-            throw $this->createNotFoundException("Il y'a une duplication au niveaau des CNI merci!");
-=======
            return $em->flush();
         }   
         catch(\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e){
             throw $this->createNotFoundException("Il y'a une duplication au niveaau des CNI merci!"); 
->>>>>>> f2ca4c3700541e0053d63cd013dbe35cf00d6864
         }
 
     }
