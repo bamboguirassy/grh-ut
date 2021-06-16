@@ -1,35 +1,35 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BasePageComponent } from 'src/app/pages/base-page';
-import { FonctionService } from '../fonction.service';
+import { RangService } from '../rang.service';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
-import { Fonction } from '../fonction';
+import { Rang } from '../rang';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-fonction-show',
-  templateUrl: './fonction-show.component.html',
-  styleUrls: ['./fonction-show.component.scss']
+  selector: 'app-rang-show',
+  templateUrl: './rang-show.component.html',
+  styleUrls: ['./rang-show.component.scss']
 })
-export class FonctionShowComponent extends BasePageComponent<Fonction> implements OnInit, OnDestroy {
-  entity: Fonction;
+export class RangShowComponent extends BasePageComponent<Rang> implements OnInit, OnDestroy {
+  entity: Rang;
 
   constructor(store: Store<IAppState>,
-    public fonctionSrv: FonctionService,
+    public rangSrv: RangService,
     private activatedRoute: ActivatedRoute,
     public location: Location) {
-    super(store, fonctionSrv);
+    super(store, rangSrv);
     this.pageData = {
-      title: 'Détails - Fonction',
+      title: 'Détails - Rang',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Fonctions',
-          route: '/'+this.orientation+'/fonction'
+          title: 'Rangs',
+          route: '/'+this.orientation+'/rang'
         },
         {
           title: 'Affichage'
@@ -48,7 +48,7 @@ export class FonctionShowComponent extends BasePageComponent<Fonction> implement
   }
 
   handlePostLoad() {
-    this.title = 'Fonction - ' + this.entity?.id;
+    this.title = 'Rang - ' + this.entity?.id;
   }
 
   handlePostDelete() {

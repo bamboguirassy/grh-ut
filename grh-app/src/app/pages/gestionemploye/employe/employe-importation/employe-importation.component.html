@@ -56,56 +56,56 @@
                     <tbody>
                         <tr *ngFor="let record of records;let i = index;">
                             <td>
-                                <input class="input form-control" [(ngModel)]="record.matricule" name="matricule"
-                                    id="matricule" #matricule="ngModel">
+                                <input class="input form-control" [(ngModel)]="record.matricule" name="matricule{{i}}"
+                                    id="matricule{{i}}" #matricule="ngModel">
                             </td>
                             <td>
-                                <input class="input form-control" [(ngModel)]="record.nom" name="nom" id="nom"
+                                <input class="input form-control" [(ngModel)]="record.nom" name="nom{{i}}" id="nom{{i}}"
                                     #nom="ngModel">
                             </td>
                             <td>
-                                <input class="input form-control" [(ngModel)]="record.prenoms" name="prenoms"
-                                    id="prenoms" #prenoms="ngModel">
+                                <input class="input form-control" [(ngModel)]="record.prenoms" name="prenoms{{i}}"
+                                    id="prenoms{{i}}" #prenoms="ngModel">
                             </td>
                             <td>
-                                <input class="input form-control" [(ngModel)]="record.genre" name="genre" id="genre"
+                                <input class="input form-control" [(ngModel)]="record.genre" name="genre{{i}}" id="genre{{i}}"
                                     #genre="ngModel">
                             </td>
                             <td>
                                 <input class="input form-control" [(ngModel)]="record.dateNaissance"
-                                    name="dateNaissance" id="dateNaissance" #dateNaissance="ngModel">
+                                    name="dateNaissance{{i}}" id="dateNaissance{{i}}" #dateNaissance="ngModel">
                             </td>
                             <td>
                                 <input class="input form-control" [(ngModel)]="record.lieuNaissance"
-                                    name="lieuNaissance" id="lieuNaissance" #lieuNaissance="ngModel">
+                                    name="lieuNaissance{{i}}" id="lieuNaissance{{i}}" #lieuNaissance="ngModel">
                             </td>
                             <td>
-                                <input class="input form-control" [(ngModel)]="record.cni" name="cni" id="cni"
+                                <input class="input form-control" [(ngModel)]="record.cni" name="cni{{i}}" id="cni{{i}}"
                                     #cni="ngModel">
                             </td>
                             <td>
                                 <input class="input form-control" [(ngModel)]="record.telephonePrimaire"
-                                    name="telephonePrimaire" id="telephonePrimaire" #telephonePrimaire="ngModel">
+                                    name="telephonePrimaire{{i}}" id="telephonePrimaire{{i}}" #telephonePrimaire="ngModel">
                             </td>
                             <td>
-                                <input class="input form-control" [(ngModel)]="record.email" name="email" id="email"
+                                <input class="input form-control" [(ngModel)]="record.email" name="email{{i}}" id="email{{i}}"
                                     #email="ngModel">
                             </td>
                             <td>
-                                <input class="input form-control" [(ngModel)]="record.emailUniv" name="emailUniv"
-                                    id="emailUniv" #emailUniv="ngModel">
+                                <input class="input form-control" [(ngModel)]="record.emailUniv" name="emailUniv{{i}}"
+                                    id="emailUniv{{i}}" #emailUniv="ngModel">
                             </td>
                             <td>
                                 <input class="input form-control" [(ngModel)]="record.dateRecrutement"
-                                    name="dateRecrutement" id="dateRecrutement" #dateRecrutement="ngModel">
+                                    name="dateRecrutement{{i}}" id="dateRecrutement{{i}}" #dateRecrutement="ngModel">
                             </td>
                             <td>
-                                <input class="input form-control" [(ngModel)]="record.grade" name="grade" id="grade"
+                                <input class="input form-control" [(ngModel)]="record.grade" name="grade{{i}}" id="grade{{i}}"
                                     #grade="ngModel">
                             </td>
                             <td>
                                 <input class="input form-control" [(ngModel)]="record.diplomeAcademique"
-                                    name="diplomeAcademique" id="diplomeAcademique" #diplomeAcademique="ngModel">
+                                    name="diplomeAcademique{{i}}" id="diplomeAcademique{{i}}" #diplomeAcademique="ngModel">
                             </td>
                         </tr>
                     </tbody>

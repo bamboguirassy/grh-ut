@@ -46,6 +46,11 @@ class StructureFonction
      * @ORM\JoinColumn(name="rang", referencedColumnName="id",nullable=false)
     */
     private $rang;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $appelation;
 
     public function __construct()
     {
@@ -131,6 +136,18 @@ class StructureFonction
     public function setRang(?Rang $rang)
     {
         $this->rang = $rang;
+
+        return $this;
+    }
+    
+    public function getAppelation(): ?string
+    {
+        return $this->appelation;
+    }
+
+    public function setAppelation(string $appelation): self
+    {
+        $this->appelation = $appelation;
 
         return $this;
     }

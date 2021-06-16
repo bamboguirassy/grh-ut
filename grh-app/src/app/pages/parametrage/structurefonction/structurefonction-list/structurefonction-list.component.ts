@@ -217,7 +217,7 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
   executeAffectationTrigger() {
     this.affectation.date = this.fonctionEmploye.datePriseFonction;
     this.affectation.employe = this.selectedEmploye.id;
-    this.affectation.poste = this.structureFonctionActive.fonction.nom;
+    this.affectation.poste = this.structureFonctionActive.rang.nom;
     this.affectation.structure = this.structureFonctionActive.structure.id;
     this.selectedEmploye.structure = this.structureFonctionActive.structure;
     this

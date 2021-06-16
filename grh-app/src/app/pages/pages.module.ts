@@ -108,10 +108,6 @@ import { DiplomeEditComponent } from './parametrage/diplome/diplome-edit/diplome
 import { DiplomeListComponent } from './parametrage/diplome/diplome-list/diplome-list.component';
 import { DiplomeNewComponent } from './parametrage/diplome/diplome-new/diplome-new.component';
 import { DiplomeShowComponent } from './parametrage/diplome/diplome-show/diplome-show.component';
-import { FonctionEditComponent } from './parametrage/fonction/fonction-edit/fonction-edit.component';
-import { FonctionListComponent } from './parametrage/fonction/fonction-list/fonction-list.component';
-import { FonctionNewComponent } from './parametrage/fonction/fonction-new/fonction-new.component';
-import { FonctionShowComponent } from './parametrage/fonction/fonction-show/fonction-show.component';
 import { GroupEditComponent } from './parametrage/group/group-edit/group-edit.component';
 import { GroupListComponent } from './parametrage/group/group-list/group-list.component';
 import { GroupNewComponent } from './parametrage/group/group-new/group-new.component';
@@ -205,6 +201,10 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { EmployeImportationComponent } from './gestionemploye/employe/employe-importation/employe-importation.component';
 import { PageResetPasswordComponent } from './apps/sessions/reset-password/reset-password.component';
 import { NzResultModule } from 'ng-zorro-antd/result';
+import { RangListComponent } from './parametrage/rang/rang-list/rang-list.component';
+import { RangEditComponent } from './parametrage/rang/rang-edit/rang-edit.component';
+import { RangShowComponent } from './parametrage/rang/rang-show/rang-show.component';
+import { RangNewComponent } from './parametrage/rang/rang-new/rang-new.component';
 import { TypeemployeStastPersComponent } from './dashboards/typeemploye-per/typeemploye-stast-pers/typeemploye-stast-pers.component';
 
 
@@ -300,11 +300,7 @@ import { TypeemployeStastPersComponent } from './dashboards/typeemploye-per/type
     CaisseSocialeEditComponent,
     CaisseSocialeShowComponent,
     CaisseSocialeNewComponent,
-    // fonction components
-    FonctionListComponent,
-    FonctionEditComponent,
-    FonctionShowComponent,
-    FonctionNewComponent,
+    
     // mutuellesante components
     MutuelleSanteListComponent,
     MutuelleSanteEditComponent,
@@ -434,6 +430,12 @@ import { TypeemployeStastPersComponent } from './dashboards/typeemploye-per/type
     GradeManagerComponent,
     MembresMutuellesanteComponent,
     DiplomeEmployeTimelineComponent,
+
+    // rang components
+    RangListComponent,
+    RangEditComponent,
+    RangShowComponent,
+    RangNewComponent,
 
     // affectation components
     AffectationListComponent,

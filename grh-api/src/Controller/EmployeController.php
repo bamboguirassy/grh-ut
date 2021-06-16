@@ -395,29 +395,42 @@ $employe->setProfession($faker->randomElement($professions));
     public function sendSingleEmail(Request $request, Swift_Mailer $mailer): array
     {
 
-        $employes_id = Utils::serializeRequestContent($request)['id'];
-        $entityManager = $this->getDoctrine()->getManager();
+       $employeIds = Utils::serializeRequestContent($request)['id'];
+       $entityManager = $this->getDoctrine()->getManager();
         $object = Utils::serializeRequestContent($request)['object'];
         $messaye_body = Utils::serializeRequestContent($request)['message'];
         $result = []; // confirmation link
-        foreach ($employes_id as $id) {
+        foreach ($employeIds as $id) {
             $employe = $entityManager->getRepository(Employe::class)->find($id);
-            if ($employe->getEmail() != NULL) {
+            if($employe->getEmail()!=NULL && $employe->getEmailUniv()!=NULL){
                 $message = (new Swift_Message($object))
-                    ->setFrom(Utils::$sender)
-                    ->setTo($employe->getEmail())
-                    ->setCc($employe->getEmailUniv())
-                    ->setBody($messaye_body, 'text/html');
-                array_push($result, [$employe->getId() => $mailer->send($message)]);
-            } else {
-                $message = (new Swift_Message($object))
-                    ->setFrom(Utils::$sender)
-                    ->setTo($employe->getEmailUniv())
-                    ->setBody($messaye_body, 'text/html');
-                array_push($result, [$employe->getId() => $mailer->send($message)]);
+                ->setFrom(Utils::$sender)
+                ->setTo($employe->getEmail())
+                ->setCc($employe->getEmailUniv())
+                ->setBody($messaye_body, 'text/html');
+                array_push($result,  [$employe->getId() => $mailer->send($message)]); 
             }
+            else{
+                 if($employe->getEmailUniv()==NULL && $employe->getEmail()!=NULL){
+                    $message = (new Swift_Message($object))
+                     ->setFrom(Utils::$sender)
+                     ->setTo($employe->getEmail())
+                     ->setBody($messaye_body, 'text/html');
+                     array_push($result,  [$employe->getId() => $mailer->send($message)]); 
+                 }
+                 elseif($employe->getEmailUniv()!=NULL && $employe->getEmail()==NULL){
+                    $message = (new Swift_Message($object))
+                     ->setFrom(Utils::$sender)
+                     ->setTo($employe->getEmailUniv())
+                     ->setBody($messaye_body, 'text/html');
+                     array_push($result,  [$employe->getId() => $mailer->send($message)]); 
+                 }
+                 else{
+                    throw $this->createNotFoundException("L'employé {$employe->getPrenoms()} {$employe->getNom()} avec l'identifiant {$employe->getId()} ne dispose d'aucun email dans le système");
+                 }
 
-            array_push($result, [$dest => $mailer->send($message)]); // 0 => failure
+               
+            }// 0 => failure
 
         }
 
@@ -574,9 +587,16 @@ $employe->setProfession($faker->randomElement($professions));
         }
 
         try {
+<<<<<<< HEAD
             return $em->flush();
         } catch (\Exception $e) {
             throw $this->createNotFoundException("Il y'a une duplication au niveaau des CNI merci!");
+=======
+           return $em->flush();
+        }   
+        catch(\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e){
+            throw $this->createNotFoundException("Il y'a une duplication au niveaau des CNI merci!"); 
+>>>>>>> f2ca4c3700541e0053d63cd013dbe35cf00d6864
         }
 
     }

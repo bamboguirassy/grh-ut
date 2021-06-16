@@ -2,29 +2,29 @@ import { BasePageComponent } from '../../../base-page/base-page.component';
 import { IAppState } from './../../../../interfaces/app-state';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { FonctionService } from '../fonction.service';
-import { Fonction } from '../fonction';
+import { RangService } from '../rang.service';
+import { Rang } from '../rang';
 
 @Component({
-  selector: 'app-fonction-list',
-  templateUrl: './fonction-list.component.html',
-  styleUrls: ['./fonction-list.component.scss']
+  selector: 'app-rang-list',
+  templateUrl: './rang-list.component.html',
+  styleUrls: ['./rang-list.component.scss']
 })
-export class FonctionListComponent extends BasePageComponent<Fonction> implements OnInit, OnDestroy {
+export class RangListComponent extends BasePageComponent<Rang> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public fonctionSrv: FonctionService) {
-    super(store, fonctionSrv);
+              public rangSrv: RangService) {
+    super(store, rangSrv);
 
     this.pageData = {
-      title: 'Liste des fonctions',
+      title: 'Liste des Rangs',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des fonctions'
+          title: 'Liste des rangs'
         }
       ]
     };

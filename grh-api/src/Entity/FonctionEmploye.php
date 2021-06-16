@@ -46,7 +46,12 @@ class FonctionEmploye
      */
     private $employe;
 
-    
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="interimaire", type="boolean", nullable=true, options={"comment"="true ou false pour savoir si la fonction est intérimaire ou pas"})
+     */
+    private $iterimaire;
 
     /**
      * @ORM\Column(type="date", nullable=true)

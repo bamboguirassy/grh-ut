@@ -1,36 +1,36 @@
 import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren } from '@angular/core';
-import { FonctionService } from '../fonction.service';
-import { Fonction } from '../fonction';
+import { RangService } from '../rang.service';
+import { Rang } from '../rang';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-fonction-new',
-  templateUrl: './fonction-new.component.html',
-  styleUrls: ['./fonction-new.component.scss']
+  selector: 'app-rang-new',
+  templateUrl: './rang-new.component.html',
+  styleUrls: ['./rang-new.component.scss']
 })
-export class FonctionNewComponent implements OnInit {
+export class RangNewComponent implements OnInit {
 
   @ViewChild('modalBody', { static: true }) modalBody: ElementRef<any>;
   @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
   @ViewChildren('form') form;
-  entity: Fonction;
-  @Output() creation: EventEmitter<Fonction> = new EventEmitter();
+  entity: Rang;
+  @Output() creation: EventEmitter<Rang> = new EventEmitter();
   isModalVisible = false;
 
-  constructor(public fonctionSrv: FonctionService,
+  constructor(public rangSrv: RangService,
     public router: Router) {
-    this.entity = new Fonction();
+    this.entity = new Rang();
   }
 
   ngOnInit(): void {}
 
   save() {
-    this.fonctionSrv.create(this.entity)
+    this.rangSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
         this.creation.emit(data);
-        this.entity = new Fonction();
-      }, error => this.fonctionSrv.httpSrv.catchError(error));
+        this.entity = new Rang();
+      }, error => this.rangSrv.httpSrv.catchError(error));
   }
 
   // open modal window
