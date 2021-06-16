@@ -22,13 +22,8 @@ final class Version20210616093929 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP INDEX cni ON employe');
-        $this->addSql('ALTER TABLE employe CHANGE cni cni VARCHAR(45) NOT NULL');
         $this->addSql('ALTER TABLE fonction_employe ADD interimaire TINYINT(1) DEFAULT NULL COMMENT \'true ou false pour savoir si la fonction est intérimaire ou pas\'');
-        $this->addSql('ALTER TABLE membre_syndicat CHANGE etat etat TINYINT(1) DEFAULT NULL COMMENT \'true si c\'\'est le syndicat actuel du travailleur
-        un employé peut être dans plusieurs syndicats\'');
         $this->addSql('ALTER TABLE structure_fonction ADD appelation VARCHAR(255) DEFAULT NULL');
-        $this->addSql('ALTER TABLE structure_fonction ADD CONSTRAINT FK_580577F781CFA4CE FOREIGN KEY (rang) REFERENCES rang (id)');
     }
 
     public function down(Schema $schema) : void
