@@ -32,9 +32,14 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
   currentFonctionEmploye: FonctionEmploye;
   affectation = new Affectation();
   canChooseDateFin = false;
+  appelationEditModel = '';
+  editAppelationState = false;
 
 
-  constructor(store: Store<IAppState>, public employeSrv: EmployeService,
+
+  constructor(
+    store: Store<IAppState>,
+    public employeSrv: EmployeService,
     public fonctionEmployeSrv: FonctionEmployeService,
     public affectationSrv: AffectationService,
     public structureFonctionSrv: StructureFonctionService,
@@ -182,6 +187,17 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
 
   onCreated(createdItems: StructureFonction[]) {
     this.findAll();
+  }
+
+  editAppelation(){
+    const structureFonction = {...this?.structureFonctionActive};
+    structureFonction.appelation = this.appelationEditModel;
+    this.structureFonctionSrv.update(structureFonction).subscribe(
+      (data: any) => {
+        this.structureFonctionActive = data;
+        this.editAppelationState = false;
+      }, error => this.structureFonctionSrv.httpSrv.catchError(error)
+    );
   }
 
   assignFunction() {

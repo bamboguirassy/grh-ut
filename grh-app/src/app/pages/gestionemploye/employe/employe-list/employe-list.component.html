@@ -14,9 +14,9 @@
     </tc-card>
     <tc-card [view]="secondViewBorder" [outline]="true">
         <div class="row d-flex justify-content-between">
-            <div class="col-4">
+            <div class="col-3">
                 <nz-select nzMode="tags" nzAllowClear nzShowSearch style="width: 100%;"
-                    (ngModelChange)="filterGlobal()" name="typeEmployes"
+                    (ngModelChange)="filterGlobal($event, 'typeEmployes')" name="typeEmployes"
                     nzPlaceHolder="Selectionner le(s) type(s) d'employé" [(ngModel)]="selectedTypeEmployes">
                     <ng-container *ngFor="let typeEmploye of typeEmployes">
                         <nz-option [nzLabel]="typeEmploye?.nom" [nzValue]="typeEmploye">
@@ -26,9 +26,9 @@
                 <small>Selectionner le(s) type(s) d'employé</small>
             </div>
 
-            <div class="col-4">
+            <div class="col-3">
                 <nz-select nzMode="tags" nzAllowClear nzShowSearch style="width: 100%;"
-                    (ngModelChange)="filterGlobal()" name="structures"
+                    (ngModelChange)="filterGlobal($event, 'structure')" name="structures"
                     nzPlaceHolder="Selectionner le(s) structure(s)" [(ngModel)]="selectedStructures">
                     <ng-container *ngFor="let struct of structures">
                         <nz-option [nzLabel]="struct?.nom" [nzValue]="struct">
@@ -38,13 +38,55 @@
                 <small>Selectionner le(s) structure(s)</small>
             </div>
 
-            <div class="col-4" >
-                <nz-range-picker [(ngModel)]="dates" [nzFormat]="'dd/MM/yyyy'" (ngModelChange)="filterGlobal($event)"></nz-range-picker>
+            <div class="col-3">
+                <nz-range-picker [(ngModel)]="recrutementRangeDates" [nzFormat]="'dd/MM/yyyy'"
+                    (ngModelChange)="filterGlobal($event, 'recrutementDates')"></nz-range-picker>
                 <small>Selectionner une intervalle de date de recrutement</small> &nbsp;
-                <small *ngIf="dates?.length === 2" >
-                    <a href="javascript:void(0)" (click)="restore()">enlever le filtre</a>
+            </div>
+
+            <div class="col-3">
+                <nz-range-picker [(ngModel)]="priseServiceRangeDates" [nzFormat]="'dd/MM/yyyy'"
+                    (ngModelChange)="filterGlobal($event, 'priseServiceDates')"></nz-range-picker>
+                <small>Selectionner une intervalle de date de prise de service</small> &nbsp;
+            </div>
+
+            <div class="col-3">
+                <nz-select nzMode="tags" nzAllowClear nzShowSearch style="width: 100%;"
+                    (ngModelChange)="filterGlobal($event, 'caisseSociale')" name="caisseSociales"
+                    nzPlaceHolder="Selectionner le(s) caisse(s) sociale(s)" [(ngModel)]="selectedCaisseSociales">
+                    <ng-container *ngFor="let caisseSociale of caisseSociales">
+                        <nz-option [nzLabel]="caisseSociale?.nom" [nzValue]="caisseSociale">
+                        </nz-option>
+                    </ng-container>
+                </nz-select>
+                <small>Selectionner le(s) caisse(s) sociale(s)</small>
+            </div>
+
+            <div class="col-3">
+                <nz-select nzMode="tags" nzAllowClear nzShowSearch style="width: 100%;"
+                    (ngModelChange)="filterGlobal($event, 'typeContrat')" name="typeContrats"
+                    nzPlaceHolder="Selectionner le(s) type(s) de contrat(s)" [(ngModel)]="selectedTypeContrats">
+                    <ng-container *ngFor="let typeContrat of typeContrats">
+                        <nz-option [nzLabel]="typeContrat?.nom + ' - ' + typeContrat?.code " [nzValue]="typeContrat">
+                        </nz-option>
+                    </ng-container>
+                </nz-select>
+                <small>Selectionner le(s) type(s) de contrat(s)</small>
+            </div>
+
+            <div class="col-3">
+                <nz-radio-group (ngModelChange)="filterGlobal($event, 'genre')" [(ngModel)]="selectedGenre"
+                    nzButtonStyle="solid">
+                    <label nz-radio-button nzValue="Masculin">Homme</label>
+                    <label nz-radio-button nzValue="Féminin">Femme</label>
+                </nz-radio-group> <br>
+                <small>Selectionner le genre</small> &nbsp;
+                <small *ngIf="selectedGenre.length" >
+                    <a href="javascript:void(0)" (click)="selectedGenre = ''; filterGlobal('', 'genre')">Désélectionner</a>
                 </small>
             </div>
+
+
         </div>
     </tc-card>
     <tc-card [view]="secondViewBorder" [outline]="true">

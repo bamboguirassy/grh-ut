@@ -16,6 +16,7 @@ class StructureFonctionType extends AbstractType
             ->add('structure')
             ->add('rang')
             ->add('duree')
+            ->add('appelation')
         ;
     }
 
