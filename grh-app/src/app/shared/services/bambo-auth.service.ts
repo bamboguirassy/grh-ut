@@ -164,9 +164,9 @@ export class BamboAuthService {
             enabled: this.checkListAccess('caissesociale')
           },
           {
-            "title": "Fonctions",
-            "routing": "fonction",
-            enabled: this.checkListAccess('fonction')
+            "title": "Rangs",
+            "routing": "rang",
+            enabled: this.checkListAccess('rang')
           },
           {
             "title": "Structures",
