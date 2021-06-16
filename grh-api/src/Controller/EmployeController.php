@@ -407,7 +407,6 @@ $employe->setProfession($faker->randomElement($professions));
             ')->setParameter('employeIds', $employeIds )
                 ->getResult();
         foreach ($employesSendingEmail as $employeSendingEmail) {
-           // $employe = $entityManager->getRepository(Employe::class)->find($id);
             if($employeSendingEmail->getEmail()!=NULL && $employeSendingEmail->getEmailUniv()!=NULL){
                 $message = (new Swift_Message($object))
                 ->setFrom(Utils::$sender)
@@ -417,14 +416,14 @@ $employe->setProfession($faker->randomElement($professions));
                 array_push($result,  [$employeSendingEmail->getId() => $mailer->send($message)]); 
             }
             else{
-                 if($employeSendingEmail->getEmailUniv()==NULL && $employeSendingEmail->getEmail()!=NULL){
+                 if($employeSendingEmail->getEmail()!=NULL){
                     $message = (new Swift_Message($object))
                      ->setFrom(Utils::$sender)
                      ->setTo($employeSendingEmail->getEmail())
                      ->setBody($messaye_body, 'text/html');
                      array_push($result,  [$employeSendingEmail->getId() => $mailer->send($message)]); 
                  }
-                 elseif($employeSendingEmail->getEmailUniv()!=NULL && $employeSendingEmail->getEmail()==NULL){
+                 elseif($employeSendingEmail->getEmailUniv()!=NULL){
                     $message = (new Swift_Message($object))
                      ->setFrom(Utils::$sender)
                      ->setTo($employeSendingEmail->getEmailUniv())
