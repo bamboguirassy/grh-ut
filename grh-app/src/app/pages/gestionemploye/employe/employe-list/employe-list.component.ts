@@ -97,7 +97,7 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
     this.typeEmployeSrv.findAll()
       .subscribe((data: any) => {
         this.typeEmployes = data;
-        this.selectedTypeEmployes = [data[0]];
+        this.selectedTypeEmployes = data;
         this.filterGlobal([]);
         this.setLoaded();
       }, err => this.typeEmployeSrv.httpSrv.catchError(err));
