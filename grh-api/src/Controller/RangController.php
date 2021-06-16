@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Rang;
+use App\Entity\Structure;
 use App\Form\RangType;
 use App\Repository\RangRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -86,6 +87,7 @@ class RangController extends AbstractController
         return $rangNew;
     }
 
+
     /**
      * @Rest\Delete("/{id}", name="rang_delete",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
@@ -118,4 +120,5 @@ class RangController extends AbstractController
 
         return $rangs;
     }
+    
 }
