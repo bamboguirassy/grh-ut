@@ -37,7 +37,7 @@
                                                                                 <tr>
                             <th>Etat</th>
                             <td>
-                                <nz-switch [(ngModel)]="entity.etat"></nz-switch>                                
+                                <nz-switch *ngIf="entity?.etat" [(ngModel)]="entity.etat"></nz-switch>                                
                             </td>
                         </tr>
                                                     </table>

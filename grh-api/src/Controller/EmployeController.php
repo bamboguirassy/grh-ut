@@ -179,9 +179,9 @@ $employe->setProfession($faker->randomElement($professions));
      */
     public function findByDateRecrutementRange(EntityManagerInterface $entityManager, $startDate, $endDate)
     {
-        if (!isset($startDate) || empty($startDate)) throw new BadRequestHttpException("Vous devez préciser la date de début!");
+        if(!isset($startDate) || empty($startDate)) throw new BadRequestHttpException("Vous devez préciser la date de début!");
 
-        if (!isset($endDate) || empty($endDate)) throw new BadRequestHttpException("Vous devez préciser la date de fin!");
+        if(!isset($endDate) || empty($endDate)) throw new BadRequestHttpException("Vous devez préciser la date de fin!");
 
         return $entityManager->createQuery('
             SELECT e
@@ -392,103 +392,61 @@ $employe->setProfession($faker->randomElement($professions));
      * @return array
      * @throws Exception
      */
-    public function sendSingleEmail(Request $request, Swift_Mailer $mailer): array
+    public function sendEmail(Request $request, Swift_Mailer $mailer): array
     {
 
        $employeIds = Utils::serializeRequestContent($request)['id'];
        $entityManager = $this->getDoctrine()->getManager();
         $object = Utils::serializeRequestContent($request)['object'];
         $messaye_body = Utils::serializeRequestContent($request)['message'];
-        $result = []; // confirmation link
-        foreach ($employeIds as $id) {
-            $employe = $entityManager->getRepository(Employe::class)->find($id);
-            if($employe->getEmail()!=NULL && $employe->getEmailUniv()!=NULL){
+        $result = []; 
+        $employesSendingEmail=$entityManager->createQuery('
+                SELECT e
+                FROM App\Entity\Employe e
+                WHERE e.id IN (:employeIds)
+            ')->setParameter('employeIds', $employeIds )
+                ->getResult();
+        foreach ($employesSendingEmail as $employeSendingEmail) {
+            if($employeSendingEmail->getEmail()!=NULL && $employeSendingEmail->getEmailUniv()!=NULL){
                 $message = (new Swift_Message($object))
                 ->setFrom(Utils::$sender)
-                ->setTo($employe->getEmail())
-                ->setCc($employe->getEmailUniv())
+                ->setTo($employeSendingEmail->getEmail())
+                ->setCc($employeSendingEmail->getEmailUniv())
                 ->setBody($messaye_body, 'text/html');
-                array_push($result,  [$employe->getId() => $mailer->send($message)]); 
+                array_push($result,  [$employeSendingEmail->getId() => $mailer->send($message)]); 
             }
             else{
-                 if($employe->getEmailUniv()==NULL && $employe->getEmail()!=NULL){
+                 if($employeSendingEmail->getEmail()!=NULL){
                     $message = (new Swift_Message($object))
                      ->setFrom(Utils::$sender)
-                     ->setTo($employe->getEmail())
+                     ->setTo($employeSendingEmail->getEmail())
                      ->setBody($messaye_body, 'text/html');
-                     array_push($result,  [$employe->getId() => $mailer->send($message)]); 
+                     array_push($result,  [$employeSendingEmail->getId() => $mailer->send($message)]); 
                  }
-                 elseif($employe->getEmailUniv()!=NULL && $employe->getEmail()==NULL){
+                 elseif($employeSendingEmail->getEmailUniv()!=NULL){
                     $message = (new Swift_Message($object))
                      ->setFrom(Utils::$sender)
-                     ->setTo($employe->getEmailUniv())
+                     ->setTo($employeSendingEmail->getEmailUniv())
                      ->setBody($messaye_body, 'text/html');
-                     array_push($result,  [$employe->getId() => $mailer->send($message)]); 
+                     array_push($result,  [$employeSendingEmail->getId() => $mailer->send($message)]); 
                  }
                  else{
-                    throw $this->createNotFoundException("L'employé {$employe->getPrenoms()} {$employe->getNom()} avec l'identifiant {$employe->getId()} ne dispose d'aucun email dans le système");
+                    throw $this->createNotFoundException("L'employé {$employeSendingEmail->getPrenoms()} {$employeSendingEmail->getNom()} avec l'identifiant {$employeSendingEmail->getId()} ne dispose d'aucun email dans le système");
                  }
 
                
             }// 0 => failure
 
         }
-
+          
         return $result;
     }
 
     /**
      * @param Request $request
      * @param EntityManagerInterface $entityManager
-     * @Rest\Post(path="/global-filter", name="global_filter")
-     * @Rest\View(StatusCode=200, serializerEnableMaxDepthChecks=true)
-     * @return mixed
-     */
-    public function filterGlobal(Request $request, EntityManagerInterface $entityManager)
-    {
-        ini_set('memory_limit', '512M');
-        $typeEmployes = Utils::serializeRequestContent($request)['criteria']['typeEmployes'];
-        $structures = Utils::serializeRequestContent($request)['criteria']['structures'];
-        $startDate = Utils::serializeRequestContent($request)['criteria']['startDate'];
-        $endDate = Utils::serializeRequestContent($request)['criteria']['endDate'];
-        $dqlQuery = count($typeEmployes)
-            ? 'SELECT DISTINCT e
-               FROM App\Entity\Employe e
-               WHERE e.typeEmploye IN (:typeEmployes)'
-            : 'SELECT DISTINCT e
-               FROM App\Entity\Employe e';
-
-        if(count($structures)) {
-            $dqlQuery .= ' AND e.structure IN (:structures)';
-        }
-
-        if(!empty($startDate) && !empty($endDate)) {
-            $dqlQuery .= ' AND  e.dateRecrutement BETWEEN :startDate AND :endDate';
-        }
-
-        $queryObject = $entityManager->createQuery(trim($dqlQuery));
-        if(str_contains($dqlQuery, ':typeEmployes')) {
-            $queryObject->setParameter('typeEmployes', $typeEmployes);
-        }
-
-        if(str_contains($dqlQuery, ':structures')) {
-            $queryObject->setParameter('structures', $structures);
-        }
-
-        if(str_contains($dqlQuery, ':startDate') && str_contains($dqlQuery, ':endDate')) {
-           $queryObject->setParameter('startDate', $startDate);
-           $queryObject->setParameter('endDate', $endDate);
-        }
-
-        return $queryObject->getResult();
-
-    }
-
-    /**
-     * @param Request $request
-     * @param EntityManagerInterface $entityManager
      * @Rest\Post(path="/many-type-employe", name="find_by_many_type_employe")
-     * @Rest\View(StatusCode=200, serializerEnableMaxDepthChecks=true)
+     * @Rest\View(StatusCode=200)
      * @return mixed
      */
     public function findByManyTypeEmploye(Request $request, EntityManagerInterface $entityManager)
@@ -559,14 +517,14 @@ $employe->setProfession($faker->randomElement($professions));
             if (!isset($rowEmploye->cni) || $rowEmploye->cni == NULL) {
                 throw $this->createNotFoundException("L'ajout échoué pour l'employé " . $rowEmploye->prenoms . " " . $rowEmploye->nom . ", le CNI est obligatoire.");
             }
-
+        
             $employes = $em->createQuery('SELECT e
                     FROM App\Entity\Employe e
                     WHERE e.cni = :cni')
                 ->setParameter('cni', $rowEmploye->cni)
                 ->getResult();
-            if (count($employes) > 0) {
-                throw $this->createNotFoundException("Ajout échoué pour l'employé " . $employe->getPrenoms() . " " . $employe->getNom() . ", CNI " . $employe->getCni() . ".");
+            if(count($employes)>0){                
+                throw $this->createNotFoundException("Ajout échoué pour l'employé ".$employe->getPrenoms()." ".$employe->getNom().", CNI ".$employe->getCni().".");
             } else {
                 $employe->setTypeEmploye($typeEmploye);
                 if (isset($rowEmploye->dateNaissance)) {
@@ -585,13 +543,13 @@ $employe->setProfession($faker->randomElement($professions));
             }
 
         }
-
+        
         try {
            return $em->flush();
         }   
         catch(\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e){
             throw $this->createNotFoundException("Il y'a une duplication au niveaau des CNI merci!"); 
         }
-
+        
     }
 }
