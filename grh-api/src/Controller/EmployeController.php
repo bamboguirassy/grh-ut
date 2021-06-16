@@ -395,41 +395,38 @@ $employe->setProfession($faker->randomElement($professions));
     public function sendSingleEmail(Request $request, Swift_Mailer $mailer): array
     {
 
-       $employeIds = Utils::serializeRequestContent($request)['id'];
-       $entityManager = $this->getDoctrine()->getManager();
+        $employeIds = Utils::serializeRequestContent($request)['id'];
+        $entityManager = $this->getDoctrine()->getManager();
         $object = Utils::serializeRequestContent($request)['object'];
         $messaye_body = Utils::serializeRequestContent($request)['message'];
         $result = []; // confirmation link
         foreach ($employeIds as $id) {
             $employe = $entityManager->getRepository(Employe::class)->find($id);
-            if($employe->getEmail()!=NULL && $employe->getEmailUniv()!=NULL){
+            if ($employe->getEmail() != NULL && $employe->getEmailUniv() != NULL) {
                 $message = (new Swift_Message($object))
-                ->setFrom(Utils::$sender)
-                ->setTo($employe->getEmail())
-                ->setCc($employe->getEmailUniv())
-                ->setBody($messaye_body, 'text/html');
-                array_push($result,  [$employe->getId() => $mailer->send($message)]); 
-            }
-            else{
-                 if($employe->getEmailUniv()==NULL && $employe->getEmail()!=NULL){
+                    ->setFrom(Utils::$sender)
+                    ->setTo($employe->getEmail())
+                    ->setCc($employe->getEmailUniv())
+                    ->setBody($messaye_body, 'text/html');
+                array_push($result, [$employe->getId() => $mailer->send($message)]);
+            } else {
+                if ($employe->getEmailUniv() == NULL && $employe->getEmail() != NULL) {
                     $message = (new Swift_Message($object))
-                     ->setFrom(Utils::$sender)
-                     ->setTo($employe->getEmail())
-                     ->setBody($messaye_body, 'text/html');
-                     array_push($result,  [$employe->getId() => $mailer->send($message)]); 
-                 }
-                 elseif($employe->getEmailUniv()!=NULL && $employe->getEmail()==NULL){
+                        ->setFrom(Utils::$sender)
+                        ->setTo($employe->getEmail())
+                        ->setBody($messaye_body, 'text/html');
+                    array_push($result, [$employe->getId() => $mailer->send($message)]);
+                } elseif ($employe->getEmailUniv() != NULL && $employe->getEmail() == NULL) {
                     $message = (new Swift_Message($object))
-                     ->setFrom(Utils::$sender)
-                     ->setTo($employe->getEmailUniv())
-                     ->setBody($messaye_body, 'text/html');
-                     array_push($result,  [$employe->getId() => $mailer->send($message)]); 
-                 }
-                 else{
+                        ->setFrom(Utils::$sender)
+                        ->setTo($employe->getEmailUniv())
+                        ->setBody($messaye_body, 'text/html');
+                    array_push($result, [$employe->getId() => $mailer->send($message)]);
+                } else {
                     throw $this->createNotFoundException("L'employé {$employe->getPrenoms()} {$employe->getNom()} avec l'identifiant {$employe->getId()} ne dispose d'aucun email dans le système");
-                 }
+                }
 
-               
+
             }// 0 => failure
 
         }
@@ -449,36 +446,76 @@ $employe->setProfession($faker->randomElement($professions));
         ini_set('memory_limit', '512M');
         $typeEmployes = Utils::serializeRequestContent($request)['criteria']['typeEmployes'];
         $structures = Utils::serializeRequestContent($request)['criteria']['structures'];
-        $startDate = Utils::serializeRequestContent($request)['criteria']['startDate'];
-        $endDate = Utils::serializeRequestContent($request)['criteria']['endDate'];
-        $dqlQuery = count($typeEmployes)
-            ? 'SELECT DISTINCT e
+        $caisseSociales = Utils::serializeRequestContent($request)['criteria']['caisseSociales'];
+        $typeContrats = Utils::serializeRequestContent($request)['criteria']['typeContrats'];
+        $recrutementDateRange = Utils::serializeRequestContent($request)['criteria']['recrutementDateRange'];
+        $priseServiceDateRange = Utils::serializeRequestContent($request)['criteria']['priseServiceDateRange'];
+        $genre = Utils::serializeRequestContent($request)['criteria']['genre'];
+        $dqlQuery =
+            count($typeEmployes)
+                ? 'SELECT DISTINCT e
                FROM App\Entity\Employe e
                WHERE e.typeEmploye IN (:typeEmployes)'
-            : 'SELECT DISTINCT e
-               FROM App\Entity\Employe e';
+                : 'SELECT DISTINCT e
+               FROM App\Entity\Employe e
+               WHERE e.id = e.id';
 
-        if(count($structures)) {
-            $dqlQuery .= ' AND e.structure IN (:structures)';
-        }
+        if (count($structures))
+            $dqlQuery .= ' AND e.structure IN (:structures) ';
 
-        if(!empty($startDate) && !empty($endDate)) {
-            $dqlQuery .= ' AND  e.dateRecrutement BETWEEN :startDate AND :endDate';
-        }
+        if (count($caisseSociales))
+            $dqlQuery .= ' AND e.caisseSociale IN (:caisseSociales) ';
+
+        if (preg_match("/^\d{4}-\d{2}-\d{2}$/", $recrutementDateRange['startDate']) && preg_match("/^\d{4}-\d{2}-\d{2}$/", $recrutementDateRange['endDate']))
+            $dqlQuery .= ' AND  e.dateRecrutement BETWEEN :rStartDate AND :rEndDate ';
+
+        if (preg_match("/^\d{4}-\d{2}-\d{2}$/", $priseServiceDateRange['startDate']) && preg_match("/^\d{4}-\d{2}-\d{2}$/", $priseServiceDateRange['endDate']))
+            $dqlQuery .= ' AND  e.datePriseService BETWEEN :pStartDate AND :pEndDate ';
+
+        if (!empty($genre))
+            $dqlQuery .= ' AND e.genre = :genre ';
+
+        if (count($typeContrats))
+            $dqlQuery .= 'AND e IN (
+                SELECT emp
+                FROM App\Entity\Contrat c
+                JOIN c.employe emp
+                WHERE c.typeContrat IN (:typeContrats)
+            )';
+
 
         $queryObject = $entityManager->createQuery(trim($dqlQuery));
-        if(str_contains($dqlQuery, ':typeEmployes')) {
+
+        if (str_contains($dqlQuery, ':typeEmployes'))
             $queryObject->setParameter('typeEmployes', $typeEmployes);
-        }
 
-        if(str_contains($dqlQuery, ':structures')) {
+
+        if (str_contains($dqlQuery, ':structures'))
             $queryObject->setParameter('structures', $structures);
-        }
 
-        if(str_contains($dqlQuery, ':startDate') && str_contains($dqlQuery, ':endDate')) {
-           $queryObject->setParameter('startDate', $startDate);
-           $queryObject->setParameter('endDate', $endDate);
-        }
+
+        if (str_contains($dqlQuery, ':caisseSociales'))
+            $queryObject->setParameter('caisseSociales', $caisseSociales);
+
+
+        if (str_contains($dqlQuery, ':rStartDate') && str_contains($dqlQuery, ':rEndDate'))
+            $queryObject
+                ->setParameter('rStartDate', $recrutementDateRange['startDate'])
+                ->setParameter('rEndDate', $recrutementDateRange['endDate']);
+
+
+        if (str_contains($dqlQuery, ':pStartDate') && str_contains($dqlQuery, ':pEndDate'))
+            $queryObject
+                ->setParameter('pStartDate', $priseServiceDateRange['startDate'])
+                ->setParameter('pEndDate', $priseServiceDateRange['endDate']);
+
+
+        if (str_contains($dqlQuery, 'genre'))
+            $queryObject->setParameter('genre', $genre);
+
+
+        if (str_contains($dqlQuery, ':typeContrats'))
+            $queryObject->setParameter('typeContrats', $typeContrats);
 
         return $queryObject->getResult();
 
@@ -587,10 +624,9 @@ $employe->setProfession($faker->randomElement($professions));
         }
 
         try {
-           return $em->flush();
-        }   
-        catch(\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e){
-            throw $this->createNotFoundException("Il y'a une duplication au niveaau des CNI merci!"); 
+            return $em->flush();
+        } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
+            throw $this->createNotFoundException("Il y'a une duplication au niveaau des CNI merci!");
         }
 
     }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\CaisseSociale;
 use App\Form\CaisseSocialeType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,7 +31,7 @@ class CaisseSocialeController extends AbstractController
             ->getRepository(CaisseSociale::class)
             ->findAll();
 
-        return count($caisseSociales)?$caisseSociales:[];
+        return count($caisseSociales) ? $caisseSociales : [];
     }
 
     /**
@@ -38,11 +39,12 @@ class CaisseSocialeController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CAISSESOCIALE_CREATE")
      */
-    public function create(Request $request, \App\Service\FileUploader $uploader): CaisseSociale    {
+    public function create(Request $request, \App\Service\FileUploader $uploader): CaisseSociale
+    {
         $caisseSociale = new CaisseSociale();
         $form = $this->createForm(CaisseSocialeType::class, $caisseSociale);
         $form->submit(Utils::serializeRequestContent($request));
-        
+
         //check if file provided
         if ($caisseSociale->getFilepath()) {
             $host = $request->getHttpHost();
@@ -70,17 +72,39 @@ class CaisseSocialeController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CAISSESOCIALE_SHOW")
      */
-    public function show(CaisseSociale $caisseSociale): CaisseSociale    {
+    public function show(CaisseSociale $caisseSociale): CaisseSociale
+    {
         return $caisseSociale;
     }
 
-    
+    /**
+     * @Rest\Get(path="/with-at-least-one-employe", name="cs_find_with_at_least_one_employe")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_CAISSESOCIALE_INDEX")
+     */
+    public function findWithAtLeastOneEmploye(EntityManagerInterface $entityManager): array
+    {
+        $caisseSociales = $entityManager->createQuery('
+            SELECT cs
+            FROM App\Entity\CaisseSociale cs
+            WHERE cs IN (
+                SELECT csoc
+                FROM App\Entity\Employe e
+                JOIN e.caisseSociale csoc
+            )
+        ')->getResult();
+
+        return count($caisseSociales) ? $caisseSociales : [];
+    }
+
+
     /**
      * @Rest\Put(path="/{id}/edit", name="caisse_sociale_edit",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CAISSESOCIALE_EDIT")
      */
-    public function edit(Request $request, CaisseSociale $caisseSociale): CaisseSociale    {
+    public function edit(Request $request, CaisseSociale $caisseSociale): CaisseSociale
+    {
         $form = $this->createForm(CaisseSocialeType::class, $caisseSociale);
         $form->submit(Utils::serializeRequestContent($request));
 
@@ -88,15 +112,16 @@ class CaisseSocialeController extends AbstractController
 
         return $caisseSociale;
     }
-    
+
     /**
      * @Rest\Put(path="/{id}/clone", name="caisse_sociale_clone",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CAISSESOCIALE_CLONE")
      */
-    public function cloner(Request $request, CaisseSociale $caisseSociale):  CaisseSociale {
-        $em=$this->getDoctrine()->getManager();
-        $caisseSocialeNew=new CaisseSociale();
+    public function cloner(Request $request, CaisseSociale $caisseSociale): CaisseSociale
+    {
+        $em = $this->getDoctrine()->getManager();
+        $caisseSocialeNew = new CaisseSociale();
         $form = $this->createForm(CaisseSocialeType::class, $caisseSocialeNew);
         $form->submit(Utils::serializeRequestContent($request));
         $em->persist($caisseSocialeNew);
@@ -111,20 +136,22 @@ class CaisseSocialeController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CAISSESOCIALE_EDIT")
      */
-    public function delete(CaisseSociale $caisseSociale): CaisseSociale    {
+    public function delete(CaisseSociale $caisseSociale): CaisseSociale
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($caisseSociale);
         $entityManager->flush();
 
         return $caisseSociale;
     }
-    
+
     /**
      * @Rest\Post("/delete-selection/", name="caisse_sociale_selection_delete")
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CAISSESOCIALE_DELETE")
      */
-    public function deleteMultiple(Request $request): array {
+    public function deleteMultiple(Request $request): array
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $caisseSociales = Utils::getObjectFromRequest($request);
         if (!count($caisseSociales)) {
@@ -138,7 +165,8 @@ class CaisseSocialeController extends AbstractController
 
         return $caisseSociales;
     }
-/**
+
+    /**
      * @Rest\Put(path="/upload-photo-caisseSociale/{id}", name="upload_caisseSociale_photo")
      * @Rest\View(StatusCode=200)
      * @param Request $request

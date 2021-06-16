@@ -13,5 +13,9 @@ export class TypeContratService extends BamboAbstractService {
     this.routePrefix = 'typecontrat/';
     this.resourceName = 'TYPECONTRAT';
   }
+
+  findWithAtLeastOneEmploye() {
+    return this.httpSrv.get(this.routePrefix + 'with-at-least-one-employe');
+  }
   
 }
