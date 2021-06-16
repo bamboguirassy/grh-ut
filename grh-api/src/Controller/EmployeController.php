@@ -429,7 +429,7 @@ $employe->setProfession($faker->randomElement($professions));
                      ->setFrom(Utils::$sender)
                      ->setTo($employeSendingEmail->getEmailUniv())
                      ->setBody($messaye_body, 'text/html');
-                     array_push($result,  [$employeSendEmail->getId() => $mailer->send($message)]); 
+                     array_push($result,  [$employeSendingEmail->getId() => $mailer->send($message)]); 
                  }
                  else{
                     throw $this->createNotFoundException("L'employé {$employeSendingEmail->getPrenoms()} {$employeSendingEmail->getNom()} avec l'identifiant {$employeSendingEmail->getId()} ne dispose d'aucun email dans le système");
