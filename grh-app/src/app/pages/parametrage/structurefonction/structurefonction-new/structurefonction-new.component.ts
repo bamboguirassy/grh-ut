@@ -68,8 +68,9 @@ export class StructureFonctionNewComponent implements OnInit {
     this.fetching = true;
     this
       .rangSrv
-      .findNotBindedByStructure(this.structure)
-      .pipe(first(), finalize(() => this.fetching = false))
+      // .findNotBindedByStructure(this.structure)
+      .findAll()
+      .pipe(finalize(() => this.fetching = false))
       .subscribe((rangs: any) => {
         this.rangs = rangs;
       }, err => {

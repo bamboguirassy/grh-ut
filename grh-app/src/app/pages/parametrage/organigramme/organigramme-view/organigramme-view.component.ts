@@ -22,7 +22,7 @@ export class OrganigrammeViewComponent implements OnInit {
   lightGradient = ['#fff', SETTINGS.topbarBg];
   secondViewBorder = 'info';
   structures: Structure[] = [];
-  selectedOrientationType: string = 'horizontal';
+  selectedOrientationType = 'horizontal';
   selectedStructure: Structure;
 
   nodes: any;
@@ -88,7 +88,8 @@ export class OrganigrammeViewComponent implements OnInit {
       if (struct.structureFonctions.length && struct.structureFonctions.some(sf => sf.etat)) {
         title += `${struct.structureFonctions.find(sf => sf.etat).rang.nom}`;
       }
-      if (struct.structureFonctions.length && struct.structureFonctions.some(sf => sf.etat) && struct.structureFonctions.find(sf => sf.etat).fonctionEmployes.some(fe => fe.etat)) {
+      if (struct.structureFonctions.length && struct.structureFonctions.some(sf => sf.etat) && 
+      struct.structureFonctions.find(sf => sf.etat).fonctionEmployes.some(fe => fe.etat)) {
         title += ` - ${struct.structureFonctions.find(sf => sf.etat).fonctionEmployes.find(fe => fe.etat)?.employe?.prenoms + ' ' + struct.structureFonctions.find(sf => sf.etat).fonctionEmployes.find(fe => fe.etat)?.employe?.nom}`;
       }
       return {
@@ -106,14 +107,17 @@ export class OrganigrammeViewComponent implements OnInit {
     );
   }
 
+  
+
   buildOrgChart() {
     const orgchartTreeItems: OrgchartTreeItem<Structure>[] = [];
     const rootEntity = this.structures.find(s => s.structureParente === null);
     let title = '';
     if (rootEntity.structureFonctions.length && rootEntity.structureFonctions.some(sf => sf.etat)) {
-      title += `${rootEntity.structureFonctions.find(sf => sf.etat).rang.nom}`;
+      title += `${rootEntity.structureFonctions.find(sf => sf.etat)?.rang?.nom}`;
     }
-    if (rootEntity.structureFonctions.length && rootEntity.structureFonctions.some(sf => sf.etat) && rootEntity.structureFonctions.find(sf => sf.etat).fonctionEmployes.some(fe => fe.etat)) {
+    if (rootEntity.structureFonctions.length && rootEntity.structureFonctions.some(sf => sf.etat) && 
+    rootEntity.structureFonctions.find(sf => sf.etat).fonctionEmployes.some(fe => fe.etat)) {
       title += ` - ${rootEntity.structureFonctions.find(sf => sf.etat).fonctionEmployes.find(fe => fe.etat)?.employe?.prenoms + ' ' + rootEntity.structureFonctions.find(sf => sf.etat).fonctionEmployes.find(fe => fe.etat)?.employe?.nom}`;
     }
     orgchartTreeItems.push({

@@ -1,172 +1,180 @@
 <tc-card *ngIf="structureFonctionSrv.resourceName|listable" [tcGradient]="lightGradient">
-  <div class="row">
-    <!--<ng-content select="selector"></ng-content><div class="col-12">
+    <div class="row">
+        <!--<ng-content select="selector"></ng-content><div class="col-12">
       <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
     </div>-->
-    <div class="col-sm-12 col-lg-6 col-md-6 pt-1 pb-2" *ngIf="structureFonctionActive">
-      <div class="custom-card pb-2">
-        <div class="info-box">
-          <h4 class="name">
-            <i class="icofont-stamp icofont-1x"></i>
-            <span style="font-weight: bold; font-style: italic;">
-              {{ structureFonctionActive?.rang?.nom }}
-            </span>
+        <div class="col-sm-12 col-lg-6 col-md-6 pt-1 pb-2" *ngIf="structureFonctionActive">
+            <div class="custom-card pb-2">
+                <div class="info-box">
+                    <ng-container *ngIf="!editAppelationState">
+                        <div>
+                            <h5 class="name">
+                                <span style="font-weight: bold; font-style: italic;">{{ structureFonctionActive?.appelation }}</span>
+                                <span *ngIf="!structureFonctionActive?.appelation" class="badge badge-warning" style="font-weight: bold; font-style: italic; cursor:pointer" (click)="editAppelationState=true">
+                                  Appelation non précisée
+                                  <i class="icofont-ui-edit icofont-1x"></i>
+                                </span>
+                            </h5>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="editAppelationState">
+                        <div class="row d-flex">
+                            <div>
+                                <tc-input [placeholder]="'Appelation'" [(ngModel)]="appelationEditModel"></tc-input>
 
-          </h4>
-          <p>
-            <span class="badge badge-success" style="font-style: italic; font-size: 15px;">
+                            </div>
+                            <div class="d-flex text-center justify-content-center">
+                                <button class="mr-1" [afterIcon]="'icofont-check'" (click)="editAppelation()" [outline]="true" tc-button [view]="'success'" [square]="true" [tcShape]="'50%'" [tcBorderStyle]="'dashed'"></button>
+
+                                <button class="ml-1" [afterIcon]="'icofont-close'" (click)="editAppelationState=false" [outline]="true" tc-button [view]="'error'" [square]="true" [tcShape]="'50%'" [tcBorderStyle]="'dashed'"></button>
+                            </div>
+
+                        </div>
+                    </ng-container>
+                    <span class=""><i class="icofont-stamp icofont-1x"></i> {{ structureFonctionActive?.rang?.nom }}</span>
+                    <p>
+                        <span class="badge badge-success" style="font-style: italic; font-size: 15px;">
               Poste Actif
             </span>
-          </p>
-          <!-- <p>lorem ipsum dolor</p>-->
-          <div class="social" *ngIf="!currentFonctionEmploye">
-            <button tc-button [afterIcon]="canChooseEmploye ? 'icofont-minus-circle' : 'icofont-plus'"
-              (click)="canChooseEmploye = !canChooseEmploye"
-              [nzTooltipTitle]="canChooseEmploye ? 'Annuler' : 'Assigner un responsable'" nzTooltipPlacement="top"
-              nz-tooltip [view]="canChooseEmploye ? 'error' : 'accent'" [square]="true" [tcShape]="500"
-              [size]="'sm'"></button>
-          </div>
+                    </p>
+                    <!-- <p>lorem ipsum dolor</p>-->
+                    <div class="social" *ngIf="!currentFonctionEmploye">
+                        <button tc-button [afterIcon]="canChooseEmploye ? 'icofont-minus-circle' : 'icofont-plus'" (click)="canChooseEmploye = !canChooseEmploye" [nzTooltipTitle]="canChooseEmploye ? 'Annuler' : 'Assigner un responsable'" nzTooltipPlacement="top" nz-tooltip [view]="canChooseEmploye ? 'error' : 'accent'"
+                            [square]="true" [tcShape]="500" [size]="'sm'"></button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="col-sm-12 col-lg-6 col-md-6 pt-1 pb-2" *ngIf="currentFonctionEmploye">
-      <div class="custom-card pb-2">
-        <div class="info-box">
-          <h4 class="name">
-            <i class="icofont-ebook icofont-1x"></i>
-            <span style="font-weight: bold; font-style: italic;">
+        <div class="col-sm-12 col-lg-6 col-md-6 pt-1 pb-2" *ngIf="currentFonctionEmploye">
+            <div class="custom-card pb-2">
+                <div class="info-box">
+                    <h4 class="name">
+                        <i class="icofont-ebook icofont-1x"></i>
+                        <span style="font-weight: bold; font-style: italic;">
               Responsable
             </span>
 
-          </h4>
-          <p style="font-weight: bold;">
-            {{ currentFonctionEmploye?.employe?.prenoms + ' ' + currentFonctionEmploye?.employe?.nom }}
-          </p>
-          <p>
-            <span class="badge badge-primary" style="font-style: italic; font-size: 15px;">
+                    </h4>
+                    <p style="font-weight: bold;">
+                        {{ currentFonctionEmploye?.employe?.prenoms + ' ' + currentFonctionEmploye?.employe?.nom }}
+                    </p>
+                    <p>
+                        <span class="badge badge-primary" style="font-style: italic; font-size: 15px;">
               {{ currentFonctionEmploye?.employe?.matricule }}
             </span>
-          </p>
-          <p>
-            <span>
+                    </p>
+                    <p>
+                        <span>
               <a href="javascript:void(0)" (click)="canChooseDateFin = !canChooseDateFin">
                 {{ canChooseDateFin ? 'Annuler l\'opération' : 'Désactiver cette fonction'}}
               </a>
             </span>
-          </p>
-          <div class="col-12 pl-4 pr-4" *ngIf="canChooseDateFin">
-            <tc-form-group>
-              <tc-form-label>Date de Fin</tc-form-label>
-              <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required [(ngModel)]="fonctionEmploye.dateFin" name="dateFin"
-                id="dateFin" #dateFin="ngModel">
-              </nz-date-picker>
-            </tc-form-group>
-            <button class="ml-3" [disabled]="dateFin?.invalid" tc-button afterIcon="icofont-check-circled"
-              [view]="'accent'" [size]="'sm'" (click)="disableCurrentFonctionEmploye()">
+                    </p>
+                    <div class="col-12 pl-4 pr-4" *ngIf="canChooseDateFin">
+                        <tc-form-group>
+                            <tc-form-label>Date de Fin</tc-form-label>
+                            <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required [(ngModel)]="fonctionEmploye.dateFin" name="dateFin" id="dateFin" #dateFin="ngModel">
+                            </nz-date-picker>
+                        </tc-form-group>
+                        <button class="ml-3" [disabled]="dateFin?.invalid" tc-button afterIcon="icofont-check-circled" [view]="'accent'" [size]="'sm'" (click)="disableCurrentFonctionEmploye()">
               Valider
             </button>
-          </div>
-          <!-- <p>lorem ipsum dolor</p>-->
-          <!--<div class="social" *ngIf="!currentFonctionEmploye">
+                    </div>
+                    <!-- <p>lorem ipsum dolor</p>-->
+                    <!--<div class="social" *ngIf="!currentFonctionEmploye">
             <button tc-button [afterIcon]="canChooseEmploye ? 'icofont-minus-circle' : 'icofont-plus'"
               (click)="canChooseEmploye = !canChooseEmploye"
               [nzTooltipTitle]="canChooseEmploye ? 'Annuler' : 'Assigner un responsable'" nzTooltipPlacement="top"
               nz-tooltip [view]="canChooseEmploye ? 'error' : 'accent'" [square]="true" [tcShape]="500"
               [size]="'sm'"></button>
           </div>-->
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="col-sm-12 col-lg-6 col-md-6 pt-1 pb-2" *ngIf="canChooseEmploye && !currentFonctionEmploye">
-      <div class="custom-card pb-2 pl-3 pr-3">
-        <form #form="ngForm" ngNativeValidate>
-          <div class="row">
-            <div class="col-12">
-              <tc-form-group>
-                <tc-form-label>Employé</tc-form-label>
-                <nz-select (nzOnSearch)="searchEmployes($event)" required="required" nzMode="default"
-                  style="width: 100%" nzPlaceHolder="Tapez pour rechercher l'employé'" nzAllowClear nzShowSearch
-                  [(ngModel)]="selectedEmploye" name="classe" id="classe" #classe="ngModel">
-                  <ng-container *ngFor="let employe of employes">
-                    <nz-option [nzValue]="employe"
-                      [nzLabel]="employe?.prenoms + ' ' + employe?.nom + ' - ' + employe?.matricule"></nz-option>
-                  </ng-container>
-                </nz-select>
-                <tc-form-description>
-                  <app-form-field-validation-message [formField]="classe">
-                  </app-form-field-validation-message>
-                </tc-form-description>
-              </tc-form-group>
-            </div>
-            <div class="col-12">
-              <tc-form-group>
-                <tc-form-label>Date de début</tc-form-label>
-                <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required [(ngModel)]="fonctionEmploye.datePriseFonction"
-                  name="dateDebut" id="dateDebut" #dateDebut="ngModel">
-                </nz-date-picker>
-              </tc-form-group>
-            </div>
-            <div class="col-12" *ngIf="isAffectation">
-              <tc-form-group>
-                <tc-form-label>Motif</tc-form-label>
-                <tc-textarea [(ngModel)]="affectation.motif" name="motif" id="motif">
-                </tc-textarea>
-              </tc-form-group>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6">
-              <button tc-button [afterIcon]="'icofont-check-circled'" (click)="assignFunction()"
-                [disabled]="form?.invalid" [view]="'accent'" [square]="false" [tcShape]="800" [size]="'sm'">
-                Assigner
-              </button>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6">
-              <tc-form-group>
-                <tc-checkbox name="isAffectation" [(ngModel)]="isAffectation"></tc-checkbox>
-                S'agit t-il d'une affectation ?
-              </tc-form-group>
+        <div class="col-sm-12 col-lg-6 col-md-6 pt-1 pb-2" *ngIf="canChooseEmploye && !currentFonctionEmploye">
+            <div class="custom-card pb-2 pl-3 pr-3">
+                <form #form="ngForm" ngNativeValidate>
+                    <div class="row">
+                        <div class="col-12">
+                            <tc-form-group>
+                                <tc-form-label>Employé</tc-form-label>
+                                <nz-select (nzOnSearch)="searchEmployes($event)" required="required" nzMode="default" style="width: 100%" nzPlaceHolder="Tapez pour rechercher l'employé'" nzAllowClear nzShowSearch [(ngModel)]="selectedEmploye" name="classe" id="classe" #classe="ngModel">
+                                    <ng-container *ngFor="let employe of employes">
+                                        <nz-option [nzValue]="employe" [nzLabel]="employe?.prenoms + ' ' + employe?.nom + ' - ' + employe?.matricule"></nz-option>
+                                    </ng-container>
+                                </nz-select>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="classe">
+                                    </app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                        </div>
+                        <div class="col-12">
+                            <tc-form-group>
+                                <tc-form-label>Date de début</tc-form-label>
+                                <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required [(ngModel)]="fonctionEmploye.datePriseFonction" name="dateDebut" id="dateDebut" #dateDebut="ngModel">
+                                </nz-date-picker>
+                            </tc-form-group>
+                        </div>
+                        <div class="col-12" *ngIf="isAffectation">
+                            <tc-form-group>
+                                <tc-form-label>Motif</tc-form-label>
+                                <tc-textarea [(ngModel)]="affectation.motif" name="motif" id="motif">
+                                </tc-textarea>
+                            </tc-form-group>
+                        </div>
+                        <div class="col-12 d-flex justify-content-between">
+                            <tc-form-group>
+                                <tc-checkbox name="isAffectation" [(ngModel)]="isAffectation">Est-ce une affectation ?</tc-checkbox>
 
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+                            </tc-form-group>
+                            <tc-form-group>
+                                <tc-checkbox name="isAffectation" [(ngModel)]="isAffectation">S'agit t-il d'intérime ?</tc-checkbox>
 
-  </div>
-  <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-    <tc-table-col [columnTitle]="'#'" [columnName]="'#'">
-      <ng-template #tableTDTemplate let-row="row">
-        <i class="icofont-stamp icofont-2x"></i> &nbsp;
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Rang'" [columnName]="'rang'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value let-row>
-        <span class="nowrap">{{ value?.nom }}</span>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Etat'" [columnName]="'etat'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-row="row" let-value>
-        <tc-switcher [value]="value" (valueChanged)="onChange($event, row)" name="etat" id="etat"
-          [bgColor]="['transparent', 'transparent', '#ed5564']" [borderColor]="['#ed5564', '#ed5564', '#ed5564']"
-          [color]="['#ed5564', '#ed5564', '#fff']">
-        </tc-switcher>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-      <ng-template #tableTDTemplate let-row="row">
-        <div class="actions">
-          <button *ngIf="structureFonctionSrv.resourceName|deletable" (click)="remove(row)" tc-button
-            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+                            </tc-form-group>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6 d-flex justify-content-center">
+                            <button tc-button [afterIcon]="'icofont-check-circled'" (click)="assignFunction()" [disabled]="form?.invalid" [view]="'accent'" [square]="false" [tcShape]="800" [size]="'sm'"> Assigner</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
         </div>
-      </ng-template>
-    </tc-table-col>
-  </tc-table>
-  <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
+
+    </div>
+    <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
+        <tc-table-col [columnTitle]="'#'" [columnName]="'#'">
+            <ng-template #tableTDTemplate let-row="row">
+                <i class="icofont-stamp icofont-2x"></i> &nbsp;
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Rang'" [columnName]="'rang'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value let-row>
+                <span class="nowrap">{{ value?.nom }}</span>
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Etat'" [columnName]="'etat'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-row="row" let-value>
+                <tc-switcher [value]="value" (valueChanged)="onChange($event, row)" name="etat" id="etat" [bgColor]="['transparent', 'transparent', '#ed5564']" [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']">
+                </tc-switcher>
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+            <ng-template #tableTDTemplate let-row="row">
+                <div class="actions">
+                    <button *ngIf="structureFonctionSrv.resourceName|deletable" (click)="remove(row)" tc-button [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+                </div>
+            </ng-template>
+        </tc-table-col>
+    </tc-table>
+    <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
 </tc-card>
 
 <tc-card *ngIf="structureFonctionSrv.resourceName|creable " [tcGradient]="lightGradient">
-  <app-structurefonction-new [structure]="structure" (creation)="onCreated($event)"></app-structurefonction-new>
+    <app-structurefonction-new [structure]="structure" (creation)="onCreated($event)"></app-structurefonction-new>
 </tc-card>
 
 <app-access-denied *ngIf="!(structureFonctionSrv.resourceName|listable)"></app-access-denied>
