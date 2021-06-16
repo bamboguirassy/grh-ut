@@ -400,17 +400,12 @@ $employe->setProfession($faker->randomElement($professions));
         $object = Utils::serializeRequestContent($request)['object'];
         $messaye_body = Utils::serializeRequestContent($request)['message'];
         $result = []; 
-        $employes = $entityManager->getRepository(Employe::class)->findAll();
-        $employesSendingEmail=[];
-        foreach ($employeIds as $id) {
-            foreach ($employes as $employe) {
-                # code...
-                if($id==$employe->getId() && !in_array($employe,$employesSendingEmail)){
-                    array_push($employesSendingEmail,$employe);
-                }
-            }
-            # code...
-        }
+        $employesSendingEmail=$entityManager->createQuery('
+                SELECT e
+                FROM App\Entity\Employe e
+                WHERE e.id IN (:employeIds)
+            ')->setParameter('employeIds', $employeIds )
+                ->getResult();
         foreach ($employesSendingEmail as $employeSendingEmail) {
            // $employe = $entityManager->getRepository(Employe::class)->find($id);
             if($employeSendingEmail->getEmail()!=NULL && $employeSendingEmail->getEmailUniv()!=NULL){
