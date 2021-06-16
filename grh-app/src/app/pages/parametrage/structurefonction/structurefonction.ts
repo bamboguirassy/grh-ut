@@ -9,4 +9,5 @@ export class StructureFonction extends BamboAbstractObject {
     structure: Structure;
     rang: Rang;
     fonctionEmployes: FonctionEmploye[];
+    appelation: string;
 }
