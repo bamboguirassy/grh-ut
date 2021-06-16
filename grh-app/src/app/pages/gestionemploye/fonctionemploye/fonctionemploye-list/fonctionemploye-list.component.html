@@ -27,9 +27,9 @@
               </div>
             </ng-template>
           </tc-table-col>
-          <tc-table-col [columnTitle]="'Fonction'" [columnName]="'responsabilite'" [enableSorting]="true">
+          <tc-table-col [columnTitle]="'Rang'" [columnName]="'responsabilite'" [enableSorting]="true">
             <ng-template #tableTDTemplate let-value>
-              <span class="nowrap" *ngIf="value">{{ value?.fonction?.nom }}</span>
+              <span class="nowrap" *ngIf="value">{{ value?.rang?.nom }}</span>
               <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
             </ng-template>
           </tc-table-col>

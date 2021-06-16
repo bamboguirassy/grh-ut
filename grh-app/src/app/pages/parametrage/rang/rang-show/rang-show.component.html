@@ -37,8 +37,7 @@
                                                                                 <tr>
                             <th>Etat</th>
                             <td>
-                                <span *ngIf="entity?.etat">{{ entity?.etat }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.etat">Indéfinie</tc-badge>
+                                <nz-switch *ngIf="entity?.etat" [(ngModel)]="entity.etat"></nz-switch>                                
                             </td>
                         </tr>
                                                     </table>
