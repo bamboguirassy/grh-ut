@@ -37,12 +37,7 @@
                                                                                 <tr>
                             <th>Etat</th>
                             <td>
-                                <ng-container [ngSwitch]="row?.id !== currentRang?.id && rangSrv.resourceName|editable">
-                                    <tc-switcher *ngSwitchCase="true" (valueChanged)="onChange($event, row)" [value]="value">
-                                    </tc-switcher>
-                                    <tc-badge *ngSwitchCase="false" view="{{value ? 'success' : 'error'}}">
-                                        {{ value ? 'Activé' : 'Désactivé' }} </tc-badge>
-                                </ng-container>
+                                <nz-switch [(ngModel)]="entity.etat"></nz-switch>                                
                             </td>
                         </tr>
                                                     </table>

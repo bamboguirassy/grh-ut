@@ -206,6 +206,7 @@ import { RangEditComponent } from './parametrage/rang/rang-edit/rang-edit.compon
 import { RangShowComponent } from './parametrage/rang/rang-show/rang-show.component';
 import { RangNewComponent } from './parametrage/rang/rang-new/rang-new.component';
 import { TypeemployeStastPersComponent } from './dashboards/typeemploye-per/typeemploye-stast-pers/typeemploye-stast-pers.component';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 
 @NgModule({
@@ -259,7 +260,8 @@ import { TypeemployeStastPersComponent } from './dashboards/typeemploye-per/type
     NzRadioModule,
     NzIconModule,
     NzToolTipModule,
-    NzResultModule 
+    NzResultModule , 
+    NzSwitchModule
 
   ],
   declarations: [
