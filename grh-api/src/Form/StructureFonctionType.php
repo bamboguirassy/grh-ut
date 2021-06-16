@@ -14,7 +14,7 @@ class StructureFonctionType extends AbstractType
         $builder
             ->add('etat')
             ->add('structure')
-            ->add('fonction')
+            ->add('rang')
             ->add('duree')
         ;
     }
