@@ -16,7 +16,7 @@
         <div class="row d-flex justify-content-between">
             <div class="col-4">
                 <nz-select nzMode="tags" nzAllowClear nzShowSearch style="width: 100%;"
-                    (ngModelChange)="findByTypeEmployes()" name="typeEmployes"
+                    (ngModelChange)="filterGlobal()" name="typeEmployes"
                     nzPlaceHolder="Selectionner le(s) type(s) d'employé" [(ngModel)]="selectedTypeEmployes">
                     <ng-container *ngFor="let typeEmploye of typeEmployes">
                         <nz-option [nzLabel]="typeEmploye?.nom" [nzValue]="typeEmploye">
@@ -28,7 +28,7 @@
 
             <div class="col-4">
                 <nz-select nzMode="tags" nzAllowClear nzShowSearch style="width: 100%;"
-                    (ngModelChange)="findByStructures()" name="structures"
+                    (ngModelChange)="filterGlobal()" name="structures"
                     nzPlaceHolder="Selectionner le(s) structure(s)" [(ngModel)]="selectedStructures">
                     <ng-container *ngFor="let struct of structures">
                         <nz-option [nzLabel]="struct?.nom" [nzValue]="struct">
@@ -39,7 +39,7 @@
             </div>
 
             <div class="col-4" >
-                <nz-range-picker [(ngModel)]="dates" [nzFormat]="'dd/MM/yyyy'" (ngModelChange)="onChange($event)"></nz-range-picker>
+                <nz-range-picker [(ngModel)]="dates" [nzFormat]="'dd/MM/yyyy'" (ngModelChange)="filterGlobal($event)"></nz-range-picker>
                 <small>Selectionner une intervalle de date de recrutement</small> &nbsp;
                 <small *ngIf="dates?.length === 2" >
                     <a href="javascript:void(0)" (click)="restore()">enlever le filtre</a>

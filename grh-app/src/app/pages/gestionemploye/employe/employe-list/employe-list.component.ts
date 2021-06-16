@@ -28,7 +28,7 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
   config = {
     language: 'fr'
   };
-  selectedEmployes: Employe[] ;
+  selectedEmployes: Employe[];
   selectedStructures: Structure[] = new Array();
   isAllSelected = false;
   isPartialSelection = false;
@@ -40,6 +40,7 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
   selectedIndex = 0;
   isModalVisible: boolean;
   selectedTypeEmployes: TypeEmploye[] = [];
+  selectedRange: Date[] = ['', ''] as any;
   constructor(
     private modal: TCModalService,
     public employeSrv: EmployeService,
@@ -96,8 +97,8 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
     this.typeEmployeSrv.findAll()
       .subscribe((data: any) => {
         this.typeEmployes = data;
-        this.selectedTypeEmployes = data;
-        this.findByTypeEmployes();
+        this.selectedTypeEmployes = [data[0]];
+        this.filterGlobal([]);
         this.setLoaded();
       }, err => this.typeEmployeSrv.httpSrv.catchError(err));
   }
@@ -177,7 +178,7 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
     }, 1);
   }
 
-  findByTypeEmployes() {
+  /*findByTypeEmployes() {
     this
       .employeSrv
       .findByTypeEmployes(this.selectedTypeEmployes)
@@ -190,9 +191,32 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
       }, err => {
         this.employeSrv.httpSrv.catchError(err);
       });
+  }*/
+
+  filterGlobal(dates: Date[] = []) {
+    if (dates.length === 2) {
+      this.selectedRange = dates;
+    }
+    this
+      .employeSrv
+      .globalFilter({
+        typeEmployes: this.selectedTypeEmployes,
+        structures: this.selectedStructures,
+        startDate: this.datePipe.transform(this.selectedRange[0], 'yyyy-MM-dd'),
+        endDate: this.datePipe.transform(this.selectedRange[1], 'yyyy-MM-dd')
+      })
+      .subscribe((employes: any) => {
+        this.items = employes;
+        this.items = [...this.items];
+        if (this.items.length) {
+          this.temp = [...this.items];
+        }
+      }, err => {
+        this.employeSrv.httpSrv.catchError(err);
+      });
   }
 
-  findByStructures() {
+  /*findByStructures() {
     if (this.selectedStructures.length > 0) {
       this
         .employeSrv
@@ -205,12 +229,13 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
           }
         }, err => {
           this.employeSrv.httpSrv.catchError(err);
-        }); 
+        });
     }
 
-  }
+  }*/
 
-  onChange(results: Date[]): void {
+  /*(results: Date[]): void {
+    this.selectedRange = results;
     if (results.length === 2) {
       this
         .employeSrv
@@ -222,7 +247,7 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
           this.employeSrv.httpSrv.catchError(err);
         });
     }
-  }
+  }*/
 
   isAllCheckt() {
     return this.items.every(element => element.selected);

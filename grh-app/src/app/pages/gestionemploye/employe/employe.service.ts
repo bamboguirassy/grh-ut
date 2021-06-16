@@ -62,14 +62,14 @@ export class EmployeService extends BamboAbstractService {
   }
 
   realtimeSearch(searchTerm: any) {
-    return this.httpSrv.post(this.routePrefix+ 'realtime-search',{'searchTerm': searchTerm})
+    return this.httpSrv.post(this.routePrefix + 'realtime-search', { 'searchTerm': searchTerm })
   }
 
-  chargerEmployeByTypeEmploye(typeEmploye: any ,elements: any) {
-    return this.httpSrv.post(this.routePrefix+ 'charger-employe/'+typeEmploye, elements);
+  chargerEmployeByTypeEmploye(typeEmploye: any, elements: any) {
+    return this.httpSrv.post(this.routePrefix + 'charger-employe/' + typeEmploye, elements);
   }
 
-  
+
   findAll(): any {
     this
       .httpSrv
@@ -84,26 +84,29 @@ export class EmployeService extends BamboAbstractService {
   findByCaisseSociale(caissesociale: CaisseSociale) {
     return this.httpSrv.get(this.routePrefix + "caisse-sociale/" + caissesociale.id);
   }
-  sendEmail(id:any,object:any,message:any){
-    const data ={id:id, object: object, message: message};
-    return this.httpSrv.post(this.routePrefix + "send-email" ,data);
+  sendEmail(id: any, object: any, message: any) {
+    const data = { id: id, object: object, message: message };
+    return this.httpSrv.post(this.routePrefix + "send-email", data);
   }
 
-  findByMutuelleSante(membremutuelle:MutuelleSante)
-  {
-    return this.httpSrv.get(this.routePrefix +membremutuelle.id+'/membre-mutuelle-sante');
+  findByMutuelleSante(membremutuelle: MutuelleSante) {
+    return this.httpSrv.get(this.routePrefix + membremutuelle.id + '/membre-mutuelle-sante');
+  }
+
+  globalFilter(criteria: { typeEmployes: TypeEmploye[], structures: Structure[], startDate: string, endDate: string } = { typeEmployes: [], structures: [], startDate: '', endDate: '' }) {
+    return this.httpSrv.post(this.routePrefix + 'global-filter', { criteria });
   }
 
   findByTypeEmployes(typeEmployes: TypeEmploye[]) {
-    return this.httpSrv.post(this.routePrefix + 'many-type-employe', {typeEmployes});
+    return this.httpSrv.post(this.routePrefix + 'many-type-employe', { typeEmployes });
   }
 
   findByManyStructure(structures: Structure[]) {
-    return this.httpSrv.post(this.routePrefix + 'many-structure', {structures});
+    return this.httpSrv.post(this.routePrefix + 'many-structure', { structures });
   }
 
-   findByDateRecrutementRange(startDate: string, endDate: string) {
-     return this.httpSrv.get(this.routePrefix + 'date-recrutement-range/' + startDate + '/' + endDate);
-   }
+  findByDateRecrutementRange(startDate: string, endDate: string) {
+    return this.httpSrv.get(this.routePrefix + 'date-recrutement-range/' + startDate + '/' + endDate);
+  }
 
 }

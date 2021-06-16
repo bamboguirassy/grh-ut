@@ -179,9 +179,9 @@ $employe->setProfession($faker->randomElement($professions));
      */
     public function findByDateRecrutementRange(EntityManagerInterface $entityManager, $startDate, $endDate)
     {
-        if(!isset($startDate) || empty($startDate)) throw new BadRequestHttpException("Vous devez préciser la date de début!");
+        if (!isset($startDate) || empty($startDate)) throw new BadRequestHttpException("Vous devez préciser la date de début!");
 
-        if(!isset($endDate) || empty($endDate)) throw new BadRequestHttpException("Vous devez préciser la date de fin!");
+        if (!isset($endDate) || empty($endDate)) throw new BadRequestHttpException("Vous devez préciser la date de fin!");
 
         return $entityManager->createQuery('
             SELECT e
@@ -395,41 +395,87 @@ $employe->setProfession($faker->randomElement($professions));
     public function sendSingleEmail(Request $request, Swift_Mailer $mailer): array
     {
 
-       $employes_id = Utils::serializeRequestContent($request)['id'];
-       $entityManager = $this->getDoctrine()->getManager();
+        $employes_id = Utils::serializeRequestContent($request)['id'];
+        $entityManager = $this->getDoctrine()->getManager();
         $object = Utils::serializeRequestContent($request)['object'];
         $messaye_body = Utils::serializeRequestContent($request)['message'];
         $result = []; // confirmation link
         foreach ($employes_id as $id) {
             $employe = $entityManager->getRepository(Employe::class)->find($id);
-            if($employe->getEmail()!=NULL){
+            if ($employe->getEmail() != NULL) {
                 $message = (new Swift_Message($object))
-                ->setFrom(Utils::$sender)
-                ->setTo($employe->getEmail())
-                ->setCc($employe->getEmailUniv())
-                ->setBody($messaye_body, 'text/html');
-                array_push($result,  [$employe->getId() => $mailer->send($message)]); 
-            }
-            else{
+                    ->setFrom(Utils::$sender)
+                    ->setTo($employe->getEmail())
+                    ->setCc($employe->getEmailUniv())
+                    ->setBody($messaye_body, 'text/html');
+                array_push($result, [$employe->getId() => $mailer->send($message)]);
+            } else {
                 $message = (new Swift_Message($object))
-                ->setFrom(Utils::$sender)
-                ->setTo($employe->getEmailUniv())
-                ->setBody($messaye_body, 'text/html');
-                array_push($result,  [$employe->getId() => $mailer->send($message)]); 
+                    ->setFrom(Utils::$sender)
+                    ->setTo($employe->getEmailUniv())
+                    ->setBody($messaye_body, 'text/html');
+                array_push($result, [$employe->getId() => $mailer->send($message)]);
             }
 
             array_push($result, [$dest => $mailer->send($message)]); // 0 => failure
 
         }
-          
+
         return $result;
     }
 
     /**
      * @param Request $request
      * @param EntityManagerInterface $entityManager
+     * @Rest\Post(path="/global-filter", name="global_filter")
+     * @Rest\View(StatusCode=200, serializerEnableMaxDepthChecks=true)
+     * @return mixed
+     */
+    public function filterGlobal(Request $request, EntityManagerInterface $entityManager)
+    {
+        ini_set('memory_limit', '512M');
+        $typeEmployes = Utils::serializeRequestContent($request)['criteria']['typeEmployes'];
+        $structures = Utils::serializeRequestContent($request)['criteria']['structures'];
+        $startDate = Utils::serializeRequestContent($request)['criteria']['startDate'];
+        $endDate = Utils::serializeRequestContent($request)['criteria']['endDate'];
+        $dqlQuery = count($typeEmployes)
+            ? 'SELECT DISTINCT e
+               FROM App\Entity\Employe e
+               WHERE e.typeEmploye IN (:typeEmployes)'
+            : 'SELECT DISTINCT e
+               FROM App\Entity\Employe e';
+
+        if(count($structures)) {
+            $dqlQuery .= ' AND e.structure IN (:structures)';
+        }
+
+        if(!empty($startDate) && !empty($endDate)) {
+            $dqlQuery .= ' AND  e.dateRecrutement BETWEEN :startDate AND :endDate';
+        }
+
+        $queryObject = $entityManager->createQuery(trim($dqlQuery));
+        if(str_contains($dqlQuery, ':typeEmployes')) {
+            $queryObject->setParameter('typeEmployes', $typeEmployes);
+        }
+
+        if(str_contains($dqlQuery, ':structures')) {
+            $queryObject->setParameter('structures', $structures);
+        }
+
+        if(str_contains($dqlQuery, ':startDate') && str_contains($dqlQuery, ':endDate')) {
+           $queryObject->setParameter('startDate', $startDate);
+           $queryObject->setParameter('endDate', $endDate);
+        }
+
+        return $queryObject->getResult();
+
+    }
+
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
      * @Rest\Post(path="/many-type-employe", name="find_by_many_type_employe")
-     * @Rest\View(StatusCode=200)
+     * @Rest\View(StatusCode=200, serializerEnableMaxDepthChecks=true)
      * @return mixed
      */
     public function findByManyTypeEmploye(Request $request, EntityManagerInterface $entityManager)
@@ -500,14 +546,14 @@ $employe->setProfession($faker->randomElement($professions));
             if (!isset($rowEmploye->cni) || $rowEmploye->cni == NULL) {
                 throw $this->createNotFoundException("L'ajout échoué pour l'employé " . $rowEmploye->prenoms . " " . $rowEmploye->nom . ", le CNI est obligatoire.");
             }
-        
+
             $employes = $em->createQuery('SELECT e
                     FROM App\Entity\Employe e
                     WHERE e.cni = :cni')
                 ->setParameter('cni', $rowEmploye->cni)
                 ->getResult();
-            if(count($employes)>0){                
-                throw $this->createNotFoundException("Ajout échoué pour l'employé ".$employe->getPrenoms()." ".$employe->getNom().", CNI ".$employe->getCni().".");
+            if (count($employes) > 0) {
+                throw $this->createNotFoundException("Ajout échoué pour l'employé " . $employe->getPrenoms() . " " . $employe->getNom() . ", CNI " . $employe->getCni() . ".");
             } else {
                 $employe->setTypeEmploye($typeEmploye);
                 if (isset($rowEmploye->dateNaissance)) {
@@ -526,13 +572,12 @@ $employe->setProfession($faker->randomElement($professions));
             }
 
         }
-        
+
         try {
-           return $em->flush();
-        }   
-        catch(\Exception $e){
-            throw $this->createNotFoundException("Il y'a une duplication au niveaau des CNI merci!"); 
+            return $em->flush();
+        } catch (\Exception $e) {
+            throw $this->createNotFoundException("Il y'a une duplication au niveaau des CNI merci!");
         }
-        
+
     }
 }
