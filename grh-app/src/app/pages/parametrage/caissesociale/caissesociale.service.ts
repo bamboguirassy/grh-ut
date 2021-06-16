@@ -18,5 +18,9 @@ export class CaisseSocialeService extends BamboAbstractService {
   uploadPhoto(caisseSociale: CaisseSociale, photo: any, fileName: any) {
     return this.httpSrv.put(this.routePrefix + 'upload-photo-caisseSociale/' + caisseSociale.id, { photo, fileName });
   }
+
+  findWithAtLeastOneEmploye() {
+    return this.httpSrv.get(this.routePrefix + 'with-at-least-one-employe');
+  }
   
 }

@@ -13,6 +13,10 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { DatePipe } from '@angular/common';
 import { StructureService } from 'src/app/pages/parametrage/structure/structure.service';
 import { Structure } from 'src/app/pages/parametrage/structure/structure';
+import { CaisseSociale } from 'src/app/pages/parametrage/caissesociale/caissesociale';
+import { CaisseSocialeService } from 'src/app/pages/parametrage/caissesociale/caissesociale.service';
+import { TypeContrat } from 'src/app/pages/parametrage/typecontrat/typecontrat';
+import { TypeContratService } from 'src/app/pages/parametrage/typecontrat/typecontrat.service';
 // import '@ckeditor/ckeditor5-build-classic/build/translations/fr';
 @Component({
   selector: 'app-employe-list',
@@ -30,21 +34,30 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
   };
   selectedEmployes: Employe[];
   selectedStructures: Structure[] = new Array();
+  selectedTypeContrats: TypeContrat[] = [];
   isAllSelected = false;
   isPartialSelection = false;
-  dates = null;
+  recrutementRangeDates = null;
+  priseServiceRangeDates = null;
   structures: Array<Structure> = [];
 
   typeEmployes: TypeEmploye[] = [];
+  caisseSociales: CaisseSociale[] = [];
+  typeContrats: TypeContrat[] = [];
   temp: Employe[] = [];
   selectedIndex = 0;
   isModalVisible: boolean;
   selectedTypeEmployes: TypeEmploye[] = [];
-  selectedRange: Date[] = ['', ''] as any;
+  selectedRecrutementRange: Date[] = ['', ''] as any;
+  selectedPriseServiceRange: Date[] = ['', ''] as any;
+  selectedGenre = '';
+  selectedCaisseSociales: CaisseSociale[] = [];
   constructor(
     private modal: TCModalService,
     public employeSrv: EmployeService,
     public datePipe: DatePipe,
+    public caisseSocialeSrv: CaisseSocialeService,
+    public typeContratSrv: TypeContratService,
     store: Store<IAppState>,
     public structureSrv: StructureService,
     public typeEmployeSrv: TypeEmployeService) {
@@ -68,6 +81,8 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
     super.ngOnInit();
     this.findTypeEmployes();
     this.findStructures();
+    this.findCaisseSociales();
+    this.findTypeContrats();
   }
 
   ngOnDestroy() {
@@ -82,6 +97,17 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
 
   }
 
+  findTypeContrats() {
+    this
+      .typeContratSrv
+      .findWithAtLeastOneEmploye()
+      .subscribe((typeContrats: any) => {
+        this.typeContrats = typeContrats;
+      }, err => {
+        this.typeContratSrv.httpSrv.catchError(err);
+      });
+  }
+
   findStructures() {
     this
       .structureSrv
@@ -93,12 +119,24 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
       });
   }
 
+
+  findCaisseSociales() {
+    this
+      .caisseSocialeSrv
+      .findWithAtLeastOneEmploye()
+      .subscribe((caisseSociales: any) => {
+        this.caisseSociales = caisseSociales;
+      }, err => {
+        this.caisseSocialeSrv.httpSrv.catchError(err);
+      });
+  }
+
   findTypeEmployes() {
     this.typeEmployeSrv.findAll()
       .subscribe((data: any) => {
         this.typeEmployes = data;
         this.selectedTypeEmployes = data;
-        this.filterGlobal([]);
+        this.filterGlobal([], '');
         this.setLoaded();
       }, err => this.typeEmployeSrv.httpSrv.catchError(err));
   }
@@ -193,17 +231,56 @@ export class EmployeListComponent extends BasePageComponent<Employe> implements 
       });
   }*/
 
-  filterGlobal(dates: Date[] = []) {
-    if (dates.length === 2) {
-      this.selectedRange = dates;
+  filterGlobal(data: any, selectionType: string) {
+    switch (selectionType) {
+      case 'typeEmployes':
+        this.selectedTypeEmployes = data;
+        break;
+
+      case 'structure':
+        this.selectedStructures = data;
+        break;
+
+      case 'recrutementDates':
+        this.selectedRecrutementRange = data;
+        break;
+
+      case 'priseServiceDates':
+        this.selectedPriseServiceRange = data;
+        break;
+
+      case 'genre':
+        this.selectedGenre = data;
+        break;
+
+      case 'caisseSociale':
+        this.selectedCaisseSociales = data;
+        break;
+
+      case 'typeContrat':
+        this.selectedTypeContrats = data;
+        break;
+
+      default:
+        break;
     }
+
     this
       .employeSrv
       .globalFilter({
-        typeEmployes: this.selectedTypeEmployes,
-        structures: this.selectedStructures,
-        startDate: this.datePipe.transform(this.selectedRange[0], 'yyyy-MM-dd'),
-        endDate: this.datePipe.transform(this.selectedRange[1], 'yyyy-MM-dd')
+        typeEmployes: this.selectedTypeEmployes.map(e => e.id),
+        structures: this.selectedStructures.map(s => s.id),
+        recrutementDateRange: {
+          startDate: this.datePipe.transform(this.selectedRecrutementRange[0], 'yyyy-MM-dd'),
+          endDate: this.datePipe.transform(this.selectedRecrutementRange[1], 'yyyy-MM-dd')
+        },
+        priseServiceDateRange: {
+          startDate: this.datePipe.transform(this.selectedPriseServiceRange[0], 'yyyy-MM-dd'),
+          endDate: this.datePipe.transform(this.selectedPriseServiceRange[1], 'yyyy-MM-dd')
+        },
+        genre: this.selectedGenre,
+        caisseSociales: this.selectedCaisseSociales.map(cs => cs.id),
+        typeContrats: this.selectedTypeContrats.map(tc => tc.id)
       })
       .subscribe((employes: any) => {
         this.items = employes;

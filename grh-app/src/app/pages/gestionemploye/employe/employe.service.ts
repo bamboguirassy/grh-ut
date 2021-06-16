@@ -9,6 +9,7 @@ import { Employe } from './employe';
 import { CaisseSociale } from '../../parametrage/caissesociale/caissesociale';
 import { data } from 'jquery';
 import { Structure } from '../../parametrage/structure/structure';
+import { EmployeSearchCriteria } from './employe-search-criteria';
 
 @Injectable({
   providedIn: 'root'
@@ -93,7 +94,14 @@ export class EmployeService extends BamboAbstractService {
     return this.httpSrv.get(this.routePrefix + membremutuelle.id + '/membre-mutuelle-sante');
   }
 
-  globalFilter(criteria: { typeEmployes: TypeEmploye[], structures: Structure[], startDate: string, endDate: string } = { typeEmployes: [], structures: [], startDate: '', endDate: '' }) {
+  globalFilter(criteria: EmployeSearchCriteria = {
+    typeEmployes: [],
+    structures: [],
+    recrutementDateRange: { startDate: '', endDate: '' },
+    priseServiceDateRange: { startDate: '', endDate: '' },
+    genre: '', caisseSociales: [],
+    typeContrats: []
+  }) {
     return this.httpSrv.post(this.routePrefix + 'global-filter', { criteria });
   }
 

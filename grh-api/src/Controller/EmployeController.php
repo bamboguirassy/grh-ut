@@ -395,8 +395,8 @@ $employe->setProfession($faker->randomElement($professions));
     public function sendEmail(Request $request, Swift_Mailer $mailer): array
     {
 
-       $employeIds = Utils::serializeRequestContent($request)['id'];
-       $entityManager = $this->getDoctrine()->getManager();
+        $employeIds = Utils::serializeRequestContent($request)['id'];
+        $entityManager = $this->getDoctrine()->getManager();
         $object = Utils::serializeRequestContent($request)['object'];
         $messaye_body = Utils::serializeRequestContent($request)['message'];
         $result = []; 
@@ -434,12 +434,98 @@ $employe->setProfession($faker->randomElement($professions));
                     throw $this->createNotFoundException("L'employé {$employeSendingEmail->getPrenoms()} {$employeSendingEmail->getNom()} avec l'identifiant {$employeSendingEmail->getId()} ne dispose d'aucun email dans le système");
                  }
 
-               
             }// 0 => failure
 
         }
           
         return $result;
+    }
+
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @Rest\Post(path="/global-filter", name="global_filter")
+     * @Rest\View(StatusCode=200, serializerEnableMaxDepthChecks=true)
+     * @return mixed
+     */
+    public function filterGlobal(Request $request, EntityManagerInterface $entityManager)
+    {
+        ini_set('memory_limit', '512M');
+        $typeEmployes = Utils::serializeRequestContent($request)['criteria']['typeEmployes'];
+        $structures = Utils::serializeRequestContent($request)['criteria']['structures'];
+        $caisseSociales = Utils::serializeRequestContent($request)['criteria']['caisseSociales'];
+        $typeContrats = Utils::serializeRequestContent($request)['criteria']['typeContrats'];
+        $recrutementDateRange = Utils::serializeRequestContent($request)['criteria']['recrutementDateRange'];
+        $priseServiceDateRange = Utils::serializeRequestContent($request)['criteria']['priseServiceDateRange'];
+        $genre = Utils::serializeRequestContent($request)['criteria']['genre'];
+        $dqlQuery =
+            count($typeEmployes)
+                ? 'SELECT DISTINCT e
+               FROM App\Entity\Employe e
+               WHERE e.typeEmploye IN (:typeEmployes)'
+                : 'SELECT DISTINCT e
+               FROM App\Entity\Employe e
+               WHERE e.id = e.id';
+
+        if (count($structures))
+            $dqlQuery .= ' AND e.structure IN (:structures) ';
+
+        if (count($caisseSociales))
+            $dqlQuery .= ' AND e.caisseSociale IN (:caisseSociales) ';
+
+        if (preg_match("/^\d{4}-\d{2}-\d{2}$/", $recrutementDateRange['startDate']) && preg_match("/^\d{4}-\d{2}-\d{2}$/", $recrutementDateRange['endDate']))
+            $dqlQuery .= ' AND  e.dateRecrutement BETWEEN :rStartDate AND :rEndDate ';
+
+        if (preg_match("/^\d{4}-\d{2}-\d{2}$/", $priseServiceDateRange['startDate']) && preg_match("/^\d{4}-\d{2}-\d{2}$/", $priseServiceDateRange['endDate']))
+            $dqlQuery .= ' AND  e.datePriseService BETWEEN :pStartDate AND :pEndDate ';
+
+        if (!empty($genre))
+            $dqlQuery .= ' AND e.genre = :genre ';
+
+        if (count($typeContrats))
+            $dqlQuery .= 'AND e IN (
+                SELECT emp
+                FROM App\Entity\Contrat c
+                JOIN c.employe emp
+                WHERE c.typeContrat IN (:typeContrats)
+            )';
+
+
+        $queryObject = $entityManager->createQuery(trim($dqlQuery));
+
+        if (str_contains($dqlQuery, ':typeEmployes'))
+            $queryObject->setParameter('typeEmployes', $typeEmployes);
+
+
+        if (str_contains($dqlQuery, ':structures'))
+            $queryObject->setParameter('structures', $structures);
+
+
+        if (str_contains($dqlQuery, ':caisseSociales'))
+            $queryObject->setParameter('caisseSociales', $caisseSociales);
+
+
+        if (str_contains($dqlQuery, ':rStartDate') && str_contains($dqlQuery, ':rEndDate'))
+            $queryObject
+                ->setParameter('rStartDate', $recrutementDateRange['startDate'])
+                ->setParameter('rEndDate', $recrutementDateRange['endDate']);
+
+
+        if (str_contains($dqlQuery, ':pStartDate') && str_contains($dqlQuery, ':pEndDate'))
+            $queryObject
+                ->setParameter('pStartDate', $priseServiceDateRange['startDate'])
+                ->setParameter('pEndDate', $priseServiceDateRange['endDate']);
+
+
+        if (str_contains($dqlQuery, 'genre'))
+            $queryObject->setParameter('genre', $genre);
+
+
+        if (str_contains($dqlQuery, ':typeContrats'))
+            $queryObject->setParameter('typeContrats', $typeContrats);
+
+        return $queryObject->getResult();
+
     }
 
     /**
@@ -545,10 +631,9 @@ $employe->setProfession($faker->randomElement($professions));
         }
         
         try {
-           return $em->flush();
-        }   
-        catch(\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e){
-            throw $this->createNotFoundException("Il y'a une duplication au niveaau des CNI merci!"); 
+            return $em->flush();
+        } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
+            throw $this->createNotFoundException("Il y'a une duplication au niveaau des CNI merci!");
         }
         
     }
