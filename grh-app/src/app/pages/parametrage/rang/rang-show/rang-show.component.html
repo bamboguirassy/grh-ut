@@ -37,8 +37,6 @@
                                                                                 <tr>
                             <th>Etat</th>
                             <td>
-                                <!-- <span *ngIf="entity?.etat">{{ entity?.etat }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.etat">Indéfinie</tc-badge> -->
                                 <ng-container [ngSwitch]="row?.id !== currentRang?.id && rangSrv.resourceName|editable">
                                     <tc-switcher *ngSwitchCase="true" (valueChanged)="onChange($event, row)" [value]="value">
                                     </tc-switcher>
