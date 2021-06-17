@@ -20,7 +20,7 @@ class StructureController extends AbstractController
 {
     /**
      * @Rest\Get(path="/", name="structure_index")
-     * @Rest\View(StatusCode = 200)
+     * @Rest\View(StatusCode = 200,  serializerEnableMaxDepthChecks=true)
      * @IsGranted("ROLE_STRUCTURE_INDEX")
      */
     public function index(): array
@@ -33,8 +33,22 @@ class StructureController extends AbstractController
     }
 
     /**
-     * @Rest\Get(path="/with-at-least-one-employe", name="find_with_at_least_one_employe")
+     * @Rest\Get(path="/find-organigramme", name="find_organigramme")
      * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_STRUCTURE_INDEX")
+     */
+    public function findOrganigramme(): array
+    {
+        $structures = $this->getDoctrine()
+            ->getRepository(Structure::class)
+            ->findAll();
+
+        return count($structures)?$structures:[];
+    }
+
+    /**
+     * @Rest\Get(path="/with-at-least-one-employe", name="find_with_at_least_one_employe")
+     * @Rest\View(StatusCode = 200,  serializerEnableMaxDepthChecks=true)
      * @IsGranted("ROLE_STRUCTURE_INDEX")
      */
     public function findWithAtLeastOneEmploye(EntityManagerInterface $entityManager): array

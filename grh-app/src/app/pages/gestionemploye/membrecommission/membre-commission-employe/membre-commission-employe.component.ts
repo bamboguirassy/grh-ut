@@ -160,8 +160,6 @@ export class MembreCommissionEmployeComponent
    */
   update() {
     this.prepareUpdate();
-    console.log("ID!:::", this.selectedMembre.id);
-    
     this.membreCommissionSrv.update(this.selectedMembre).subscribe((resp: any) => {
       this.closeEditModal();
       this.findMembresOfCommission();

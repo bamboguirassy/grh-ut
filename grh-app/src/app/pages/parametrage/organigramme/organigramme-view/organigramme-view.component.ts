@@ -72,7 +72,7 @@ export class OrganigrammeViewComponent implements OnInit {
   findStructures() {
     this
       .structureSrv
-      .findAll()
+      .findOrganigramme()
       .pipe(first())
       .subscribe((data: any) => {
         this.structures = data;
@@ -136,7 +136,6 @@ export class OrganigrammeViewComponent implements OnInit {
   }
 
   onCreatedStructureFonction(structureFonctions: StructureFonction[]) {
-    console.log(structureFonctions);
     this.structures.forEach(s => {
       if (s.id === this.selectedStructure.id) {
         s.structureFonctions.concat(structureFonctions);

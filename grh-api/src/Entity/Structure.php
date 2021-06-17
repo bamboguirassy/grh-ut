@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\MaxDepth;
+
 
 /**
  * Structure
@@ -58,6 +60,7 @@ class Structure
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="structure_parente", referencedColumnName="id")
      * })
+     * @MaxDepth(1)
      */
     private $structureParente;
 
@@ -65,11 +68,13 @@ class Structure
 
     /**
      * @ORM\OneToMany(targetEntity=Structure::class, mappedBy="structureParente")
+     * @MaxDepth(0)
      */
     private $children;
 
     /**
      * @ORM\OneToMany(targetEntity=StructureFonction::class, mappedBy="structure")
+     * @MaxDepth(0)
      */
     private $structureFonctions;
 
