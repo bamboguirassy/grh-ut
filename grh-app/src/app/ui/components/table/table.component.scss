@@ -177,7 +177,7 @@ $_shadow: 0 0 10px rgba(#000,.12);
   .table-scrollable{
     overflow-x: auto;
     white-space: nowrap;
-    scrollbar-color:#346bfa;
+    scrollbar-color:#3d84cc;
   }
 
   /* width */
@@ -194,7 +194,7 @@ $_shadow: 0 0 10px rgba(#000,.12);
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #346bfa;
+    background: #3d84cc;
     border-radius: 10px;
   }
 }
