@@ -13,8 +13,9 @@ import { Structure } from '../structure';
 export class StructureListComponent extends BasePageComponent<Structure> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public structureSrv: StructureService) {
+    public structureSrv: StructureService) {
     super(store, structureSrv);
+    this.setLoaded();
 
     this.pageData = {
       title: 'Liste des Structures',
@@ -30,9 +31,17 @@ export class StructureListComponent extends BasePageComponent<Structure> impleme
     };
   }
 
+  findOrganigramme() {
+    this.structureSrv.findOrganigramme()
+      .subscribe((data: any) => {
+        this.items = data;
+        this.handlePostLoad();
+      }, err => this.structureSrv.httpSrv.catchError(err));
+  }
+
   ngOnInit(): void {
     super.ngOnInit();
-    this.findAll();
+    this.findOrganigramme();
   }
 
   ngOnDestroy() {
@@ -40,11 +49,11 @@ export class StructureListComponent extends BasePageComponent<Structure> impleme
   }
 
   handlePostDelete() {
-    this.findAll();
+    this.findOrganigramme();
   }
 
-  handlePostLoad(){
-    this.items = this.items.filter(item=>item.structureParente==null);
+  handlePostLoad() {
+    this.items = this.items.filter(item => item.structureParente == null);
     this.items.forEach(item => {
       this.mapOfExpandedData[item.id] = this.convertTreeToList(item);
     });
