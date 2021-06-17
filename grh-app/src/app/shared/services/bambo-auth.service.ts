@@ -46,7 +46,6 @@ export class BamboAuthService {
           this.currentUserManager.next(data);
           resolve(this.currentUser);
         }, error => {
-          console.log(error);
           this.httpSrv.router.navigate(['public', 'sign-in']);
           resolve(false);
         });
