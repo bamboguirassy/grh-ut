@@ -112,14 +112,14 @@ class FonctionEmployeController extends AbstractController
             ->findBy(['employe'=>$fonctionEmploye->getEmploye(),'etat'=>true]);
             if(count($posteEmployes)) {
                 throw $this->createAccessDeniedException("Cet employé occupe déja la
-                fonction {$posteEmployes[0]->getResponsabilite()->getFonction()->getNom()} au niveau de {$posteEmployes[0]->getResponsabilite()->getStructure()->getNom()}. Si vous souhaitez attribuer cette fonction à cet employé, vous devez mettre fin à la précédente.");
+                fonction {$posteEmployes[0]->getResponsabilite()->getAppelation()} au niveau de {$posteEmployes[0]->getResponsabilite()->getStructure()->getNom()}. Si vous souhaitez attribuer cette fonction à cet employé, vous devez mettre fin à la précédente.");
             }
             // verifier si le poste est occupé par un autre employé
             $posteStructures = $entityManager->getRepository(FonctionEmploye::class)
             ->findBy(['etat'=>true,'responsabilite'=>$fonctionEmploye->getResponsabilite()]);
             if(count($posteStructures)) {
                 throw $this->createAccessDeniedException("L'employé {$posteStructures[0]->getEmploye()->getPrenoms()} {$posteStructures[0]->getEmploye()->getNom()} occupe déja la
-                fonction {$posteStructures[0]->getResponsabilite()->getFonction()->getNom()} au niveau de: {$posteStructures[0]->getResponsabilite()->getStructure()->getNom()}");
+                fonction {$posteStructures[0]->getResponsabilite()->getAppelation()} au niveau de: {$posteStructures[0]->getResponsabilite()->getStructure()->getNom()}");
             }
             // fin verification contraintes
         }

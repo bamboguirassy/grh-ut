@@ -34,7 +34,8 @@ export class FonctionemployeTimelineComponent implements OnInit {
         :'Indefini'} - ${i.etat?'En Cours'
         :`${i.dateFin?`${this.datePipe.transform(`${i.dateFin}`
          , 'dd/MM/yyyy')}`:'En Cours'}`}`,
-        title: i.responsabilite?.rang?.nom,
+        title: i?.responsabilite?.appelation + '(' + i.responsabilite?.rang?.nom + ')',
+        // title: i.responsabilite?.rang?.nom,
         content: i.responsabilite.structure.nom,
         icon: "icofont-business-man-alt-1",
         iconBg: SETTINGS.sidebarBg,
