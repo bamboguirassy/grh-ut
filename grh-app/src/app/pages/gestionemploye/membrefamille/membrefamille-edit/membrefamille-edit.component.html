@@ -1,14 +1,8 @@
-<tc-card *ngIf="entity && membreFamilleSrv.resourceName|editable" [tcGradient]="lightGradient">
-    <form #form="ngForm" novalidate>
-        <tc-card [view]="secondViewBorder" [outline]="true">
-            <div class="actions justify-content-between">
-                <button [outline]="true" type="button" (click)="location.back()" tc-button
-                    beforeIcon="icofont-reply">Retour</button>
-                <button (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button type="button"
-                    view="accent" class="float-right">Rafraichir</button>
-            </div>
-        </tc-card>
-        <tc-card title="Détails" [outline]="true" [view]="secondViewBorder" [tcGradient]="secondGradient">
+<nz-modal nzWidth="70%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Modification'"
+    [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+    <ng-template #modalBody>
+        <app-access-denied *ngIf="!(membreFamilleSrv.resourceName|editable)"></app-access-denied>
+        <form #form="ngForm" novalidate>
             <div class="row">
                 <div class="col-12 col-md-6">
                     <tc-form-group>
@@ -28,16 +22,16 @@
                         <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
                         </tc-input>
                         <tc-form-description>
-                            <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
+                            <app-form-field-validation-message [formField]="nom">
+                            </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>
                 </div>
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>DateNaissance</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.dateNaissance" name="dateNaissance"
-                            id="dateNaissance" #dateNaissance="ngModel">
-                        </tc-input>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateNaissance"
+                            name="dateNaissance" id="dateNaissance" #dateNaissance="ngModel"></nz-date-picker>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="dateNaissance">
                             </app-form-field-validation-message>
@@ -59,22 +53,41 @@
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Genre</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.genre" name="genre" id="genre"
-                            #genre="ngModel">
-                        </tc-input>
+                        <tc-radio [direction]="'horizontal'" required="required" [(ngModel)]="entity.genre" [value]="entity.genre" name="genre"
+                            id="genre" #genre="ngModel">
+                            <tc-radio-option [value]="'Masculin'">Masculin</tc-radio-option>
+                            <tc-radio-option [value]="'Féminin'">Féminin</tc-radio-option>
+                        </tc-radio>
                         <tc-form-description>
-                            <app-form-field-validation-message [formField]="genre"></app-form-field-validation-message>
+                            <app-form-field-validation-message [formField]="genre">
+                            </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6" *ngIf="entity?.genre">
                     <tc-form-group>
-                        <tc-form-label>LienParente</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.lienParente" name="lienParente"
-                            id="lienParente" #lienParente="ngModel">
-                        </tc-input>
+                        <tc-form-label>Lien Parenté</tc-form-label>
+                        <tc-radio required="required" [value]="entity.lienParente" [(ngModel)]="entity.lienParente" name="lienParente"
+                            id="lienParente" #lienParente="ngModel" [direction]="'horizontal'">
+                            <tc-radio-option [hidden]="entity?.genre!='Masculin'" [value]="'époux'">Epoux</tc-radio-option>
+                            <tc-radio-option [hidden]="entity?.genre!='Féminin'" [value]="'épouse'">Epouse
+                            </tc-radio-option>
+                            <tc-radio-option [hidden]="entity?.genre!='Masculin'" [value]="'fils'">Fils</tc-radio-option>
+                            <tc-radio-option [hidden]="entity?.genre!='Féminin'" [value]="'fille'">Fille</tc-radio-option>
+                        </tc-radio>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="lienParente">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6" *ngIf="entity?.lienParente=='époux' || entity?.lienParente=='épouse'">
+                    <tc-form-group>
+                        <tc-form-label>Date du mariage</tc-form-label>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateMariage" name="dateMariage"
+                            id="dateMariage" #dateMariage="ngModel"></nz-date-picker>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="dateMariage">
                             </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>
@@ -82,7 +95,7 @@
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Telephone</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.telephone" name="telephone" id="telephone"
+                        <tc-input [(ngModel)]="entity.telephone" name="telephone" id="telephone"
                             #telephone="ngModel">
                         </tc-input>
                         <tc-form-description>
@@ -92,19 +105,17 @@
                     </tc-form-group>
                 </div>
             </div>
-        </tc-card>
-        <tc-card [view]="secondViewBorder" [outline]="true">
-            <div class="actions">
-                <button [outline]="true" type="button" (click)="location.back()" tc-button view="error"
-                    beforeIcon="icofont-close">Annuler</button>
-                <button type="button" [disabled]="form.invalid" class="float-right" (click)="update()"
-                    beforeIcon="icofont-save" tc-button view="warning">
-                    Mettre à jour
-                </button>
-                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button
-                    type="button" view="success">Rafraichir</button>
-            </div>
-        </tc-card>
-    </form>
-</tc-card>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="actions justify-content-between">
+            <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'"
+                (click)="closeModal()">Fermer</button>
+            <button type="button" class="float-right" (click)="update()" beforeIcon="icofont-save" tc-button
+                view="warning">
+                Mettre à jour
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
 <app-access-denied *ngIf="!(membreFamilleSrv.resourceName|editable)"></app-access-denied>

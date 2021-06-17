@@ -50,6 +50,20 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
+                
+                    <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Etat</tc-form-label>
+                        <tc-switcher [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel"
+                            [bgColor]="['transparent', 'transparent', '#ed5564']"
+                            [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']">
+                        </tc-switcher>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                
             </div>
         </form>
     </ng-template>

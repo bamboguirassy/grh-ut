@@ -32,9 +32,14 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
   currentFonctionEmploye: FonctionEmploye;
   affectation = new Affectation();
   canChooseDateFin = false;
+  appelationEditModel = '';
+  editAppelationState = false;
 
 
-  constructor(store: Store<IAppState>, public employeSrv: EmployeService,
+
+  constructor(
+    store: Store<IAppState>,
+    public employeSrv: EmployeService,
     public fonctionEmployeSrv: FonctionEmployeService,
     public affectationSrv: AffectationService,
     public structureFonctionSrv: StructureFonctionService,
@@ -85,7 +90,7 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
   }
 
   searchEmployes(term: any) {
-    if (term.length) {
+    if (term.length >= 4) {
       this
         .employeSrv
         .realtimeSearch(term)
@@ -94,6 +99,8 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
         }, err => {
           this.employeSrv.httpSrv.catchError(err);
         });
+    } else {
+      this.employes = [];
     }
   }
 
@@ -142,11 +149,11 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
   disableCurrentFonctionEmploye() {
     this.currentFonctionEmploye.etat = false;
     Swal.fire({
-      title: event ? 'Êtes-vous sûr de vouloir activer la fonction de cet employé ?' : 'Êtes-vous sûr de vouloir désactiver la fonction de cet employé ?',
+      title: 'Êtes-vous sûr de vouloir désactiver la fonction de cet employé ?',
       showCancelButton: true,
-      confirmButtonText: event ? 'Activer' : 'Désactiver ?',
+      confirmButtonText: 'Désactiver ?',
       cancelButtonText: 'Annuler',
-      confirmButtonColor: event ? '#68d487' : '#d33',
+      confirmButtonColor: '#d33',
       showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve, reject) => {
@@ -182,6 +189,17 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
     this.findAll();
   }
 
+  editAppelation(){
+    const structureFonction = {...this?.structureFonctionActive};
+    structureFonction.appelation = this.appelationEditModel;
+    this.structureFonctionSrv.update(structureFonction).subscribe(
+      (data: any) => {
+        this.structureFonctionActive = data;
+        this.editAppelationState = false;
+      }, error => this.structureFonctionSrv.httpSrv.catchError(error)
+    );
+  }
+
   assignFunction() {
     this.fonctionEmploye.employe = this.selectedEmploye.id;
     this.fonctionEmploye.responsabilite = this.structureFonctionActive.id;
@@ -215,7 +233,7 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
   executeAffectationTrigger() {
     this.affectation.date = this.fonctionEmploye.datePriseFonction;
     this.affectation.employe = this.selectedEmploye.id;
-    this.affectation.poste = this.structureFonctionActive.fonction.nom;
+    this.affectation.poste = this.structureFonctionActive.rang.nom;
     this.affectation.structure = this.structureFonctionActive.structure.id;
     this.selectedEmploye.structure = this.structureFonctionActive.structure;
     this

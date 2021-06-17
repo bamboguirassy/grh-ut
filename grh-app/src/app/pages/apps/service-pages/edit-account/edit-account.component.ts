@@ -130,9 +130,7 @@ export class PageEditAccountComponent extends BasePageComponent<User> implements
       .subscribe((resp) => {
         this.userSrv.toastr.success('Mot de passe mis à jour avec succès !');
         this.passwordModel = { oldPassword: null, newPassword: null, confirmPassword: null };
-        console.log('resp',resp);
-        
-      }, err => {this.userSrv.httpSrv.catchError(err); console.log(err);
+      }, err => {this.userSrv.httpSrv.catchError(err);
       });
   }
 

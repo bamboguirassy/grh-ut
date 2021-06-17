@@ -39,7 +39,7 @@ export class DiplomeEmployeListComponent implements OnInit {
   }
 
   onCreate(item: DiplomeEmploye) {
-    this.items = [item, ...this.items];
+    this.findByEmploye();
   }
 
   setSelectedDiplome(element: DiplomeEmploye){

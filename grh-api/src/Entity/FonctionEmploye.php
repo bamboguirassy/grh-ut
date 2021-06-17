@@ -46,7 +46,12 @@ class FonctionEmploye
      */
     private $employe;
 
-    
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="interimaire", type="boolean", nullable=true, options={"comment"="true ou false pour savoir si la fonction est intérimaire ou pas"})
+     */
+    private $interimaire;
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -121,6 +126,18 @@ class FonctionEmploye
     public function setResponsabilite(?StructureFonction $responsabilite): self
     {
         $this->responsabilite = $responsabilite;
+
+        return $this;
+    }
+    
+    public function getInterimaire()
+    {
+        return $this->interimaire;
+    }
+
+    public function setInterimaire($interimaire)
+    {
+        $this->interimaire = $interimaire;
 
         return $this;
     }

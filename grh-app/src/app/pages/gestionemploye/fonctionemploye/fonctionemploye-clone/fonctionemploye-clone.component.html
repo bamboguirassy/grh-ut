@@ -2,10 +2,8 @@
     <form #form="ngForm" novalidate>
         <tc-card [outline]="true" [view]="secondViewBorder">
             <div class="actions">
-                <button [outline]="true" type="button" (click)="location.back()" tc-button view="accent"
-                    beforeIcon="icofont-reply">Retour</button>
-                <button class="float-right" (click)="refreshCloneData()" afterIcon="icofont-refresh" tc-button
-                    type="button" view="success">Rafraichir</button>
+                <button [outline]="true" type="button" (click)="location.back()" tc-button view="accent" beforeIcon="icofont-reply">Retour</button>
+                <button class="float-right" (click)="refreshCloneData()" afterIcon="icofont-refresh" tc-button type="button" view="success">Rafraichir</button>
             </div>
         </tc-card>
         <tc-card [outline]="true" title="Détails" [view]="secondViewBorder" [tcGradient]="secondGradient">
@@ -13,8 +11,7 @@
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>DatePriseFonction</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.datePriseFonction" name="datePriseFonction"
-                            id="datePriseFonction" #datePriseFonction="ngModel">
+                        <tc-input required="required" [(ngModel)]="entity.datePriseFonction" name="datePriseFonction" id="datePriseFonction" #datePriseFonction="ngModel">
                         </tc-input>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="datePriseFonction">
@@ -32,18 +29,25 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Intérimaire</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.interimaire" name="interimaire" id="interimaire" #interimaire="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="interimaire"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
             </div>
         </tc-card>
         <tc-card [outline]="true" [view]="secondViewBorder">
             <div class="actions">
-                <button [outline]="true" type="button" (click)="location.back()" tc-button view="error"
-                    beforeIcon="icofont-close">Annuler</button>
-                <button type="button" [disabled]="form.invalid" class="ml-1 float-right" (click)="clone()"
-                    [beforeIcon]="'icofont-save'" tc-button [view]="'warning'">
+                <button [outline]="true" type="button" (click)="location.back()" tc-button view="error" beforeIcon="icofont-close">Annuler</button>
+                <button type="button" [disabled]="form.invalid" class="ml-1 float-right" (click)="clone()" [beforeIcon]="'icofont-save'" tc-button [view]="'warning'">
                     Enregistrer
                 </button>
-                <button class="ml-1 float-right" (click)="refreshCloneData()" afterIcon="icofont-refresh" tc-button
-                    type="button" view="success">Rafraichir</button>
+                <button class="ml-1 float-right" (click)="refreshCloneData()" afterIcon="icofont-refresh" tc-button type="button" view="success">Rafraichir</button>
                 <button class="ml-1 float-right" afterIcon="icofont-eraser" tc-button type="reset">Vider</button>
             </div>
         </tc-card>

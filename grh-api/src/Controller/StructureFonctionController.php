@@ -129,10 +129,12 @@ class StructureFonctionController extends AbstractController
                 SELECT sf
                 FROM App\Entity\StructureFonction sf
                 WHERE sf.etat = :etat
-                AND sf.structure = :structure
+                AND sf.structure = :structure 
+                AND sf != :structureFonction
             ')->setParameters([
                 'etat' => true,
-                'structure' => $structureFonction->getStructure()
+                'structure' => $structureFonction->getStructure(),
+                'structureFonction' => $structureFonction
             ])->getResult();
 
             if(count($structureFonctions)) throw new BadRequestHttpException("Cette structure posséde déja une fonction active.");

@@ -17,6 +17,7 @@ class AffectationType extends AbstractType
             ->add('poste')
             ->add('employe')
             ->add('structure')
+            ->add('etat')
         ;
     }
 

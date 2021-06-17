@@ -1,84 +1,66 @@
 <!-- Modal window -->
 
-<nz-modal nzWidth="70%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Modification'"
-  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
-  <ng-template #modalBody>
-      <form #form="ngForm" novalidate>
-        <div class="row">
-            <div class="col-12 col-md-6">
-              <tc-form-group>
-                <tc-form-label>Structure</tc-form-label>
-                <nz-select (ngModelChange)="findFonctionsByStructure($event)" [required]="true" name="structure" id="structure" #structure="ngModel"
-                  nzPlaceHolder="Selectionner la structure" nzAllowClear nzShowSearch [(ngModel)]="selectedStructure">
-                  <ng-container *ngFor="let structure of structures">
-                    <nz-option [nzValue]="structure" [nzLabel]="structure.nom+' ('+structure.code+')'"></nz-option>
-                  </ng-container>
-                </nz-select>
-                <tc-form-description>
-                  <app-form-field-validation-message [formField]="structure"></app-form-field-validation-message>
-                </tc-form-description>
-              </tc-form-group>
+<nz-modal nzWidth="70%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Modification'" [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+    <ng-template #modalBody>
+        <form #form="ngForm" novalidate>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Rang</tc-form-label>
+                        <div class="form-control">
+                            {{entity?.responsabilite?.rang?.nom}}
+                        </div>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Date Prise Fonction</tc-form-label>
+                        <nz-date-picker [required]="true" [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="entity.datePriseFonction" name="datePriseFonction" id="datePriseFonction" #datePriseFonction="ngModel"></nz-date-picker>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="datePriseFonction"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>En cours ?</tc-form-label>
+                        <tc-switcher [bgColor]="['transparent', 'transparent', '#ed5564']" [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']" [labelColor]="['#000', '#000', '#ed5564']" [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel"></tc-switcher>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Intérimaire ?</tc-form-label>
+                        <tc-switcher [bgColor]="['transparent', 'transparent', '#ed5564']" [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']" [labelColor]="['#000', '#000', '#ed5564']" [(ngModel)]="entity.interimaire" name="interimaire"
+                            id="interimaire" #interimaire="ngModel"></tc-switcher>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="interimaire"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6" *ngIf="(!entity.responsabilite.duree && !entity.etat) || entity.responsabilite.duree>0">
+                    <tc-form-group>
+                        <tc-form-label>Date Fin</tc-form-label>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateFin" name="dateFin" id="dateFin" #dateFin="ngModel"></nz-date-picker>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="dateFin"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
             </div>
-            <div class="col-12 col-md-6">
-              <tc-form-group>
-                <tc-form-label>Fonction</tc-form-label>
-                <nz-select [required]="true" name="fonction" id="fonction" #fonction="ngModel"
-                  nzAllowClear nzShowSearch [(ngModel)]="selectedFonctionId">
-                  <ng-container *ngFor="let fonction of fonctions">
-                    <nz-option *ngIf="fonction.id==entity?.responsabilite?.id || fonction.etat" [nzValue]="fonction.id" [nzLabel]="fonction?.fonction?.nom"></nz-option>
-                  </ng-container>
-                </nz-select>
-                <tc-form-description>
-                  <app-form-field-validation-message [formField]="fonction"></app-form-field-validation-message>
-                </tc-form-description>
-              </tc-form-group>
-            </div>
-            
-            <div class="col-12 col-md-6">
-              <tc-form-group>
-                <tc-form-label>Date Prise Fonction</tc-form-label>
-                <nz-date-picker [required]="true" [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="entity.datePriseFonction"
-                  name="datePriseFonction" id="datePriseFonction" #datePriseFonction="ngModel"></nz-date-picker>
-                <tc-form-description>
-                  <app-form-field-validation-message [formField]="datePriseFonction"></app-form-field-validation-message>
-                </tc-form-description>
-              </tc-form-group>
-            </div>
-            <div class="col-12 col-md-6">
-              <tc-form-group>
-                <tc-form-label>En cours ?</tc-form-label>
-                <tc-switcher [bgColor]="['transparent', 'transparent', '#ed5564']"
-                  [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']"
-                  [labelColor]="['#000', '#000', '#ed5564']" [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel"></tc-switcher>
-                <tc-form-description>
-                  <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
-                </tc-form-description>
-              </tc-form-group>
-            </div>
-            <div class="col-12 col-md-6" [hidden]="entity.etat">
-              <tc-form-group>
-                <tc-form-label>Date Fin</tc-form-label>
-                <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateFin"
-                  name="dateFin" id="dateFin" #dateFin="ngModel"></nz-date-picker>
-                <tc-form-description>
-                  <app-form-field-validation-message [formField]="dateFin"></app-form-field-validation-message>
-                </tc-form-description>
-              </tc-form-group>
-            </div>
-          </div>
-      </form>
-  </ng-template>
+        </form>
+    </ng-template>
 
-  <ng-template #modalFooter>
-    <div class="actions justify-content-between">
-      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'"
-        (click)="closeModal()">Fermer</button>
-      <button type="button"class="float-right" (click)="update()"
-                    beforeIcon="icofont-save" tc-button view="warning">
-                    Mettre à jour
-                </button>
-    </div>
-  </ng-template>
+    <ng-template #modalFooter>
+        <div class="actions justify-content-between">
+            <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" (click)="closeModal()">Fermer</button>
+            <button type="button" class="float-right" (click)="update()" beforeIcon="icofont-save" tc-button view="warning">
+        Mettre à jour
+      </button>
+        </div>
+    </ng-template>
 </nz-modal>
 <!-- end Modal window -->
 <app-access-denied *ngIf="!(fonctionEmployeSrv.resourceName|editable)"></app-access-denied>

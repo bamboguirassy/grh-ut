@@ -9,12 +9,26 @@
   <tc-card [view]="secondViewBorder" [outline]="true">
     <nz-tabset [(nzSelectedIndex)]="selectedIndex" (nzSelectChange)="handleTabChange($event)">
       <nz-tab *ngFor="let typeEmploye of typeEmployes" [nzTitle]="typeEmploye.code">
-        <h3>Liste des Syndicats/Amicales - {{typeEmploye?.nom}} </h3>
+        <h3>Liste des partnaires sociaux - {{typeEmploye?.code}} </h3>
         <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
           <tc-table-col [columnTitle]="'#'" [columnName]="'filepath'">
             <ng-template #tableTDTemplate let-row="row" let-value>
               <i *ngIf="!value" class="icofont-data icofont-2x"></i>
               <tc-avatar *ngIf="value" [src]="value"></tc-avatar>
+            </ng-template>
+          </tc-table-col>
+          <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+            <ng-template #tableTDTemplate let-row="row">
+              <div class="actions">
+                <button *ngIf="syndicatSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+                  [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"
+                  [routerLink]="[row.id,'edit']"></button>
+                <button *ngIf="syndicatSrv.resourceName|deletable" (click)="remove(row)" tc-button
+                  [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
+                  [size]="'sm'"></button>
+                <button *ngIf="syndicatSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"
+                  [view]="'accent'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id]"></button>
+              </div>
             </ng-template>
           </tc-table-col>
           <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
@@ -40,20 +54,6 @@
             <ng-template #tableTDTemplate let-value>
               <span class="nowrap" *ngIf="value">{{ value }} FCFA</span>
               <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-            </ng-template>
-          </tc-table-col>
-          <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-            <ng-template #tableTDTemplate let-row="row">
-              <div class="actions">
-                <button *ngIf="syndicatSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-                  [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"
-                  [routerLink]="[row.id,'edit']"></button>
-                <button *ngIf="syndicatSrv.resourceName|deletable" (click)="remove(row)" tc-button
-                  [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
-                  [size]="'sm'"></button>
-                <button *ngIf="syndicatSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"
-                  [view]="'accent'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id]"></button>
-              </div>
             </ng-template>
           </tc-table-col>
         </tc-table>

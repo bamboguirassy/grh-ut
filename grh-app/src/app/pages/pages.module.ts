@@ -108,10 +108,6 @@ import { DiplomeEditComponent } from './parametrage/diplome/diplome-edit/diplome
 import { DiplomeListComponent } from './parametrage/diplome/diplome-list/diplome-list.component';
 import { DiplomeNewComponent } from './parametrage/diplome/diplome-new/diplome-new.component';
 import { DiplomeShowComponent } from './parametrage/diplome/diplome-show/diplome-show.component';
-import { FonctionEditComponent } from './parametrage/fonction/fonction-edit/fonction-edit.component';
-import { FonctionListComponent } from './parametrage/fonction/fonction-list/fonction-list.component';
-import { FonctionNewComponent } from './parametrage/fonction/fonction-new/fonction-new.component';
-import { FonctionShowComponent } from './parametrage/fonction/fonction-show/fonction-show.component';
 import { GroupEditComponent } from './parametrage/group/group-edit/group-edit.component';
 import { GroupListComponent } from './parametrage/group/group-list/group-list.component';
 import { GroupNewComponent } from './parametrage/group/group-new/group-new.component';
@@ -151,10 +147,6 @@ import { TypeEmployeEditComponent } from './parametrage/typeemploye/typeemploye-
 import { TypeEmployeListComponent } from './parametrage/typeemploye/typeemploye-list/typeemploye-list.component';
 import { TypeEmployeNewComponent } from './parametrage/typeemploye/typeemploye-new/typeemploye-new.component';
 import { TypeEmployeShowComponent } from './parametrage/typeemploye/typeemploye-show/typeemploye-show.component';
-import { TypeEntiteEditComponent } from './parametrage/typeentite/typeentite-edit/typeentite-edit.component';
-import { TypeEntiteListComponent } from './parametrage/typeentite/typeentite-list/typeentite-list.component';
-import { TypeEntiteNewComponent } from './parametrage/typeentite/typeentite-new/typeentite-new.component';
-import { TypeEntiteShowComponent } from './parametrage/typeentite/typeentite-show/typeentite-show.component';
 import { UserEditComponent } from './parametrage/user/user-edit/user-edit.component';
 import { UserListComponent } from './parametrage/user/user-list/user-list.component';
 import { UserNewComponent } from './parametrage/user/user-new/user-new.component';
@@ -197,21 +189,34 @@ import { MembreCommissionListComponent } from './gestionemploye/membrecommission
 import { MembreCommissionEditComponent } from './gestionemploye/membrecommission/membrecommission-edit/membrecommission-edit.component';
 import { MembreCommissionShowComponent } from './gestionemploye/membrecommission/membrecommission-show/membrecommission-show.component';
 import { MembreCommissionNewComponent } from './gestionemploye/membrecommission/membrecommission-new/membrecommission-new.component';
-import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sortie-stats.component';
-import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
-
-
 import { MembreCommissionEmployeComponent } from './gestionemploye/membrecommission/membre-commission-employe/membre-commission-employe.component';
 import { FonctionemployeTimelineComponent } from './gestionemploye/fonctionemploye/fonctionemploye-timeline/fonctionemploye-timeline.component';
 import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/fonction-en-expiration/fonction-en-expiration.component';
+import { PyramideAgeGenreComponent } from './dashboards/pyramide/pyramide-age-genre/pyramide-age-genre.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { MembreCaisseSocialeComponent } from './gestionemploye/employe/membre-caisse-sociale/membre-caisse-sociale.component';
+import { SortieStatsComponent } from './dashboards/recrutement/sortie-stats/sortie-stats.component';
+import { MembreSyndicatAmicalComponent } from './gestionemploye/membresyndicat/membre-syndicat-amical/membre-syndicat-amical.component';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { EmployeImportationComponent } from './gestionemploye/employe/employe-importation/employe-importation.component';
+import { PageResetPasswordComponent } from './apps/sessions/reset-password/reset-password.component';
+import { NzResultModule } from 'ng-zorro-antd/result';
+import { RangListComponent } from './parametrage/rang/rang-list/rang-list.component';
+import { RangEditComponent } from './parametrage/rang/rang-edit/rang-edit.component';
+import { RangShowComponent } from './parametrage/rang/rang-show/rang-show.component';
+import { RangNewComponent } from './parametrage/rang/rang-new/rang-new.component';
+import { TypeemployeStastPersComponent } from './dashboards/typeemploye-per/typeemploye-stast-pers/typeemploye-stast-pers.component';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
+
 
 @NgModule({
   imports: [
+    NzCheckboxModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-
+    CKEditorModule,
     ChartsModule,
     AgmCoreModule.forRoot({
       apiKey: environment.googleMapApiKey
@@ -254,7 +259,9 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
     NgPipesModule,
     NzRadioModule,
     NzIconModule,
-    NzToolTipModule
+    NzToolTipModule,
+    NzResultModule , 
+    NzSwitchModule
 
   ],
   declarations: [
@@ -263,6 +270,7 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
     PageUserProfileComponent,
     PageEditAccountComponent,
     PageSignInComponent,
+    PageResetPasswordComponent,
     PageSignUpComponent,
     PageSettingsComponent,
     Page404Component,
@@ -277,11 +285,6 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
     GroupShowComponent,
     GroupListComponent,
     GroupNewComponent,
-    // typeentite components
-    TypeEntiteListComponent,
-    TypeEntiteEditComponent,
-    TypeEntiteShowComponent,
-    TypeEntiteNewComponent,
     // typecontrat components
     TypeContratListComponent,
     TypeContratEditComponent,
@@ -299,11 +302,7 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
     CaisseSocialeEditComponent,
     CaisseSocialeShowComponent,
     CaisseSocialeNewComponent,
-    // fonction components
-    FonctionListComponent,
-    FonctionEditComponent,
-    FonctionShowComponent,
-    FonctionNewComponent,
+    
     // mutuellesante components
     MutuelleSanteListComponent,
     MutuelleSanteEditComponent,
@@ -345,6 +344,8 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
     AdresseShowComponent,
     AdresseCloneComponent,
     AdresseNewComponent,
+    // membresCaisseSociale components
+    MembreCaisseSocialeComponent,
     // membrefamille components
     MembreFamilleListComponent,
     MembreFamilleEditComponent,
@@ -432,6 +433,12 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
     MembresMutuellesanteComponent,
     DiplomeEmployeTimelineComponent,
 
+    // rang components
+    RangListComponent,
+    RangEditComponent,
+    RangShowComponent,
+    RangNewComponent,
+
     // affectation components
     AffectationListComponent,
     AffectationEditComponent,
@@ -461,7 +468,12 @@ import { FonctionEnExpirationComponent } from './gestionemploye/fonctionemploye/
     MembreCommissionEmployeComponent,
     FonctionemployeTimelineComponent,
     FonctionEnExpirationComponent,
+    MembreSyndicatAmicalComponent,
 
+    PyramideAgeGenreComponent,
+    EmployeImportationComponent,
+    TypeemployeStastPersComponent,
+  
   ],
   exports: [],
   entryComponents: []

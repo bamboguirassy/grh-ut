@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\TypeContrat;
 use App\Form\TypeContratType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,6 +56,26 @@ class TypeContratController extends AbstractController
      */
     public function show(TypeContrat $typeContrat): TypeContrat    {
         return $typeContrat;
+    }
+
+    /**
+     * @Rest\Get(path="/with-at-least-one-employe", name="tc_find_with_at_least_one_employe")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_TYPECONTRAT_INDEX")
+     */
+    public function findWithAtLeastOneEmploye(EntityManagerInterface $entityManager): array
+    {
+        $caisseSociales = $entityManager->createQuery('
+            SELECT DISTINCT tc
+            FROM App\Entity\TypeContrat tc
+            WHERE tc IN (
+                SELECT tcon
+                FROM App\Entity\Contrat c
+                JOIN c.typeContrat tcon
+            )
+        ')->getResult();
+
+        return count($caisseSociales) ? $caisseSociales : [];
     }
 
     

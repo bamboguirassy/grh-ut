@@ -21,14 +21,14 @@ export class SyndicatEditComponent extends BasePageComponent<Syndicat> implement
     public location: Location) {
     super(store, syndicatSrv);
     this.pageData = {
-      title: 'Modification - Syndicat/Amicale',
+      title: 'Modification - Partenaire Social',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des syndicats/amicales',
+          title: 'Liste des partenaires sociaux',
           route: '/' + this.orientation + '/syndicat'
         },
         {

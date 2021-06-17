@@ -13,7 +13,6 @@
           <th>Code</th>
           <th>Nom</th>
           <th>Téléphone</th>
-          <th>Type</th>
           <th>Address</th>
           <th>Actions</th>
         </tr>
@@ -34,11 +33,7 @@
               <td>
                 <span class="nowrap" *ngIf="item.telephone">{{ item.telephone }}</span>
                 <tc-badge view="error" *ngIf="!item.telephone">Indéfinie</tc-badge>
-              </td>
-              <td>
-                <span class="nowrap" *ngIf="item.typeEntite">{{ item.typeEntite?.nom }}</span>
-                <tc-badge view="error" *ngIf="!item.typeEntite">Indéfinie</tc-badge>
-              </td>
+              </td>              
               <td>
                 <span class="nowrap" *ngIf="item.adresse">{{ item.adresse }}</span>
                 <tc-badge view="error" *ngIf="!item.adresse">Indéfinie</tc-badge>

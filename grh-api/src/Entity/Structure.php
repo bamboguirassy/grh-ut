@@ -5,11 +5,13 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\MaxDepth;
+
 
 /**
  * Structure
  *
- * @ORM\Table(name="structure", indexes={@ORM\Index(name="fk_structure_structure1_idx", columns={"structure_parente"}), @ORM\Index(name="fk_structure_typeentite_idx", columns={"type_entite"})})
+ * @ORM\Table(name="structure", indexes={@ORM\Index(name="fk_structure_structure1_idx", columns={"structure_parente"})})
  * @ORM\Entity
  */
 class Structure
@@ -58,26 +60,21 @@ class Structure
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="structure_parente", referencedColumnName="id")
      * })
+     * @MaxDepth(1)
      */
     private $structureParente;
 
-    /**
-     * @var \TypeEntite
-     *
-     * @ORM\ManyToOne(targetEntity="TypeEntite")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="type_entite", referencedColumnName="id")
-     * })
-     */
-    private $typeEntite;
+    
 
     /**
      * @ORM\OneToMany(targetEntity=Structure::class, mappedBy="structureParente")
+     * @MaxDepth(0)
      */
     private $children;
 
     /**
      * @ORM\OneToMany(targetEntity=StructureFonction::class, mappedBy="structure")
+     * @MaxDepth(0)
      */
     private $structureFonctions;
 
@@ -152,17 +149,6 @@ class Structure
         return $this;
     }
 
-    public function getTypeEntite(): ?TypeEntite
-    {
-        return $this->typeEntite;
-    }
-
-    public function setTypeEntite(?TypeEntite $typeEntite): self
-    {
-        $this->typeEntite = $typeEntite;
-
-        return $this;
-    }
 
     /**
      * @return Collection|self[]

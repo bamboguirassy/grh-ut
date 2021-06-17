@@ -46,7 +46,6 @@ export class BamboAuthService {
           this.currentUserManager.next(data);
           resolve(this.currentUser);
         }, error => {
-          console.log(error);
           this.httpSrv.router.navigate(['public', 'sign-in']);
           resolve(false);
         });
@@ -164,9 +163,9 @@ export class BamboAuthService {
             enabled: this.checkListAccess('caissesociale')
           },
           {
-            "title": "Fonctions",
-            "routing": "fonction",
-            enabled: this.checkListAccess('fonction')
+            "title": "Rangs",
+            "routing": "rang",
+            enabled: this.checkListAccess('rang')
           },
           {
             "title": "Structures",
@@ -174,7 +173,7 @@ export class BamboAuthService {
             enabled: this.checkListAccess('structure')
           },
           {
-            title: "Syndicats & Amicales",
+            title: "Partenaires Sociaux",
             routing: "syndicat",
             enabled: this.checkListAccess('syndicat')
           },
@@ -266,4 +265,12 @@ export class BamboAuthService {
     });
     return this.menuItems.filter(menuItem => menuItem.enabled);
   }
+
+  sendPasswordRequest(email: string) {
+    return this.httpSrv.post('auth/public/forgot-password', {email}).pipe(first());
+  }
+
+  createNewPassorwd(token: string, password: string) {
+    return this.httpSrv.post('auth/public/update-password', {password, token}).pipe(first());
+}
 }

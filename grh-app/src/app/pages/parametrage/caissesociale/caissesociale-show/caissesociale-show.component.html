@@ -1,74 +1,52 @@
 <tc-card *ngIf="caisseSocialeSrv.resourceName|showable" [tcGradient]="lightGradient">
-    <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
-        <div class="row">
-            <!--<div class="d-none d-md-block col-md-1">
-               <i class="icofont icofont-data icofont-4x"></i>
-            </div>-->
-            <div class="col-12 col-md-7">
-                <!-- <blockquote class="blockquote">
-                   <p class="mb-0">{{title}}</p>
-                   <footer class="blockquote-footer"> <cite title="Source Title">sous titre</cite></footer>
-                </blockquote>-->
-            </div>
-
-        </div>
-    </tc-card>
     <div class="row">
-        <div class="col-12 col-md-4" style="height:300px;">
+        <div class="col-12 col-md-4" style="height:100px; align-items: center;">
             <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
-                <table class="table">
-                    <tr>
-                        <th>Nom</th>
-                        <td>
-                            <span *ngIf="entity?.nom">{{ entity?.nom }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.nom">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Code</th>
-                        <td>
-                            <span *ngIf="entity?.code">{{ entity?.code }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.code">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Filename</th>
-                        <td>
-                            <span *ngIf="entity?.filename">{{ entity?.filename }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.filename">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Filepath</th>
-                        <td>
-                            <span *ngIf="entity?.filepath">{{ entity?.filepath }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.filepath">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div class="col-12 col-md-10">
-                                <button *ngIf="caisseSocialeSrv.resourceName|editable"
-                                    [routerLink]="['/'+orientation,caisseSocialeSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
-                                    class="float-right ml-1" tc-button view="warning"
-                                    beforeIcon="icofont-edit"></button>
-                                <button (click)="remove(entity)" *ngIf="caisseSocialeSrv.resourceName|deletable"
-                                    tc-button view="error" beforeIcon="icofont-trash"
-                                    class=" float-right ml-1"></button>
-                                <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
-                                    beforeIcon="icofont-refresh"></button>
-                                <button tc-button class="float-right" (click)="location.back()"
-                                    beforeIcon="icofont-reply"></button>
-                            </div>
-                        </td>
-
-                    </tr>
-
-                </table>
+                <div class="row">
+                    <div class="col-12">
+                         <img class="card-img-top" (click)="fileInput.click()" [src]="entity?.filepath ? entity?.filepath:'assets/img/default-profile-picture1.jpg'" alt="Image caisse sociale">
+                         <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
+                   </div>
+                   <div class="col-12">
+                       <table class="table">
+                           <tr>
+                               <th>Nom</th>
+                               <td>
+                                   <span *ngIf="entity?.nom">{{ entity?.nom }}</span>
+                                   <tc-badge view="error" *ngIf="!entity?.nom">Indéfinie</tc-badge>
+                               </td>
+                           </tr>
+                           <tr>
+                               <th>Code</th>
+                               <td>
+                                   <span *ngIf="entity?.code">{{ entity?.code }}</span>
+                                   <tc-badge view="error" *ngIf="!entity?.code">Indéfinie</tc-badge>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td colspan="2">
+                                   <div class="col-12">
+                                       <button *ngIf="caisseSocialeSrv.resourceName|editable"
+                                           [routerLink]="['/'+orientation,caisseSocialeSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+                                           class="float-right ml-1" tc-button view="warning"
+                                           beforeIcon="icofont-edit"></button>
+                                       <button (click)="remove(entity)" *ngIf="caisseSocialeSrv.resourceName|deletable"
+                                           tc-button view="error" beforeIcon="icofont-trash"
+                                           class=" float-right ml-1"></button>
+                                       <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
+                                           beforeIcon="icofont-refresh"></button>
+                                       <button tc-button class="float-right ml-1" (click)="location.back()"
+                                           beforeIcon="icofont-reply"></button>
+                                   </div>
+                               </td>
+                           </tr>
+                       </table>
+                   </div>
+                </div>
             </tc-card>
         </div>
         <div class="col-12 col-md-8">
-            <app-membre-caisse-sociale *ngIf="entity" [caisseSociale]=entity [orientation]=orientation></app-membre-caisse-sociale>
+            <app-membre-caisse-sociale *ngIf="entity" [caisseSociale]="entity" [orientation]="orientation"></app-membre-caisse-sociale>
         </div>
     </div>
 </tc-card>

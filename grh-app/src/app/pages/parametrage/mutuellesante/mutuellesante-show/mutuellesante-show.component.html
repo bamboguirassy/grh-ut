@@ -7,8 +7,11 @@
                 <div class="container-fluid">
 
                     <div class="rounded-circle text-center" style="justify-content: center;" >
-                        <img [src]="entity?.filepath ? entity?.filepath:'assets/img/default-profile-picture1.jpg'"
-                        alt="photo employé" style="min-width: center; width: 100px;">
+                      <img (click)="fileInput.click()"
+                      [src]="entity?.filepath ? entity?.filepath:'assets/img/default-profile-picture1.jpg'"
+                            alt="photo employé" style="min-width: center; width: 100px;">
+                            <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
+                       
                         
                     </div>
                 </div>

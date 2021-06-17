@@ -13,6 +13,8 @@ import { FonctionEmploye } from '../../fonctionemploye/fonctionemploye';
 import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
 import { FormGroup } from '@angular/forms';
 import { SETTINGS } from 'src/environments/settings';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -23,8 +25,12 @@ import { SETTINGS } from 'src/environments/settings';
 export class EmployeShowComponent extends BasePageComponent<Employe> implements OnInit, OnDestroy {
   @ViewChild('modalBody', { static: true }) modalBody: ElementRef<any>;
   @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
-  @ViewChildren('form') form;
   isModalVisible = false;
+  editor = ClassicEditor;
+  public email= {
+      object: '',
+      message: ''
+    };
   entity: Employe;
   employeForm: FormGroup;
   latestFonction: FonctionEmploye;
@@ -71,16 +77,18 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     };
     activatedRoute.params.subscribe(() => {
       this.findEntity(this.activatedRoute.snapshot.params.id);
-      this.isAdresseLoaded = false;
-      this.isFamilleLoaded = false;
-      this.isSyndicatsLoaded = false;
-      this.isCommissionsLoaded = false;
-      this.isDocumentsLoaded = false;
-      this.isFonctionsLoaded = false;
-      this.isGradeLoaded = false;
-      this.isDiplomeLoaded = false;
-      this.isContratLoaded = false;
-      this.isCommissionLoaded = false;
+      setTimeout(() => {
+        this.isAdresseLoaded = false;
+        this.isFamilleLoaded = false;
+        this.isSyndicatsLoaded = false;
+        this.isCommissionsLoaded = false;
+        this.isDocumentsLoaded = false;
+        this.isFonctionsLoaded = false;
+        this.isGradeLoaded = false;
+        this.isDiplomeLoaded = false;
+        this.isContratLoaded = false;
+        this.isCommissionLoaded = false;
+      }, 0);
       this.loadAdressesTab();
       this.loadFamillesTab();
     });
@@ -140,7 +148,6 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
         .subscribe(
           (data: any) => {
             this.entity = data;
-            this.handlePostLoad();
             this.employeSrv.toastr.success('Photo mise à jour !')
           },
           error => this.employeSrv.httpSrv.catchError(error))
@@ -149,53 +156,95 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   }
 
   loadAdressesTab() {
-    this.isAdresseLoaded = true;
+    setTimeout(() => {
+      this.isAdresseLoaded = true;
+    }, 0);
   }
 
   loadFamillesTab() {
-    this.isFamilleLoaded = true;
+    setTimeout(() => {
+      this.isFamilleLoaded = true;
+    }, 0);
   }
 
   loadSyndicatsTab() {
-    this.isSyndicatsLoaded = true;
+    setTimeout(() => {
+      this.isSyndicatsLoaded = true;
+    }, 0);
   }
 
   loadDocumentsTab() {
-    this.isDocumentsLoaded = true;
+    setTimeout(() => {
+      this.isDocumentsLoaded = true;
+    }, 0);
   }
 
   loadFonctionsTab() {
-    this.isFonctionsLoaded = true;
+    setTimeout(() => {
+      this.isFonctionsLoaded = true;
+    }, 0);
   }
 
   loadGradesTab() {
-    this.isGradeLoaded = true;
+    setTimeout(() => {
+      this.isGradeLoaded = true;
+    }, 0);
   }
 
   loadDiplomesTab() {
-    this.isDiplomeLoaded = true;
+    setTimeout(() => {
+      this.isDiplomeLoaded = true;
+    }, 0);
   }
   loadContratsTab() {
-    this.isContratLoaded = true;
+    setTimeout(() => {
+      this.isContratLoaded = true;
+    }, 0);
   }
 
   loadAffectationsTab() {
-    this.isAffectationLoaded = true;
+    setTimeout(() => {
+      this.isAffectationLoaded = true;
+    }, 0);
   }
 
   loadCommissionsTab() {
-    this.isCommissionsLoaded = true;
+    setTimeout(() => {
+      this.isCommissionsLoaded = true;
+    }, 0);
   }
 
  // open modal window
   openModal() {
-    this.isModalVisible = true;
+    setTimeout(() => {
+      this.isModalVisible = true;
+    }, 0);
   }
 
   // close modal window
   closeModal() {
-    this.isModalVisible = false;
+    setTimeout(() => {
+      this.isModalVisible = false;
+    }, 0);
   }
+  sendSingleEmail(){
+    if(this.email.object.length==0 || this.email.message.length==0){
+      this.employeSrv.toastr.error('Verifier vos champs');
+      return;
+    }
+    this.employeSrv.sendEmail([this.entity.id],this.email.object,this.email.message)
+    .subscribe(
+      (data: any) => {
+        this.employeSrv.toastr.success('Email Envoyé avec succès')
+        this.closeModal(); 
+        this.email.object=""
+        this.email.message=""
+      },
+      error => this.employeSrv.httpSrv.catchError(error))
 
+  }
+    
+      
+    
 
 }

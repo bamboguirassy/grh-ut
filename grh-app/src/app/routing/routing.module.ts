@@ -26,7 +26,7 @@ import { gNiveauRoutes } from '../pages/gestiongrade/gniveau/gniveau.routes';
 import { gradeRoutes } from '../pages/gestiongrade/grade/grade.routes';
 import { caisseSocialeRoutes } from '../pages/parametrage/caissesociale/caissesociale.routes';
 import { diplomeRoutes } from '../pages/parametrage/diplome/diplome.routes';
-import { fonctionRoutes } from '../pages/parametrage/fonction/fonction.routes';
+import { rangRoutes } from '../pages/parametrage/rang/rang.routes';
 import { groupRoutes } from '../pages/parametrage/group/group.routes';
 import { mutuelleSanteRoutes } from '../pages/parametrage/mutuellesante/mutuellesante.routes';
 import { organigrammeRoutes } from '../pages/parametrage/organigramme/organigramme.routes';
@@ -37,12 +37,12 @@ import { syndicatRoutes } from '../pages/parametrage/syndicat/syndicat.routes';
 import { typeContratRoutes } from '../pages/parametrage/typecontrat/typecontrat.routes';
 import { typeDocumentRoutes } from '../pages/parametrage/typedocument/typedocument.routes';
 import { typeEmployeRoutes } from '../pages/parametrage/typeemploye/typeemploye.routes';
-import { typeEntiteRoutes } from '../pages/parametrage/typeentite/typeentite.routes';
 import { userRoutes } from '../pages/parametrage/user/user.routes';
 import { TestComponent } from '../pages/tests/test/test.component';
 import { contratRoutes } from '../pages/gestionemploye/contrat/contrat.routes';
 import { commissionRoutes } from '../pages/parametrage/commission/commission.routes';
 import { membreCommissionRoutes } from '../pages/gestionemploye/membrecommission/membrecommission.routes';
+import { PageResetPasswordComponent } from '../pages/apps/sessions/reset-password/reset-password.component';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -54,12 +54,11 @@ const VERTICAL_ROUTES: Routes = [
   userRoutes,
   contratRoutes,
   groupRoutes,
-  typeEntiteRoutes,
   typeContratRoutes,
   typeDocumentRoutes,
   caisseSocialeRoutes,
   mutuelleSanteRoutes,
-  fonctionRoutes,
+  rangRoutes,
   paysRoutes,
   typeEmployeRoutes,
   structureRoutes,
@@ -85,6 +84,8 @@ const VERTICAL_ROUTES: Routes = [
 const PUBLIC_ROUTES: Routes = [
   { path: 'sign-in', component: PageSignInComponent },
   { path: 'sign-up', component: PageSignUpComponent },
+  { path: 'new-password/:token', component: PageResetPasswordComponent },
+  { path: 'new-password/:email/:token', component: PageResetPasswordComponent },
   { path: 'page-404', component: Page404Component },
   { path: 'page-500', component: Page500Component },
   { path: '**', component: Page404Component }

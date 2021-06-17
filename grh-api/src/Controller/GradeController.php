@@ -6,6 +6,7 @@ use App\Entity\GCategorie;
 use App\Entity\GClasse;
 use App\Entity\GNiveau;
 use App\Entity\Grade;
+use App\Entity\Employe;
 use App\Form\GradeType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,7 +44,7 @@ class GradeController extends AbstractController
        $em= $this->getDoctrine()->getManager();
        $grades = $em->createQuery('select'
                . ' g FROM App\Entity\Grade g '
-               . 'JOIN g.classe c WHERE c.typeEmploye=:typeEmploye ')
+               . 'JOIN g.classe c WHERE c.typeEmploye=:typeEmploye order by g.classification asc')
                ->setParameter('typeEmploye',$typeEmploye)
                ->getResult();
                
@@ -117,20 +118,30 @@ class GradeController extends AbstractController
         ->setParameter(4,$selectedEchelonIds)
         ->getResult();
         foreach($dropedGrades as $dropedGrade) {
+            $employes = $entityManager->getRepository(Employe::class)
+                    ->findBy(['indice' => $dropedGrade]);
+            if(count($employes)){
+                throw $this->createNotFoundException("La suppression de l'indice {$dropedGrade->getClassification()} a échoué car des employés y sont déja associés.");
+            }
             $entityManager->remove($dropedGrade);
         }
         // if echelons vide (signifie qu'on supprime tout)
         if(!$selectedEchelonIds) {
             // trouver les grades précédement rattachés dont les echelonIds ne sont pas dans selectedEchelonIds
-        $dropedGrades = $entityManager->createQuery('select g from App\Entity\Grade g 
-        JOIN g.echelon e where g.niveau=?1 and g.classe=?2 and g.categorie=?3')
-        ->setParameter(1,$niveau)
-        ->setParameter(2,$classe)
-        ->setParameter(3,$categorie)
-        ->getResult();
-        foreach($dropedGrades as $dropedGrade) {
-            $entityManager->remove($dropedGrade);
-        }
+            $dropedGrades = $entityManager->createQuery('select g from App\Entity\Grade g 
+            JOIN g.echelon e where g.niveau=?1 and g.classe=?2 and g.categorie=?3')
+            ->setParameter(1,$niveau)
+            ->setParameter(2,$classe)
+            ->setParameter(3,$categorie)
+            ->getResult();
+            foreach($dropedGrades as $dropedGrade) {
+                $employes = $entityManager->getRepository(Employe::class)
+                    ->findBy(['indice' => $dropedGrade]);
+                if(count($employes)>0){
+                    throw $this->createNotFoundException("La suppression de l'indice {$dropedGrade->getClassification()} a échoué car des employés y sont déja associés.");
+                }
+                $entityManager->remove($dropedGrade);
+            }
         }
         $entityManager->flush();
 

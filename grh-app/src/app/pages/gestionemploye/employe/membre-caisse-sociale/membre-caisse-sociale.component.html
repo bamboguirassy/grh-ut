@@ -1,12 +1,12 @@
 <tc-card [outline]="true">
-  <div class="card-header">
-   <h4> Membres du caisse sociale {{caisseSociale.code}}</h4>
+  <div class="card-header mb-1">
+   <h4> Membres caisse sociale {{caisseSociale.code}}</h4>
   </div>
   <div style="overflow-x:auto; width:100%; height:300px;">
     <tc-table   [itemsPerPage]="15" [rows]="employes" [hovered]="true"  [pagination]="true" [search]="true">
       <tc-table-col [columnTitle]="'Photo'" [columnName]="'filepath'">
           <ng-template #tableTDTemplate let-row="row" let-value>
-              <a [routerLink]="[row.id]" routerLinkActive="router-link-active">
+              <a [routerLink]="['/',orientation,employeSrv.getRoutePrefixWithoutSlash(),row?.id]" routerLinkActive="router-link-active">
                   <i *ngIf="!value" class="icofont-data icofont-2x"></i>
                   <tc-avatar *ngIf="value" [src]="value"></tc-avatar>
               </a>
