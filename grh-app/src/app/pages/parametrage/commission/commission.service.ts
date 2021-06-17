@@ -17,10 +17,11 @@ export class CommissionService extends BamboAbstractService {
   membresCommission(){
     return this.httpSrv.get("membrecommission").subscribe({
       next: data => {
-        console.log("MEMBRES COMMISSIONS: ", data);
+        // console.log("MEMBRES COMMISSIONS: ", data);
       },
       error: errors => {
-        console.error("MEMBRES COMMISSIONS: ", errors);
+        this.httpSrv.catchError(errors);
+        // console.error("MEMBRES COMMISSIONS: ", errors);
       },
     })
   }

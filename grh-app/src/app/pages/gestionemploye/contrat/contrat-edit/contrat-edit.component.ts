@@ -148,7 +148,6 @@ export class ContratEditComponent implements OnInit, OnDestroy {
       this.entity.dateFinPrevue = null;
     }
     this.entity.dateFinPrevue = this.datePipe.transform(this.entity.dateFinPrevue, 'yyyy-MM-dd');
-    console.log(this.entity.dateFinPrevue);
 
   }
 }

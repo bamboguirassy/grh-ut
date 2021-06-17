@@ -18,7 +18,7 @@
             <tc-card class="col-6" [view]="secondViewBorder" [outline]="true">
                 <div class="row d-flex justify-content-center">
 
-                    <div class="col-6">
+                    <div class="col-12">
                         <nz-select nzMode="tags" nzAllowClear nzShowSearch style="width: 100%;"
                             (ngModelChange)="filterGlobal($event, 'typeEmployes')" name="typeEmployes"
                             nzPlaceHolder="Selectionner le(s) type(s) d'employé" [(ngModel)]="selectedTypeEmployes">
@@ -30,7 +30,7 @@
                         <small>Selectionner le(s) type(s) d'employé</small>
                     </div>
 
-                    <div class="col-6">
+                    <div class="col-12">
                         <nz-select nzMode="tags" nzAllowClear nzShowSearch style="width: 100%;"
                             (ngModelChange)="filterGlobal($event, 'typeContrat')" name="typeContrats"
                             nzPlaceHolder="Selectionner le(s) type(s) de contrat(s)" [(ngModel)]="selectedTypeContrats">
@@ -74,8 +74,8 @@
             </tc-card>
 
             <tc-card class="col-5" [view]="secondViewBorder" [outline]="true">
-                <div class="row">
-                    <div class="col-6">
+                <div class="row d-flex justify-content-between">
+                    <div class="col-12">
                         <nz-select nzMode="tags" nzAllowClear nzShowSearch style="width: 100%;"
                             (ngModelChange)="filterGlobal($event, 'structure')" name="structures"
                             nzPlaceHolder="Selectionner le(s) structure(s)" [(ngModel)]="selectedStructures">
@@ -87,7 +87,7 @@
                         <small>Selectionner le(s) structure(s)</small>
                     </div>
 
-                    <div class="col-6">
+                    <div class="col-12">
                         <nz-range-picker [(ngModel)]="recrutementRangeDates" [nzFormat]="'dd/MM/yyyy'"
                             (ngModelChange)="filterGlobal($event, 'recrutementDates')"></nz-range-picker>
                         <small>Selectionner une intervalle de date de recrutement</small> &nbsp;
@@ -100,9 +100,6 @@
                     </div>
                 </div>
             </tc-card>
-
-
-
         </div>
     </tc-card>
     <tc-card [view]="secondViewBorder" [outline]="true">

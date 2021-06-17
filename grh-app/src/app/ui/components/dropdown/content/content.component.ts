@@ -99,7 +99,7 @@ export class TCDropdownContentComponent implements OnInit, DoCheck {
 	}
 	
 	public eventHandler(keycode: number) {
-		console.log('button clicked');
+		// console.log('button clicked');
 	}
 
   // show dropdown content
