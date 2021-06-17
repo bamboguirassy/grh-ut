@@ -77,16 +77,18 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     };
     activatedRoute.params.subscribe(() => {
       this.findEntity(this.activatedRoute.snapshot.params.id);
-      this.isAdresseLoaded = false;
-      this.isFamilleLoaded = false;
-      this.isSyndicatsLoaded = false;
-      this.isCommissionsLoaded = false;
-      this.isDocumentsLoaded = false;
-      this.isFonctionsLoaded = false;
-      this.isGradeLoaded = false;
-      this.isDiplomeLoaded = false;
-      this.isContratLoaded = false;
-      this.isCommissionLoaded = false;
+      setTimeout(() => {
+        this.isAdresseLoaded = false;
+        this.isFamilleLoaded = false;
+        this.isSyndicatsLoaded = false;
+        this.isCommissionsLoaded = false;
+        this.isDocumentsLoaded = false;
+        this.isFonctionsLoaded = false;
+        this.isGradeLoaded = false;
+        this.isDiplomeLoaded = false;
+        this.isContratLoaded = false;
+        this.isCommissionLoaded = false;
+      }, 0);
       this.loadAdressesTab();
       this.loadFamillesTab();
     });
@@ -154,52 +156,76 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
   }
 
   loadAdressesTab() {
-    this.isAdresseLoaded = true;
+    setTimeout(() => {
+      this.isAdresseLoaded = true;
+    }, 0);
   }
 
   loadFamillesTab() {
-    this.isFamilleLoaded = true;
+    setTimeout(() => {
+      this.isFamilleLoaded = true;
+    }, 0);
   }
 
   loadSyndicatsTab() {
-    this.isSyndicatsLoaded = true;
+    setTimeout(() => {
+      this.isSyndicatsLoaded = true;
+    }, 0);
   }
 
   loadDocumentsTab() {
-    this.isDocumentsLoaded = true;
+    setTimeout(() => {
+      this.isDocumentsLoaded = true;
+    }, 0);
   }
 
   loadFonctionsTab() {
-    this.isFonctionsLoaded = true;
+    setTimeout(() => {
+      this.isFonctionsLoaded = true;
+    }, 0);
   }
 
   loadGradesTab() {
-    this.isGradeLoaded = true;
+    setTimeout(() => {
+      this.isGradeLoaded = true;
+    }, 0);
   }
 
   loadDiplomesTab() {
-    this.isDiplomeLoaded = true;
+    setTimeout(() => {
+      this.isDiplomeLoaded = true;
+    }, 0);
   }
   loadContratsTab() {
-    this.isContratLoaded = true;
+    setTimeout(() => {
+      this.isContratLoaded = true;
+    }, 0);
   }
 
   loadAffectationsTab() {
-    this.isAffectationLoaded = true;
+    setTimeout(() => {
+      this.isAffectationLoaded = true;
+    }, 0);
   }
 
   loadCommissionsTab() {
-    this.isCommissionsLoaded = true;
+    setTimeout(() => {
+      this.isCommissionsLoaded = true;
+    }, 0);
   }
 
  // open modal window
   openModal() {
-    this.isModalVisible = true;
+    setTimeout(() => {
+      this.isModalVisible = true;
+    }, 0);
   }
 
   // close modal window
   closeModal() {
-    this.isModalVisible = false;
+    setTimeout(() => {
+      this.isModalVisible = false;
+    }, 0);
   }
   sendSingleEmail(){
     if(this.email.object.length==0 || this.email.message.length==0){
