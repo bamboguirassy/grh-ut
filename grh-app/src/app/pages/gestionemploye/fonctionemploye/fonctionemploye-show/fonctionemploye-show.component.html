@@ -11,13 +11,9 @@
                 </blockquote>
             </div>
             <div class="col-12 col-md-4">
-                <button *ngIf="fonctionEmployeSrv.resourceName|editable"
-                    [routerLink]="['/'+orientation,fonctionEmployeSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
-                    class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
-                <button (click)="remove(entity)" *ngIf="fonctionEmployeSrv.resourceName|deletable" tc-button
-                    view="error" beforeIcon="icofont-trash" class=" float-right ml-1"></button>
-                <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
-                    beforeIcon="icofont-refresh"></button>
+                <button *ngIf="fonctionEmployeSrv.resourceName|editable" [routerLink]="['/'+orientation,fonctionEmployeSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']" class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
+                <button (click)="remove(entity)" *ngIf="fonctionEmployeSrv.resourceName|deletable" tc-button view="error" beforeIcon="icofont-trash" class=" float-right ml-1"></button>
+                <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent" beforeIcon="icofont-refresh"></button>
                 <button tc-button class="float-right" (click)="location.back()" beforeIcon="icofont-reply"></button>
             </div>
         </div>
@@ -36,8 +32,17 @@
                     <tr>
                         <th>Etat</th>
                         <td>
-                            <span *ngIf="entity?.etat">{{ entity?.etat }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.etat">Indéfinie</tc-badge>
+                            <!-- <span *ngIf="entity?.etat">{{ entity?.etat }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.etat">Indéfinie</tc-badge> -->
+                            <tc-badge view="success" *ngIf="entity?.etat"><span class="nowrap">En cours</span></tc-badge>
+                            <tc-badge view="error" *ngIf="!entity?.etat">Expirée</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Intérimaire</th>
+                        <td>
+                            <tc-badge view="success" [outline]="true" *ngIf="entity?.interimaire"><span class="nowrap">Oui</span></tc-badge>
+                            <tc-badge view="error" [outline]="true" *ngIf="!entity?.interimaire">Non</tc-badge>
                         </td>
                     </tr>
                 </table>
