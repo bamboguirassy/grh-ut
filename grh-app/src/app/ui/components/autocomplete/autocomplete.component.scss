@@ -28,7 +28,7 @@ $_list-shadow: $shadow;
 	.autocomplete-list {
 		display: none;
 		position: relative;
-		z-index: 900;
+		z-index: 99999;
 
     &.opened {
       display: block;
@@ -48,7 +48,7 @@ $_list-shadow: $shadow;
       position: absolute;
       top: 0;
       width: 100%;
-      z-index: 900;
+      z-index: 99998;
 
 			.list-li {
         box-shadow: 0 1px 0 rgba(#000,.05);
