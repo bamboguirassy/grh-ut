@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChi
 import { TypeContratService } from '../typecontrat.service';
 import { TypeContrat } from '../typecontrat';
 import { Router } from '@angular/router';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-typecontrat-new',
@@ -16,6 +17,8 @@ export class TypeContratNewComponent implements OnInit {
   entity: TypeContrat;
   @Output() creation: EventEmitter<TypeContrat> = new EventEmitter();
   isModalVisible = false;
+  
+  editor = ClassicEditor;
 
   constructor(public typeContratSrv: TypeContratService,
     public router: Router) {

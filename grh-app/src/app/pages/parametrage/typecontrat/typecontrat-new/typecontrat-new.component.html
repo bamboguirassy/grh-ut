@@ -30,6 +30,17 @@
             </tc-form-description>
           </tc-form-group>
         </div>
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Description</tc-form-label>
+            <ckeditor id="description" name="description" #description="ngModel"
+               [(ngModel)]="entity.description"  [editor]="editor"  class="ckeditor-col-container clearfix">
+               </ckeditor>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="description"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
       </div>
     </form>
   </ng-template>

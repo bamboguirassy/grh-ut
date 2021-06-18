@@ -35,6 +35,11 @@ class TypeContrat
      */
     private $code;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +65,18 @@ class TypeContrat
     public function setCode(string $code): self
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
