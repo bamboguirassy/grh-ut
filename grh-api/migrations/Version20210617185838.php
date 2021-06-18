@@ -31,8 +31,7 @@ final class Version20210617185838 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE membre_syndicat CHANGE etat etat TINYINT(1) DEFAULT NULL COMMENT \'true si c\'\'est le syndicat actuel du travailleur
-                un employé peut être dans plusieurs syndicats\'');
+        
         $this->addSql('ALTER TABLE type_document DROP description');
     }
 }
