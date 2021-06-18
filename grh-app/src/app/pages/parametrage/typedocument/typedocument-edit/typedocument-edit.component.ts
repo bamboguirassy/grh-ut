@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { BasePageComponent } from 'src/app/pages/base-page';
 import { Location } from '@angular/common';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-typedocument-edit',
@@ -14,6 +15,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./typedocument-edit.component.scss']
 })
 export class TypeDocumentEditComponent extends BasePageComponent<TypeDocument> implements OnInit, OnDestroy {
+  editor = ClassicEditor;
 
   constructor(store: Store<IAppState>,
               public typeDocumentSrv: TypeDocumentService,
