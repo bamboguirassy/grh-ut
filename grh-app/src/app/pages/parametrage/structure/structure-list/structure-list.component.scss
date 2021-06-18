@@ -182,4 +182,9 @@ $_shadow: 0 0 10px rgba(#000,.12);
       }
     }
   }
+
+  /* width */
+  ::-webkit-scrollbar {
+    height: 8px;
+  }
 }
