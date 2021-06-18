@@ -138,11 +138,6 @@ export class BamboAuthService {
             enabled: this.checkListAccess('typedocument')
           },
           {
-            "title": "Types Entité",
-            "routing": "typeentite",
-            enabled: this.checkListAccess('typeentite')
-          },
-          {
             "title": "Types Employé",
             "routing": "typeemploye",
             enabled: this.checkListAccess('typeemploye')
