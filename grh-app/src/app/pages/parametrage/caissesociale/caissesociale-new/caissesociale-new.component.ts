@@ -32,6 +32,7 @@ export class CaisseSocialeNewComponent implements OnInit {
     this.entity.filepath = this.fileModel.fileContent;
     this.caisseSocialeSrv.create(this.entity)
       .subscribe((data: any) => {
+        this.currentAvatar = null;
         this.closeModal();
         this.creation.emit(data);
         this.entity = new CaisseSociale();
