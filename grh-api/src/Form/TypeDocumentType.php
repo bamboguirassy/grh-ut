@@ -14,6 +14,7 @@ class TypeDocumentType extends AbstractType
         $builder
             ->add('nom')
             ->add('dureeArchivage')
+            ->add('description')
         ;
     }
 

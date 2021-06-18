@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChi
 import { TypeDocumentService } from '../typedocument.service';
 import { TypeDocument } from '../typedocument';
 import { Router } from '@angular/router';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-typedocument-new',
@@ -16,6 +17,7 @@ export class TypeDocumentNewComponent implements OnInit {
   entity: TypeDocument;
   @Output() creation: EventEmitter<TypeDocument> = new EventEmitter();
   isModalVisible = false;
+  editor = ClassicEditor;
 
   constructor(public typeDocumentSrv: TypeDocumentService,
     public router: Router) {
