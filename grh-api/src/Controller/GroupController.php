@@ -139,7 +139,6 @@ class GroupController extends AbstractController {
             new AccessGroup("Paramétrage Générale", [
                 new AccessModel('GROUP', "Groupe d'utilisateur"),
                 new AccessModel('USER', "Utilisateur"),
-                new AccessModel('TYPEENTITE', "Type entité"),
                 new AccessModel('TYPEDOCUMENT', "Type de documents"),
                 new AccessModel('TYPECONTRAT', "Type de contrats"),
                 new AccessModel('RANG', "Rang"),

@@ -14,6 +14,7 @@ class TypeContratType extends AbstractType
         $builder
             ->add('nom')
             ->add('code')
+            ->add('description')
         ;
     }
 

@@ -3,4 +3,5 @@ import { BamboAbstractObject } from './../../../shared/classes/bambo-abstract-ob
 export class TypeContrat extends BamboAbstractObject {
     nom: string;
     code: string;
+    description: string;
 }

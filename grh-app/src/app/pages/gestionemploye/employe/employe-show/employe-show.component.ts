@@ -14,7 +14,6 @@ import { BamboAuthService } from 'src/app/shared/services/bambo-auth.service';
 import { FormGroup } from '@angular/forms';
 import { SETTINGS } from 'src/environments/settings';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { HttpClient } from '@angular/common/http';
 
 
 @Component({

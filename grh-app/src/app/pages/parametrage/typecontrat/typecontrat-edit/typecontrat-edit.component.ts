@@ -2,11 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TypeContrat } from '../typecontrat';
 import { TypeContratService } from '../typecontrat.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { BasePageComponent } from 'src/app/pages/base-page';
 import { Location } from '@angular/common';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 
 @Component({
   selector: 'app-typecontrat-edit',
@@ -14,6 +15,8 @@ import { Location } from '@angular/common';
   styleUrls: ['./typecontrat-edit.component.scss']
 })
 export class TypeContratEditComponent extends BasePageComponent<TypeContrat> implements OnInit, OnDestroy {
+
+  editor = ClassicEditor;
 
   constructor(store: Store<IAppState>,
               public typeContratSrv: TypeContratService,

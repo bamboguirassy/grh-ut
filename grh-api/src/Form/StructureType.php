@@ -17,7 +17,7 @@ class StructureType extends AbstractType
             ->add('adresse')
             ->add('telephone')
             ->add('structureParente')
-            ->add('typeEntite')
+            ->add('etat')
         ;
     }
 

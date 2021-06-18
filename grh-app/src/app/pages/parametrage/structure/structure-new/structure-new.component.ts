@@ -23,6 +23,7 @@ export class StructureNewComponent implements OnInit {
     public router: Router
     ) {
     this.entity = new Structure();
+    this.entity.etat = true;
   }
 
   ngOnInit(): void {
@@ -38,6 +39,7 @@ export class StructureNewComponent implements OnInit {
         this.closeModal();
         this.creation.emit(data);
         this.entity = new Structure();
+        this.entity.etat = true;
         this.findStructureParentes();
         this.selectedStructureParente = null;
       }, error => this.structureSrv.httpSrv.catchError(error));

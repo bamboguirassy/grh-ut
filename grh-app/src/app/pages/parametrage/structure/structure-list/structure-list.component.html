@@ -2,7 +2,7 @@
   <tc-card [view]="secondViewBorder" [outline]="true">
     <div class="row">
       <div class="col-12">
-        <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
+        <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findOrganigramme()">Rafraichir</button>
       </div>
     </div>
   </tc-card>
@@ -10,20 +10,33 @@
     <nz-table #expandTable [nzData]="items" class="table-box">
       <thead>
         <tr>
+          <th>Actions</th>
           <th>Code</th>
           <th>Nom</th>
           <th>Téléphone</th>
-          <th>Address</th>
-          <th>Actions</th>
+          <th>Adresse</th>
+          <th>Etat</th>
         </tr>
       </thead>
       <tbody>
         <ng-container *ngFor="let data of expandTable.data">
           <ng-container *ngFor="let item of mapOfExpandedData[data.id]">
             <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
+              <td>
+                <div class="actions">
+                  <button *ngIf="structureSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+                    [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"
+                    [routerLink]="[item.id,'edit']"></button>
+                  <button *ngIf="structureSrv.resourceName|deletable" (click)="remove(item)" tc-button
+                    [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
+                    [size]="'sm'"></button>
+                  <button *ngIf="structureSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"
+                    [view]="'accent'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[item.id]"></button>
+                </div>
+              </td>
               <td style="white-space: nowrap;" [nzIndentSize]="item.level! * 20" [nzShowExpand]="!!item.children" [(nzExpand)]="item.expand"
                 (nzExpandChange)="collapse(mapOfExpandedData[data.id], item, $event)">
-                <span class="nowrap" *ngIf="item.nom">{{ item.nom }}</span>
+                <span [title]="item.nom" class="nowrap" *ngIf="item.nom">{{ item.nom }}</span>
                 <tc-badge view="error" *ngIf="!item.nom">Indéfinie</tc-badge>
               </td>
               <td>
@@ -39,16 +52,7 @@
                 <tc-badge view="error" *ngIf="!item.adresse">Indéfinie</tc-badge>
               </td>
               <td>
-                <div class="actions">
-                  <button *ngIf="structureSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-                    [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"
-                    [routerLink]="[item.id,'edit']"></button>
-                  <button *ngIf="structureSrv.resourceName|deletable" (click)="remove(item)" tc-button
-                    [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
-                    [size]="'sm'"></button>
-                  <button *ngIf="structureSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"
-                    [view]="'accent'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[item.id]"></button>
-                </div>
+                <nz-switch [nzDisabled]="true" [(ngModel)]="item.etat"></nz-switch>
               </td>
             </tr>
           </ng-container>
@@ -56,58 +60,6 @@
       </tbody>
     </nz-table>
   </div>
-
-  <!-- <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-    <tc-table-col [columnTitle]="'#'" [columnName]="'#'">
-      <ng-template #tableTDTemplate let-row="row">
-        <i class="icofont-building icofont-2x"></i>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Code'" [columnName]="'code'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Type'" [columnName]="'typeEntite'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value?.nom }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Téléphone'" [columnName]="'telephone'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Adresse'" [columnName]="'adresse'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-      <ng-template #tableTDTemplate let-row="row">
-        <div class="actions">
-          <button *ngIf="structureSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-          <button *ngIf="structureSrv.resourceName|clonable" [outline]="true" tc-button [afterIcon]="'icofont-copy'"
-            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'clone']"></button>
-          <button *ngIf="structureSrv.resourceName|deletable" (click)="remove(row)" tc-button
-            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-          <button *ngIf="structureSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"
-            [view]="'accent'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id]"></button>
-        </div>
-      </ng-template>
-    </tc-table-col>
-  </tc-table> -->
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
   <app-structure-new (creation)="onCreate($event)"></app-structure-new>
 </tc-card>

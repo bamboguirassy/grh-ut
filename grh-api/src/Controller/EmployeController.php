@@ -129,8 +129,9 @@ $employe->setProfession($faker->randomElement($professions));
         $employe->setDateNaissance(new \DateTime($reqData->dateNaissance));
 
 
+        $scheme = $request->getScheme();
+        $host = $request->getHttpHost();
         if ($employe->getFilepath()) {
-            $scheme = $request->getScheme();
             file_put_contents($employe->getFilename(), base64_decode($employe->getFilepath()));
             $file = new \Symfony\Component\HttpFoundation\File\File($employe->getFilename());
             $authorizedExtensions = ['jpeg', 'jpg', 'png'];

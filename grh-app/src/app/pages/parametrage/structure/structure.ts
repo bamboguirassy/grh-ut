@@ -9,4 +9,5 @@ export class Structure extends BamboAbstractObject {
     structureParente: Structure;
     structureFonctions: StructureFonction[];
     children: Structure[];
+    etat: boolean;
 }
