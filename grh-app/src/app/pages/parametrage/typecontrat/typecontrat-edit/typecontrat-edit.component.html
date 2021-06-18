@@ -33,7 +33,7 @@
                 <div class="col-12">
                   <tc-form-group>
                     <tc-form-label>Description</tc-form-label>
-                    <ckeditor id="description" name="description" #description="ngModel"
+                    <ckeditor [data]="entity.description" id="description" name="description" #description="ngModel"
                        [(ngModel)]="entity.description"  [editor]="editor"  class="ckeditor-col-container clearfix">
                        </ckeditor>
                     <tc-form-description>
