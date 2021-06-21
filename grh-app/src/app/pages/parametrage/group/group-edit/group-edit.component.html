@@ -2,10 +2,14 @@
     <form #form="ngForm" novalidate>
         <tc-card [view]="secondViewBorder" [outline]="true">
             <div class="actions justify-content-between">
-                <button [outline]="true" type="button" (click)="location.back()" tc-button
-                    beforeIcon="icofont-reply">Retour</button>
-                <button (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button type="button"
-                    view="success" class="float-right">Rafraichir</button>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                            <button [outline]="true" type="button" (click)="location.back()" tc-button
+                            beforeIcon="icofont-reply">Retour</button>
+                            <button (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button type="button"
+                            view="success" class="float-right">Rafraichir</button>
+                    </div>
+                </div>
             </div>
         </tc-card>
         <tc-card title="Détails" [view]="secondViewBorder" [outline]="true" [tcGradient]="secondGradient">
@@ -37,7 +41,7 @@
                 <div class="col-12">
                     <div class="row">
                         <div class="col-lg-6" *ngFor="let accessGroup of accessGroups">
-                            <table class="table">
+                            <table class="table table-responsive-sm">
                                 <thead>
                                     <tr>
                                         <th colspan="8" class="text-center">
