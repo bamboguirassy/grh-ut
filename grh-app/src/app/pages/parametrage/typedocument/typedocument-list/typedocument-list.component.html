@@ -38,7 +38,7 @@
           <span class="nowrap" *ngIf="row.dureeArchivage">{{ row?.dureeArchivage }} an(s)  </span>
           <tc-badge view="error" *ngIf="!row.dureeArchivage">Indéfinie</tc-badge>
           <i (click)="enabledEdit(row)" class="icofont-ui-edit"
-                        *ngIf="typeDocumentSrv.resourceName|creable"></i>
+            *ngIf="typeDocumentSrv.resourceName | editable"></i>
         </ng-container>
         <ng-container *ngIf="row.editEnabled">
             <tc-input required="required" [(ngModel)]="row.dureeArchivage" name="dureeArchivage" id="dureeArchivage"
