@@ -45,4 +45,19 @@ export class TypeDocumentListComponent extends BasePageComponent<TypeDocument> i
 
   handlePostLoad(){}
 
+  enabledEdit(item) {
+    item.editEnabled = true;
+  }
+
+  disableEdit(item) {
+    item.editEnabled = false;
+  }
+
+  updateDureeArchivage(item) {
+    this.typeDocumentSrv.update(item)
+      .subscribe(() => {
+        item.editEnabled = false;
+      }, err => this.typeDocumentSrv.httpSrv.catchError(err));
+  }
+
 }

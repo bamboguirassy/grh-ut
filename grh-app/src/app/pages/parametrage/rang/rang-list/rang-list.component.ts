@@ -11,6 +11,7 @@ import { Rang } from '../rang';
   styleUrls: ['./rang-list.component.scss']
 })
 export class RangListComponent extends BasePageComponent<Rang> implements OnInit, OnDestroy {
+  editEnabled: boolean;
 
   constructor(store: Store<IAppState>,
               public rangSrv: RangService) {
@@ -44,5 +45,21 @@ export class RangListComponent extends BasePageComponent<Rang> implements OnInit
   }
 
   handlePostLoad(){}
+
+  
+  enabledEdit(item) {
+    item.editEnabled = true;
+  }
+
+  disableEdit(item) {
+    item.editEnabled = false;
+  }
+
+  updateRang(rang) {
+    this.rangSrv.update(rang)
+      .subscribe(() => {
+        rang.editEnabled = false;
+      }, err => this.rangSrv.httpSrv.catchError(err));
+  }
 
 }
