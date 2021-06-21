@@ -202,7 +202,6 @@ import { EmployeImportationComponent } from './gestionemploye/employe/employe-im
 import { PageResetPasswordComponent } from './apps/sessions/reset-password/reset-password.component';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { RangListComponent } from './parametrage/rang/rang-list/rang-list.component';
-import { RangEditComponent } from './parametrage/rang/rang-edit/rang-edit.component';
 import { RangShowComponent } from './parametrage/rang/rang-show/rang-show.component';
 import { RangNewComponent } from './parametrage/rang/rang-new/rang-new.component';
 import { TypeemployeStastPersComponent } from './dashboards/typeemploye-per/typeemploye-stast-pers/typeemploye-stast-pers.component';
@@ -435,7 +434,6 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
     // rang components
     RangListComponent,
-    RangEditComponent,
     RangShowComponent,
     RangNewComponent,
 
