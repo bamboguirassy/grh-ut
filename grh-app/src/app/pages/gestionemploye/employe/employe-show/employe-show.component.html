@@ -25,7 +25,7 @@
                     <div [ngStyle]="{'color': sidebarBg}">{{entity?.structure?.nom}}</div>
                     <div style="font-weight: bold;">{{ entity?.profession?.nom}}</div>
                     <div *ngFor="let latestFonction of latestFonctions" [ngStyle]="{'color': sidebarBg}" style="font-size: large;" class="m-1">
-                        {{latestFonction?.responsabilite?.appelation}}
+                        - {{latestFonction?.responsabilite?.appelation}}
                     </div>
                     <hr [ngStyle]="{'background-color': sidebarBg}" class="m-1">
                     <ul class="personal-info">

@@ -4,7 +4,7 @@
 
 <!-- Modal window -->
 <nz-modal nzWidth="60%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
-  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+  [nzContent]="modalBody" [nzFooter]="null" (nzOnCancel)="closeModal()">
   <ng-template #modalBody>
     <form #form="ngForm" ngNativeValidate>
       <div class="row">
@@ -83,19 +83,17 @@
             </tc-form-description>
           </tc-form-group>
         </div>
+        <div class="col-12">
+          <div class="actions justify-content-between">
+            <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+              (click)="closeModal()">Fermer</button>
+            <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
+              tc-button [view]="'accent'">
+              Enregistrer
+            </button>
+          </div>
+        </div>
       </div>
     </form>
   </ng-template>
-
-  <ng-template #modalFooter>
-    <div class="actions justify-content-between">
-      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
-        (click)="closeModal()">Fermer</button>
-      <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
-        tc-button [view]="'accent'">
-        Enregistrer
-      </button>
-    </div>
-  </ng-template>
-</nz-modal>
 <!-- end Modal window -->
