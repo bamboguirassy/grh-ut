@@ -19,8 +19,8 @@ class Utils {
 
     public static $sender = 'support-grh@univ-thies.sn';
     public static $senderName = 'GRH UIDT';
-    public static $websiteUrl = 'http://localhost:4200/#';
-    public static $passwordResetLink = 'http://localhost:4200/#/public/new-password/';
+    public static $websiteUrl = 'https://grh.uidt.sn/#';
+    public static $passwordResetLink = 'https://grh.uidt.sn/#/public/new-password/';
 
     public static function serializeRequestContent(Request $request) {
         return json_decode($request->getContent(), true);
