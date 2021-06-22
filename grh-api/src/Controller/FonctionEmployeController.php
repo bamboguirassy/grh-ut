@@ -65,8 +65,7 @@ class FonctionEmployeController extends AbstractController
                 WHERE fe.employe = :employe
                 ORDER BY fe.datePriseFonction DESC
           ')->setParameter('employe', $employe)
-                    ->setMaxResults(1)
-                    ->getSingleResult();
+                    ->getResult();
         } catch (NoResultException $e) {
             return null;
         } catch (NonUniqueResultException $e) {

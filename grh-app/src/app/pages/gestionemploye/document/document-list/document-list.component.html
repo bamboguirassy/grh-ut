@@ -39,7 +39,7 @@
     </tc-table-col>
   </tc-table-->
   <div class="row" style="background: #DADCE3;">
-    <div class="col-12 col-md-3 col-lg-2 m-1">
+    <div class="col-12 col-md-3 col-lg-2">
       <div class="famille-card">
         <div class="info-box">
           <div class="social">
@@ -50,12 +50,12 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-9 col-lg-9 m-1">
+    <div class="col-12 col-md-9 col-lg-10 mb-1" style="background-color: #fff;">
       <nz-collapse nzGhost>
         <nz-collapse-panel *ngFor="let typeDocument of items | uniq:'typeDocument.id' | map:'typeDocument'"
           [nzHeader]="typeDocument.nom">
           <div class="row d-flex justify-content-center">
-            <div class="col-md-3 col-sm-12 mb-2" *ngFor="let item of items|filterBy:['typeDocument.id']:typeDocument?.id">
+            <div class="col-12 col-md-6 col-lg-3 mb-2" *ngFor="let item of items|filterBy:['typeDocument.id']:typeDocument?.id">
               <a target="_blank" [href]="item?.filepath">
                 <nz-card nzHoverable [nzCover]="coverTemplate">
                   <nz-card-meta [nzTitle]="item?.typeDocument?.nom" [nzDescription]="item?.nom"></nz-card-meta>

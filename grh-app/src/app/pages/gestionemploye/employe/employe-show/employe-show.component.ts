@@ -32,7 +32,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     };
   entity: Employe;
   employeForm: FormGroup;
-  latestFonction: FonctionEmploye;
+  latestFonctions: FonctionEmploye[];
   photo: any;
   filename: any;
   image: any;
@@ -130,8 +130,8 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
       .fonctionEmployeSrv
       .findLatest(this.entity)
       .pipe(first())
-      .subscribe((fonctionEmploye: any) => {
-        this.latestFonction = fonctionEmploye;
+      .subscribe((data: any) => {
+        this.latestFonctions = data;
       }, err => {
         this.fonctionEmployeSrv.httpSrv.handleError(err);
       })
