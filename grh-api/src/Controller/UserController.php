@@ -118,8 +118,8 @@ class UserController extends AbstractController {
         $entityManager->flush();
 
         //send confirmation mail
-        $message = (new \Swift_Message('Creation Compte'))
-          ->setFrom(Utils::$sender)
+        $message = (new \Swift_Message('Creation Compte - GRH'))
+          ->setFrom(Utils::$sender, Utils::$senderName)
           ->setTo($user->getEmail())
           ->setBody(
           $this->renderView(
@@ -251,7 +251,7 @@ class UserController extends AbstractController {
         $entityManager->flush();
 
         //send confirmation mail
-        $message = (new \Swift_Message('Creation Compte SICOFT'))
+        $message = (new \Swift_Message('Creation Compte GRH'))
                 ->setFrom(Utils::$senderEmail)
                 ->setTo($userNew->getEmail())
                 ->setBody(
