@@ -8,11 +8,14 @@
                 <div class="info-box">
                     <ng-container *ngIf="!editAppelationState">
                         <div>
-                            <h5 class="name">
-                                <span style="font-weight: bold; font-style: italic;">{{ structureFonctionActive?.appelation }}</span>
-                                <span *ngIf="!structureFonctionActive?.appelation" class="badge badge-warning" style="font-weight: bold; font-style: italic; cursor:pointer" (click)="editAppelationState=true">
-                                  Appelation non précisée
-                                  <i class="icofont-ui-edit icofont-1x"></i>
+                            <h5 class="name" style=" cursor:pointer" (click)="editAppelationState=true">
+                                <span *ngIf="structureFonctionActive?.appelation" style="font-weight: bold; font-style: italic;">
+                                    {{ structureFonctionActive?.appelation }} 
+                                    <i class="icofont-ui-edit icofont-1x"></i>
+                                </span>
+                                <span *ngIf="!structureFonctionActive?.appelation" class="badge badge-warning" style="font-weight: bold; font-style: italic;">
+                                    Appelation non précisée
+                                    <i class="icofont-ui-edit icofont-1x"></i>
                                 </span>
                             </h5>
                         </div>
