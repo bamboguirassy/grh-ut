@@ -129,7 +129,6 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     this
       .fonctionEmployeSrv
       .findLatest(this.entity)
-      .pipe(first())
       .subscribe((data: any) => {
         this.latestFonctions = data;
       }, err => {
