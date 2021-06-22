@@ -45,6 +45,17 @@ class FileUploader {
         return $newFileName;
     }
 
+    public function remove(String $fileName): bool{
+        $fs = new Filesystem();
+        $fileToRemove = $this->getTargetDirectory() . $fileName;
+        if($fs->exists($fileToRemove)){
+            $fs->remove($fileToRemove);
+            return true;
+        }
+        
+        return false;
+    }
+
     public function getTargetDirectory() {
         return $this->params->get($this->targetDirectory);
     }

@@ -126,8 +126,12 @@ class SyndicatController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_SYNDICAT_EDIT")
      */
-    public function delete(Syndicat $syndicat): Syndicat    {
+    public function delete(Syndicat $syndicat, FileUploader $uploader): Syndicat    {
         $entityManager = $this->getDoctrine()->getManager();
+        if ($syndicat->getFileName()) {
+            $uploader->setTargetDirectory('syndicat_image_directory');
+            $uploader->remove($syndicat->getFileName());
+        }
         $entityManager->remove($syndicat);
         $entityManager->flush();
 
@@ -139,14 +143,18 @@ class SyndicatController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_SYNDICAT_DELETE")
      */
-    public function deleteMultiple(Request $request): array {
+    public function deleteMultiple(Request $request, FileUploader $uploader): array {
         $entityManager = $this->getDoctrine()->getManager();
         $syndicats = Utils::getObjectFromRequest($request);
+        $uploader->setTargetDirectory('syndicat_image_directory');
         if (!count($syndicats)) {
             throw $this->createNotFoundException("Selectionner au minimum un élément à supprimer.");
         }
         foreach ($syndicats as $syndicat) {
             $syndicat = $entityManager->getRepository(Syndicat::class)->find($syndicat->id);
+            if ($syndicat->getFileName()) {
+                $uploader->remove($syndicat->getFileName());
+            }
             $entityManager->remove($syndicat);
         }
         $entityManager->flush();
