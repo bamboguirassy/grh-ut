@@ -22,14 +22,16 @@ export class RangNewComponent implements OnInit {
     this.entity = new Rang();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.entity.etat='true';
+  }
 
   save() {
     this.rangSrv.create(this.entity)
       .subscribe((data: any) => {
-        this.closeModal();
         this.creation.emit(data);
         this.entity = new Rang();
+        this.entity.etat='true';
       }, error => this.rangSrv.httpSrv.catchError(error));
   }
 
