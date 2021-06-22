@@ -6,6 +6,7 @@ import { DashboardService } from 'src/app/pages/dashboards/dashboard.service';
 import { SETTINGS } from 'src/environments/settings';
 import { BamboAbstractChartModel } from '../../classes/bambo-abstract-chart-model';
 import { BamboAbstractService } from '../../services/bambo-abstract.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-dashboard-base',
@@ -58,6 +59,17 @@ export class DashboardBaseComponent<T extends BamboAbstractChartModel> implement
   handlePostFetch(data: T[]) {
     this.rawChartData = data;
     this.setDataChart();
+  }
+
+  exportToExcel(tableId: string, fileName: string) {
+    /* table id is passed over here */
+    const element = document.getElementById(tableId);
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    /* save to file */
+    XLSX.writeFile(wb, fileName + tableId + (new Date().toDateString()) + '.xlsx');
   }
 
 }
