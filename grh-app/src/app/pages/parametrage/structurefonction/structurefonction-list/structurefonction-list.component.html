@@ -8,7 +8,7 @@
                 <div class="info-box">
                     <ng-container *ngIf="!editAppelationState">
                         <div>
-                            <h5 class="name" style=" cursor:pointer" (click)="editAppelationState=true">
+                            <h5 class="name" style=" cursor:pointer" (click)="toogleEditAppelationInput(true)">
                                 <span *ngIf="structureFonctionActive?.appelation" style="font-weight: bold; font-style: italic;">
                                     {{ structureFonctionActive?.appelation }} 
                                     <i class="icofont-ui-edit icofont-1x"></i>
@@ -29,7 +29,7 @@
                             <div class="d-flex text-center justify-content-center">
                                 <button class="mr-1" [afterIcon]="'icofont-check'" (click)="editAppelation()" [outline]="true" tc-button [view]="'success'" [square]="true" [tcShape]="'50%'" [tcBorderStyle]="'dashed'"></button>
 
-                                <button class="ml-1" [afterIcon]="'icofont-close'" (click)="editAppelationState=false" [outline]="true" tc-button [view]="'error'" [square]="true" [tcShape]="'50%'" [tcBorderStyle]="'dashed'"></button>
+                                <button class="ml-1" [afterIcon]="'icofont-close'" (click)="toogleEditAppelationInput(false)" [outline]="true" tc-button [view]="'error'" [square]="true" [tcShape]="'50%'" [tcBorderStyle]="'dashed'"></button>
                             </div>
 
                         </div>

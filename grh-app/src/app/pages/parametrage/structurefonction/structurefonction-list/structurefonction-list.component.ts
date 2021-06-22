@@ -189,6 +189,13 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
     this.findAll();
   }
 
+  toogleEditAppelationInput(state = true){
+    if (state){
+      this.appelationEditModel = this.structureFonctionActive?.appelation || '';
+    }
+    this.editAppelationState = state;
+  }
+
   editAppelation(){
     const structureFonction = {...this?.structureFonctionActive};
     structureFonction.appelation = this.appelationEditModel;
