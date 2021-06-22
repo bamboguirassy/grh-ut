@@ -12,6 +12,8 @@ import { Structure } from '../structure';
 })
 export class StructureListComponent extends BasePageComponent<Structure> implements OnInit, OnDestroy {
 
+  selectedStructures: Structure[] = [];
+
   constructor(store: Store<IAppState>,
     public structureSrv: StructureService) {
     super(store, structureSrv);
@@ -53,8 +55,8 @@ export class StructureListComponent extends BasePageComponent<Structure> impleme
   }
 
   handlePostLoad() {
-    this.items = this.items.filter(item => item.structureParente == null);
-    this.items.forEach(item => {
+    this.selectedStructures = this.items.filter(item => item.structureParente == null);
+    this.selectedStructures.forEach(item => {
       this.mapOfExpandedData[item.id] = this.convertTreeToList(item);
     });
   }
@@ -99,6 +101,13 @@ export class StructureListComponent extends BasePageComponent<Structure> impleme
       hashMap[node.id] = true;
       array.push(node);
     }
+  }
+
+  setSelected(selected) {
+    this.selectedStructures = [selected];
+    this.selectedStructures.forEach(item => {
+      this.mapOfExpandedData[item.id] = this.convertTreeToList(item);
+    });
   }
 
 }
