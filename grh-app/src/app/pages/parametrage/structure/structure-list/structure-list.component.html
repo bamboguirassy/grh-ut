@@ -61,13 +61,9 @@
                 <tc-badge view="error" *ngIf="!item.adresse">Indéfinie</tc-badge>
               </td>
               <td>
-                <ng-container *ngIf="structureSrv.resourceName|editable">
-                    <tc-switcher [value]="item.etat" (valueChanged)="onChange($event, item)" name="etat" id="etat">
-                    </tc-switcher>
-                </ng-container>
-                <ng-container *ngIf="!(structureSrv.resourceName|editable)">
-                    <nz-switch [(ngModel)]="item.etat" [nzDisabled]="true"></nz-switch>
-                </ng-container>
+                <tc-switcher *ngIf="structureSrv.resourceName|editable" [value]="item.etat" (valueChanged)="onChange($event, item)" name="etat" id="etat">
+                </tc-switcher>
+                <nz-switch *ngIf="!(structureSrv.resourceName|editable)" [(ngModel)]="item.etat" [nzDisabled]="true"></nz-switch>                
               </td>              
             </tr>
           </ng-container>
