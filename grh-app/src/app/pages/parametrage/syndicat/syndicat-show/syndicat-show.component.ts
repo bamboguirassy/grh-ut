@@ -23,7 +23,7 @@ export class SyndicatShowComponent extends BasePageComponent<Syndicat> implement
     public location: Location) {
     super(store, syndicatSrv);
     this.pageData = {
-      title: 'Détails - Syndicat/Amicale',
+      title: 'Détails - Partenaire Social',
       breadcrumbs: [
         {
           title: 'Accueil',

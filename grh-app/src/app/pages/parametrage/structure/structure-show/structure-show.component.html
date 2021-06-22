@@ -1,13 +1,10 @@
 <tc-card *ngIf="structureSrv.resourceName|showable" [tcGradient]="lightGradient">
-    
     <div class="row">
-        <div class="col-12 col-md-4" style="height:100px; align-items: center;">
-            <tc-card [outline]="true"  [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
+        <div class="col-12" style="align-items: center;">
+            <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
                 <div class="row">
-                   
-                   <div class="col-12" >
-                       <table class="table">
-                        
+                    <div class="col-12 col-lg-4">
+                        <table class="table">
                             <tr>
                                 <th>Code</th>
                                 <td>
@@ -36,31 +33,28 @@
                                     <tc-badge view="error" *ngIf="!entity?.etat">Inactif</tc-badge>
                                 </td>
                             </tr>
-                           <tr>
-                               <td colspan="2">
-                                   <div class="col-12">
-                                       <button *ngIf="structureSrv.resourceName|editable"
-                                           [routerLink]="['/'+orientation,structureSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
-                                           class="float-right ml-1" tc-button view="warning"
-                                           beforeIcon="icofont-edit"></button>
-                                       <button (click)="remove(entity)" *ngIf="structureSrv.resourceName|deletable"
-                                           tc-button view="error" beforeIcon="icofont-trash"
-                                           class=" float-right ml-1"></button>
-                                       <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
-                                           beforeIcon="icofont-refresh"></button>
-                                       <button tc-button class="float-right ml-1" (click)="location.back()"
-                                           beforeIcon="icofont-reply"></button>
-                                   </div>
-                               </td>
-                           </tr>
-                       </table>
-                   </div>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="col-12">
+                                        <button *ngIf="structureSrv.resourceName|editable"
+                                            [routerLink]="['/'+orientation,structureSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+                                            class="float-right ml-1" tc-button view="warning"
+                                            beforeIcon="icofont-edit"></button>
+                                        <button (click)="remove(entity)" *ngIf="structureSrv.resourceName|deletable"
+                                            tc-button view="error" beforeIcon="icofont-trash"
+                                            class=" float-right ml-1"></button>
+                                        <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button
+                                            view="accent" beforeIcon="icofont-refresh"></button>
+                                        <button tc-button class="float-right ml-1" (click)="location.back()"
+                                            beforeIcon="icofont-reply"></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </tc-card>
         </div>
-       
     </div>
 </tc-card>
 <app-access-denied *ngIf="!(structureSrv.resourceName|showable)"></app-access-denied>
-
-

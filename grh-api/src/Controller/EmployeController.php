@@ -418,7 +418,7 @@ $employe->setProfession($faker->randomElement($professions));
         foreach ($employesSendingEmail as $employeSendingEmail) {
             if($employeSendingEmail->getEmail()!=NULL && $employeSendingEmail->getEmailUniv()!=NULL){
                 $message = (new Swift_Message($object))
-                ->setFrom(Utils::$sender)
+                ->setFrom(Utils::$sender,Utils::$senderName)
                 ->setTo($employeSendingEmail->getEmail())
                 ->setCc($employeSendingEmail->getEmailUniv())
                 ->setBody($messaye_body, 'text/html');
@@ -427,14 +427,14 @@ $employe->setProfession($faker->randomElement($professions));
             else{
                  if($employeSendingEmail->getEmail()!=NULL){
                     $message = (new Swift_Message($object))
-                     ->setFrom(Utils::$sender)
+                     ->setFrom(Utils::$sender,Utils::$senderName)
                      ->setTo($employeSendingEmail->getEmail())
                      ->setBody($messaye_body, 'text/html');
                      array_push($result,  [$employeSendingEmail->getId() => $mailer->send($message)]); 
                  }
                  elseif($employeSendingEmail->getEmailUniv()!=NULL){
                     $message = (new Swift_Message($object))
-                     ->setFrom(Utils::$sender)
+                     ->setFrom(Utils::$sender, Utils::$senderName)
                      ->setTo($employeSendingEmail->getEmailUniv())
                      ->setBody($messaye_body, 'text/html');
                      array_push($result,  [$employeSendingEmail->getId() => $mailer->send($message)]); 

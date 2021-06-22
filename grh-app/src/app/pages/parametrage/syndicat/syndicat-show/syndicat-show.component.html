@@ -34,8 +34,6 @@
                         </td>
                     </tr>
                 </table>
-
-
                 <div class="d-flex flex-row">
                     <div class="d-flex flex-row">
                         <button *ngIf="syndicatSrv.resourceName|editable"
@@ -55,18 +53,12 @@
                             beforeIcon="icofont-reply"></button>
                     </div>
                 </div>
-
-
-
             </tc-card>
-
-
         </div>
-
-
         <div class="col-12 col-md-8">
-
             <app-membre-syndicat-amical *ngIf="entity" [membresyndicat]="entity" [orientation]="orientation">
             </app-membre-syndicat-amical>
-
-            <app-access-denied *ngIf="!(syndicatSrv.resourceName|showable)"></app-access-denied>
+        </div>
+    </div>
+</tc-card>
+<app-access-denied *ngIf="!(syndicatSrv.resourceName|showable)"></app-access-denied>
