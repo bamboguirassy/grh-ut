@@ -73,9 +73,9 @@ export class DiplomeEmployeEditComponent implements OnInit, OnDestroy {
   update() {
     this.entity.diplome = this.selectedDiplomeId;
     this.entity.statutFormation = this.selectedStatutFormation;
-    if (this.entity.statutFormation!='Terminée') {
-      this.entity.anneeObtention='- - -';
-    } 
+    if (this.selectedStatutFormation=='Suspendue') {
+      this.entity.anneeObtention='';
+    }
     this.diplomeEmployeSrv.update(this.entity)
       .subscribe((resp: any) => {
         this.closeModal();

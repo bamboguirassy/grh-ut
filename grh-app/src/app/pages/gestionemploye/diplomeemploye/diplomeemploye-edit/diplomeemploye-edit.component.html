@@ -56,10 +56,16 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6" *ngIf="selectedStatutFormation=='Terminée'">
+                <div class="col-12 col-md-6"
+                    *ngIf="selectedStatutFormation =='Terminée' || selectedStatutFormation =='En cours'">
                     <tc-form-group>
-                        <tc-form-label>Année Obtention</tc-form-label>
-                        <tc-input [(ngModel)]="entity.anneeObtention" name="anneeObtention" id="anneeObtention"
+                        <span *ngIf="selectedStatutFormation=='Terminée'">
+                            <tc-form-label>Année obtention</tc-form-label>
+                        </span>
+                        <span *ngIf="selectedStatutFormation=='En cours'">
+                            <tc-form-label>Année Obtention prévue</tc-form-label>
+                        </span>
+                        <tc-input required="required" [(ngModel)]="entity.anneeObtention" name="anneeObtention" id="anneeObtention"
                             #anneeObtention="ngModel">
                         </tc-input>
                         <tc-form-description>
