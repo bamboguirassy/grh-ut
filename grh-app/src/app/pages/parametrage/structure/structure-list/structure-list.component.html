@@ -1,18 +1,26 @@
 <tc-card *ngIf="structureSrv.resourceName|listable" [tcGradient]="lightGradient">
   <tc-card [view]="secondViewBorder" [outline]="true">
     <div class="row">
-      <div class="col-12">
-        <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findOrganigramme()">Rafraichir</button>
+      <div class="col-12 col-md-6">
+        <nz-select [(ngModel)]="selected" (ngModelChange)="setSelected($event)" style="width: 100%;" nzAllowClear nzPlaceHolder="Choisir une structure">
+          <ng-container *ngFor="let item of items">
+            <nz-option *ngIf="item?.children?.length" [nzValue]="item" [nzLabel]="item.nom"></nz-option>
+          </ng-container>
+        </nz-select>
+      </div>
+      <div class="col-12 col-md-6">
+        <button class="float-right" tc-button afterIcon="icofont-refresh"
+          (click)="findOrganigramme()">Rafraichir</button>
       </div>
     </div>
   </tc-card>
   <div class="table-wrap">
-    <nz-table #expandTable [nzData]="items" class="table-box">
+    <nz-table #expandTable [nzData]="selectedStructures" class="table-box">
       <thead>
         <tr>
           <th>Actions</th>
-          <th>Code</th>
           <th>Nom</th>
+          <th>Code</th>
           <th>Téléphone</th>
           <th>Adresse</th>
           <th>Etat</th>
@@ -34,8 +42,8 @@
                     [view]="'accent'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[item.id]"></button>
                 </div>
               </td>
-              <td style="white-space: nowrap;" [nzIndentSize]="item.level! * 20" [nzShowExpand]="!!item.children" [(nzExpand)]="item.expand"
-                (nzExpandChange)="collapse(mapOfExpandedData[data.id], item, $event)">
+              <td style="white-space: nowrap;" [nzIndentSize]="item.level! * 20" [nzShowExpand]="!!item.children"
+                [(nzExpand)]="item.expand" (nzExpandChange)="collapse(mapOfExpandedData[data.id], item, $event)">
                 <span [title]="item.nom" class="nowrap" *ngIf="item.nom">{{ item.nom }}</span>
                 <tc-badge view="error" *ngIf="!item.nom">Indéfinie</tc-badge>
               </td>
@@ -46,14 +54,16 @@
               <td>
                 <span class="nowrap" *ngIf="item.telephone">{{ item.telephone }}</span>
                 <tc-badge view="error" *ngIf="!item.telephone">Indéfinie</tc-badge>
-              </td>              
+              </td>
               <td>
                 <span class="nowrap" *ngIf="item.adresse">{{ item.adresse }}</span>
                 <tc-badge view="error" *ngIf="!item.adresse">Indéfinie</tc-badge>
               </td>
               <td>
-                <nz-switch [nzDisabled]="true" [(ngModel)]="item.etat"></nz-switch>
-              </td>
+                <!-- <tc-switcher *ngIf="structureSrv.resourceName|editable" [value]="item.etat" (valueChanged)="onChange($event, item)" name="etat" id="etat">
+                </tc-switcher> -->
+                <nz-switch [(ngModel)]="item.etat" [nzDisabled]="true"></nz-switch>                
+              </td>              
             </tr>
           </ng-container>
         </ng-container>

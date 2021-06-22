@@ -4,7 +4,7 @@
 
 <!-- Modal window -->
 <nz-modal nzWidth="60%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
-  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+  [nzContent]="modalBody" [nzFooter]="null" (nzOnCancel)="closeModal()">
   <ng-template #modalBody>
     <form #form="ngForm" ngNativeValidate>
       <div class="row">
@@ -36,17 +36,6 @@
         </div>
         <div class="col-12 col-md-6">
           <tc-form-group>
-            <tc-form-label>Année Obtention</tc-form-label>
-            <tc-input [(ngModel)]="entity.anneeObtention" name="anneeObtention" id="anneeObtention"
-              #anneeObtention="ngModel">
-            </tc-input>
-            <tc-form-description>
-              <app-form-field-validation-message [formField]="anneeObtention"></app-form-field-validation-message>
-            </tc-form-description>
-          </tc-form-group>
-        </div>
-        <div class="col-12 col-md-6">
-          <tc-form-group>
             <tc-form-label>Etablissement</tc-form-label>
             <tc-input required="required" [(ngModel)]="entity.etablissement" name="etablissement" id="etablissement"
               #etablissement="ngModel">
@@ -67,6 +56,22 @@
             </tc-form-description>
           </tc-form-group>
         </div>
+        <div class="col-12 col-md-6" *ngIf="entity.statutFormation =='Terminée' || entity.statutFormation =='En cours'">
+          <tc-form-group>
+            <span *ngIf="entity.statutFormation=='Terminée'">
+              <tc-form-label>Année obtention</tc-form-label>
+            </span>
+            <span *ngIf="entity.statutFormation=='En cours'">
+              <tc-form-label>Année Obtention prévue</tc-form-label>
+            </span>
+            <tc-input required="required" [(ngModel)]="entity.anneeObtention" name="anneeObtention" id="anneeObtention"
+              #anneeObtention="ngModel">
+            </tc-input>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="anneeObtention"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
         <div class="col-12 col-md-6">
           <tc-form-group>
             <tc-form-label>Commentaire</tc-form-label>
@@ -78,19 +83,17 @@
             </tc-form-description>
           </tc-form-group>
         </div>
+        <div class="col-12">
+          <div class="actions justify-content-between">
+            <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+              (click)="closeModal()">Fermer</button>
+            <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
+              tc-button [view]="'accent'">
+              Enregistrer
+            </button>
+          </div>
+        </div>
       </div>
     </form>
   </ng-template>
-
-  <ng-template #modalFooter>
-    <div class="actions justify-content-between">
-      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
-        (click)="closeModal()">Fermer</button>
-      <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
-        tc-button [view]="'accent'">
-        Enregistrer
-      </button>
-    </div>
-  </ng-template>
-</nz-modal>
 <!-- end Modal window -->

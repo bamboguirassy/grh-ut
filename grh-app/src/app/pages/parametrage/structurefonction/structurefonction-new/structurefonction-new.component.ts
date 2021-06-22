@@ -60,7 +60,7 @@ export class StructureFonctionNewComponent implements OnInit {
   }
 
   onFonctionSelected(rang: any) {
-    this.structureFonctions = [{ etat: false, rang: rang, structure: this.structure, duree: 0 } as any];
+    this.structureFonctions = [{ etat: true, rang: rang, structure: this.structure, duree: 0 } as any];
   }
 
   fetchNotBindedFonctions() {

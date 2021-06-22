@@ -88,7 +88,7 @@ class DiplomeEmploye
         return $this->anneeObtention;
     }
 
-    public function setAnneeObtention(string $anneeObtention): self
+    public function setAnneeObtention(?string $anneeObtention): self
     {
         $this->anneeObtention = $anneeObtention;
 

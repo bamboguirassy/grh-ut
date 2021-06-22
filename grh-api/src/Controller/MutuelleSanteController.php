@@ -147,8 +147,12 @@ class MutuelleSanteController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MUTUELLESANTE_EDIT")
      */
-    public function delete(MutuelleSante $mutuelleSante): MutuelleSante    {
+    public function delete(MutuelleSante $mutuelleSante, FileUploader $uploader): MutuelleSante    {
         $entityManager = $this->getDoctrine()->getManager();
+        if ($mutuelleSante->getFileName()) {
+            $uploader->setTargetDirectory('mutuellesante_image_directory');
+            $uploader->remove($mutuelleSante->getFileName());
+        }
         $entityManager->remove($mutuelleSante);
         $entityManager->flush();
 
@@ -160,14 +164,18 @@ class MutuelleSanteController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MUTUELLESANTE_DELETE")
      */
-    public function deleteMultiple(Request $request): array {
+    public function deleteMultiple(Request $request, FileUploader $uploader): array {
         $entityManager = $this->getDoctrine()->getManager();
         $mutuelleSantes = Utils::getObjectFromRequest($request);
+        $uploader->setTargetDirectory('mutuellesante_image_directory');
         if (!count($mutuelleSantes)) {
             throw $this->createNotFoundException("Selectionner au minimum un élément à supprimer.");
         }
         foreach ($mutuelleSantes as $mutuelleSante) {
             $mutuelleSante = $entityManager->getRepository(MutuelleSante::class)->find($mutuelleSante->id);
+            if ($mutuelleSante->getFileName()) {
+                $uploader->remove($mutuelleSante->getFileName());
+            }
             $entityManager->remove($mutuelleSante);
         }
         $entityManager->flush();

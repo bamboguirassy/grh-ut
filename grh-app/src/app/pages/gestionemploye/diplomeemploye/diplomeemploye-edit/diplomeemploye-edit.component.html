@@ -1,5 +1,5 @@
 <nz-modal nzWidth="70%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Modification'"
-    [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+    [nzContent]="modalBody" [nzFooter]="null" (nzOnCancel)="closeModal()">
     <ng-template #modalBody>
         <app-access-denied *ngIf="!(diplomeEmployeSrv.resourceName|editable)"></app-access-denied>
         <form #form="ngForm" novalidate>
@@ -34,18 +34,6 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <tc-form-group>
-                        <tc-form-label>Année Obtention</tc-form-label>
-                        <tc-input [(ngModel)]="entity.anneeObtention" name="anneeObtention" id="anneeObtention"
-                            #anneeObtention="ngModel">
-                        </tc-input>
-                        <tc-form-description>
-                            <app-form-field-validation-message [formField]="anneeObtention">
-                            </app-form-field-validation-message>
-                        </tc-form-description>
-                    </tc-form-group>
-                </div>
-                <div class="col-12 col-md-6">
-                    <tc-form-group>
                         <tc-form-label>Etablissement</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.etablissement" name="etablissement"
                             id="etablissement" #etablissement="ngModel">
@@ -59,11 +47,29 @@
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Statut Formation</tc-form-label>
-                        <tc-select [(ngModel)]="entity.statutFormation" required="required"
+                        <tc-select [(ngModel)]="selectedStatutFormation" required="required"
                             [placeholder]="'Select statut'" [options]="statutFormations" [multiple]="false"
                             name="statutFormation" id="statutFormation" #statutFormation="ngModel"></tc-select>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="statutFormation">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6"
+                    *ngIf="selectedStatutFormation =='Terminée' || selectedStatutFormation =='En cours'">
+                    <tc-form-group>
+                        <span *ngIf="selectedStatutFormation=='Terminée'">
+                            <tc-form-label>Année obtention</tc-form-label>
+                        </span>
+                        <span *ngIf="selectedStatutFormation=='En cours'">
+                            <tc-form-label>Année Obtention prévue</tc-form-label>
+                        </span>
+                        <tc-input required="required" [(ngModel)]="entity.anneeObtention" name="anneeObtention" id="anneeObtention"
+                            #anneeObtention="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="anneeObtention">
                             </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>
@@ -80,18 +86,18 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
+                <div class="col-12">
+                    <div class="actions justify-content-between">
+                        <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'"
+                            (click)="closeModal()">Fermer</button>
+                        <button [disabled]="form.invalid" type="button" class="float-right" (click)="update()" beforeIcon="icofont-save" tc-button
+                            view="warning">
+                            Mettre à jour
+                        </button>
+                    </div>
+                </div>
             </div>
         </form>
-    </ng-template>
-    <ng-template #modalFooter>
-        <div class="actions justify-content-between">
-            <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'"
-                (click)="closeModal()">Fermer</button>
-            <button type="button" class="float-right" (click)="update()" beforeIcon="icofont-save" tc-button
-                view="warning">
-                Mettre à jour
-            </button>
-        </div>
     </ng-template>
 </nz-modal>
 <app-access-denied *ngIf="!(diplomeEmployeSrv.resourceName|editable)"></app-access-denied>

@@ -35,7 +35,7 @@ export class FonctionEmployeNewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.findStructures();   
+    this.findStructures();      
   }
 
   save() {
@@ -59,6 +59,7 @@ export class FonctionEmployeNewComponent implements OnInit {
   // open modal window
   openModal() {
     this.isModalVisible = true;
+    this.entity.etat = true; 
   }
 
   // close modal window

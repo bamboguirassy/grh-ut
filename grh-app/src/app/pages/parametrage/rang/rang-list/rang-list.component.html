@@ -12,33 +12,60 @@
         <i class="icofont-data icofont-2x"></i>
       </ng-template>
     </tc-table-col>
-            <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
-                <ng-template #tableTDTemplate let-row="row">
-                    <span class="nowrap" *ngIf="row.nom">{{ row?.nom }}</span>
-                    <tc-badge view="error" *ngIf="!row.nom">Indéfinie</tc-badge>
-                </ng-template>
-            </tc-table-col>
-            <tc-table-col [columnTitle]="'Etat'" [columnName]="'etat'" [enableSorting]="true">
-                <ng-template #tableTDTemplate let-row="row">                 
-                  <nz-switch [(ngModel)]="row.etat" [nzDisabled]="true"></nz-switch>
-                </ng-template>
-            </tc-table-col>
-                <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+    <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-row="row">
-        <div class="actions">
-          <button *ngIf="rangSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'" [square]="true" [tcShape]="500"
-            [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-          <button *ngIf="rangSrv.resourceName|clonable" [outline]="true" tc-button [afterIcon]="'icofont-copy'" [square]="true" [tcShape]="500"
-            [size]="'sm'" [routerLink]="[row.id,'clone']"></button>
-          <button *ngIf="rangSrv.resourceName|deletable" (click)="remove(row)" tc-button [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
-            [size]="'sm'"></button>
-          <button *ngIf="rangSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'" [view]="'accent'" [square]="true" [tcShape]="500"
-            [size]="'sm'" [routerLink]="[row.id]"></button>
+        
+        <ng-container *ngIf="!row.editEnabled">
+          <span class="nowrap" *ngIf="row.nom">{{ row?.nom }}</span>
+          <tc-badge view="error" *ngIf="!row.nom">Indéfinie</tc-badge>
+        </ng-container>
+        
+        <ng-container *ngIf="row.editEnabled">
+          <tc-form-group>
+            <tc-input required="required" [(ngModel)]="row.nom" name="nom" id="nom" #nom="ngModel">
+            </tc-input>
+            <tc-form-description>
+                <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>                 
+        </ng-container>        
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Etat'" [columnName]="'etat'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-row="row">
+        <ng-container *ngIf="!row.editEnabled">
+          <nz-switch [(ngModel)]="row.etat" [nzDisabled]="true"></nz-switch>
+        </ng-container>
+        <ng-container *ngIf="row.editEnabled">
+          <tc-form-group>
+            <nz-switch [(ngModel)]="row.etat" name="etat" id="etat" #etat="ngModel"></nz-switch>            
+          </tc-form-group>
+        </ng-container>
+        
+        
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+      <ng-template #tableTDTemplate let-row="row">
+        <div class="actions"  *ngIf="!row.editEnabled">
+          <button *ngIf="rangSrv.resourceName|editable" (click)="enabledEdit(row)" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'"
+            [square]="true" [tcShape]="500" [size]="'sm'"></button>
+          <button *ngIf="rangSrv.resourceName|deletable" (click)="remove(row)" tc-button
+            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+          <button *ngIf="rangSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'" [view]="'accent'"
+            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id]"></button>
+        </div>
+        <div class="actions" *ngIf="row.editEnabled">
+          <button tc-button (click)="updateRang(row)"
+          [afterIcon]="'icofont-save'" [view]="'accent'" [square]="true" [tcShape]="500"
+          [size]="'sm'"></button>
+          <button class="ml-1" (click)="disableEdit(row)" tc-button [afterIcon]="'icofont-close'"
+            [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
         </div>
       </ng-template>
     </tc-table-col>
   </tc-table>
-  <app-empty-table-message *ngIf="!items.length" ></app-empty-table-message>
+  <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
   <app-rang-new (creation)="onCreate($event)"></app-rang-new>
 </tc-card>
 <app-access-denied *ngIf="!(rangSrv.resourceName|listable)"></app-access-denied>

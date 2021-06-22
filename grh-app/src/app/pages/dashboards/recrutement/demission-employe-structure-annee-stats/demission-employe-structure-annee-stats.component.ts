@@ -29,7 +29,7 @@ export class DemissionEmployeStructureAnneeStatsComponent extends DashboardBaseC
 
   setDataChart() {
     const chartData: ChartDataset[] = [];
-    let structures = this.rawChartData.structures.map((data) => data.nom);
+    let structures = this.rawChartData.structures.map((data) => data.code);
     this.rawChartData.anneeData.forEach((chartDataItem) => {
       const arr: number[] = chartDataItem.data;
       chartData.push({ data: arr, label: chartDataItem.annee });

@@ -136,9 +136,13 @@ class CaisseSocialeController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CAISSESOCIALE_EDIT")
      */
-    public function delete(CaisseSociale $caisseSociale): CaisseSociale
+    public function delete(CaisseSociale $caisseSociale, FileUploader $uploader): CaisseSociale
     {
         $entityManager = $this->getDoctrine()->getManager();
+        if ($caisseSociale->getFileName()) {
+            $uploader->setTargetDirectory('caissesociale_image_directory');
+            $uploader->remove($caisseSociale->getFileName());
+        }
         $entityManager->remove($caisseSociale);
         $entityManager->flush();
 
@@ -150,15 +154,19 @@ class CaisseSocialeController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CAISSESOCIALE_DELETE")
      */
-    public function deleteMultiple(Request $request): array
+    public function deleteMultiple(Request $request, FileUploader $uploader): array
     {
         $entityManager = $this->getDoctrine()->getManager();
         $caisseSociales = Utils::getObjectFromRequest($request);
+        $uploader->setTargetDirectory('caissesociale_image_directory');
         if (!count($caisseSociales)) {
             throw $this->createNotFoundException("Selectionner au minimum un élément à supprimer.");
         }
         foreach ($caisseSociales as $caisseSociale) {
             $caisseSociale = $entityManager->getRepository(CaisseSociale::class)->find($caisseSociale->id);
+            if ($caisseSociale->getFileName()) {
+                $uploader->remove($caisseSociale->getFileName());
+            }
             $entityManager->remove($caisseSociale);
         }
         $entityManager->flush();

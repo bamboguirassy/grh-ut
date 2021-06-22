@@ -25,21 +25,22 @@ export class DiplomeEmployeEditComponent implements OnInit, OnDestroy {
   @Output() onClose: EventEmitter<any> = new EventEmitter();
   diplomes: Diplome[] = [];
   statutFormations: IOption[] = [];
-  @Input() set selectedDiplome(value){
+  @Input() set selectedDiplome(value) {
     this.entity = value;
     this.handlePostLoad();
     this.openModal();
   }
   selectedDiplomeId: any;
-  
+  selectedStatutFormation: any;
+
   constructor(store: Store<IAppState>,
-              public diplomeEmployeSrv: DiplomeEmployeService,
-              public router: Router, public diplomeServ: DiplomeService,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
-                diplomeEmployeSrv.statutFormations.forEach(statut => {
-                  this.statutFormations.push({value: statut.label, label: statut.label, color: statut.color});
-                });
+    public diplomeEmployeSrv: DiplomeEmployeService,
+    public router: Router, public diplomeServ: DiplomeService,
+    private activatedRoute: ActivatedRoute,
+    public location: Location) {
+    diplomeEmployeSrv.statutFormations.forEach(statut => {
+      this.statutFormations.push({ value: statut.label, label: statut.label, color: statut.color });
+    });
   }
 
   ngOnDestroy(): void {
@@ -51,15 +52,15 @@ export class DiplomeEmployeEditComponent implements OnInit, OnDestroy {
 
   handlePostLoad() {
     this.selectedDiplomeId = this.entity?.diplome.id;
-    
+    this.selectedStatutFormation = this.entity?.statutFormation;
   }
 
   handlePostUpdate() {
     this.location.back();
   }
 
-   // open modal window
-   openModal() {
+  // open modal window
+  openModal() {
     this.isModalVisible = true;
   }
 
@@ -71,11 +72,15 @@ export class DiplomeEmployeEditComponent implements OnInit, OnDestroy {
 
   update() {
     this.entity.diplome = this.selectedDiplomeId;
+    this.entity.statutFormation = this.selectedStatutFormation;
+    if (this.selectedStatutFormation=='Suspendue') {
+      this.entity.anneeObtention='';
+    }
     this.diplomeEmployeSrv.update(this.entity)
       .subscribe((resp: any) => {
         this.closeModal();
         this.modification.emit(resp);
-      },(err)=>{
+      }, (err) => {
         this.diplomeEmployeSrv.httpSrv.catchError(err);
       });
   }

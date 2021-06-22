@@ -1,61 +1,58 @@
 <tc-card *ngIf="structureSrv.resourceName|showable" [tcGradient]="lightGradient">
-    <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
-        <div class="row">
-            <div class="d-none d-md-block col-md-1">
-                <i class="icofont icofont-data icofont-4x"></i>
-            </div>
-            <div class="col-12 col-md-7">
-                <blockquote class="blockquote">
-                    <p class="mb-0">{{title}}</p>
-                    <footer class="blockquote-footer"> <cite title="Source Title">sous titre</cite></footer>
-                </blockquote>
-            </div>
-            <div class="col-12 col-md-4">
-                <button *ngIf="structureSrv.resourceName|editable"
-                    [routerLink]="['/'+orientation,structureSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
-                    class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
-                <button (click)="remove(entity)" *ngIf="structureSrv.resourceName|deletable" tc-button
-                    view="error" beforeIcon="icofont-trash" class=" float-right ml-1"></button>
-                <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
-                    beforeIcon="icofont-refresh"></button>
-                <button tc-button class="float-right" (click)="location.back()"
-                    beforeIcon="icofont-reply"></button>
-            </div>
-        </div>
-    </tc-card>
     <div class="row">
-        <div class="col-12 col-md-4">
+        <div class="col-12" style="align-items: center;">
             <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
-                <table class="table">
-                                                                                                <tr>
-                            <th>Nom</th>
-                            <td>
-                                <span *ngIf="entity?.nom">{{ entity?.nom }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.nom">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Code</th>
-                            <td>
-                                <span *ngIf="entity?.code">{{ entity?.code }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.code">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Adresse</th>
-                            <td>
-                                <span *ngIf="entity?.adresse">{{ entity?.adresse }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.adresse">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                                                <tr>
-                            <th>Telephone</th>
-                            <td>
-                                <span *ngIf="entity?.telephone">{{ entity?.telephone }}</span>
-                                <tc-badge view="error" *ngIf="!entity?.telephone">Indéfinie</tc-badge>
-                            </td>
-                        </tr>
-                                                    </table>
+                <div class="row">
+                    <div class="col-12 col-lg-4">
+                        <table class="table">
+                            <tr>
+                                <th>Code</th>
+                                <td>
+                                    <span *ngIf="entity?.code">{{ entity?.code }}</span>
+                                    <tc-badge view="error" *ngIf="!entity?.code">Indéfinie</tc-badge>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Adresse</th>
+                                <td>
+                                    <span *ngIf="entity?.adresse">{{ entity?.adresse }}</span>
+                                    <tc-badge view="error" *ngIf="!entity?.adresse">Indéfinie</tc-badge>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Telephone</th>
+                                <td>
+                                    <span *ngIf="entity?.telephone">{{ entity?.telephone }}</span>
+                                    <tc-badge view="error" *ngIf="!entity?.telephone">Indéfinie</tc-badge>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Etat</th>
+                                <td>
+                                    <tc-badge view="success" *ngIf="entity?.etat">Actif</tc-badge>
+                                    <tc-badge view="error" *ngIf="!entity?.etat">Inactif</tc-badge>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="col-12">
+                                        <button *ngIf="structureSrv.resourceName|editable"
+                                            [routerLink]="['/'+orientation,structureSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+                                            class="float-right ml-1" tc-button view="warning"
+                                            beforeIcon="icofont-edit"></button>
+                                        <button (click)="remove(entity)" *ngIf="structureSrv.resourceName|deletable"
+                                            tc-button view="error" beforeIcon="icofont-trash"
+                                            class=" float-right ml-1"></button>
+                                        <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button
+                                            view="accent" beforeIcon="icofont-refresh"></button>
+                                        <button tc-button class="float-right ml-1" (click)="location.back()"
+                                            beforeIcon="icofont-reply"></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </tc-card>
         </div>
     </div>

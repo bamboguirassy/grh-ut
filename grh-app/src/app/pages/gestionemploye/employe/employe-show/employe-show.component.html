@@ -24,9 +24,9 @@
                         {{titre+' '+entity?.prenoms+' '+entity?.nom}} - {{entity?.matricule}}</div>
                     <div [ngStyle]="{'color': sidebarBg}">{{entity?.structure?.nom}}</div>
                     <div style="font-weight: bold;">{{ entity?.profession?.nom}}</div>
-                    <!-- <div [ngStyle]="{'color': sidebarBg}" style="font-size: large;" class="m-1">
-                        {{latestFonction?.responsabilite?.fonction?.nom}}
-                    </div> -->
+                    <div *ngFor="let latestFonction of latestFonctions" [ngStyle]="{'color': sidebarBg}" style="font-size: large;" class="m-1">
+                        - {{latestFonction?.responsabilite?.appelation}}
+                    </div>
                     <hr [ngStyle]="{'background-color': sidebarBg}" class="m-1">
                     <ul class="personal-info">
                         <li class="info-line">
@@ -214,7 +214,7 @@
                 <app-fonctionemploye-list *ngIf="entity && isFonctionsLoaded" [employe]="entity">
                 </app-fonctionemploye-list>
             </nz-tab>
-            <nz-tab (nzSelect)="loadSyndicatsTab()" nzTitle="Syndicats & amicales">
+            <nz-tab (nzSelect)="loadSyndicatsTab()" nzTitle="Partenaires Sociaux">
                 <app-membresyndicat-list *ngIf="entity && isSyndicatsLoaded" [employe]="entity">
                 </app-membresyndicat-list>
             </nz-tab>

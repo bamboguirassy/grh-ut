@@ -1,16 +1,14 @@
 <div class="row">
     <div class="col-12 col-md-6">
         <tc-form-group>Choisir un Type Employé</tc-form-group>
-        <nz-select [(ngModel)]="selectedTypeEmploye" (ngModelChange)="buildDiagram()"
-            style="width: 100%;margin-top: -10px;">
+        <nz-select [(ngModel)]="selectedTypeEmploye" (ngModelChange)="buildDiagram()" style="width: 100%;margin-top: -10px;">
             <nz-option *ngFor="let item of items" [nzValue]="item" [nzLabel]="item?.nom"></nz-option>
         </nz-select>
     </div>
     <div class="col-12 col-md-6">
         <tc-form-group *ngIf="canSwitchDiagramType && dataDiagram">
             <tc-form-label>Type de graphe</tc-form-label>
-            <nz-select nzAllowClear nzShowSearch style="width: 50%" name="typeDiagram" id="typeDiagram"
-                nzPlaceHolder="Selectionner type diagram" [(ngModel)]="selectedTypeDiagram">
+            <nz-select nzAllowClear nzShowSearch style="width: 50%" name="typeDiagram" id="typeDiagram" nzPlaceHolder="Selectionner type diagram" [(ngModel)]="selectedTypeDiagram">
                 <ng-container *ngFor="let diagramType of typeDiagrams">
                     <nz-option [nzLabel]="diagramType?.title" [nzValue]="diagramType?.value">
                     </nz-option>
@@ -21,12 +19,11 @@
 </div>
 <br>
 <div *ngIf="!loading && dataDiagram">
-    <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions" [plugins]="chartPlugins"
-        [legend]="chartLegend" [chartType]="selectedTypeDiagram">
+    <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions" [plugins]="chartPlugins" [legend]="chartLegend" [chartType]="selectedTypeDiagram">
     </canvas>
     <hr class="m-2">
     <tc-card view="accent" [outline]="true">
-        <table class="table table-responsive-sm">
+        <table id="pyramide-age-genre" class="table table-responsive-sm">
             <thead>
                 <tr>
                     <th>Plages
@@ -41,5 +38,8 @@
                 </tr>
             </tbody>
         </table>
+        <div class="ms-auto p-2 bd-highlight d-flex justify-content-end">
+            <button nz-button nzType="primary" (click)="exportToExcel('pyramide-age-genre', '')" [nzSize]="'large'"><i nz-icon nzType="download"></i>Exporter le tableau</button>
+        </div>
     </tc-card>
 </div>

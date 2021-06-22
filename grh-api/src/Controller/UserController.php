@@ -273,13 +273,11 @@ class UserController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_USER_DELETE")
      */
-    public function delete(User $user, FileUploader $uploader, ParameterBagInterface $params): User {
+    public function delete(User $user, FileUploader $uploader): User {
         $entityManager = $this->getDoctrine()->getManager();
         if ($user->getFileName()) {
-            $oldFile = $params->get('user_image_directory') . $user->getFileName();
-            $fs= new Filesystem();
-            if ($fs->exists($oldFile))
-                $fs->remove($oldFile); // remove old file
+            $uploader->setTargetDirectory('user_image_directory');
+            $uploader->remove($user->getFileName());
         }
         $entityManager->remove($user);
         $entityManager->flush();
@@ -292,14 +290,18 @@ class UserController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_USER_DELETE")
      */
-    public function deleteMultiple(Request $request): array {
+    public function deleteMultiple(Request $request, FileUploader $uploader): array {
         $entityManager = $this->getDoctrine()->getManager();
         $users = Utils::getObjectFromRequest($request);
+        $uploader->setTargetDirectory('user_image_directory');
         if (!count($users)) {
             throw $this->createNotFoundException("Selectionner au minimum un élément à supprimer.");
         }
         foreach ($users as $user) {
             $user = $entityManager->getRepository(User::class)->find($user->id);
+            if ($user->getFileName()) {
+                $uploader->remove($user->getFileName());
+            }
             $entityManager->remove($user);
         }
         $entityManager->flush();

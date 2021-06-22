@@ -24,6 +24,7 @@ export class OrganigrammeViewComponent implements OnInit {
   structures: Structure[] = [];
   selectedOrientationType = 'horizontal';
   selectedStructure: Structure;
+  filtered: Structure;
 
   nodes: any;
 
@@ -47,6 +48,15 @@ export class OrganigrammeViewComponent implements OnInit {
     this.setLoaded();
     this.findStructures();
 
+  }
+
+  setFiltered(item) {
+    if (item != null) {
+      this.buildOrgChart(item)
+    } else {
+      const rootEntity = this.structures.find(s => s.structureParente === null);
+      this.buildOrgChart(rootEntity);
+    }
   }
 
   openFonctionAdderModal(event: any) {
@@ -76,7 +86,8 @@ export class OrganigrammeViewComponent implements OnInit {
       .pipe(first())
       .subscribe((data: any) => {
         this.structures = data;
-        this.buildOrgChart();
+        const rootEntity = this.structures.find(s => s.structureParente === null);
+        this.buildOrgChart(rootEntity);
       }, err => {
         this.structureSrv.httpSrv.catchError(err)
       });
@@ -88,8 +99,8 @@ export class OrganigrammeViewComponent implements OnInit {
       if (struct.structureFonctions.length && struct.structureFonctions.some(sf => sf.etat)) {
         title += `${struct.structureFonctions.find(sf => sf.etat).rang.nom}`;
       }
-      if (struct.structureFonctions.length && struct.structureFonctions.some(sf => sf.etat) && 
-      struct.structureFonctions.find(sf => sf.etat).fonctionEmployes.some(fe => fe.etat)) {
+      if (struct.structureFonctions.length && struct.structureFonctions.some(sf => sf.etat) &&
+        struct.structureFonctions.find(sf => sf.etat).fonctionEmployes.some(fe => fe.etat)) {
         title += ` - ${struct.structureFonctions.find(sf => sf.etat).fonctionEmployes.find(fe => fe.etat)?.employe?.prenoms + ' ' + struct.structureFonctions.find(sf => sf.etat).fonctionEmployes.find(fe => fe.etat)?.employe?.nom}`;
       }
       return {
@@ -107,17 +118,16 @@ export class OrganigrammeViewComponent implements OnInit {
     );
   }
 
-  
 
-  buildOrgChart() {
+
+  buildOrgChart(rootEntity) {
     const orgchartTreeItems: OrgchartTreeItem<Structure>[] = [];
-    const rootEntity = this.structures.find(s => s.structureParente === null);
     let title = '';
     if (rootEntity.structureFonctions.length && rootEntity.structureFonctions.some(sf => sf.etat)) {
       title += `${rootEntity.structureFonctions.find(sf => sf.etat)?.rang?.nom}`;
     }
-    if (rootEntity.structureFonctions.length && rootEntity.structureFonctions.some(sf => sf.etat) && 
-    rootEntity.structureFonctions.find(sf => sf.etat).fonctionEmployes.some(fe => fe.etat)) {
+    if (rootEntity.structureFonctions.length && rootEntity.structureFonctions.some(sf => sf.etat) &&
+      rootEntity.structureFonctions.find(sf => sf.etat).fonctionEmployes.some(fe => fe.etat)) {
       title += ` - ${rootEntity.structureFonctions.find(sf => sf.etat).fonctionEmployes.find(fe => fe.etat)?.employe?.prenoms + ' ' + rootEntity.structureFonctions.find(sf => sf.etat).fonctionEmployes.find(fe => fe.etat)?.employe?.nom}`;
     }
     orgchartTreeItems.push({
@@ -141,7 +151,12 @@ export class OrganigrammeViewComponent implements OnInit {
         s.structureFonctions.concat(structureFonctions);
       }
     });
-    this.buildOrgChart();
+    if(!this.filtered) {
+      const rootEntity = this.structures.find(s => s.structureParente === null);
+      this.buildOrgChart(rootEntity);
+    } else {
+      this.buildOrgChart(this.filtered);
+    }
     this.nodes = [...this.nodes];
   }
 }
