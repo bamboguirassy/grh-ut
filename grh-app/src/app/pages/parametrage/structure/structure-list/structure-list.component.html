@@ -62,7 +62,7 @@
               </td>
               <td>
                 <ng-container *ngIf="structureSrv.resourceName|editable">
-                    <tc-switcher [value]="item.etat" (valueChanged)="onChange($event, item)" name="etat" id="etat" [bgColor]="['transparent', 'transparent', '#ed5564']" [borderColor]="['#ed5564', '#ed5564', '#ed5564']" [color]="['#ed5564', '#ed5564', '#fff']">
+                    <tc-switcher [value]="item.etat" (valueChanged)="onChange($event, item)" name="etat" id="etat">
                     </tc-switcher>
                 </ng-container>
                 <ng-container *ngIf="!(structureSrv.resourceName|editable)">
