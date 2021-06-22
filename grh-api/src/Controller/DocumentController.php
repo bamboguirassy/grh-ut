@@ -117,7 +117,7 @@ class DocumentController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_DOCUMENT_EDIT")
      */
-    public function delete(Document $document, FileUploader $uploader): Document {
+    public function delete(Document $document, \App\Service\FileUploader $uploader): Document {
         $entityManager = $this->getDoctrine()->getManager();
         if ($document->getFileName()) {
             $uploader->setTargetDirectory('employe_document_directory');
@@ -134,7 +134,7 @@ class DocumentController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_DOCUMENT_DELETE")
      */
-    public function deleteMultiple(Request $request, FileUploader $uploader): array {
+    public function deleteMultiple(Request $request, \App\Service\FileUploader $uploader): array {
         $entityManager = $this->getDoctrine()->getManager();
         $documents = Utils::getObjectFromRequest($request);
         $uploader->setTargetDirectory('employe_document_directory');
