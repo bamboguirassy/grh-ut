@@ -191,7 +191,7 @@ export class StructureFonctionListComponent extends BasePageComponent<StructureF
 
   toogleEditAppelationInput(state = true){
     if (state){
-      this.appelationEditModel = this.structureFonctionActive?.appelation;
+      this.appelationEditModel = this.structureFonctionActive?.appelation || '';
     }
     this.editAppelationState = state;
   }
