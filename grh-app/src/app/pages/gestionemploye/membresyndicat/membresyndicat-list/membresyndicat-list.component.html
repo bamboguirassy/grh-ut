@@ -8,11 +8,12 @@
   <div class="col-12 col-md-8 offset-md-2">
     <tc-card>
       <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true">
-        <tc-table-col [columnTitle]="'#'" [columnName]="'#'">
-          <ng-template #tableTDTemplate let-row="row">
-            <i class="icofont-data icofont-2x"></i>
-          </ng-template>
-        </tc-table-col>
+        <tc-table-col [columnTitle]="'#'" [columnName]="'syndicat'">
+            <ng-template #tableTDTemplate let-row="row" let-value>
+              <i *ngIf="!value" class="icofont-data icofont-2x"></i>
+              <tc-avatar *ngIf="value" [src]="value.filepath"></tc-avatar>
+            </ng-template>
+          </tc-table-col>
         <tc-table-col [columnTitle]="'Syndicat'" [columnName]="'syndicat'" [enableSorting]="true">
           <ng-template #tableTDTemplate let-value>
             <span title="{{value?.nom}}" class="nowrap" *ngIf="value">{{ value?.code }}</span>
