@@ -117,15 +117,12 @@ class DocumentController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_DOCUMENT_EDIT")
      */
-    public function delete(Document $document, ParameterBagInterface $params): Document {
+    public function delete(Document $document, FileUploader $uploader): Document {
         $entityManager = $this->getDoctrine()->getManager();
-
-        $fs = new \Symfony\Component\Filesystem\Filesystem();
-        $oldFile = $params->get('employe_document_directory') . $document->getFilename();
-        if ($fs->exists($oldFile)) {
-            $fs->remove($oldFile); // remove old file
+        if ($document->getFileName()) {
+            $uploader->setTargetDirectory('employe_document_directory');
+            $uploader->remove($document->getFileName());
         }
-
         $entityManager->remove($document);
         $entityManager->flush();
 
@@ -137,14 +134,18 @@ class DocumentController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_DOCUMENT_DELETE")
      */
-    public function deleteMultiple(Request $request): array {
+    public function deleteMultiple(Request $request, FileUploader $uploader): array {
         $entityManager = $this->getDoctrine()->getManager();
         $documents = Utils::getObjectFromRequest($request);
+        $uploader->setTargetDirectory('employe_document_directory');
         if (!count($documents)) {
             throw $this->createNotFoundException("Selectionner au minimum un élément à supprimer.");
         }
         foreach ($documents as $document) {
             $document = $entityManager->getRepository(Document::class)->find($document->id);
+            if ($document->getFileName()) {
+                $uploader->remove($document->getFileName());
+            }
             $entityManager->remove($document);
         }
         $entityManager->flush();
