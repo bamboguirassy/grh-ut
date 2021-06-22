@@ -28,7 +28,7 @@ export class DiplomeEmployeTimelineComponent implements OnInit {
     
     setTimeline() {
       const sectionData = this.items.map((i: any) => ({
-       date: i.anneeObtention?i.anneeObtention:"encours",
+       date: i.anneeObtention ? i.anneeObtention:"Indéfinie",
         title: i.diplome.nom,
         content: i.formation,
         icon: "icofont-hat-alt",

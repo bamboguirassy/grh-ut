@@ -13,6 +13,9 @@ import Swal from 'sweetalert2';
 })
 export class StructureListComponent extends BasePageComponent<Structure> implements OnInit, OnDestroy {
 
+  selectedStructures: Structure[] = [];
+  selected: Structure;
+
   constructor(store: Store<IAppState>,
     public structureSrv: StructureService) {
     super(store, structureSrv);
@@ -54,8 +57,8 @@ export class StructureListComponent extends BasePageComponent<Structure> impleme
   }
 
   handlePostLoad() {
-    this.items = this.items.filter(item => item.structureParente == null);
-    this.items.forEach(item => {
+    this.selectedStructures = this.items.filter(item => item.structureParente == null);
+    this.selectedStructures.forEach(item => {
       this.mapOfExpandedData[item.id] = this.convertTreeToList(item);
     });
   }
@@ -102,6 +105,17 @@ export class StructureListComponent extends BasePageComponent<Structure> impleme
     }
   }
 
+  setSelected(selected) {
+    if(selected) {
+      this.selectedStructures = [selected];
+      this.selectedStructures.forEach(item => {
+        this.mapOfExpandedData[item.id] = this.convertTreeToList(item);
+      });
+    } else {
+      this.handlePostLoad();
+    }
+  }
+  
   onChange(event: any, structure: Structure) {
     structure.etat = event;
     Swal.fire({
