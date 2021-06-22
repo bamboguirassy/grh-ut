@@ -40,7 +40,7 @@ export class DiplomeEmployeNewComponent implements OnInit {
   save() {
     this.entity.diplome = this.selectedDiplome.id;
     this.entity.employe = this.employe.id;
-    if (this.entity.statutFormation=='En cours') {
+    if (this.entity.statutFormation!='Terminée') {
       this.entity.anneeObtention='- - -';
     }  
     this.diplomeEmployeSrv.create(this.entity)
