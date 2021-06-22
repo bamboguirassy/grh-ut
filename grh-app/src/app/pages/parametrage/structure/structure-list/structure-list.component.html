@@ -59,8 +59,9 @@
               </ng-container>
               <ng-container *ngIf="!(structureSrv.resourceName|editable)">
                 <td>
-                  <tc-switcher [value]="item.etat" [disabled]="true" name="etat" id="etat" [color]="['#ed5564', '#ed5564', '#fff']">
-                  </tc-switcher>
+                  <!-- <tc-switcher [value]="item.etat" [disabled]="true" name="etat" id="etat" [color]="['#ed5564', '#ed5564', '#fff']">
+                  </tc-switcher> -->
+                  <nz-switch [(ngModel)]="item.etat" [nzDisabled]="true"></nz-switch>
                 </td>
               </ng-container>
               
