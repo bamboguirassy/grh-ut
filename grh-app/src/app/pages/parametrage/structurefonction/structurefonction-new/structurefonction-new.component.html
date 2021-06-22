@@ -24,7 +24,6 @@
     </div>
   </div>
 </form>
-
 <tc-table *ngIf="structureFonctions?.length" [itemsPerPage]="10" [rows]="structureFonctions" [hovered]="true"
   [pagination]="true" [search]="false">
   <tc-table-col [columnTitle]="'Rang'" [columnName]="'rang'" [enableSorting]="true">
@@ -54,14 +53,11 @@
     </ng-template>
   </tc-table-col>
 </tc-table>
-
-
 <div class="row d-flex justify-content-end mt-2" *ngIf="structureFonctions?.length">
-  <div class="col-2 col-sm-2 col-lg-2">
-    <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'" tc-button
+  <div class="col-12 col-lg-6">
+    <button class="float-right" [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'" tc-button
       [view]="'accent'">
       Enregistrer
     </button>
   </div>
-
 </div>
