@@ -39,7 +39,10 @@ export class DiplomeEmployeNewComponent implements OnInit {
 
   save() {
     this.entity.diplome = this.selectedDiplome.id;
-    this.entity.employe = this.employe.id;    
+    this.entity.employe = this.employe.id;
+    if (this.entity.statutFormation=='En cours') {
+      this.entity.anneeObtention='- - -';
+    }  
     this.diplomeEmployeSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
