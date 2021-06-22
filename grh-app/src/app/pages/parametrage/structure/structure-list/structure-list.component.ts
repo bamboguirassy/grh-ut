@@ -4,6 +4,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { StructureService } from '../structure.service';
 import { Structure } from '../structure';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-structure-list',
@@ -113,6 +114,50 @@ export class StructureListComponent extends BasePageComponent<Structure> impleme
     } else {
       this.handlePostLoad();
     }
+  }
+  
+  onChange(event: any, structure: Structure) {
+    structure.etat = event;
+    Swal.fire({
+      title: event ? 'Êtes-vous sûr de vouloir activer cette structure ?' : 'Êtes-vous sûr de vouloir désactiver cette structure ?',
+      showCancelButton: true,
+      confirmButtonText: event ? 'Activer' : 'Désactiver ?',
+      cancelButtonText: 'Annuler',
+      confirmButtonColor: event ? '#68d487' : '#d33',
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        return new Promise((resolve, reject) => {
+          return this.structureSrv.update(structure)
+            .subscribe((data) => {
+              resolve(data);
+            }, (err) => {
+              reject(err);
+            });
+        }).then((updatedUser: any) => {
+          this.structureSrv.httpSrv.toastr.success('Modification effectuée avec succès.');
+          Swal.close();
+        }).catch(err => {
+          this.structureSrv.httpSrv.catchError(err);
+          structure.etat = !event;
+          Swal.fire(
+            'Erreur!',
+            'Une erreur est survenue lors de la modification.',
+            'error'
+          );
+        });
+      },
+      onClose: () => {
+        this.findAll();
+      },
+
+      allowOutsideClick: () => !Swal.isLoading()
+    });
+  }
+
+  updateStructure(structure) {
+    this.structureSrv.update(structure)
+      .subscribe(() => {
+      }, err => this.structureSrv.httpSrv.catchError(err));
   }
 
 }
