@@ -21,11 +21,6 @@
         </div>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'#'" [columnName]="'#'">
-      <ng-template #tableTDTemplate let-row="row">
-        <i class="icofont-file-document icofont-2x"></i>
-      </ng-template>
-    </tc-table-col>
     <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-row="row">
         <span class="nowrap" *ngIf="row.nom">{{ row.nom }}</span>
