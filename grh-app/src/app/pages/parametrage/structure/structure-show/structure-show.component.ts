@@ -48,7 +48,7 @@ export class StructureShowComponent extends BasePageComponent<Structure> impleme
   }
 
   handlePostLoad() {
-    this.title = 'Structure - ' + this.entity?.id;
+    this.title =  this.entity?.nom;
   }
 
   handlePostDelete() {
