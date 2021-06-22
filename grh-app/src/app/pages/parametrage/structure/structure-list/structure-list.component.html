@@ -2,8 +2,11 @@
   <tc-card [view]="secondViewBorder" [outline]="true">
     <div class="row">
       <div class="col-12 col-md-6">
-        <nz-select (ngModelChange)="setSelected($event)" style="width: 100%;" nzAllowClear nzPlaceHolder="Choisir une structure">
-          <nz-option *ngFor="let item of items" [nzValue]="item" [nzLabel]="item.nom"></nz-option>
+        <nz-select [(ngModel)]="selected" (ngModelChange)="setSelected($event)" style="width: 100%;" nzAllowClear nzPlaceHolder="Choisir une structure">
+          <ng-container *ngFor="let item of items">
+            <nz-option *ngIf="item?.children?.length" [nzValue]="item" [nzLabel]="item.nom"></nz-option>
+          </ng-container>
+          
         </nz-select>
       </div>
       <div class="col-12 col-md-6">

@@ -13,6 +13,7 @@ import { Structure } from '../structure';
 export class StructureListComponent extends BasePageComponent<Structure> implements OnInit, OnDestroy {
 
   selectedStructures: Structure[] = [];
+  selected: Structure;
 
   constructor(store: Store<IAppState>,
     public structureSrv: StructureService) {
@@ -104,10 +105,14 @@ export class StructureListComponent extends BasePageComponent<Structure> impleme
   }
 
   setSelected(selected) {
-    this.selectedStructures = [selected];
-    this.selectedStructures.forEach(item => {
-      this.mapOfExpandedData[item.id] = this.convertTreeToList(item);
-    });
+    if(selected) {
+      this.selectedStructures = [selected];
+      this.selectedStructures.forEach(item => {
+        this.mapOfExpandedData[item.id] = this.convertTreeToList(item);
+      });
+    } else {
+      this.handlePostLoad();
+    }
   }
 
 }
