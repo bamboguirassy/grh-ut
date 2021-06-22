@@ -274,9 +274,13 @@ $employe->setProfession($faker->randomElement($professions));
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_EMPLOYE_EDIT")
      */
-    public function delete(Employe $employe): Employe
+    public function delete(Employe $employe, FileUploader $uploader): Employe
     {
         $entityManager = $this->getDoctrine()->getManager();
+        if ($employe->getFileName()) {
+            $uploader->setTargetDirectory('employe_photo_directory');
+            $uploader->remove($employe->getFileName());
+        }
         $entityManager->remove($employe);
         $entityManager->flush();
 
@@ -288,15 +292,19 @@ $employe->setProfession($faker->randomElement($professions));
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_EMPLOYE_DELETE")
      */
-    public function deleteMultiple(Request $request): array
+    public function deleteMultiple(Request $request, FileUploader $uploader): array
     {
         $entityManager = $this->getDoctrine()->getManager();
         $employes = Utils::getObjectFromRequest($request);
+        $uploader->setTargetDirectory('employe_photo_directory');
         if (!count($employes)) {
             throw $this->createNotFoundException("Selectionner au minimum un élément à supprimer.");
         }
         foreach ($employes as $employe) {
             $employe = $entityManager->getRepository(Employe::class)->find($employe->id);
+            if ($employe->getFileName()) {
+                $uploader->remove($employe->getFileName());
+            }
             $entityManager->remove($employe);
         }
         $entityManager->flush();
