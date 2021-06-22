@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { SETTINGS } from 'src/environments/settings';
 import { BamboAbstractService } from 'src/app/shared/services/bambo-abstract.service';
 import Swal from 'sweetalert2';
+import * as XLSX from 'xlsx';
 import { Router } from '@angular/router';
 
 @Component({
@@ -176,5 +177,16 @@ export class BasePageComponent<T extends BamboAbstractObject> implements OnInit,
       .subscribe((data: any) => {
         this.original = data;
       }, err => this.httpSv.httpSrv.catchError(err));
+  }
+
+  exportToExcel(tableId: string, fileName: string) {
+    /* table id is passed over here */
+    const element = document.getElementById(tableId);
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    /* save to file */
+    XLSX.writeFile(wb, fileName + tableId + (new Date().toDateString()) + '.xlsx');
   }
 }
