@@ -21,7 +21,6 @@ class CommissionController extends AbstractController
     /**
      * @Rest\Get(path="/", name="commission_index")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_COMMISSION_INDEX")
      */
     public function index(CommissionRepository $commissionRepository): array
     {

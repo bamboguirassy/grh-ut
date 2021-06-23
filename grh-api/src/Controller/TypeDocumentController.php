@@ -20,7 +20,6 @@ class TypeDocumentController extends AbstractController
     /**
      * @Rest\Get(path="/", name="type_document_index")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_TYPEDOCUMENT_INDEX")
      */
     public function index(): array
     {

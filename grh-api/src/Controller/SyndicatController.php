@@ -22,7 +22,6 @@ class SyndicatController extends AbstractController
     /**
      * @Rest\Get(path="/", name="syndicat_index")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_SYNDICAT_INDEX")
      */
     public function index(): array
     {

@@ -21,7 +21,6 @@ class DiplomeController extends AbstractController
     /**
      * @Rest\Get(path="/", name="diplome_index")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_DIPLOME_INDEX")
      */
     public function index(DiplomeRepository $diplomeRepository): array
     {

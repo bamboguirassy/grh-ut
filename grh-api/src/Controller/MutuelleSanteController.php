@@ -23,7 +23,6 @@ class MutuelleSanteController extends AbstractController
     /**
      * @Rest\Get(path="/", name="mutuelle_sante_index")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_MUTUELLESANTE_INDEX")
      */
     public function index(): array
     {

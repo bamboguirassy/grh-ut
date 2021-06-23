@@ -21,7 +21,6 @@ class GNiveauController extends AbstractController
     /**
      * @Rest\Get(path="/", name="g_niveau_index")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_GNIVEAU_INDEX")
      */
     public function index(GNiveauRepository $gNiveauRepository): array
     {

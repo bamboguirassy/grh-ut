@@ -21,7 +21,6 @@ class GCategorieController extends AbstractController
     /**
      * @Rest\Get(path="/", name="g_categorie_index")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_GCATEGORIE_INDEX")
      */
     public function index(GCategorieRepository $gCategorieRepository): array
     {

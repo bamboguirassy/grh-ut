@@ -22,7 +22,6 @@ class GClasseController extends AbstractController
     /**
      * @Rest\Get(path="/", name="g_classe_index")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_GCLASSE_INDEX")
      */
     public function index(GClasseRepository $gClasseRepository): array
     {
@@ -32,7 +31,6 @@ class GClasseController extends AbstractController
     /**
      * @Rest\Get(path="/{id}/typeemploye", name="g_classe_type_employe")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_GCLASSE_INDEX")
      */
     public function findByEmploye(TypeEmploye $typeEmploye): array
     {

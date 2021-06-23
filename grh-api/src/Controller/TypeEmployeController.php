@@ -20,7 +20,6 @@ class TypeEmployeController extends AbstractController
     /**
      * @Rest\Get(path="/", name="type_employe_index")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_TYPEEMPLOYE_INDEX")
      */
     public function index(): array
     {
