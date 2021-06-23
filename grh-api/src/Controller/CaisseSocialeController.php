@@ -23,7 +23,6 @@ class CaisseSocialeController extends AbstractController
     /**
      * @Rest\Get(path="/", name="caisse_sociale_index")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_CAISSESOCIALE_INDEX")
      */
     public function index(): array
     {

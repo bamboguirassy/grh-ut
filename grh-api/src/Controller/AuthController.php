@@ -71,7 +71,7 @@ class AuthController extends AbstractController
 
         $link = Utils::$passwordResetLink . $user->getConfirmationToken(); // confirmation link
         $message = (new Swift_Message('Lien de réinitialisation du Mot de passe.'))
-            ->setFrom(Utils::$sender)
+            ->setFrom(Utils::$sender, Utils::$senderName)
             ->setTo($user->getEmail())
             ->setBody($this->renderView('emails/forgot-password/forgot-password.html.twig', compact('user', 'link')), 'text/html');
 

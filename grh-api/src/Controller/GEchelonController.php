@@ -21,7 +21,6 @@ class GEchelonController extends AbstractController
     /**
      * @Rest\Get(path="/", name="g_echelon_index")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_GECHELON_INDEX")
      */
     public function index(GEchelonRepository $gEchelonRepository): array
     {
@@ -128,7 +127,6 @@ class GEchelonController extends AbstractController
     /** 
      * @Rest\Get(path="/no-suivant/", name="find_echelon_no_suivant")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_GECHELON_INDEX")
      */
     public function findNonSuivants(GEchelonRepository $gEchelonRepository): array
     {

@@ -22,7 +22,6 @@ class ProfessionController extends AbstractController
     /**
      * @Rest\Get(path="/", name="profession_index")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_PROFESSION_INDEX")
      */
     public function index(ProfessionRepository $professionRepository): array
     {

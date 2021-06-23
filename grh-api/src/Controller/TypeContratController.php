@@ -21,7 +21,6 @@ class TypeContratController extends AbstractController
     /**
      * @Rest\Get(path="/", name="type_contrat_index")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_TYPECONTRAT_INDEX")
      */
     public function index(): array
     {

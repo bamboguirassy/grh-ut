@@ -22,7 +22,6 @@ class RangController extends AbstractController
     /**
      * @Rest\Get(path="/", name="rang_index")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_RANG_INDEX")
      */
     public function index(RangRepository $rangRepository): array
     {
