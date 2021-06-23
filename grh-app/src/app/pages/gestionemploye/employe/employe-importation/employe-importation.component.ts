@@ -8,6 +8,8 @@ import { TypeEmployeService } from 'src/app/pages/parametrage/typeemploye/typeem
 import { Employe } from '../employe';
 import { EmployeService } from '../employe.service';
 import * as Papa from 'papaparse';
+import { StructureService } from 'src/app/pages/parametrage/structure/structure.service';
+import { Structure } from 'src/app/pages/parametrage/structure/structure';
 
 
 @Component({
@@ -21,10 +23,12 @@ export class EmployeImportationComponent extends BasePageComponent<Employe> impl
   records: any[];
   isError = true;
   layout = 'horizontal';
-  
+  structures: Structure[] = [];
+  selectedStructureId: number;
+
   constructor(
     public employeSrv: EmployeService,
-    store: Store<IAppState>,
+    store: Store<IAppState>, public structureSrv: StructureService,
     public typeEmployeSrv: TypeEmployeService,
     public router: Router
   ) {
@@ -34,6 +38,7 @@ export class EmployeImportationComponent extends BasePageComponent<Employe> impl
   ngOnInit(): void {
     super.ngOnInit();
     this.findTypeEmployes();
+    this.findStructures();
   }
 
   findTypeEmployes() {
@@ -43,6 +48,18 @@ export class EmployeImportationComponent extends BasePageComponent<Employe> impl
         this.setLoaded();
       }, err => this.typeEmployeSrv.httpSrv.catchError(err));
   }
+
+  findStructures() {
+    this
+      .structureSrv
+      .findAll()
+      .subscribe((structures: any) => {
+        this.structures = structures;
+      }, err => {
+        this.structureSrv.httpSrv.catchError(err);
+      });
+  }
+
 
   onChange(files: File[]) {
     if (files[0]) {
@@ -56,8 +73,9 @@ export class EmployeImportationComponent extends BasePageComponent<Employe> impl
     }
   }
 
-  chargerEmployes(){
-    if(this.selectedTypeEmploye){
+  chargerEmployes() {
+    if (this.selectedTypeEmploye && this.selectedStructureId) {
+      this.records.forEach(r => r.structure = this.selectedStructureId);
       this.employeSrv.chargerEmployeByTypeEmploye(this.selectedTypeEmploye, this.records)
         .subscribe((data: any) => {
           this.isError = false;
@@ -65,7 +83,7 @@ export class EmployeImportationComponent extends BasePageComponent<Employe> impl
     }
   }
 
-  goTo(){
+  goTo() {
     this.router.navigate(['/' + this.layout + '/' + this.employeSrv.getRoutePrefix()]);
   }
 
