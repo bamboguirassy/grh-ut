@@ -150,7 +150,6 @@ class GClasseController extends AbstractController
     /** 
      * @Rest\Get(path="/no-suivant/", name="find_classe_no_suivant")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_GCATEGORIE_INDEX")
      */
     public function findNonSuivants(GClasseRepository $gClasseRepository): array
     {
