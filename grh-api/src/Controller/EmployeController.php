@@ -40,7 +40,6 @@ class EmployeController extends AbstractController
         $employes = $this->getDoctrine()
             ->getRepository(Employe::class)
             ->findAll();
-
         return count($employes) ? $employes : [];
     }
 

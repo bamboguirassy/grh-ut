@@ -24,7 +24,8 @@
                         {{titre+' '+entity?.prenoms+' '+entity?.nom}} - {{entity?.matricule}}</div>
                     <div [ngStyle]="{'color': sidebarBg}">{{entity?.structure?.nom}}</div>
                     <div style="font-weight: bold;">{{ entity?.profession?.nom}}</div>
-                    <div *ngFor="let latestFonction of latestFonctions" [ngStyle]="{'color': sidebarBg}" style="font-size: large;" class="m-1">
+                    <div *ngFor="let latestFonction of latestFonctions" [ngStyle]="{'color': sidebarBg}"
+                        style="font-size: large;" class="m-1">
                         - {{latestFonction?.responsabilite?.appelation}}
                     </div>
                     <hr [ngStyle]="{'background-color': sidebarBg}" class="m-1">
@@ -32,49 +33,89 @@
                         <li class="info-line">
                             <div class="row">
                                 <div class="col-6 col-md-5 title">Date Naissance:</div>
-                                <div class="col-6 col-md-7 content">{{entity?.dateNaissance|date:'dd/MM/yyyy'}}</div>
+                                <div class="col-6 col-md-7 content">
+                                    <tc-badge size="sm" *ngIf="!entity?.dateNaissance" [outline]="true" view="error">Non renseigné</tc-badge>
+                                    <span *ngIf="entity?.dateNaissance">
+                                        {{entity?.dateNaissance|date:'dd/MM/yyyy'}}
+                                    </span>
+                                </div>
                             </div>
                         </li>
                         <li class="info-line">
                             <div class="row">
                                 <div class="col-6 col-md-5 title">Lieu Naissance:</div>
-                                <div class="col-6 col-md-7 content">{{entity?.lieuNaissance}}</div>
+                                <div class="col-6 col-md-7 content">
+                                    <tc-badge size="sm" *ngIf="!entity?.lieuNaissance" [outline]="true" view="error">Non renseigné</tc-badge>
+                                    <span *ngIf="entity?.lieuNaissance">
+                                        {{entity?.lieuNaissance}}
+                                    </span>
+                                </div>
                             </div>
                         </li>
                         <li class="info-line">
                             <div class="row">
                                 <div class="col-6 col-md-5 title">Situation Matrimoniale:</div>
-                                <div class="col-6 col-md-7 content">{{entity?.situtationMatrimoniale}}</div>
+                                <div class="col-6 col-md-7 content">
+                                    <tc-badge size="sm" *ngIf="!entity?.situtationMatrimoniale" [outline]="true" view="error">Non renseigné</tc-badge>
+                                    <span *ngIf="entity?.situtationMatrimoniale">
+                                        {{entity?.situtationMatrimoniale}}
+                                    </span>
+                                </div>
                             </div>
                         </li>
                         <li class="info-line">
                             <div class="row">
                                 <div class="col-6 col-md-5 title">Numéro Pièce:</div>
-                                <div class="col-6 col-md-7 content">{{entity?.cni}}</div>
+                                <div class="col-6 col-md-7 content">
+                                    <tc-badge size="sm" *ngIf="!entity?.cni" [outline]="true" view="error">Non renseigné</tc-badge>
+                                    <span *ngIf="entity?.cni">
+                                        {{entity?.cni}}
+                                    </span>
+                                </div>
                             </div>
                         </li>
                         <li class="info-line">
                             <div class="row">
                                 <div class="col-6 col-md-5 title">Nationalité:</div>
-                                <div class="col-6 col-md-7 content">{{entity?.nationalite?.nationalite}}</div>
+                                <div class="col-6 col-md-7 content">
+                                    <tc-badge size="sm" *ngIf="!entity?.nationalite" [outline]="true" view="error">Non renseigné</tc-badge>
+                                    <span *ngIf="entity?.nationalite">
+                                        {{entity?.nationalite?.nationalite}}
+                                    </span>
+                                </div>
                             </div>
                         </li>
                         <li class="info-line">
                             <div class="row">
                                 <div class="col-6 col-md-5 title">Date Recrutement:</div>
-                                <div class="col-6 col-md-7 content">{{entity?.dateRecrutement|date:'dd/MM/yyyy'}}</div>
+                                <div class="col-6 col-md-7 content">
+                                    <tc-badge size="sm" *ngIf="!entity?.dateRecrutement" [outline]="true" view="error">Non renseigné</tc-badge>
+                                    <span *ngIf="entity?.dateRecrutement">
+                                        {{entity?.dateRecrutement|date:'dd/MM/yyyy'}}
+                                    </span>
+                                </div>
                             </div>
                         </li>
                         <li class="info-line">
                             <div class="row">
                                 <div class="col-6 col-md-5 title">Date Prise Service:</div>
-                                <div class="col-6 col-md-7 content">{{entity?.datePriseService|date:'dd/MM/yyyy'}}</div>
+                                <div class="col-6 col-md-7 content">
+                                    <tc-badge size="sm" *ngIf="!entity?.datePriseService" [outline]="true" view="error">Non renseigné</tc-badge>
+                                    <span *ngIf="entity?.datePriseService">
+                                        {{entity?.datePriseService|date:'dd/MM/yyyy'}}
+                                    </span>
+                                </div>
                             </div>
                         </li>
                         <li class="info-line" *ngIf="entity?.typeEmploye?.code=='PER'">
                             <div class="row">
                                 <div class="col-6 col-md-5 title">Diplôme académique:</div>
-                                <div class="col-6 col-md-7 content">{{entity?.diplomeAcademique}}</div>
+                                <div class="col-6 col-md-7 content">
+                                    <tc-badge size="sm" *ngIf="!entity?.diplomeAcademique" [outline]="true" view="error">Non renseigné</tc-badge>
+                                    <span *ngIf="entity?.diplomeAcademique">
+                                        {{entity?.diplomeAcademique}}
+                                    </span>
+                                </div>
                             </div>
                         </li>
                     </ul>
@@ -84,7 +125,7 @@
                         <div class="col-12">
                             <div class="col-12 justify-content-center">
                                 <button size="sm" tc-button class="float-right ml-1" (click)="openModal()"
-                                    beforeIcon="icofont-email" view="accent" [outline]="true"> Contacter</button>   
+                                    beforeIcon="icofont-email" view="accent" [outline]="true"> Contacter</button>
                                 <button size="sm" *ngIf="employeSrv.resourceName|editable"
                                     [routerLink]="['/'+orientation,employeSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
                                     class="float-right ml-1" tc-button view="warning"
@@ -96,7 +137,7 @@
                                     view="accent" beforeIcon="icofont-refresh"></button>
                                 <button size="sm" tc-button class="float-right" (click)="location.back()"
                                     beforeIcon="icofont-reply"></button>
-                                
+
                             </div>
                         </div>
                         <div class="col-12">
@@ -107,7 +148,10 @@
                                 <li class="info-line">
                                     <div class="row">
                                         <div class="col-6 col-md-5 title">Téléphone Primaire:</div>
-                                        <div class="col-6 col-md-7 content"><a
+                                        <div class="col-6 col-md-7 content">
+                                            <tc-badge size="sm" *ngIf="!entity?.telephonePrimaire" [outline]="true" view="error">
+                                                Non renseigné</tc-badge>
+                                            <a *ngIf="entity?.telephonePrimaire"
                                                 href="tel:{{entity?.telephonePrimaire}}">{{entity?.telephonePrimaire}}</a>
                                         </div>
                                     </div>
@@ -115,23 +159,32 @@
                                 <li class="info-line">
                                     <div class="row">
                                         <div class="col-6 col-md-5 title">Téléphone Secondaire:</div>
-                                        <div class="col-6 col-md-7 content"><a
-                                                href="tel:{{entity?.telephoneSecondaire}}">{{entity?.telephonePrimaire}}</a>
+                                        <div class="col-6 col-md-7 content">
+                                            <tc-badge size="sm" *ngIf="!entity?.telephoneSecondaire" [outline]="true" view="error">Non renseigné
+                                            </tc-badge>
+                                            <a  *ngIf="entity?.telephoneSecondaire"
+                                                href="tel:{{entity?.telephoneSecondaire}}">{{entity?.telephoneSecondaire}}</a>
                                         </div>
                                     </div>
                                 </li>
                                 <li class="info-line">
                                     <div class="row">
                                         <div class="col-6 col-md-5 title">Email Perso:</div>
-                                        <div class="col-6 col-md-7 content"><a
-                                                href="mailto:{{entity?.email}}">{{entity?.email}}</a></div>
+                                        <div class="col-6 col-md-7 content">
+                                            <tc-badge size="sm" *ngIf="!entity?.email" [outline]="true" view="error">Non renseigné
+                                            </tc-badge>
+                                            <a  *ngIf="entity?.email" href="mailto:{{entity?.email}}">{{entity?.email}}</a>
+                                        </div>
                                     </div>
                                 </li>
                                 <li class="info-line">
                                     <div class="row">
                                         <div class="col-6 col-md-5 title">Email Universitaire:</div>
-                                        <div class="col-6 col-md-7 content"><a
-                                                href="mailto:{{entity?.emailUniv}}">{{entity?.emailUniv}}</a></div>
+                                        <div class="col-6 col-md-7 content">
+                                            <tc-badge size="sm" *ngIf="!entity?.emailUniv" [outline]="true" view="error">Non renseigné
+                                            </tc-badge>
+                                            <a *ngIf="entity?.emailUniv" href="mailto:{{entity?.emailUniv}}">{{entity?.emailUniv}}</a>
+                                        </div>
                                     </div>
                                 </li>
                                 <li class="info-line" *ngIf="isAdresseLoaded && entity">
@@ -228,54 +281,55 @@
 <app-access-denied *ngIf="!(employeSrv.resourceName|showable)"></app-access-denied>
 <!-- Modal window -->
 <nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Nouveau Message'"
-  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
-  <ng-template #modalBody>
-    <form #form="ngForm" ngNativeValidate>
-      <div class="row">
-        <div class="col-12">
-          
-            <!--tc-form-label>Type</tc-form-label-->
-            <!--nz-select [required]="true" name="typeDocument" id="typeDocument" #typeDocument="ngModel" nzPlaceHolder="Selectionner le type de document"
+    [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+    <ng-template #modalBody>
+        <form #form="ngForm" ngNativeValidate>
+            <div class="row">
+                <div class="col-12">
+
+                    <!--tc-form-label>Type</tc-form-label-->
+                    <!--nz-select [required]="true" name="typeDocument" id="typeDocument" #typeDocument="ngModel" nzPlaceHolder="Selectionner le type de document"
               nzAllowClear nzShowSearch [(ngModel)]="selectedTypeDocument">
               <ng-container *ngFor="let typeDocument of typeDocuments">
                 <nz-option [nzValue]="typeDocument" [nzLabel]="typeDocument.nom"></nz-option>
               </ng-container>
             </nz-select-->
-            
-        </div>
-        <div class="col-12">
-          <tc-form-group>
-            <tc-form-label>Objet</tc-form-label>
-            <tc-input required="required" [(ngModel)]="email.object" name="object" id="object" #object="ngModel">
-            </tc-input>
-        <tc-form-description>
-            <app-form-field-validation-message [formField]="object"></app-form-field-validation-message>
-        </tc-form-description>
-      </tc-form-group>
-         <tc-form-group>
-            <tc-form-label>Message</tc-form-label>
-            <ckeditor nz-input [required]="true" id="message" name="message" #message="ngModel"
-                        [(ngModel)]="email.message" [editor]="editor" class="ckeditor-col-container clearfix">
-                    </ckeditor>
-            <tc-form-description>
-              <app-form-field-validation-message [formField]="message"></app-form-field-validation-message>
-            </tc-form-description>
-          </tc-form-group>
-         
-        </div>
-      </div>
-    </form>
-  </ng-template>
 
-  <ng-template #modalFooter>
-    <div class="actions justify-content-between">
-      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
-        (click)="closeModal()">Fermer</button>
-      <button [afterIcon]="'icofont-send-mail'"
-        tc-button [view]="'accent'" (click)="sendSingleEmail()">
-        Envoyer
-      </button>
-    </div>
-  </ng-template>
+                </div>
+                <div class="col-12">
+                    <tc-form-group>
+                        <tc-form-label>Objet</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="email.object" name="object" id="object"
+                            #object="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="object"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                    <tc-form-group>
+                        <tc-form-label>Message</tc-form-label>
+                        <ckeditor nz-input [required]="true" id="message" name="message" #message="ngModel"
+                            [(ngModel)]="email.message" [editor]="editor" class="ckeditor-col-container clearfix">
+                        </ckeditor>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="message">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="actions justify-content-between">
+            <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+                (click)="closeModal()">Fermer</button>
+            <button [afterIcon]="'icofont-send-mail'" tc-button [view]="'accent'" (click)="sendSingleEmail()">
+                Envoyer
+            </button>
+        </div>
+    </ng-template>
 </nz-modal>
 <!-- end Modal window -->

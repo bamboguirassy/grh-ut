@@ -26,8 +26,10 @@
     </ng-template>
 </div> -->
 
-<input style="min-width: 250px;" [(ngModel)]="searchTerm" class="form-control d-none d-sm-block" (input)="getEmployes()" placeholder="Rechercher un employé" nz-input [nzAutocomplete]="auto" />
-<input style="min-width: 150px;" [(ngModel)]="searchTerm" class="form-control d-block d-sm-none" (input)="getEmployes()" placeholder="Rechercher un employé" nz-input [nzAutocomplete]="auto" />
+<input style="min-width: 350px;" [(ngModel)]="searchTerm" class="form-control d-none d-sm-block" (input)="getEmployes()"
+    placeholder="Rechercher un employé" nz-input [nzAutocomplete]="auto" />
+<input style="min-width: 150px;" [(ngModel)]="searchTerm" class="form-control d-block d-sm-none" (input)="getEmployes()"
+    placeholder="Rechercher un employé" nz-input [nzAutocomplete]="auto" />
 
 <nz-autocomplete #auto>
     <nz-auto-option *ngFor="let item of filteredOptions" [nzValue]="item.matricule">
@@ -38,12 +40,17 @@
                     <i *ngIf="!item.filepath" class="icofont-user-suited float-right"></i>
                 </div>
                 <div class="col-9">
-                    <span [innerHTML]="item?.prenoms" class="thick">{{item?.prenoms}}</span>,
+                    <span [innerHTML]="item?.prenoms" class="thick">{{item?.prenoms}}</span> &nbsp;
                     <span [innerHTML]="item?.nom" class="thick">{{item?.nom}}</span>
                     <br>
                     <span [innerHTML]="item?.matricule" style="color: blue;">{{item?.matricule}}</span>
                     <br>
-                    <span [innerHTML]="item?.profession?.nom">{{item?.profession?.nom}}</span> 
+                    <span [innerHTML]="item?.typeEmploye?.code"></span>
+                    <br *ngIf="item?.profession">
+                    <span [innerHTML]="item?.profession?.nom">{{item?.profession?.nom}}</span>
+                </div>
+                <div class="col-12">
+                    <hr>
                 </div>
             </div>
         </a>

@@ -86,8 +86,13 @@ export class OrganigrammeViewComponent implements OnInit {
       .pipe(first())
       .subscribe((data: any) => {
         this.structures = data;
-        const rootEntity = this.structures.find(s => s.structureParente === null);
-        this.buildOrgChart(rootEntity);
+        if(!this.filtered) {
+          const rootEntity = this.structures.find(s => s.structureParente === null);
+          this.buildOrgChart(rootEntity);
+        } else {
+          const rootEntity = this.structures.find(item=>item.id==this.filtered.id);
+          this.buildOrgChart(rootEntity);
+        }
       }, err => {
         this.structureSrv.httpSrv.catchError(err)
       });
