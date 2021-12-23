@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./caissesociale-edit.component.scss']
 })
 export class CaisseSocialeEditComponent extends BasePageComponent<CaisseSociale> implements OnInit, OnDestroy {
-
+  caissesocialeavatar: any;
   constructor(store: Store<IAppState>,
               public caisseSocialeSrv: CaisseSocialeService,
               public router: Router,
@@ -56,6 +56,23 @@ export class CaisseSocialeEditComponent extends BasePageComponent<CaisseSociale>
 
   handlePostUpdate() {
     this.location.back();
+  }
+
+  // upload new file
+  onFileChanged(inputValue: any) {
+    let file: File = inputValue.target.files[0];
+    let reader: FileReader = new FileReader();
+    reader.onloadend = () => {
+      this.caissesocialeavatar = reader.result;
+      this.caisseSocialeSrv.uploadPhoto(this.entity, this.caissesocialeavatar.split(',')[1], file.name.split('.')[0])
+        .subscribe(
+          (user: any) => {
+            this.findEntity(this.activatedRoute.snapshot.params.id);
+            this.caisseSocialeSrv.toastr.success('Photo mise à jour !')
+          },
+          error => this.caisseSocialeSrv.httpSrv.catchError(error))
+    };
+    reader.readAsDataURL(file);
   }
 
 }

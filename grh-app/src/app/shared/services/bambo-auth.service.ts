@@ -133,7 +133,7 @@ export class BamboAuthService {
             enabled: this.checkListAccess('typecontrat')
           },
           {
-            "title": "Types Document",
+            "title": "Types Document Personnel",
             "routing": "typedocument",
             enabled: this.checkListAccess('typedocument')
           },
@@ -153,7 +153,7 @@ export class BamboAuthService {
             enabled: this.checkListAccess('structurefonction')
           },
           {
-            "title": "Caisses Sociales",
+            "title": "Organismes Sociaux",
             "routing": "caissesociale",
             enabled: this.checkListAccess('caissesociale')
           },
