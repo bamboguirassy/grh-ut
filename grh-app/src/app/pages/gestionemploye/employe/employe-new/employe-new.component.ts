@@ -1,3 +1,4 @@
+import { TypeEmployeService } from './../../../parametrage/typeemploye/typeemploye.service';
 import { GradeService } from './../../../gestiongrade/grade/grade.service';
 import { CaisseSocialeService } from './../../../parametrage/caissesociale/caissesociale.service';
 import { MutuelleSanteService } from './../../../parametrage/mutuellesante/mutuellesante.service';
@@ -33,7 +34,8 @@ export class EmployeNewComponent implements OnInit {
   isModalVisible = false;
   currentAvatar: any;
   fileModel: UploadFileModel = new UploadFileModel();
-  @Input() typeEmploye: TypeEmploye;
+  selectedTypeEmploye: TypeEmploye;
+  typeEmployes: TypeEmploye[] = [];
   nationalites: Pays[] = [];
   selectedNationalite: Pays;
   caisseSociales: CaisseSociale[] = [];
@@ -61,6 +63,7 @@ export class EmployeNewComponent implements OnInit {
     public mutuelleSanteSrv: MutuelleSanteService,
     public caisseSocialeSrv: CaisseSocialeService,
     public professionSrv: ProfessionService,
+    public typeEmployeSrv: TypeEmployeService,
     public gradeSrv: GradeService, public structureSrv: StructureService, public datePipe: DatePipe) {
     this.initNewEmploye();
   }
@@ -93,8 +96,8 @@ export class EmployeNewComponent implements OnInit {
     if (this.selectedNationalite) {
       this.entity.nationalite = this.selectedNationalite.id;
     }
-    if (this.typeEmploye) {
-      this.entity.typeEmploye = this.typeEmploye.id;
+    if (this.selectedTypeEmploye) {
+      this.entity.typeEmploye = this.selectedTypeEmploye.id;
     }
     this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
     this.entity.dateRecrutement = this.datePipe.transform(this.entity.dateRecrutement, 'yyyy-MM-dd');
@@ -118,6 +121,13 @@ export class EmployeNewComponent implements OnInit {
       }, error => this.employeSrv.httpSrv.catchError(error));
   }
 
+  findTypeEmployes() {
+    this.typeEmployeSrv.findAll()
+      .subscribe((data: any) => {
+        this.typeEmployes = data;
+      }, err => this.typeEmployeSrv.httpSrv.catchError(err));
+  }
+
 
   // open modal window
   openModal() {
@@ -126,8 +136,8 @@ export class EmployeNewComponent implements OnInit {
       this.findNationalites();
       this.findCaisseSociales();
       this.findMutuelleSantes();
-      this.findIndices();
       this.findStructures();
+      this.findTypeEmployes();
       this.areDataLoaded = true;
     }
   }
@@ -156,6 +166,11 @@ export class EmployeNewComponent implements OnInit {
       }, err => this.paysSrv.httpSrv.catchError(err));
   }
 
+  selectTypeEmploye($typeEmploye) {
+    this.selectedTypeEmploye = $typeEmploye;
+    this.findIndices();
+  } 
+
   findMutuelleSantes() {
     this.mutuelleSanteSrv.findAll()
       .subscribe((data: any) => {
@@ -171,7 +186,7 @@ export class EmployeNewComponent implements OnInit {
   }
 
   findIndices() {
-    this.gradeSrv.findByTypeEmploye(this.typeEmploye)
+    this.gradeSrv.findByTypeEmploye(this.selectedTypeEmploye)
       .subscribe((data: any) => {
         this.indices = data;
       }, err => this.gradeSrv.httpSrv.catchError(err));

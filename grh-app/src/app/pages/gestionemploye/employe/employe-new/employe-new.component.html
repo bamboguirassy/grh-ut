@@ -6,7 +6,7 @@
 
 <!-- Modal window -->
 <nz-modal nzWidth="80%" [(nzVisible)]="isModalVisible" [nzClosable]="false"
-    [nzTitle]="'Formulaire - Nouveau - '+typeEmploye?.code" [nzContent]="modalBody" [nzFooter]=null
+    [nzTitle]="'Formulaire - Nouveau - '+selectedTypeEmploye?.code" [nzContent]="modalBody" [nzFooter]=null
     (nzOnCancel)="closeModal()">
     <ng-template #modalBody>
         <div class="row">
@@ -24,6 +24,23 @@
                 <div class="steps-content" *ngIf="current == 0 ">
                     <form (submit)="next()" ngNativeValidate>
                         <div class="row">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <tc-form-group>
+                                    <tc-form-label>Type Employé</tc-form-label>
+                                    <nz-select (ngModelChange)="selectTypeEmploye($event)" style="width: 100%" nzPlaceHolder="Sélectionner Type Employé"
+                                        nzAllowClear nzShowSearch [(ngModel)]="selectedTypeEmploye"
+                                        name="typeEmploye" id="typeEmploye" #typeEmploye="ngModel">
+                                        <ng-container *ngFor="let typeEmploye of typeEmployes">
+                                            <nz-option [nzValue]="typeEmploye" [nzLabel]="typeEmploye.nom">
+                                            </nz-option>
+                                        </ng-container>
+                                    </nz-select>
+                                    <tc-form-description>
+                                        <app-form-field-validation-message [formField]="typeEmploye">
+                                        </app-form-field-validation-message>
+                                    </tc-form-description>
+                                </tc-form-group>
+                            </div>
                             <div class="col-12 col-md-6 col-lg-4">
                                 <tc-form-group>
                                     <tc-form-label>Prénoms</tc-form-label>
@@ -357,7 +374,7 @@
                                     </tc-form-description>
                                 </tc-form-group>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-4" *ngIf="typeEmploye?.code=='PER'">
+                            <div class="col-12 col-md-6 col-lg-4" *ngIf="selectedTypeEmploye?.code=='PER'">
                                 <tc-form-group>
                                     <tc-form-label>Grade</tc-form-label>
                                     <tc-select [(ngModel)]="entity.grade" name="grade" id="grade"
@@ -370,7 +387,7 @@
                                     </tc-form-description>
                                 </tc-form-group>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-4" *ngIf="typeEmploye?.code=='PATS'">
+                            <div class="col-12 col-md-6 col-lg-4" *ngIf="selectedTypeEmploye?.code=='PATS'">
                                 <tc-form-group>
                                     <tc-form-label>Grade</tc-form-label>
                                     <tc-input [(ngModel)]="entity.grade" name="grade" id="grade" #grade="ngModel">

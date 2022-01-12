@@ -352,7 +352,7 @@
         </tc-table>
         <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
     </tc-card>
-    <app-employe-new [typeEmploye]="typeEmployes[selectedIndex]" (creation)="onCreate($event)"></app-employe-new>
+    <app-employe-new (creation)="onCreate($event)"></app-employe-new>
 </tc-card>
 <ng-container>
     <ng-template #modalHeader>
