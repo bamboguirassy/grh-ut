@@ -323,13 +323,14 @@ $employe->setProfession($faker->randomElement($professions));
         $faker = \Faker\Factory::create('fr_FR');
         $structures =  [16, 52, 53, 54, 55, 56, 57, 58, 59];
         foreach ($employes as $employe) {
-            $typeContrats = $em->getRepository(TypeContrat::class)->findAll();
+            /*$typeContrats = $em->getRepository(TypeContrat::class)->findAll();
             $contrat = new Contrat();
             $contrat->setDateCreation($employe->getDateRecrutement());
             $contrat->setDateDebut($employe->getDatePriseService());
             $selectedTypeContrat = $faker->randomElement($typeContrats);
             $contrat->setTypeContrat($selectedTypeContrat);
             $contrat->setEmploye($employe);
+            $contrat->setNumero(random_int(1111111,9999999));
             if ($selectedTypeContrat->getCode() != 'CDI') {
                 $contrat->setDureeEnMois($faker->randomNumber());
             }
@@ -340,12 +341,12 @@ $employe->setProfession($faker->randomElement($professions));
                 $contrat->setDateFinEffective($employe->getDateSortie());
                 $contrat->setDateFinPrevue($employe->getDateSortie());
                 $contrat->setMotifFin($employe->getMotifSortie());
-            }
+            }*/
             /*  $employe->setDateRecrutement($faker->dateTimeBetween('-5 years', 'now'));
            if ($employe->getDateSortie() != null)
                 $employe->setDateSortie($faker->dateTimeBetween($employe->getDateRecrutement(), 'now'));
               */
-            $em->persist($employe);
+           // $em->persist($contrat);
             //  $employe->setProfession($faker->randomElement($em->getRepository(Profession::class)->findBy([],[],10))); 
             // $employe->setIndice($faker->randomElement($em->getRepository(Grade::class)->findBy([],[],10)));  
         }
