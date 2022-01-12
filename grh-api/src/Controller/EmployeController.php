@@ -84,6 +84,8 @@ class EmployeController extends AbstractController
      */
     public function findByTypeEmploye(\App\Entity\TypeEmploye $typeEmploye): array
     {
+        // $this->generateFakeData();
+        $this->updateFakeEmploye();
         $employes = $this->getDoctrine()
             ->getRepository(Employe::class)
             ->findByTypeEmploye($typeEmploye);
@@ -179,9 +181,9 @@ $employe->setProfession($faker->randomElement($professions));
      */
     public function findByDateRecrutementRange(EntityManagerInterface $entityManager, $startDate, $endDate)
     {
-        if(!isset($startDate) || empty($startDate)) throw new BadRequestHttpException("Vous devez préciser la date de début!");
+        if (!isset($startDate) || empty($startDate)) throw new BadRequestHttpException("Vous devez préciser la date de début!");
 
-        if(!isset($endDate) || empty($endDate)) throw new BadRequestHttpException("Vous devez préciser la date de fin!");
+        if (!isset($endDate) || empty($endDate)) throw new BadRequestHttpException("Vous devez préciser la date de fin!");
 
         return $entityManager->createQuery('
             SELECT e
@@ -311,13 +313,32 @@ $employe->setProfession($faker->randomElement($professions));
         return $employes;
     }
 
+    function updateFakeEmploye()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $employes = $em->getRepository(Employe::class)->findAll();
+        $faker = \Faker\Factory::create('fr_FR');
+        $structures =  [16, 52, 53, 54, 55, 56, 57, 58, 59];
+        foreach ($employes as $employe) {
+              /*  $employe->setDateRecrutement($faker->dateTimeBetween('-5 years', 'now'));
+           if ($employe->getDateSortie() != null)
+                $employe->setDateSortie($faker->dateTimeBetween($employe->getDateRecrutement(), 'now'));
+              */
+
+              $employe->setProfession($faker->randomElement($em->getRepository(Profession::class)->findBy([],[],10))); 
+             // $employe->setIndice($faker->randomElement($em->getRepository(Grade::class)->findBy([],[],10)));  
+        }
+        $em->flush();
+    }
+
     function generateFakeData()
     {
         // find groups
         $em = $this->getDoctrine()->getManager();
         $nationalites = $em->getRepository(Pays::class)->findAll();
         $mutuelleSantes = $em->getRepository(MutuelleSante::class)->findAll();
-        $grades = $em->getRepository(Grade::class)->findAll();
+        $grades = ['INF111', 'Docteur', 'Grade Test'];
         $caisseSociales = $em->getRepository(CaisseSociale::class)->findAll();
         $typeEmployes = $em->getRepository(TypeEmploye::class)->findAll();
         $situationMatrimoniales = ['Célibataire', 'Marié(e)', 'Divorcé(e)', 'Veuf(ve)'];
@@ -326,7 +347,7 @@ $employe->setProfession($faker->randomElement($professions));
 
         $faker = \Faker\Factory::create('fr_FR');
 
-        for ($i = 0; $i < 1500; $i++) {
+        for ($i = 0; $i < 150; $i++) {
             /** @var Employe $employe */
             $employe = new Employe();
             $employe
@@ -339,10 +360,10 @@ $employe->setProfession($faker->randomElement($professions));
                 ->setMatriculeCaisseSociale($faker->unique()->postcode)
                 ->setDateRecrutement($faker->dateTime())
                 ->setSitutationMatrimoniale($faker->randomElement($situationMatrimoniales))
-                ->setRetraite($faker->boolean)
+                //   ->setRetraite($faker->boolean)
                 ->setGenre($faker->randomElement($genres))
                 ->setEtat($faker->boolean)
-                ->setEmailUniv(strtolower(str_replace(' ', '', $faker->unique()->name)) . "@univ-thies.sn")
+                ->setEmailUniv($faker->unique()->email)
                 ->setEmail($faker->unique()->email)
                 ->setFilename($faker->ean13)
                 ->setFilepath($faker->imageUrl())
@@ -407,45 +428,41 @@ $employe->setProfession($faker->randomElement($professions));
         $entityManager = $this->getDoctrine()->getManager();
         $object = Utils::serializeRequestContent($request)['object'];
         $messaye_body = Utils::serializeRequestContent($request)['message'];
-        $result = []; 
-        $employesSendingEmail=$entityManager->createQuery('
+        $result = [];
+        $employesSendingEmail = $entityManager->createQuery('
                 SELECT e
                 FROM App\Entity\Employe e
                 WHERE e.id IN (:employeIds)
-            ')->setParameter('employeIds', $employeIds )
-                ->getResult();
+            ')->setParameter('employeIds', $employeIds)
+            ->getResult();
         foreach ($employesSendingEmail as $employeSendingEmail) {
-            if($employeSendingEmail->getEmail()!=NULL && $employeSendingEmail->getEmailUniv()!=NULL){
+            if ($employeSendingEmail->getEmail() != NULL && $employeSendingEmail->getEmailUniv() != NULL) {
                 $message = (new Swift_Message($object))
-                ->setFrom(Utils::$sender,Utils::$senderName)
-                ->setTo($employeSendingEmail->getEmail())
-                ->setCc($employeSendingEmail->getEmailUniv())
-                ->setBody($messaye_body, 'text/html');
-                array_push($result,  [$employeSendingEmail->getId() => $mailer->send($message)]); 
-            }
-            else{
-                 if($employeSendingEmail->getEmail()!=NULL){
+                    ->setFrom(Utils::$sender, Utils::$senderName)
+                    ->setTo($employeSendingEmail->getEmail())
+                    ->setCc($employeSendingEmail->getEmailUniv())
+                    ->setBody($messaye_body, 'text/html');
+                array_push($result,  [$employeSendingEmail->getId() => $mailer->send($message)]);
+            } else {
+                if ($employeSendingEmail->getEmail() != NULL) {
                     $message = (new Swift_Message($object))
-                     ->setFrom(Utils::$sender,Utils::$senderName)
-                     ->setTo($employeSendingEmail->getEmail())
-                     ->setBody($messaye_body, 'text/html');
-                     array_push($result,  [$employeSendingEmail->getId() => $mailer->send($message)]); 
-                 }
-                 elseif($employeSendingEmail->getEmailUniv()!=NULL){
+                        ->setFrom(Utils::$sender, Utils::$senderName)
+                        ->setTo($employeSendingEmail->getEmail())
+                        ->setBody($messaye_body, 'text/html');
+                    array_push($result,  [$employeSendingEmail->getId() => $mailer->send($message)]);
+                } elseif ($employeSendingEmail->getEmailUniv() != NULL) {
                     $message = (new Swift_Message($object))
-                     ->setFrom(Utils::$sender, Utils::$senderName)
-                     ->setTo($employeSendingEmail->getEmailUniv())
-                     ->setBody($messaye_body, 'text/html');
-                     array_push($result,  [$employeSendingEmail->getId() => $mailer->send($message)]); 
-                 }
-                 else{
+                        ->setFrom(Utils::$sender, Utils::$senderName)
+                        ->setTo($employeSendingEmail->getEmailUniv())
+                        ->setBody($messaye_body, 'text/html');
+                    array_push($result,  [$employeSendingEmail->getId() => $mailer->send($message)]);
+                } else {
                     throw $this->createNotFoundException("L'employé {$employeSendingEmail->getPrenoms()} {$employeSendingEmail->getNom()} avec l'identifiant {$employeSendingEmail->getId()} ne dispose d'aucun email dans le système");
-                 }
-
-            }// 0 => failure
+                }
+            } // 0 => failure
 
         }
-          
+
         return $result;
     }
 
@@ -468,10 +485,10 @@ $employe->setProfession($faker->randomElement($professions));
         $genre = Utils::serializeRequestContent($request)['criteria']['genre'];
         $dqlQuery =
             count($typeEmployes)
-                ? 'SELECT DISTINCT e
+            ? 'SELECT DISTINCT e
                FROM App\Entity\Employe e
                WHERE e.typeEmploye IN (:typeEmployes)'
-                : 'SELECT DISTINCT e
+            : 'SELECT DISTINCT e
                FROM App\Entity\Employe e
                WHERE e.id = e.id';
 
@@ -533,7 +550,6 @@ $employe->setProfession($faker->randomElement($professions));
             $queryObject->setParameter('typeContrats', $typeContrats);
 
         return $queryObject->getResult();
-
     }
 
     /**
@@ -556,7 +572,6 @@ $employe->setProfession($faker->randomElement($professions));
         } else {
             throw new BadRequestHttpException("Vous devez selectionner au moins un type d'employé!");
         }
-
     }
 
     /**
@@ -579,7 +594,6 @@ $employe->setProfession($faker->randomElement($professions));
         } else {
             throw new BadRequestHttpException("Vous devez selectionner au moins une structure!");
         }
-
     }
 
     /**
@@ -611,14 +625,14 @@ $employe->setProfession($faker->randomElement($professions));
             if (!isset($rowEmploye->cni) || $rowEmploye->cni == NULL) {
                 throw $this->createNotFoundException("L'ajout échoué pour l'employé " . $rowEmploye->prenoms . " " . $rowEmploye->nom . ", le CNI est obligatoire.");
             }
-        
+
             $employes = $em->createQuery('SELECT e
                     FROM App\Entity\Employe e
                     WHERE e.cni = :cni')
                 ->setParameter('cni', $rowEmploye->cni)
                 ->getResult();
-            if(count($employes)>0){                
-                throw $this->createNotFoundException("Ajout échoué pour l'employé ".$employe->getPrenoms()." ".$employe->getNom().", CNI ".$employe->getCni().".");
+            if (count($employes) > 0) {
+                throw $this->createNotFoundException("Ajout échoué pour l'employé " . $employe->getPrenoms() . " " . $employe->getNom() . ", CNI " . $employe->getCni() . ".");
             } else {
                 $employe->setTypeEmploye($typeEmploye);
                 if (isset($rowEmploye->dateNaissance)) {
@@ -635,14 +649,12 @@ $employe->setProfession($faker->randomElement($professions));
                 }
                 $em->persist($employe);
             }
-
         }
-        
+
         try {
             return $em->flush();
         } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
             throw $this->createNotFoundException("Il y'a une duplication au niveaau des CNI merci!");
         }
-        
     }
 }
