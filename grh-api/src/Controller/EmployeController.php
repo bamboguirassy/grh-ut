@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\CaisseSociale;
+use App\Entity\Contrat;
 use App\Entity\Employe;
 use App\Entity\Grade;
 use App\Entity\MutuelleSante;
@@ -11,6 +12,7 @@ use App\Entity\Profession;
 use App\Entity\Structure;
 use App\Entity\TypeEmploye;
 use App\Entity\MembreFamille;
+use App\Entity\TypeContrat;
 use App\Form\EmployeType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -321,13 +323,31 @@ $employe->setProfession($faker->randomElement($professions));
         $faker = \Faker\Factory::create('fr_FR');
         $structures =  [16, 52, 53, 54, 55, 56, 57, 58, 59];
         foreach ($employes as $employe) {
-              /*  $employe->setDateRecrutement($faker->dateTimeBetween('-5 years', 'now'));
+            $typeContrats = $em->getRepository(TypeContrat::class)->findAll();
+            $contrat = new Contrat();
+            $contrat->setDateCreation($employe->getDateRecrutement());
+            $contrat->setDateDebut($employe->getDatePriseService());
+            $selectedTypeContrat = $faker->randomElement($typeContrats);
+            $contrat->setTypeContrat($selectedTypeContrat);
+            $contrat->setEmploye($employe);
+            if ($selectedTypeContrat->getCode() != 'CDI') {
+                $contrat->setDureeEnMois($faker->randomNumber());
+            }
+            if ($employe->getEtat()) {
+                $contrat->setEtat(true);
+            } else {
+                $contrat->setEtat(false);
+                $contrat->setDateFinEffective($employe->getDateSortie());
+                $contrat->setDateFinPrevue($employe->getDateSortie());
+                $contrat->setMotifFin($employe->getMotifSortie());
+            }
+            /*  $employe->setDateRecrutement($faker->dateTimeBetween('-5 years', 'now'));
            if ($employe->getDateSortie() != null)
                 $employe->setDateSortie($faker->dateTimeBetween($employe->getDateRecrutement(), 'now'));
               */
-
-              $employe->setProfession($faker->randomElement($em->getRepository(Profession::class)->findBy([],[],10))); 
-             // $employe->setIndice($faker->randomElement($em->getRepository(Grade::class)->findBy([],[],10)));  
+            $em->persist($employe);
+            //  $employe->setProfession($faker->randomElement($em->getRepository(Profession::class)->findBy([],[],10))); 
+            // $employe->setIndice($faker->randomElement($em->getRepository(Grade::class)->findBy([],[],10)));  
         }
         $em->flush();
     }
