@@ -22,7 +22,7 @@
                             nzShowSearch [(ngModel)]="selectedTypeContrat" name="typeContrat" id="typeContrat"
                             #typeContrat="ngModel">
                             <ng-container *ngFor="let typeContratItem of typeContrats">
-                                <nz-option [nzValue]="typeContratItem" [nzLabel]="typeContratItem.nom"></nz-option>
+                                <nz-option [nzValue]="typeContratItem" [nzLabel]="typeContratItem.nom+' ('+typeContratItem.code+')'"></nz-option>
                             </ng-container>
                         </nz-select>
                         <tc-form-description>

@@ -644,7 +644,7 @@ $employe->setProfession($faker->randomElement($professions));
             $form = $this->createForm(EmployeType::class, $employe);
             $form->submit((array)$rowEmploye);
             if (!isset($rowEmploye->cni) || $rowEmploye->cni == NULL) {
-                throw $this->createNotFoundException("L'ajout échoué pour l'employé " . $rowEmploye->prenoms . " " . $rowEmploye->nom . ", le CNI est obligatoire.");
+                throw $this->createNotFoundException("L'ajout a échoué pour l'employé " . $rowEmploye->prenoms . " " . $rowEmploye->nom . ", le CNI est obligatoire.");
             }
 
             $employes = $em->createQuery('SELECT e
@@ -661,13 +661,12 @@ $employe->setProfession($faker->randomElement($professions));
                 }
                 if (isset($rowEmploye->dateRecrutement)) {
                     $employe->setDateRecrutement(new \DateTime($rowEmploye->dateRecrutement));
+                    $employe->setDatePriseService(new \DateTime($rowEmploye->dateRecrutement));
                 }
                 if (isset($rowEmploye->dateSortie)) {
                     $employe->setDateSortie(new \DateTime($rowEmploye->dateSortie));
                 }
-                if (isset($rowEmploye->datePriseService)) {
-                    $employe->setDatePriseService(new \DateTime($rowEmploye->datePriseService));
-                }
+                $employe->setEtat(true);
                 $em->persist($employe);
             }
         }
