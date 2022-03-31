@@ -330,6 +330,7 @@ $employe->setProfession($faker->randomElement($professions));
             $selectedTypeContrat = $faker->randomElement($typeContrats);
             $contrat->setTypeContrat($selectedTypeContrat);
             $contrat->setEmploye($employe);
+            $contrat->setNumero(random_int(1111111,9999999));
             if ($selectedTypeContrat->getCode() != 'CDI') {
                 $contrat->setDureeEnMois($faker->randomNumber());
             }
@@ -345,7 +346,7 @@ $employe->setProfession($faker->randomElement($professions));
            if ($employe->getDateSortie() != null)
                 $employe->setDateSortie($faker->dateTimeBetween($employe->getDateRecrutement(), 'now'));
               */
-            $em->persist($employe);
+           // $em->persist($contrat);
             //  $employe->setProfession($faker->randomElement($em->getRepository(Profession::class)->findBy([],[],10))); 
             // $employe->setIndice($faker->randomElement($em->getRepository(Grade::class)->findBy([],[],10)));  
         }

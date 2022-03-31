@@ -33,7 +33,7 @@ export class FonctionemployeTimelineComponent implements OnInit {
         transform(`${i.datePriseFonction}` , 'dd/MM/yyyy')}`
         :'Indefini'} - ${i.etat?'En Cours'
         :`${i.dateFin?`${this.datePipe.transform(`${i.dateFin}`
-         , 'dd/MM/yyyy')}`:'En Cours'}`}`,
+         , 'dd/MM/yyyy')}`:'Expirée '}`}`,
         title: i?.responsabilite?.appelation,
         // title: i.responsabilite?.rang?.nom,
         content: i.responsabilite.structure.nom,
