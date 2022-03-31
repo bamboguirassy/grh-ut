@@ -323,7 +323,7 @@ $employe->setProfession($faker->randomElement($professions));
         $faker = \Faker\Factory::create('fr_FR');
         $structures =  [16, 52, 53, 54, 55, 56, 57, 58, 59];
         foreach ($employes as $employe) {
-            $typeContrats = $em->getRepository(TypeContrat::class)->findAll();
+           /* $typeContrats = $em->getRepository(TypeContrat::class)->findAll();
             $contrat = new Contrat();
             $contrat->setDateCreation($employe->getDateRecrutement());
             $contrat->setDateDebut($employe->getDatePriseService());
@@ -340,7 +340,7 @@ $employe->setProfession($faker->randomElement($professions));
                 $contrat->setDateFinEffective($employe->getDateSortie());
                 $contrat->setDateFinPrevue($employe->getDateSortie());
                 $contrat->setMotifFin($employe->getMotifSortie());
-            }
+            }*/
             /*  $employe->setDateRecrutement($faker->dateTimeBetween('-5 years', 'now'));
            if ($employe->getDateSortie() != null)
                 $employe->setDateSortie($faker->dateTimeBetween($employe->getDateRecrutement(), 'now'));
