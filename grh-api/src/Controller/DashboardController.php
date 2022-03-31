@@ -163,7 +163,7 @@ class DashboardController extends AbstractController
         }
         /** @var Employe $employe */
         foreach ($employes as $employe) {
-            if (strtolower($employe->getGenre()) === 'masculin')
+            if (strtolower($employe->getGenre()) === 'Masculin')
                 $nbrHomme++;
             else
                 $nbrFemme++;
@@ -516,7 +516,7 @@ class DashboardController extends AbstractController
             $employes = $em->getRepository(Employe::class)
                 ->findByTypeEmploye($typeEmploye);
             foreach ($employes as $employe) {
-                if (strtolower($employe->getGenre()) === 'masculin')
+                if ($employe->getGenre() == 'Masculin')
                     $nbrHomme++;
                 else
                     $nbrFemme++;

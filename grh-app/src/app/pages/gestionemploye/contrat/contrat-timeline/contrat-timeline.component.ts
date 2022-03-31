@@ -31,8 +31,8 @@ export class ContratTimelineComponent implements OnInit {
     const sectionData = this.items.map((i: any) => ({
       date: `${i.dateDebut?`${this.datePipe.
         transform(`${i.dateDebut}` , 'dd/MM/yyyy')}`
-        :'Indefini'} - ${i.boolean?'En Cours'
-        :`${i.dateFin?`${this.datePipe.transform(`${i.dateFin}`
+        :'Indefini'} - ${i.etat?'En Cours'
+        :`${i.dateFinEffective?`${this.datePipe.transform(`${i.dateFinEffective}`
          , 'dd/MM/yyyy')}`:'En Cours'}`}`,
      //date: i.anneeObtention?i.anneeObtention:"encours",
       title: i.typeContrat.nom,

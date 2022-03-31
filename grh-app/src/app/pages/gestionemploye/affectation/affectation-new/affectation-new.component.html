@@ -15,7 +15,7 @@
                             nzAllowClear nzShowSearch [(ngModel)]="selectedStructure" name="structure"
                             id="structure" #structure="ngModel">
                             <ng-container *ngFor="let structureItem of structures">
-                                <nz-option [nzValue]="structureItem" [nzLabel]="structureItem.nom"></nz-option>
+                                <nz-option [nzValue]="structureItem" [nzLabel]="structureItem.nom+' ('+structureItem.code+')'"></nz-option>
                             </ng-container>
                         </nz-select>
                         <tc-form-description>

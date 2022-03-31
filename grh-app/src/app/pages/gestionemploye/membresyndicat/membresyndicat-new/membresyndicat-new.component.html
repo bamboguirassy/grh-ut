@@ -25,7 +25,7 @@
               <nz-select name="syndicat" id="syndicat" #syndicat="ngModel" nzPlaceHolder="Selectionner le syndicat"
                 nzAllowClear nzShowSearch [(ngModel)]="selectedSyndicat">
                 <ng-container *ngFor="let syndicat of syndicats">
-                  <nz-option *ngIf="syndicat.type==selectedType" [nzValue]="syndicat" [nzLabel]="syndicat.nom"></nz-option>
+                  <nz-option *ngIf="syndicat.type==selectedType" [nzValue]="syndicat" [nzLabel]="syndicat.nom+' ('+syndicat.code+')'"></nz-option>
                 </ng-container>
               </nz-select>
               <tc-form-description>
@@ -60,8 +60,8 @@
   </ng-template>
 
   <ng-template #modalFooter>
-    <div class="actions justify-content-between">
-      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+    <div class="actions d-flex justify-content-between">
+      <button beforeIcon="icofont-close" tc-button [type]="'button'" [view]="'error'"
         (click)="closeModal()">Fermer</button>
       <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
         tc-button [view]="'accent'">

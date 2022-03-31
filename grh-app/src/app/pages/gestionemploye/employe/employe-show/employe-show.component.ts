@@ -32,7 +32,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     };
   entity: Employe;
   employeForm: FormGroup;
-  latestFonctions: FonctionEmploye[];
+  //latestFonctions: FonctionEmploye[];
   photo: any;
   filename: any;
   image: any;
@@ -103,7 +103,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
 
   handlePostLoad() {
     this.title = this.entity?.prenoms + ' ' + this.entity?.nom + ' (' + this.entity?.matricule + ')';
-    this.findLatestFonction();
+    //this.findLatestFonction();
     this.setTitre();
     this.loadFamillesTab();
     this.loadAdressesTab();
@@ -125,7 +125,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
     }
   }
 
-  findLatestFonction() {
+ /* findLatestFonction() {
     this
       .fonctionEmployeSrv
       .findLatest(this.entity)
@@ -134,7 +134,7 @@ export class EmployeShowComponent extends BasePageComponent<Employe> implements 
       }, err => {
         this.fonctionEmployeSrv.httpSrv.handleError(err);
       })
-  }
+  }*/
 
   // upload new file
   onFileChanged(inputValue: any) {

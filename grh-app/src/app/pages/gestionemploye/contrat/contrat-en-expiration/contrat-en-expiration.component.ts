@@ -27,14 +27,14 @@ export class ContratEnExpirationComponent extends BasePageComponent<Contrat>  im
       super(store, contratSrv);
       this.setLoaded(); 
       this.pageData = {
-        title: 'Liste des contrats qui vont expirer d\'ici 3 mois',
+        title: 'Liste des contrats à durée limitée',
         breadcrumbs: [
           {
             title: 'Accueil',
             route: ''
           },
           {
-            title: 'Liste des contrats bientôt expirés'
+            title: 'Liste des contrats'
           }
         ]
       };

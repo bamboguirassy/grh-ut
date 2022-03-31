@@ -211,33 +211,10 @@ class ContratController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $toDay = new \DateTime();
-        $toDay = $toDay->format('Y-m-d');
-        $newDate = strtotime($toDay . "+ 3 months");
-        $date = date("Y-m-d", $newDate);
         $contratEnExpirations = $em->createQuery('select c from App\Entity\Contrat c 
-        where c.dateFinPrevue <= ?1 and c.dateFinPrevue >=?2 and c.etat=?3')
-            ->setParameter(1, $date)
-            ->setParameter(2, $toDay)
+        where c.dateFinPrevue IS NOT NULL and c.etat=?3')
             ->setParameter(3, true)
             ->getResult();
         return $contratEnExpirations;
     }
-
-
-    // public function generateNumeroContrat()
-    // {
-    //     $em = $this->getDoctrine()->getManager();
-    //     $toDay = new \DateTime();
-    //     $numero = $toDay->format('Ymd');
-    //     $i = 1;
-    //     // check contrats for unique numero
-    //     $contrats = $em->getRepository(Contrat::class)
-    //         ->findByNumero($numero . $i);
-    //     while (count($contrats) > 0) {
-    //         $i++;
-    //         $contrats = $em->getRepository(Contrat::class)
-    //             ->findByNumero($numero . $i);
-    //     }
-    //     return $numero . $i;
-    // }
 }

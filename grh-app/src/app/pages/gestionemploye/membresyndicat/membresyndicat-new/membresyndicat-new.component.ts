@@ -30,6 +30,7 @@ export class MembreSyndicatNewComponent implements OnInit {
     public router: Router, public datePipe: DatePipe,
     public syndicatSrv: SyndicatService) {
     this.entity = new MembreSyndicat();
+    this.entity.etat = true;
 
   }
 
@@ -46,6 +47,7 @@ export class MembreSyndicatNewComponent implements OnInit {
         this.closeModal();
         this.creation.emit(data);
         this.entity = new MembreSyndicat();
+        this.entity.etat = true;
       }, error => this.membreSyndicatSrv.httpSrv.catchError(error));
   }
 

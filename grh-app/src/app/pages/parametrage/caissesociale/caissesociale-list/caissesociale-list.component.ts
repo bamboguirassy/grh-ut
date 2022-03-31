@@ -17,14 +17,14 @@ export class CaisseSocialeListComponent extends BasePageComponent<CaisseSociale>
     super(store, caisseSocialeSrv);
 
     this.pageData = {
-      title: 'Liste des Caisses Sociales',
+      title: 'Liste des Organismes Sociaux',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des caisses sociales'
+          title: 'Liste des organismes sociaux'
         }
       ]
     };
